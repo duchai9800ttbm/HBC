@@ -1296,8 +1296,8 @@
                                         (input)="countGeneralExpensesBaseGfa($event);">
                                 </div>
                             </div>
-                            <div class="item-2 d-flex align-items-center">
-                                <div class="pl-1">
+                            <div class="item-2 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
                                     {{ priceReviewForm.get('chiPhiBaseGfa').value | truncateDecimal }}
                                 </div>
                             </div>
@@ -1309,8 +1309,8 @@
                                 </div>
 
                             </div>
-                            <div class="item-4 d-flex align-items-center">
-                                <div class="pl-1">
+                            <div class="item-4 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
                                     {{ priceReviewForm.get('chiPhiAlterGfa').value | truncateDecimal }}
                                 </div>
                             </div>
@@ -1340,8 +1340,8 @@
                                         (input)="countDirectConstructionBaseGfa($event)">
                                 </div>
                             </div>
-                            <div class="item-2 d-flex align-items-center">
-                                <div class="pl-1">
+                            <div class="item-2 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
                                     {{ priceReviewForm.get('giaTriBaseGfa').value | truncateDecimal }}
                                 </div>
                                 <!-- <div>
@@ -1356,8 +1356,8 @@
                                 </div>
 
                             </div>
-                            <div class="item-4 d-flex align-items-center">
-                                <div class="pl-1">
+                            <div class="item-4 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
                                     {{ priceReviewForm.get('giaTriAlterGfa').value | truncateDecimal }}
                                 </div>
                                 <!-- <div>
@@ -1391,10 +1391,10 @@
                                         (input)="countNSCBaseGfa($event)">
                                 </div>
                             </div>
-                            <div class="item-2 d-flex align-items-center">
-                                    <div class="pl-1">
-                                            {{ priceReviewForm.get('giaTriPCBaseGfa').value | truncateDecimal }}
-                                        </div>
+                            <div class="item-2 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
+                                    {{ priceReviewForm.get('giaTriPCBaseGfa').value | truncateDecimal }}
+                                </div>
                                 <!-- <div>
                                     <input formControlName="giaTriPCBaseGfa" appInputNumberNegativeDecimal [decimal]="true">
                                 </div> -->
@@ -1407,10 +1407,10 @@
                                 </div>
 
                             </div>
-                            <div class="item-4 d-flex align-items-center">
-                                    <div class="pl-1">
-                                            {{ priceReviewForm.get('giaTriPCAlterGfa').value | truncateDecimal }}
-                                        </div>
+                            <div class="item-4 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
+                                    {{ priceReviewForm.get('giaTriPCAlterGfa').value | truncateDecimal }}
+                                </div>
                                 <!-- <div>
                                     <input formControlName="giaTriPCAlterGfa" appInputNumberNegativeDecimal [decimal]="true">
                                 </div> -->
@@ -1442,10 +1442,10 @@
                                         appInputNumberNegativeDecimal [decimal]="true" (input)="countDirectContractorBaseGfa($event)">
                                 </div>
                             </div>
-                            <div class="item-2 d-flex align-items-center">
-                                    <div class="pl-1">
-                                            {{ priceReviewForm.get('giaTriNhaThauTrucTiepBaseGfa').value | truncateDecimal }}
-                                        </div>
+                            <div class="item-2 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
+                                    {{ priceReviewForm.get('giaTriNhaThauTrucTiepBaseGfa').value | truncateDecimal }}
+                                </div>
                                 <!-- <div>
                                     <input formControlName="giaTriNhaThauTrucTiepBaseGfa" appInputNumberNegativeDecimal
                                         [decimal]="true">
@@ -1459,10 +1459,10 @@
                                 </div>
 
                             </div>
-                            <div class="item-4 d-flex align-items-center">
-                                    <div class="pl-1">
-                                            {{ priceReviewForm.get('giaTriNhaThauTrucTiepAlterGfa').value | truncateDecimal }}
-                                        </div>
+                            <div class="item-4 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
+                                    {{ priceReviewForm.get('giaTriNhaThauTrucTiepAlterGfa').value | truncateDecimal }}
+                                </div>
                                 <!-- <div>
                                     <input formControlName="giaTriNhaThauTrucTiepAlterGfa"
                                         appInputNumberNegativeDecimal [decimal]="true">
@@ -1481,25 +1481,25 @@
                             <div class="ml-1 mr-1">TOTAL GIÁ VỐN</div>
                         </div>
                         <div class="two d-flex">
-                            <div class="item-1 d-flex align-items-center">
-                                <div class="pl-1">
+                            <div class="item-1 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
                                     {{priceReviewForm.get('totalGiaVonAmount').value | truncateDecimal}}
                                 </div>
                             </div>
-                            <div class="item-2 d-flex align-items-center">
-                                <div class="pl-1">
+                            <div class="item-2 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
                                     {{ priceReviewForm.get('totalGiaVonGfa').value | truncateDecimal }}
                                 </div>
                             </div>
 
-                            <div class="item-3 d-flex align-items-center">
-                                <div class="pl-1">
+                            <div class="item-3 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
                                     {{priceReviewForm.get('totalAlterAmount').value | truncateDecimal}}
                                 </div>
 
                             </div>
-                            <div class="item-4 d-flex align-items-center">
-                                <div class="pl-1">
+                            <div class="item-4 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
                                     {{priceReviewForm.get('totalAlterGfa').value | truncateDecimal}}
                                     <!-- <input formControlName="totalAlterGfa" appInputNumberNegativeDecimal [decimal]="true"> -->
                                 </div>
@@ -1549,8 +1549,8 @@
                             <div class="ml-1 mr-1">TOTAL GIÁ ĐI NỘP THẦU</div>
                         </div>
                         <div class="two d-flex">
-                            <div class="item-1 d-flex align-items-center">
-                                <div class="pl-1">
+                            <div class="item-1 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
                                     {{ priceReviewForm.get('giaDiNopThauAmount').value | truncateDecimal }}
                                     <!-- <input formControlName="giaDiNopThauAmount" appInputMoneyNoplaceholder> -->
                                 </div>
@@ -1561,8 +1561,8 @@
                                 </div>
                             </div>
 
-                            <div class="item-3 d-flex align-items-center">
-                                <div class="pl-1">
+                            <div class="item-3 d-flex align-items-center overflow-auto">
+                                <div class="pl-1 pr-1">
                                     {{ priceReviewForm.get('giaDiNopThauAlterAmount').value | truncateDecimal }}
                                     <!-- <input formControlName="giaDiNopThauAlterAmount" appInputNumberNegativeDecimal
                                         [decimal]="true"> -->
@@ -1599,8 +1599,9 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div class="pl-1">
-                                    {{ priceReviewForm.get('tyleAmount').value | truncateDecimal }}
-                                    <!-- <input formControlName="tyleAmount" appInputMoneyNoplaceholder> -->
+                                    {{
+                                        priceReviewForm.get('tyleAmount').value ?
+                                        (((priceReviewForm.get('tyleAmount').value)*100 | truncateDecimal) + ' %' ) : '' }}
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
@@ -1615,8 +1616,9 @@
 
                             <div class="item-3 d-flex align-items-center">
                                 <div class="pl-1">
-                                    {{ priceReviewForm.get('tyleAlter').value | truncateDecimal }}
-                                    <!-- <input formControlName="tyleAlter" appInputNumberNegativeDecimal [decimal]="true"> -->
+                                    {{
+                                    priceReviewForm.get('tyleAlter').value ?
+                                    (((priceReviewForm.get('tyleAlter').value)*100 | truncateDecimal) + ' %' ) : '' }}
                                 </div>
 
                             </div>

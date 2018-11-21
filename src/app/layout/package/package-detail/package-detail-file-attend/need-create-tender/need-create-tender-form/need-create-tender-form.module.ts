@@ -16,12 +16,15 @@ import { NeedCreateTenderFormDirectorProposalComponent } from './need-create-ten
 // tslint:disable-next-line:max-line-length
 import { NeedCreateTenderFormDecisionBoardComponent } from './need-create-tender-form-decision-board/need-create-tender-form-decision-board.component';
 import { SharedModule } from '../../../../../../shared/shared.module';
+import {
+    NeedCreateTenderFormImagesProjectComponent
+} from './need-create-tender-form-images-project/need-create-tender-form-images-project.component';
 
 @NgModule({
     imports: [
-      CommonModule,
-      NeedCreateTenderFormRoutingModule,
-      SharedModule
+        CommonModule,
+        NeedCreateTenderFormRoutingModule,
+        SharedModule
     ],
     declarations: [
         NeedCreateTenderFormComponent,
@@ -32,7 +35,8 @@ import { SharedModule } from '../../../../../../shared/shared.module';
         NeedCreateTenderFormFeeTenderComponent,
         NeedCreateTenderFormContractConditionComponent,
         NeedCreateTenderFormDirectorProposalComponent,
-        NeedCreateTenderFormDecisionBoardComponent
+        NeedCreateTenderFormDecisionBoardComponent,
+        NeedCreateTenderFormImagesProjectComponent
     ]
 })
-export class NeedCreateTenderFormModule {}
+export class NeedCreateTenderFormModule { }

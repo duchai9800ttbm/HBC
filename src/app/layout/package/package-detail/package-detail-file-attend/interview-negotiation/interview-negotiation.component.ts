@@ -17,7 +17,7 @@ import { ReportEndInterviewComponent } from './end-interview/report-end-intervie
 import { CheckStatusPackage } from '../../../../../shared/constants/check-status-package';
 import { slideToLeft } from '../../../../../router.animations';
 import { PermissionService } from '../../../../../shared/services/permission.service';
-import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 
 
 @Component({

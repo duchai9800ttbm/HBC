@@ -1262,4 +1262,20 @@ export class PackageService {
     directionalTabResultFuc() {
         this.directionalTabResult.next();
     }
+
+    // Upload ảnh - chung cho các form upload
+    uploadImageService(imageFiles: any) {
+        const url = `image/upload`;
+        const imageUploadForm = new FormData();
+        for (const image of imageFiles) {
+            imageUploadForm.append('Images', image);
+        }
+        return this.apiService.postFile(url, imageUploadForm).map(res => res.result);
+    }
+    // Xóa ảnh trên server - chung cho các form upload
+    deleteImageService(id) {
+        const url = `image/delete`;
+        const dateSent = { guid: id };
+        return this.apiService.post(url, dateSent);
+    }
 }

@@ -1231,35 +1231,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     });
   }
 
-
-
-  // Count Value
-  countRateOnPBase() {
-    const chiPhiOnPBaseValue = this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value;
-    const totalGiaNopThauBaseValue = this.priceReviewForm.get('giaDiNopThauAmount').value;
-    const result = chiPhiOnPBaseValue / totalGiaNopThauBaseValue;
-    if (result >= 0.01) {
-      this.priceReviewForm.get('tyleAmount').patchValue(result);
-    }
-  }
-  countRateOnPAlter() {
-    const chiPhiOnPAlterValue = this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value;
-    const totalGiaNopThauAlterValue = this.priceReviewForm.get('giaDiNopThauAlterAmount').value;
-    const result = chiPhiOnPAlterValue / totalGiaNopThauAlterValue;
-    if (result >= 0.01) {
-      this.priceReviewForm.get('tyleAlter').patchValue(result);
-    }
-  }
-  countRateOnP() {
-    const chiPhiLoiNhuanOnp = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value) ?
-      this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0;
-    const totalGiaDiNOpThau = (this.priceReviewForm.get('giaDiNopThauAmount').value) ?
-      this.priceReviewForm.get('giaDiNopThauAmount').value : 0;
-    this.priceReviewForm.get('tyleAmount').patchValue(
-      chiPhiLoiNhuanOnp / totalGiaDiNOpThau
-    );
-  }
-
   // Gủi duyệt
   guiDuyet() {
     const dieuKienGuiDuyet = (this.priceReviewForm.get('isApprovedByTenderLeader').value !== null ||
@@ -1419,11 +1390,11 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     const value = (this.priceReviewForm.get('totalGiaVonAmount').value ? +this.priceReviewForm.get('totalGiaVonAmount').value : 0) +
       (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value ? +this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0);
     if (Number(value.toFixed(2)) >= 0.01) {
-      console.log(value, 'value');
       this.priceReviewForm.get('giaDiNopThauAmount').patchValue(Number(value.toFixed(2)));
     } else {
       this.priceReviewForm.get('giaDiNopThauAmount').patchValue(0);
     }
+    this.countRateONPbaseTender();
   }
   countTotalBidPriceAlterTender() {
     const value = (this.priceReviewForm.get('totalAlterAmount').value ? +this.priceReviewForm.get('totalAlterAmount').value : 0) +
@@ -1433,6 +1404,26 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       this.priceReviewForm.get('giaDiNopThauAlterAmount').patchValue(Number(value.toFixed(2)));
     } else {
       this.priceReviewForm.get('giaDiNopThauAlterAmount').patchValue(0);
+    }
+    this.countRateONPalterTender();
+  }
+  countRateONPbaseTender() {
+    const value = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value ?
+      +this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0) / Number(this.priceReviewForm.get('giaDiNopThauAmount').value);
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('tyleAmount').patchValue(Number(value.toFixed(4)));
+    } else {
+      this.priceReviewForm.get('tyleAmount').patchValue(0);
+    }
+  }
+  countRateONPalterTender() {
+    const value = (this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value ?
+      +this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value : 0) /
+      Number(this.priceReviewForm.get('giaDiNopThauAlterAmount').value);
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('tyleAlter').patchValue(Number(value.toFixed(4)));
+    } else {
+      this.priceReviewForm.get('tyleAlter').patchValue(0);
     }
   }
 }

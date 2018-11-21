@@ -13,6 +13,7 @@ import { NeedCreateTenderFormContractConditionComponent } from './need-create-te
 import { NeedCreateTenderFormDirectorProposalComponent } from './need-create-tender-form-director-proposal/need-create-tender-form-director-proposal.component';
 // tslint:disable-next-line:max-line-length
 import { NeedCreateTenderFormDecisionBoardComponent } from './need-create-tender-form-decision-board/need-create-tender-form-decision-board.component';
+import { NeedCreateTenderFormImagesProjectComponent } from './need-create-tender-form-images-project/need-create-tender-form-images-project.component';
 
 const routes: Routes = [
   {
@@ -54,6 +55,10 @@ const routes: Routes = [
       {
         path: 'descion-board',
         component: NeedCreateTenderFormDecisionBoardComponent
+      },
+      {
+        path: 'images-project',
+        component: NeedCreateTenderFormImagesProjectComponent
       }
     ]
   }
