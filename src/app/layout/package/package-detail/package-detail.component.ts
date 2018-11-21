@@ -191,6 +191,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
     if (this.subFirst) {
       this.subInterval.unsubscribe();
     }
+    PackageDetailComponent.packageId = null;
   }
 
   getInforPackage() {
