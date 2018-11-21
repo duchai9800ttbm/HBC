@@ -25,6 +25,7 @@ import { PermissionService } from '../../../../../../shared/services/permission.
 import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { Subscription } from '../../../../../../../../node_modules/rxjs/Subscription';
 import { DocumentTypeId } from '../../../../../../shared/constants/document-type-id';
+import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -77,6 +78,15 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   InLiveFormBangTomTatDK = false;
   // liveForm tham quan công trình
   XemLiveFormThamquanCT = false;
+  // Các tài liệu khác
+  yeuCauBaoGia = false;
+  bangTongHopDuToan = false;
+  bangTinhChiPhiChung = false;
+  bangCauHoiLamRoHSMT = false;
+  cacHSKTLienQuan = false;
+  hoSoPhapLy = false;
+  hoSoKhac = false;
+
   InLiveFormThamquanCT = false;
   documentTypeId = DocumentTypeId;
   constructor(
@@ -87,7 +97,8 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
     private statusObservableHsdtService: StatusObservableHsdtService,
     private dialogService: DialogService,
     private router: Router,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private hoSoDuThauService: HoSoDuThauService
   ) { }
 
 
@@ -142,10 +153,56 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
           this.uploadDocHSDT = [];
         }
         if (screenDocHSDT) {
-          console.log('screenDocHSDT', screenDocHSDT);
-          // this.uploadDocHSDT = screen.permissions
-          //   .filter(t => t.tenderDocumentTypeId === this.currentDocumentTypeId).map(z => z.value);
-          // http://115.79.35.119:9004/api/hbc/bidopportunity/938/tenderdocumentmajortypes
+          this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(response => {
+            (response || []).forEach(item => {
+              let tempArray = [];
+              switch (item.item.name) {
+                case 'Yêu cầu báo giá vật tư, thầu phụ': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.yeuCauBaoGia = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Bảng tổng hợp dự toán': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.bangTongHopDuToan = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Bảng tính chi phí chung': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.bangTinhChiPhiChung = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Bảng câu hỏi làm rõ HSMT': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.bangCauHoiLamRoHSMT = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Các HSKT có liên quan': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.cacHSKTLienQuan = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Hồ sơ pháp lý': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.hoSoPhapLy = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Hồ sơ khác': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.hoSoKhac = tempArray.includes('DownloadFile');
+                  break;
+                }
+              }
+
+            });
+          });
         }
       }
       // Screen

@@ -462,17 +462,25 @@
                                                     </div>
                                                 </ng-container>
 
-                                                <div style="cursor: pointer;" title="download" *ngIf="!item?.document?.isLiveForm">
-                                                    <a *ngIf="!item?.document?.filerUrl" (click)="downloadHSDTChinhThuc(item?.document?.id)">
-                                                        <i class="fa fa-download cursor-pointer icon-view" aria-hidden="true"></i>
-                                                    </a>
-                                                    <ng-container *ngIf="item?.document?.filerUrl">
-                                                        <a [href]="item?.document?.filerUrl" target="_blank">
-                                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                <ng-container *ngIf="(items?.typeName === 'Yêu cầu báo giá vật tư, thầu phụ' && yeuCauBaoGia)
+                                                || (items?.typeName === 'Bảng tổng hợp dự toán' && bangTongHopDuToan)
+                                                || (items?.typeName === 'Bảng tính chi phí chung' && bangTinhChiPhiChung)
+                                                || (items?.typeName === 'Bảng câu hỏi làm rõ HSMT' && bangCauHoiLamRoHSMT)
+                                                || (items?.typeName === 'Các HSKT có liên quan' && cacHSKTLienQuan)
+                                                || (items?.typeName === 'Hồ sơ pháp lý' && hoSoPhapLy)
+                                                || (items?.typeName === 'Hồ sơ khác' && hoSoKhac)">
+                                                    <div style="cursor: pointer;" title="download" *ngIf="!item?.document?.isLiveForm">
+                                                        <a *ngIf="!item?.document?.filerUrl" (click)="downloadHSDTChinhThuc(item?.document?.id)">
+                                                            <i class="fa fa-download cursor-pointer icon-view" aria-hidden="true"></i>
                                                         </a>
-                                                    </ng-container>
+                                                        <ng-container *ngIf="item?.document?.filerUrl">
+                                                            <a [href]="item?.document?.filerUrl" target="_blank">
+                                                                <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                            </a>
+                                                        </ng-container>
+                                                    </div>
+                                                </ng-container>
 
-                                                </div>
 
                                                 <ng-container *ngIf="item?.document?.isLiveForm">
                                                     <div style="cursor: pointer;" title="In" *ngIf="(item?.document?.type === 'TenderConditionalSummary' && InLiveFormBangTomTatDK)
@@ -519,17 +527,26 @@
                                                     </div>
                                                 </ng-container>
 
-                                                <div style="cursor: pointer;" title="download" *ngIf="!item?.isLiveForm && !item?.filerUrl">
-                                                    <a (click)="downloadHSDTChinhThuc(item?.id)">
-                                                        <i class="fa fa-download  cursor-pointer icon-view" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
+                                                <ng-container *ngIf="(items?.typeName === 'Yêu cầu báo giá vật tư, thầu phụ' && yeuCauBaoGia)
+                                                || (items?.typeName === 'Bảng tổng hợp dự toán' && bangTongHopDuToan)
+                                                || (items?.typeName === 'Bảng tính chi phí chung' && bangTinhChiPhiChung)
+                                                || (items?.typeName === 'Bảng câu hỏi làm rõ HSMT' && bangCauHoiLamRoHSMT)
+                                                || (items?.typeName === 'Các HSKT có liên quan' && cacHSKTLienQuan)
+                                                || (items?.typeName === 'Hồ sơ pháp lý' && hoSoPhapLy)
+                                                || (items?.typeName === 'Hồ sơ khác' && hoSoKhac)">
+                                                    <div style="cursor: pointer;" title="download" *ngIf="!item?.isLiveForm && !item?.filerUrl">
+                                                        <a (click)="downloadHSDTChinhThuc(item?.id)">
+                                                            <i class="fa fa-download  cursor-pointer icon-view" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
 
-                                                <div style="cursor: pointer;" *ngIf="item?.filerUrl">
-                                                    <a [href]="item?.filerUrl" target="_blank">
-                                                        <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
+                                                    <div style="cursor: pointer;" *ngIf="item?.filerUrl">
+                                                        <a [href]="item?.filerUrl" target="_blank">
+                                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </ng-container>
+
                                                 <ng-container *ngIf="item?.isLiveForm">
                                                     <div style="cursor: pointer;" title="In" *ngIf="(item.type === 'TenderConditionalSummary' && InLiveFormBangTomTatDK)
                                                     || (item.type === 'SiteSurveyingReport' && InLiveFormThamquanCT)
