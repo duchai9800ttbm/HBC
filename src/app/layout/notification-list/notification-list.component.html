@@ -1,4 +1,5 @@
-<div [@routerTransition]>
+<!-- [@routerTransition] -->
+<div>
   <div class="title-detail center-parent">
     <div class="mr-auto col-md-12 pl-16">
       <div class="media-header header-title p-0">
@@ -117,9 +118,9 @@
                 </a>
 
                 <div class="mr-3">
-                  <span title="Đánh dấu đã đọc" *ngIf="item.notificationState.id === 'UnRead'" style="cursor: pointer" (click)="tickReaded(item)"><i class="fa fa-check" aria-hidden="true"></i></span> 
+                  <span title="Đánh dấu đã đọc" *ngIf="item.notificationState.id === 'UnRead'" class="cursor-pointer" (click)="tickReaded(item)"><i class="fa fa-check" aria-hidden="true"></i></span> 
                 </div>
-                <div class="mr-4" title="Xóa thông báo" (click)="deleteOneNotification(item)"><i class="fa fa-ban" aria-hidden="true"></i></div>
+                <div class="cursor-pointer mr-4" title="Xóa thông báo" (click)="deleteOneNotification(item)"><i class="fa fa-ban" aria-hidden="true"></i></div>
               </div>
             </div>
 
