@@ -552,11 +552,8 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
           });
         });
       });
-      setTimeout(() => {
-      });
     },
-      () => {
-      });
+    );
   }
 
   pagedResultChangeHistory() {
