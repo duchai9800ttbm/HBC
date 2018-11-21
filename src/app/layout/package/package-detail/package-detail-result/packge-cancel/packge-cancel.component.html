@@ -1,4 +1,4 @@
-<div [@routerTransition] class="outer" id="outer">
+<!-- <div [@routerTransition] class="outer" id="outer">
     <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start" style="height: 35px;">
@@ -24,4 +24,417 @@
             <button class="btn btn-primary" id="success"  [routerLink]="['/package/detail', currentPackageId ,'info']">Quay trở về trang chi tiết</button>           
         </div>
     </div>
+</div> -->
+
+
+<div [@routerTransition] class="table-small mt-3">
+    <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
+        <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+            <div class="d-flex justify-content-start" style="height: 40px;">
+                <div class="rule mr-2">
+                </div>
+                <div class="center-parent mr-4">
+                    <div class="title-header">Hủy thầu</div>
+
+                    <!-- <button type="button" class="btn btn-primary btn-view-list" *ngIf="showBtnNotification" (click)="modelViewListData(ViewListData)">
+              Xem danh sách đã thông báo
+            </button> -->
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="btn-toolbar mt-2 mb-2">
+                <div class="btn-group ml-1" ngbDropdown placement="bottom-right">
+                    <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
+                        Tải template
+                    </button>
+                    <div ngbDropdownMenu style="top: 33px;">
+                        <div class="fileUpload dropdown-item" (click)="downloadTemplate('LostBid')">
+                            <a>Thông báo kết quả trật thầu</a>
+                        </div>
+                        <div class="fileUpload dropdown-item" (click)="downloadTemplate('WinBid')">
+                            <a>Thông báo kết quả trúng thầu</a>
+                        </div>
+                        <div class="fileUpload dropdown-item" (click)="downloadTemplate('LessonLearn')">
+                            <a>Báo cáo đánh giá rút kinh nghiệm</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary ml-1" (click)="deleteFileResult()">
+                    Xóa
+                </button>
+                <button class="btn btn-primary ml-1" (click)="uploadkqdt()">
+                    Upload thư
+                </button>
+                <button class="btn btn-primary ml-1" (click)="refesh(true)">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex form-group status-filter" id="result">
+        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t title-header-chirl">Thư cảm ơn</h5>
+    </div>
+    <div class="main-table">
+        <div class="bot-table">
+            <table class="table-selection stripe row-border hover cell-border dataTable table-layout">
+                <thead>
+                    <tr>
+                        <th class="set-stt--width">
+                            <div class="d-flex justify-content-around">
+                                <div class="w-40">
+                                    <div class="center-parent">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" (change)="onSelectAll($event.target.checked)">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="center-parent w-35">
+                                    <div>STT</div>
+                                </div>
+                            </div>
+                        </th>
+
+                        <th class="w-25">
+                            <div class="d-flex justify-content-between">
+                                <div class="center-parent">
+                                    <div>Tên tài liệu</div>
+                                </div>
+                                <div class="center-parent ml-2">
+                                    <img *ngIf="currentFieldSort !== 'name' ||  (currentFieldSort === 'name' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
+                                        (click)="sortField('name', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'name' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('name', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'name' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('name', '')">
+                                </div>
+                            </div>
+
+                        </th>
+                        <th class="th-mark-status w-10">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent w-80">
+                                    <div>Phiên bản</div>
+                                </div>
+                                <div class="center-parent ml-2">
+                                    <img *ngIf="currentFieldSort !== 'version' ||  (currentFieldSort === 'version' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
+                                        (click)="sortField('version', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'version' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('version', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'version' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('version', '')">
+                                </div>
+                            </div>
+                        </th>
+
+                        <th class="w-10">
+                            <div class="center-parent">
+                                <div>Mô tả</div>
+                            </div>
+                        </th>
+
+                        <th class="w-15">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Người upload</div>
+                                </div>
+                                <div class="center-parent ml-2">
+                                    <img *ngIf="currentFieldSort !== 'employeeName' ||  (currentFieldSort === 'employeeName' && statusSort === '')" class="icon-sort"
+                                        src="assets/images/sort.svg" (click)="sortField('employeeName', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('employeeName', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('employeeName', '')">
+                                </div>
+                            </div>
+                        </th>
+
+                        <th class="w-15">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Ngày upload</div>
+                                </div>
+                                <div class="center-parent ml-2">
+                                    <img *ngIf="currentFieldSort !== 'uploadDate' ||  (currentFieldSort === 'uploadDate' && statusSort === '')" class="icon-sort"
+                                        src="assets/images/sort.svg" (click)="sortField('uploadDate', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('uploadDate', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('uploadDate', '')">
+                                </div>
+                            </div>
+                        </th>
+                        <th class="w-15">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Lần phỏng vấn</div>
+                                </div>
+                                <div class="center-parent ml-2">
+                                    <img *ngIf="currentFieldSort !== 'interviewTimes' ||  (currentFieldSort === 'interviewTimes' && statusSort === '')" class="icon-sort"
+                                        src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('interviewTimes', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('interviewTimes', '')">
+                                </div>
+                            </div>
+                        </th>
+                        <th class="table-action text-center set-manipulation--width">
+                            Thao tác
+                        </th>
+                    </tr>
+                </thead>
+                <!-- <tbody>
+                    <tr *ngFor="let item of listFileResult; let i = index">
+                        <td class="set-stt--width">
+                            <div class="d-flex justify-content-around">
+                                <div class="w-40">
+                                    <div class="center-parent">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="center-parent w-35">
+                                    <div>{{i+1}}</div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="docName" [title]="item.name" (click)="viewDetail(item)">
+                            <a href="javascript:;"> {{ item.name }}
+                            </a>
+                        </td>
+                        <td class="text-center" [title]="item.version">{{ item.version }}</td>
+                        <td class="doc" [title]="item.desc">{{ item.desc }}</td>
+                        <td class="select-filter text-center" [title]="item.uploadBy?.employeeName">{{ item.uploadBy?.employeeName }}</td>
+                        <td class="select-filter text-center">{{ item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
+                        <td class="select-filter text-center">{{ item.interviewTimes }}</td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-around">
+                                <div id="mr" *ngIf="!item.linkUrl">
+                                    <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div id="mr" *ngIf="item.linkUrl">
+                                    <a title="Mở link" [href]="item.linkUrl" target="_blank">
+                                        <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div id="mr">
+                                    <a title="Xóa file" (click)="deleteFileItem(item.id)">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody> -->
+            </table>
+        </div>
+    </div>
+
 </div>
+
+<!-- notification -->
+<ng-template #notification>
+    <div class="modal-header no-mr-bt">
+        <div class="pull-left ">
+            <div class="text-title icon-arrow">
+                <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="ClosePopup()" />
+                <h4 class="modal-title text-dark d-inline text-send-noti"> Gửi thông báo các bên liên quan</h4>
+            </div>
+        </div>
+
+        <div class="pull-right">
+            <button type="button" class="btn btn-cancel mg-r" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
+            <button type="button" class="btn btn-send" aria-label="Close" (click)="SendMail()">Gửi</button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">To:</span>
+            </div>
+            <input type="text" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To"
+                autofocus>
+            <div class="input-group-append" *ngIf="!isSendCc || !isSendBcc">
+                <span class="input-group-text">
+                    <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Cc</span>
+                    <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Bcc</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="input-group mb-3" *ngIf="isSendCc">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Cc:</span>
+            </div>
+            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1" autofocus>
+        </div>
+
+        <div class="input-group mb-3" *ngIf="isSendBcc">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Bcc:</span>
+            </div>
+            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1" autofocus>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
+            </div>
+            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1">
+        </div>
+        <div class="body-ckeditor">
+            <ckeditor [(ngModel)]="ckeditorContent">
+                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'" [label]="'Save Document'"
+                    [toolbar]="'clipboard,1'">
+                </ckbutton>
+            </ckeditor>
+        </div>
+    </div>
+</ng-template>
+<!-- modal view data send mail -->
+<ng-template #ViewListData>
+    <div class="modal-header no-boder-bottom">
+        <div class="col-md-10 offset-md-1 text-center">
+            <h4 class="modal-title text-model">Danh sách đã gửi thông báo KQDT</h4>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalViewData.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="bot-table">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                <thead>
+                    <tr>
+                        <th class="bg-default" style="background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>STT</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default" style="background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Nhân viên</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default" style="background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Email</div>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of listData; let i = index">
+                        <td class="select-filter text-center">{{ i+1}}</td>
+                        <td class="select-filter text-center">{{ data.username}}</td>
+                        <td class="select-filter text-center color-default">{{ data.email}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</ng-template>
+
+<!-- Modal upladfile -->
+
+<ng-template #uploadFile>
+    <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
+        <div class="modal-header no-mr-bt">
+            <div class="col-md-10 offset-md-1 text-center">
+                <h4 class="modal-title text-title text-model">Upload kết quả dự thầu</h4>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalUpload.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div class="modal-body fg-w">
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Chọn file</div>
+                <div class="col-md-7 input-group">
+                    <div class="custom-file form-control">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01">
+                        <label class="custom-file-label" for="inputGroupFile01">--Choose file--</label>
+                    </div>
+                    <span class="input-group-addon">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mg-l or">OR</div>
+            </div>
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Đường dẫn file</div>
+                <div class="col-md-7">
+                    <input type="text" placeholder="Text" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Tên</div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" placeholder="Tên" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.name.errors.required">Vui lòng nhập tên file</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Version</div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" value="1">
+                </div>
+            </div>
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Lần phỏng vấn</div>
+                <div class="col-md-7">
+                    <input type="number" placeholder=Number class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Ngày nhận kết quả</div>
+                <div class="col-md-7 input-group">
+                    <owl-date-time>
+                    </owl-date-time>
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
+                <div class="col-md-7">
+                    <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
+                </div>
+            </div>
+
+            <div class="text-center pd-food">
+                <button type="submit" class="btn btn-primary w-80" [disabled]="loading">Upload</button>
+                <button type="button" class="btn btn-cancel w-80" (click)="modalUpload.hide()">Hủy</button>
+            </div>
+        </div>
+    </form>
+</ng-template>
