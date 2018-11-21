@@ -24,6 +24,7 @@ import { slideToLeft } from '../../../../../../router.animations';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { Subscription } from '../../../../../../../../node_modules/rxjs/Subscription';
+import { DocumentTypeId } from '../../../../../../shared/constants/document-type-id';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -52,6 +53,9 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   listPermission: Array<PermissionModel>;
   listPermissionScreen = [];
   listPermissionScreen2 = [];
+  bangTomDKDT = [];
+  thamquanCT = [];
+  uploadDocHSDT = [];
 
   TaoMoiTDG = false;
   XemTDG = false;
@@ -68,6 +72,13 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   HieuChinhHSDT = false;
   isLoading = true;
   isShowPopupFormIn = false;
+  // liveForm lập HSDT
+  XemLiveFormBangTomTatDK = false;
+  InLiveFormBangTomTatDK = false;
+  // liveForm tham quan công trình
+  XemLiveFormThamquanCT = false;
+  InLiveFormThamquanCT = false;
+  documentTypeId = DocumentTypeId;
   constructor(
     private priceReviewService: PriceReviewService,
     private alertService: AlertService,
@@ -109,7 +120,33 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
         if (screen2) {
           this.listPermissionScreen2 = screen2.permissions.map(z => z.value);
         }
+        // ==========
+        // Screen Hồ sơ dự thầu đã phê duyệt
+        // LiveForm
+        const screenDocsApprovedLiveForm = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauLiveForm')[0];
+        if (!screenDocsApprovedLiveForm) {
+          this.bangTomDKDT = [];
+          this.thamquanCT = [];
+        }
+        if (screenDocsApprovedLiveForm) {
+          this.bangTomDKDT = screenDocsApprovedLiveForm.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTomTatDK).map(z => z.value);
+          this.thamquanCT = screenDocsApprovedLiveForm.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BaoCaoThamQuanCongTrinh).map(z => z.value);
+        }
+        // Tài liệu HSDT
+        // const DocHSDT = hsdt.userPermissionDetails.length
+        //   && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
+        // if (!DocHSDT) {
+        //   this.uploadDocHSDT = [];
+        // }
+        // if (DocHSDT) {
+        //   this.uploadDocHSDT = screen.permissions
+        //     .filter(t => t.tenderDocumentTypeId === this.currentDocumentTypeId).map(z => z.value);
+        // }
       }
+      // Screen
       this.TaoMoiTDG = this.listPermissionScreen.includes('TaoMoiTDG');
       this.XemTDG = this.listPermissionScreen.includes('XemTDG');
       this.SuaTDG = this.listPermissionScreen.includes('SuaTDG');
@@ -120,9 +157,17 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
       this.DuyetTDGTPDuThau = this.listPermissionScreen.includes('DuyetTDGTPDuThau');
       this.GuiDuyet = this.listPermissionScreen.includes('GuiDuyet');
       this.DuyetTDGBGD = this.listPermissionScreen.includes('DuyetTDGBGD');
+      // Screen2
       this.ChotHoSo = this.listPermissionScreen2.includes('ChotHoSo');
       this.NopHSDT = this.listPermissionScreen2.includes('NopHSDT');
       this.HieuChinhHSDT = this.listPermissionScreen2.includes('HieuChinhHSDT');
+      // Screen Hồ sơ dự thầu đã phê duyệt
+      // Bảng tóm tắt ĐKDT
+      this.XemLiveFormBangTomTatDK = this.bangTomDKDT.includes('XemLiveForm');
+      this.InLiveFormBangTomTatDK = this.bangTomDKDT.includes('InLiveForm');
+      // Tham quan công trình
+      this.XemLiveFormThamquanCT = this.thamquanCT.includes('XemLiveForm');
+      this.InLiveFormThamquanCT = this.thamquanCT.includes('XemLiveForm');
     });
 
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
@@ -135,8 +180,8 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
     });
     this.priceReviewService.getDanhSachHSDTChinhThucInstantSearch(this.packageId, this.searchTerm$).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
+      console.log('this.listItemHSDTChinhThuc', this.listItemHSDTChinhThuc);
     });
-
     this.getChangeHistory(0, 10);
   }
 

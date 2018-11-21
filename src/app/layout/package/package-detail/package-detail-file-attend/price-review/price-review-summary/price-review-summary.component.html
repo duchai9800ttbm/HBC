@@ -15,8 +15,7 @@
                 && (package?.stageStatus?.id !== bidStatus.DaGuiDuyetTrinhDuyetGia)
                 && (package?.stageStatus?.id !== bidStatus.DaDuyetTrinhDuyetGia)
                 && (package?.stageStatus?.id !== bidStatus.CanDieuChinhTrinhDuyetGia)
-                && (package?.stageStatus?.id !== bidStatus.ChotHoSo)">Đã
-                        nộp hồ sơ dự thầu</h4>
+                && (package?.stageStatus?.id !== bidStatus.ChotHoSo)">Đã nộp hồ sơ dự thầu</h4>
                 </div>
             </div>
         </div>
@@ -25,8 +24,7 @@
                 <div>
                     <div class="input-group ml-auto max-width-name-document" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
                         <span class="input-group-addon">Tìm kiếm theo</span>
-                        <input (keyup)="searchTerm$.next($event.target.value)" type="text" class="form-control icon"
-                            placeholder="&#xf002; Tên tài liệu">
+                        <input (keyup)="searchTerm$.next($event.target.value)" type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
                     </div>
                 </div>
                 <ng-container *ngIf="GuiDuyet">
@@ -34,12 +32,10 @@
                         (click)="guiDuyet()">Gửi duyệt trình duyệt giá</button>
                 </ng-container>
                 <ng-container *ngIf="ChotHoSo">
-                    <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaDuyetTrinhDuyetGia'"
-                        (click)="chotHoSo()">Chốt hồ sơ</button>
+                    <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaDuyetTrinhDuyetGia'" (click)="chotHoSo()">Chốt hồ sơ</button>
                 </ng-container>
                 <ng-container *ngIf="GuiDuyet">
-                    <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'"
-                        (click)="guiDuyet()">Gửi lại trình duyệt giá</button>
+                    <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'" (click)="guiDuyet()">Gửi lại trình duyệt giá</button>
                 </ng-container>
                 <!-- <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'"
                     (click)="downloadAll()">Tải xuống tài liệu</button> -->
@@ -48,13 +44,11 @@
                     </button>
                 </ng-container>
                 <ng-container *ngIf="NopHSDT">
-                    <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'ChotHoSo'"
-                        (click)="nopHoSo()">Nộp HSDT
+                    <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'ChotHoSo'" (click)="nopHoSo()">Nộp HSDT
                     </button>
                 </ng-container>
                 <ng-container *ngIf="HieuChinhHSDT">
-                    <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT'"
-                        (click)="hieuChinhHSDT()">Hiệu chỉnh HSDT</button>
+                    <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT'" (click)="hieuChinhHSDT()">Hiệu chỉnh HSDT</button>
                 </ng-container>
                 <button type="button" class="btn btn-primary ml-1" (click)="refresh(true)">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -84,8 +78,8 @@
                 <h5>BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h5>
             </div>
             <div class="table-responsive">
-                    <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" -->
-                <table  class="table-selection stripe row-border hover cell-border dataTable">
+                <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" -->
+                <table class="table-selection stripe row-border hover cell-border dataTable">
                     <thead>
                         <tr>
 
@@ -100,8 +94,7 @@
                                 <div class="d-flex">
                                     <div class="d-flex justify-content-between w-100">
                                         <div>File đính kèm</div>
-                                        <div class="w-25 d-flex flex-row-reverse" (click)="open()" style="cursor: pointer"
-                                            title="Upload tài liệu">
+                                        <div class="w-25 d-flex flex-row-reverse" (click)="open()" style="cursor: pointer" title="Upload tài liệu">
                                             <img width="25" height="25" src="assets\images\file-upload.png">
                                         </div>
                                     </div>
@@ -189,13 +182,11 @@
 
                             </td>
                             <td class="select-filter text-center" valign="baseline">{{priceReview?.interviewTimes}}</td>
-                            <td class="select-filter" valign="baseline">{{priceReview?.isDraftVersion ? 'Bản nháp' :
-                                'Chính thức'}}</td>
+                            <td class="select-filter" valign="baseline">{{priceReview?.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
 
                             <td class="select-filter text-center" valign="baseline">{{priceReview?.approvalTimes}}</td>
                             <td class="select-filter" valign="baseline">{{priceReview?.createdEmployee?.employeeName}}</td>
-                            <td class="select-filter" valign="baseline">{{priceReview?.createdDate*1000 |
-                                date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
+                            <td class="select-filter" valign="baseline">{{priceReview?.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
                             <td class="select-filter min-width-action" valign="baseline">
                                 <div class="d-flex justify-content-around">
                                     <ng-container *ngIf="XemTDG">
@@ -206,8 +197,7 @@
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="SuaTDG">
-                                        <div *ngIf="!package?.isChotHoSo" style="cursor: pointer;" title="Sửa"
-                                            routerLink="../edit">
+                                        <div *ngIf="!package?.isChotHoSo" style="cursor: pointer;" title="Sửa" routerLink="../edit">
                                             <a>
                                                 <i class="fa fa-pencil cursor-pointer icon-edit" aria-hidden="true">
                                                 </i>
@@ -265,8 +255,7 @@
                                     {{ indexItemHistoryChange - i}}
                                 </td>
                                 <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
-                                <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy ,
-                                    HH:mm':'+0000' }}</td>
+                                <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
                                 <td>
                                     <div class="text-truncate" [title]="itemByChangedTimes.items[0].updateDesc">{{itemByChangedTimes.items[0].updateDesc}}</div>
                                 </td>
@@ -289,48 +278,32 @@
                                                                 <ng-container *ngIf="(itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue) && !(itemByLiveFormStep.oldValue === '0' && itemByLiveFormStep.newValue === '0')">
                                                                     <ng-container *ngIf="(itemByLiveFormStep.oldValue == 'True' || itemByLiveFormStep.oldValue == 'False') && (itemByLiveFormStep.newValue == 'True' || itemByLiveFormStep.newValue == 'False')">
                                                                         <span *ngIf="itemByLiveFormStep.oldValue == 'False' && itemByLiveFormStep.newValue == 'True'">
-                                                                            *Đã chọn: {{
-                                                                            itemByLiveFormStep.liveFormTitle |
-                                                                            translate }}
+                                                                            *Đã chọn: {{ itemByLiveFormStep.liveFormTitle | translate }}
                                                                         </span>
                                                                         <span *ngIf="itemByLiveFormStep.oldValue == 'True' && itemByLiveFormStep.newValue == 'False'">
-                                                                            *Đã bỏ chọn: {{
-                                                                            itemByLiveFormStep.liveFormTitle |
-                                                                            translate }}
+                                                                            *Đã bỏ chọn: {{ itemByLiveFormStep.liveFormTitle | translate }}
                                                                         </span>
                                                                     </ng-container>
                                                                     <ng-container *ngIf="!((itemByLiveFormStep.oldValue == 'True' || itemByLiveFormStep.oldValue == 'False') && (itemByLiveFormStep.newValue == 'True' || itemByLiveFormStep.newValue == 'False'))">
-                                                                        <span>*{{itemByLiveFormStep.liveFormTitle |
-                                                                            translate}}:</span>&nbsp;
-                                                                        từ
+                                                                        <span>*{{itemByLiveFormStep.liveFormTitle | translate}}:
+                                                                        </span>&nbsp; từ
                                                                         <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
-                                                                            {{ itemByLiveFormStep.oldValue
-                                                                            ? (itemByLiveFormStep.oldValue |
-                                                                            truncateDecimal )
-                                                                            :
-                                                                            'không có'}}
+                                                                            {{ itemByLiveFormStep.oldValue ? (itemByLiveFormStep.oldValue | truncateDecimal ) : 'không có'}}
                                                                         </span>
 
                                                                         <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
-                                                                            {{itemByLiveFormStep.oldValue
-                                                                            ? itemByLiveFormStep.oldValue :
-                                                                            'không có'}}
+                                                                            {{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue : 'không có'}}
                                                                         </span>
 
 
 
                                                                         thành
                                                                         <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
-                                                                            {{itemByLiveFormStep.newValue ?
-                                                                            itemByLiveFormStep.newValue : 'không có'}}
+                                                                            {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue : 'không có'}}
                                                                         </span>
 
                                                                         <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
-                                                                            {{itemByLiveFormStep.newValue ?
-                                                                            (itemByLiveFormStep.newValue |
-                                                                            truncateDecimal
-                                                                            ) :
-                                                                            'không có'}}
+                                                                            {{itemByLiveFormStep.newValue ? (itemByLiveFormStep.newValue | truncateDecimal ) : 'không có'}}
                                                                         </span>
                                                                     </ng-container>
                                                                 </ng-container>
@@ -340,16 +313,14 @@
 
                                                             <div *ngIf="itemByLiveFormStep.liveFormTitle === 'GFA'">
                                                                 <ng-container *ngIf="(itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue) && !(itemByLiveFormStep.oldValue === '0' && itemByLiveFormStep.newValue === '0')">
-                                                                    <span>*{{itemByLiveFormStep.liveFormTitle |
-                                                                        translate}}:</span>&nbsp;
-                                                                    từ
+                                                                    <span>*{{itemByLiveFormStep.liveFormTitle | translate}}:
+                                                                    </span>&nbsp; từ
                                                                     <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
                                                                         {{itemByLiveFormStep.oldValue | numberArea}}
                                                                     </span>
 
                                                                     <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
-                                                                        {{itemByLiveFormStep.oldValue |
-                                                                        truncateDecimal}}
+                                                                        {{itemByLiveFormStep.oldValue | truncateDecimal}}
                                                                     </span>
                                                                     thành
                                                                     <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
@@ -370,18 +341,16 @@
                                                                         itemByLiveFormStep.liveFormTitle === 'TotalCostOfSubmission' ||
                                                                         itemByLiveFormStep.liveFormTitle === 'CostOfCapitalValue'">
                                                                 <ng-container *ngIf="(itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue) && !(itemByLiveFormStep.oldValue === '0' && itemByLiveFormStep.newValue === '0')">
-                                                                    <span>*{{itemByLiveFormStep.liveFormTitle |
-                                                                        translate}}:</span>&nbsp;
-                                                                    từ
+                                                                    <span>*{{itemByLiveFormStep.liveFormTitle | translate}}:
+                                                                    </span>&nbsp; từ
                                                                     <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
-                                                                        {{itemByLiveFormStep.oldValue |
-                                                                        truncateDecimal}}</span>
+                                                                        {{itemByLiveFormStep.oldValue | truncateDecimal}}
+                                                                    </span>
                                                                     <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
                                                                         {{itemByLiveFormStep.oldValue | vnCurrency}}</span>
                                                                     thành
                                                                     <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
-                                                                        {{itemByLiveFormStep.newValue |
-                                                                        truncateDecimal}}
+                                                                        {{itemByLiveFormStep.newValue | truncateDecimal}}
                                                                     </span>
                                                                     <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
                                                                         {{itemByLiveFormStep.newValue | vnCurrency}}
@@ -483,28 +452,38 @@
                                         </td>
                                         <td class="min-width-action">
                                             <div class="d-flex justify-content-around">
-                                                <div style="cursor: pointer;" title="Xem" *ngIf="items?.isLiveForm">
-                                                    <a (click)="viewLiveForm(items.typeName)">
-                                                        <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
-                                                <div style="cursor: pointer;" title="download" *ngIf="!items?.isLiveForm">
-                                                    <a *ngIf="!item?.document?.filerUrl" (click)="downloadHSDTChinhThuc(item.document?.id)">
+                                                <ng-container *ngIf="item?.document?.isLiveForm">
+                                                    <div style="cursor: pointer;" title="Xem" *ngIf="(item?.document?.type === 'TenderConditionalSummary' && XemLiveFormBangTomTatDK)
+                                                    || (item?.document?.type === 'SiteSurveyingReport' && XemLiveFormThamquanCT)
+                                                    || (item?.document?.type === 'TenderPriceApproval' && XemTDG)">
+                                                        <a (click)="viewLiveForm(item?.document?.typeName)">
+                                                            <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </ng-container>
+
+                                                <div style="cursor: pointer;" title="download" *ngIf="!item?.document?.isLiveForm">
+                                                    <a *ngIf="!item?.document?.filerUrl" (click)="downloadHSDTChinhThuc(item?.document?.id)">
                                                         <i class="fa fa-download cursor-pointer icon-view" aria-hidden="true"></i>
                                                     </a>
                                                     <ng-container *ngIf="item?.document?.filerUrl">
-                                                        <a [href]="item?.filerUrl" target="_blank">
+                                                        <a [href]="item?.document?.filerUrl" target="_blank">
                                                             <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                                         </a>
                                                     </ng-container>
 
                                                 </div>
 
-                                                <!-- <div style="cursor: pointer;" title="In" *ngIf="items?.isLiveForm">
-                                                    <a class="text-success" (click)="print()">
-                                                        <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
-                                                    </a>
-                                                </div> -->
+                                                <ng-container *ngIf="item?.document?.isLiveForm">
+                                                    <div style="cursor: pointer;" title="In" *ngIf="(item?.document?.type === 'TenderConditionalSummary' && InLiveFormBangTomTatDK)
+                                                    || (item?.document?.type === 'SiteSurveyingReport' && InLiveFormThamquanCT)
+                                                    || (item?.document?.type === 'TenderPriceApproval' && InTDG)">
+                                                        <a class="text-success" (click)="print()">
+                                                            <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </ng-container>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -530,13 +509,17 @@
                                         </td>
                                         <td class="min-width-action">
                                             <div class="d-flex justify-content-around">
-                                                <div style="cursor: pointer;" title="Xem" *ngIf="items?.isLiveForm">
-                                                    <a (click)="viewLiveForm(items.typeName)">
-                                                        <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
+                                                <ng-container *ngIf="item?.isLiveForm">
+                                                    <div style="cursor: pointer;" title="Xem" *ngIf="(item.type === 'TenderConditionalSummary' && XemLiveFormBangTomTatDK)
+                                                    || (item.type === 'SiteSurveyingReport' && XemLiveFormThamquanCT)
+                                                    || (item.type === 'TenderPriceApproval' && XemTDG)">
+                                                        <a (click)="viewLiveForm(item.typeName)">
+                                                            <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </ng-container>
 
-                                                <div style="cursor: pointer;" title="download" *ngIf="!items?.isLiveForm && !item?.filerUrl">
+                                                <div style="cursor: pointer;" title="download" *ngIf="!item?.isLiveForm && !item?.filerUrl">
                                                     <a (click)="downloadHSDTChinhThuc(item?.id)">
                                                         <i class="fa fa-download  cursor-pointer icon-view" aria-hidden="true"></i>
                                                     </a>
@@ -547,12 +530,15 @@
                                                         <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                                     </a>
                                                 </div>
-
-                                                <div style="cursor: pointer;" title="In" *ngIf="items?.isLiveForm">
-                                                    <a (click)="inLiveForm(items?.typeName)" class="text-success">
-                                                        <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
+                                                <ng-container *ngIf="item?.isLiveForm">
+                                                    <div style="cursor: pointer;" title="In" *ngIf="(item.type === 'TenderConditionalSummary' && InLiveFormBangTomTatDK)
+                                                    || (item.type === 'SiteSurveyingReport' && InLiveFormThamquanCT)
+                                                    || (item.type === 'TenderPriceApproval' && InTDG)">
+                                                        <a (click)="inLiveForm(item?.typeName)" class="text-success">
+                                                            <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </ng-container>
                                             </div>
                                         </td>
                                     </tr>
