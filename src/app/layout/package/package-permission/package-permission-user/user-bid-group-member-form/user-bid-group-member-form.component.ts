@@ -60,14 +60,18 @@ export class UserBidGroupMemberFormComponent implements OnInit {
     getDepartmentName(name: string, index: number, value: number) {
         const formArray = this.packagePermissionBidUserGroupForm.get(name).get('users') as FormArray;
         const formGroup = formArray.controls[index] as FormGroup;
-        // tslint:disable-next-line:triple-equals
-        const user = this.listUser.find(i => i.id == value);
-        const department = user.department;
-        if (department) {
-            formGroup.get('department').patchValue(this.listUser.find(i => i.id == value).department.value);
-        } else{
-            formGroup.get('department').patchValue(null);
+        if (!isNaN(value)) {
+            // tslint:disable-next-line:triple-equals
+            const user = this.listUser.find(i => i.id == value);
+            const department = user.department;
+            if (department) {
+                formGroup.get('department').patchValue(this.listUser.find(i => i.id == value).department.value);
+            } else {
+                formGroup.get('department').patchValue(null);
 
+            }
+        } else {
+            formGroup.get('department').patchValue(null);
         }
     }
 
@@ -111,6 +115,13 @@ export class UserBidGroupMemberFormComponent implements OnInit {
                         resultItem.userIds.push(i.name);
                     }
                 });
+                result.push(resultItem);
+            } else {
+                const data = formData[control];
+                const resultItem = {
+                    userGroupId: data.id,
+                    userIds: []
+                };
                 result.push(resultItem);
             }
         }
