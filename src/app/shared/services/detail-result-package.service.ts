@@ -28,6 +28,7 @@ export class DetailResultPackageService {
   listContractSigning: Subject<any> = new Subject();
   listReportMeeting: Subject<any> = new Subject();
   listFilePresentationMeeting: Subject<any> = new Subject();
+  listFileThanksLetter: Subject<any> = new Subject();
   instantSearchService: any;
   constructor(
     private apiService: ApiService,
@@ -1083,4 +1084,99 @@ export class DetailResultPackageService {
     return this.listFilePresentationMeeting;
   }
 
+  // ==============
+  // Hủy thầu
+  // Tải lên tài liệu thư cảm ơn
+  uploadThanksLetter(
+    BidOpportunityId: number,
+    uploadResultFormValue: any,
+    file: File,
+  ) {
+    const url = `tenderthankletterdoc/upload`;
+    const formData = new FormData();
+    formData.append('BidOpportunityId', `${BidOpportunityId}`);
+    formData.append('Name', `${uploadResultFormValue.documentName}`);
+    formData.append('InterviewTimes', `${uploadResultFormValue.interviewTimes}`);
+    if (uploadResultFormValue.documentDesc || uploadResultFormValue.documentDesc === '') {
+      formData.append('Desc', uploadResultFormValue.documentDesc);
+    }
+    if (file) {
+      formData.append('File', file);
+    } else {
+      formData.append('Url', uploadResultFormValue.link);
+    }
+    formData.append('Version', uploadResultFormValue.version);
+    return this.apiService.postFile(url, formData)
+      .map(response => response)
+      .share();
+  }
+  // Mapping model danh sách thư cảm ơn
+  toListThanksLetter(result: any): DocumentResultList {
+    return {
+      id: result.id,
+      name: result.name,
+      version: result.version,
+      desc: result.desc,
+      uploadBy: {
+        employeeId: result.uploadBy.employeeId,
+        employeeNo: result.uploadBy.employeeNo,
+        employeeName: result.uploadBy.employeeName,
+        employeeAvatar: {
+          guid: result.uploadBy.employeeAvatar && result.uploadBy.employeeAvatar.guid,
+          thumbSizeUrl: result.uploadBy.employeeAvatar && result.uploadBy.employeeAvatar.thumbSizeUrl,
+          largeSizeUrl: result.uploadBy.employeeAvatar && result.uploadBy.employeeAvatar.largeSizeUrl,
+        },
+        employeeEmail: result.uploadBy.employeeEmail,
+      },
+      uploadDate: result.uploadDate,
+      interviewTimes: result.interviewTimes,
+      fileGuid: result.fileGuid,
+      linkUrl: result.linkUrl,
+    };
+  }
+  // Danh sách thư cảm ơn
+  getListThanksLetter(BidOpportunityId: number): Observable<DocumentResultList[]> {
+    const url = `tenderthankletterdoc/${BidOpportunityId}/gettenderthankletterdocs`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return (result || []).map(
+        this.toListThanksLetter
+      );
+    });
+  }
+  // Tải về tài liệu thư cảm ơn
+  downloadThanksLetter(tenderThankLetterDocId: number) {
+    const url = `tenderthankletterdoc/${tenderThankLetterDocId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+  // Có sự thay đổi ThanksLetter list
+  changeListThanksLetter() {
+    this.listFileThanksLetter.next();
+  }
+  // Obserable ThanksLetter list
+  watchListThanksLetter() {
+    return this.listFileThanksLetter;
+  }
+  // Xóa 1 thư cảm ơn
+  deleteThanksLetter(idFile: number) {
+    const url = `tenderthankletterdoc/delete`;
+    const request = {
+      id: idFile,
+    };
+    return this.apiService.post(url, request);
+  }
+  // Xóa nhiều thư cảm ơn
+  deleteMutipleThanksLetter(arayIdFile: number[]) {
+    const url = `tenderthankletterdoc/deletemultiple`;
+    const request = {
+      ids: arayIdFile,
+    };
+    return this.apiService.post(url, request);
+  }
 }

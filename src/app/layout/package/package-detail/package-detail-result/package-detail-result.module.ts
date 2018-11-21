@@ -17,6 +17,8 @@ import { UploadContractSigningComponent } from './package-success/contract-signe
 import { UploadResultAttendComponent } from './wait-result/upload-result-attend/upload-result-attend.component';
 import { UploadKickOffComponent } from './package-success/meeting-kickoff/upload-kick-off/upload-kick-off.component';
 import { ViewDetailComponent } from './view-detail/view-detail.component';
+import { ThanksLetterComponent } from './wait-result/thanks-letter/thanks-letter.component';
+import { ThanksLetterCancelComponent } from './packge-cancel/thanks-letter-cancel/thanks-letter-cancel.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -35,7 +37,9 @@ import { ViewDetailComponent } from './view-detail/view-detail.component';
       UploadContractSigningComponent,
       UploadResultAttendComponent,
       UploadKickOffComponent,
-      ViewDetailComponent
+      ViewDetailComponent,
+      ThanksLetterComponent,
+      ThanksLetterCancelComponent
   ],
   entryComponents: [
     UploadResultFileAttendComponent,
@@ -43,7 +47,8 @@ import { ViewDetailComponent } from './view-detail/view-detail.component';
     UploadContractSigningComponent,
     UploadResultAttendComponent,
     UploadKickOffComponent,
-    ViewDetailComponent
+    ViewDetailComponent,
+    ThanksLetterCancelComponent
   ],
   providers: [
     DetailResultPackageService

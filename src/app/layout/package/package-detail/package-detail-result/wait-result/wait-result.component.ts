@@ -20,6 +20,7 @@ import { PackageService } from '../../../../../shared/services/package.service';
 import { CheckStatusPackage } from '../../../../../shared/constants/check-status-package';
 import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../shared/services/permission.service';
+import { ThanksLetterComponent } from './thanks-letter/thanks-letter.component';
 
 @Component({
     selector: 'app-wait-result',
@@ -58,6 +59,7 @@ export class WaitResultComponent implements OnInit, OnDestroy {
     submitted = false;
     modalRef: BsModalRef;
     dialogUploadResultAttend;
+    dialogUploadThanksLetter;
     checkStatusPackage = CheckStatusPackage;
 
 
@@ -259,7 +261,17 @@ export class WaitResultComponent implements OnInit, OnDestroy {
                         break;
                     }
                     case 'cancel': {
-                        this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-cancel`]);
+                        this.dialogUploadThanksLetter = this.dialogService.open({
+                            content: ThanksLetterComponent,
+                            width: 650,
+                            minWidth: 250
+                        });
+                        const instance = this.dialogUploadThanksLetter.content.instance;
+                        instance.callBack = () => this.closePopuup();
+                        instance.callBackAndNavigate = () => this.closePopuupNevigate(typeBid);
+                        // instance.interviewTimes = 1;
+                        break;
+                        // this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-cancel`]);
                     }
                 }
                 this.spinner.hide();
