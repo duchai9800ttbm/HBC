@@ -15,6 +15,7 @@ import ValidationHelper from '../../../../../../shared/helpers/validation.helper
 })
 export class ThanksLetterComponent implements OnInit {
   @Input() callBack: Function;
+  @Input() callBackAndNavigate: Function;
   uploadResultForm: FormGroup;
   file;
   formErrors = {
@@ -75,6 +76,7 @@ export class ThanksLetterComponent implements OnInit {
         this.closePopup();
         this.detailResultPackageService.changeListThanksLetter();
         this.alertService.success('Upload thư cảm ơn thành công!');
+        this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-cancel`]);
       },
         err => {
           this.alertService.error('Upload thư cảm ơn không thành công!');
@@ -102,5 +104,10 @@ export class ThanksLetterComponent implements OnInit {
 
   closePopup() {
     this.callBack();
+  }
+
+  closePopupAndNegative() {
+    console.log('closePopupAndNegative');
+    this.callBackAndNavigate();
   }
 }

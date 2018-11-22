@@ -48,7 +48,8 @@ import { ThanksLetterCancelComponent } from './packge-cancel/thanks-letter-cance
     UploadResultAttendComponent,
     UploadKickOffComponent,
     ViewDetailComponent,
-    ThanksLetterCancelComponent
+    ThanksLetterCancelComponent,
+    ThanksLetterComponent
   ],
   providers: [
     DetailResultPackageService

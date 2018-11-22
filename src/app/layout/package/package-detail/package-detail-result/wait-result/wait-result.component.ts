@@ -239,7 +239,7 @@ export class WaitResultComponent implements OnInit, OnDestroy {
                             minWidth: 250
                         });
                         const instance = this.dialogUploadResultAttend.content.instance;
-                        instance.callBack = () => this.closePopuup();
+                        instance.callBack = () => this.closePopuup(typeBid);
                         instance.callBackAndNavigate = () => this.closePopuupNevigate(typeBid);
                         instance.typeBid = typeBid;
                         instance.interviewTimes = 1;
@@ -253,7 +253,7 @@ export class WaitResultComponent implements OnInit, OnDestroy {
                             minWidth: 250
                         });
                         const instance = this.dialogUploadResultAttend.content.instance;
-                        instance.callBack = () => this.closePopuup();
+                        instance.callBack = () => this.closePopuup(typeBid);
                         instance.callBackAndNavigate = () => this.closePopuupNevigate(typeBid);
                         instance.typeBid = typeBid;
                         instance.interviewTimes = 1;
@@ -267,11 +267,9 @@ export class WaitResultComponent implements OnInit, OnDestroy {
                             minWidth: 250
                         });
                         const instance = this.dialogUploadThanksLetter.content.instance;
-                        instance.callBack = () => this.closePopuup();
+                        instance.callBack = () => this.closePopuup(typeBid);
                         instance.callBackAndNavigate = () => this.closePopuupNevigate(typeBid);
                         // instance.interviewTimes = 1;
-                        break;
-                        // this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-cancel`]);
                     }
                 }
                 this.spinner.hide();
@@ -282,19 +280,35 @@ export class WaitResultComponent implements OnInit, OnDestroy {
             });
     }
 
-    closePopuup() {
-        this.dialogUploadResultAttend.close();
+    closePopuup(typeBid) {
+        switch (typeBid) {
+            case 'win':
+            case 'lose': {
+                this.dialogUploadResultAttend.close();
+                break;
+            }
+            case 'cancel': {
+                this.dialogUploadThanksLetter.close();
+                break;
+            }
+        }
     }
 
     closePopuupNevigate(typeBid) {
-        this.dialogUploadResultAttend.close();
         switch (typeBid) {
             case 'win': {
+                this.dialogUploadResultAttend.close();
                 this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-success`]);
                 break;
             }
             case 'lose': {
+                this.dialogUploadResultAttend.close();
                 this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-failed`]);
+                break;
+            }
+            case 'cancel': {
+                this.dialogUploadThanksLetter.close();
+                this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-cancel`]);
                 break;
             }
         }
