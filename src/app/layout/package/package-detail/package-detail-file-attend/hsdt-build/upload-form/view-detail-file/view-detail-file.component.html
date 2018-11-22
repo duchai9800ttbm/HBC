@@ -21,7 +21,7 @@
                     <div class="body cus-header" id="info-main">
 
 
-                        <div class="d-flex w-100" *ngIf="model.fileUrl">
+                        <div class="d-flex w-100" *ngIf="model.fileUrl && downLoadFile">
                             <div class="w-40 font-weight-bold">
 
                                 <div class="d-flex justify-content-between">
@@ -180,7 +180,7 @@
                             <div class="w-40 font-weight-bold">
                             </div>
                             <div class="w-60">
-                                <button class="btn btn-primary" *ngIf="!model.fileUrl" (click)="dowloadDocument(model.id)">
+                                <button class="btn btn-primary" *ngIf="!model.fileUrl && downLoadFile" (click)="dowloadDocument(model.id)">
                                     Tải File &nbsp;&nbsp; &nbsp;&nbsp;
                                     <i class="fa fa-download icon-download" aria-hidden="true"></i>
                                 </button>

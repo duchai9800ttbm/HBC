@@ -173,7 +173,7 @@
 
                 <div class="table-responsive">
                     <table id="table-file-scroll" [hidden]="!showTable" class="zui-table row-border cell-border w-100">
-                            <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" table-selection -->
+                        <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" table-selection -->
                         <thead>
                             <tr>
 
@@ -340,13 +340,13 @@
                                                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
+                                                    <div style="cursor: pointer;" *ngIf="item.url">
+                                                        <a [href]="item.url" target="_blank">
+                                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
                                                 </ng-container>
 
-                                                <div style="cursor: pointer;" *ngIf="item.url">
-                                                    <a [href]="item.url" target="_blank">
-                                                        <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
                                                 <ng-container *ngIf="XoaFile">
                                                     <div (click)="deleteDocument(item.id)" style="cursor: pointer;" title="Xóa">
                                                         <a class="text-success ml-3">
@@ -392,5 +392,4 @@
 </div>
 <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner> -->
 <app-upload-file [typeFile]="typeFileUpload" [majorTypeId]="1" [packageId]="packageId" *ngIf="showPopupAdd" (closed)="closePopup($event)"></app-upload-file>
-<app-detail-upload-file [model]="currentItem" [currentMajorType]="currentMajorTypeText"
-*ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-detail-upload-file>   
+<app-detail-upload-file [model]="currentItem" [downloadFile]="DownloadFile" [currentMajorType]="currentMajorTypeText" *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-detail-upload-file>

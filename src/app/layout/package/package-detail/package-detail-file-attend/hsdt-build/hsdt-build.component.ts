@@ -185,13 +185,20 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.BangTinhChiPhiChungTemplate = this.listPerBangTinhChiPhiChung.includes('TaiTemplate');
             this.BangCauHoiLamRoTemplate = this.listPerCauHoiLamRo.includes('TaiTemplate');
 
-            this.YeuCauBaoGiaVatTuDownload = this.listPerYeuCauBaoGiaVatTu.includes('DownloadFile');
-            this.BangTongHopDuToanDownload = this.listPerBangTongHopDuToan.includes('DownloadFile');
-            this.BangTinhChiPhiChungDownload = this.listPerBangTinhChiPhiChung.includes('DownloadFile');
-            this.BangCauHoiLamRoDownload = this.listPerCauHoiLamRo.includes('DownloadFile');
-            this.CacHSKTCoLienQuanDownload = this.listPerCacHSKTCoLienQuan.includes('DownloadFile');
-            this.HoSoPhapLyDownload = this.listPerHoSoPhapLy.includes('DownloadFile');
-            this.HoSoKhacDownload = this.listPerHoSoKhac.includes('DownloadFile');
+            this.YeuCauBaoGiaVatTuDownload = this.listPerYeuCauBaoGiaVatTu.includes('DownloadFile')
+                || this.listPerYeuCauBaoGiaVatTu.includes('XoaFile') || this.listPerYeuCauBaoGiaVatTu.includes('UploadHSDT');
+            this.BangTongHopDuToanDownload = this.listPerBangTongHopDuToan.includes('DownloadFile')
+                || this.listPerBangTongHopDuToan.includes('XoaFile') || this.listPerBangTongHopDuToan.includes('UploadHSDT');
+            this.BangTinhChiPhiChungDownload = this.listPerBangTinhChiPhiChung.includes('DownloadFile')
+                || this.listPerBangTinhChiPhiChung.includes('XoaFile') || this.listPerBangTinhChiPhiChung.includes('UploadHSDT');
+            this.BangCauHoiLamRoDownload = this.listPerCauHoiLamRo.includes('DownloadFile')
+                || this.listPerCauHoiLamRo.includes('XoaFile') || this.listPerCauHoiLamRo.includes('UploadHSDT');
+            this.CacHSKTCoLienQuanDownload = this.listPerCacHSKTCoLienQuan.includes('DownloadFile')
+                || this.listPerCacHSKTCoLienQuan.includes('XoaFile') || this.listPerCacHSKTCoLienQuan.includes('UploadHSDT');
+            this.HoSoPhapLyDownload = this.listPerHoSoPhapLy.includes('DownloadFile')
+                || this.listPerHoSoPhapLy.includes('XoaFile') || this.listPerHoSoPhapLy.includes('UploadHSDT');
+            this.HoSoKhacDownload = this.listPerHoSoKhac.includes('DownloadFile')
+                || this.listPerHoSoKhac.includes('XoaFile') || this.listPerHoSoKhac.includes('UploadHSDT');
 
 
             const hsdt2 = this.listPermission.length &&

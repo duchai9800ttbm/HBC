@@ -21,14 +21,13 @@
                     </ng-container>
 
                     <ng-container *ngIf="UploadFile">
-                        <button *ngIf="!isTypeChildDoc" class="btn btn-primary ml-1" [ngClass]="{'btn-secondary': isChotHoSo}"
-                            (click)="showDialogUploadFile()">
+                        <button *ngIf="!isTypeChildDoc" class="btn btn-primary ml-1" [ngClass]="{'btn-secondary': isChotHoSo}" (click)="showDialogUploadFile()">
                             Thêm mới HSDT
                         </button>
 
                         <div *ngIf="isTypeChildDoc" class="btn-group ml-1" ngbDropdown placement="bottom-right">
-                            <button type="button" class="btn btn-primary" (click)="showError()" [ngClass]="{'btn-secondary': isChotHoSo}"
-                                ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn btn-primary" (click)="showError()" [ngClass]="{'btn-secondary': isChotHoSo}" ngbDropdownToggle
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Thêm mới HSDT
                             </button>
                             <div [ngClass]="{'d-none': isChotHoSo}" class="dropdown-menu" ngbDropdownMenu>
@@ -76,8 +75,8 @@
                 <label for="" class="form-label mr-2">Ngày upload</label>
                 <div class="input-group calendarInput">
 
-                    <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
-                        readonly [(ngModel)]="filterModel.createdDate" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                    <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar" readonly [(ngModel)]="filterModel.createdDate"
+                        [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
                     <owl-date-time #dt pickerType="calendar"></owl-date-time>
                     <span [owlDateTimeTrigger]="dt" class="input-group-addon">
                         <i class="fa fa-calendar"></i>
@@ -121,8 +120,7 @@
                         </div>
                     </th>
 
-                    <th [class.d-none]="!isTypeChildDoc" class="boder-table header-table large-column set-width-of-type"
-                        style="width: 12%; min-width: 100px;">
+                    <th [class.d-none]="!isTypeChildDoc" class="boder-table header-table large-column set-width-of-type" style="width: 12%; min-width: 100px;">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Loại tài liệu</div>
@@ -219,16 +217,14 @@
                                 </div>
                             </td>
 
-                            <td [attr.rowspan]="loaihoso.items.length" valign="baseline" *ngIf="k == 0" [class.d-none]="!isTypeChildDoc"
-                                class="remove-border boder-table">
+                            <td [attr.rowspan]="loaihoso.items.length" valign="baseline" *ngIf="k == 0" [class.d-none]="!isTypeChildDoc" class="remove-border boder-table">
 
                                 <div class="d-flex  document-type center-parent">
-                                    <div [title]="hoso.tenderDocumentType.name" class="set-width-text-type"
-                                        [class.text-truncate-custom]="loaihoso.items.length==1" [class.td-group]="loaihoso.items.length>1">
+                                    <div [title]="hoso.tenderDocumentType.name" class="set-width-text-type" [class.text-truncate-custom]="loaihoso.items.length==1"
+                                        [class.td-group]="loaihoso.items.length>1">
                                         {{ hoso.tenderDocumentType?.name }}
                                     </div>
-                                    <div (click)="showDialogUploadFile(hoso.tenderDocumentType.id)" title="Upload tài liệu"
-                                        class="custom-image">
+                                    <div (click)="showDialogUploadFile(hoso.tenderDocumentType.id)" title="Upload tài liệu" class="custom-image">
                                         <img width="25" height="25" src="assets\images\document.png">
                                     </div>
                                 </div>
@@ -240,8 +236,7 @@
                                     {{ hoso?.documentName }}
                                 </a>
                             </td>
-                            <td class="boder-table text-center text-truncate text-truncate-custom underline-dotted"
-                                [title]="hoso?.images?.length">
+                            <td class="boder-table text-center text-truncate text-truncate-custom underline-dotted" [title]="hoso?.images?.length">
                                 <a class="link-effect" *ngIf="hoso?.images?.length !== 0" (click)="viewFullScreenImage(hoso.images)">
                                     {{ hoso?.images?.length }} hình ảnh</a>
                                 <div *ngIf="hoso?.images?.length === 0"></div>
@@ -259,15 +254,12 @@
                                         {{ hoso.status | translate }}
                                     </div>
                                     <div (click)="changeStatus(hoso)">
-                                        <i class="fa fa-check-square color-item-down pointer-link" aria-hidden="true"
-                                            *ngIf="hoso.status === 'Official'"></i>
-                                        <i class="fa fa-check-square color-item-test pointer-link" aria-hidden="true"
-                                            *ngIf="hoso.status === 'Draft'"></i>
+                                        <i class="fa fa-check-square color-item-down pointer-link" aria-hidden="true" *ngIf="hoso.status === 'Official'"></i>
+                                        <i class="fa fa-check-square color-item-test pointer-link" aria-hidden="true" *ngIf="hoso.status === 'Draft'"></i>
                                     </div>
                                 </div>
                             </td>
-                            <td class="boder-table text-center text-truncate text-truncate-custom pr-2 pl-2 custom-updater-responsive"
-                                [title]="hoso.uploadedBy.employeeName">
+                            <td class="boder-table text-center text-truncate text-truncate-custom pr-2 pl-2 custom-updater-responsive" [title]="hoso.uploadedBy.employeeName">
                                 {{ hoso.uploadedBy?.employeeName }}</td>
                             <td class="boder-table text-center" title="{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}">
                                 {{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
@@ -280,17 +272,15 @@
                                                 <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                             </a>
                                         </div>
+                                        <div class="pointer-link" *ngIf="hoso.fileUrl" title="Xem file">
+                                            <a [href]="hoso.fileUrl" target="_blank">
+                                                <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
                                     </ng-container>
 
-                                    <div class="pointer-link" *ngIf="hoso.fileUrl" title="Xem file">
-                                        <a [href]="hoso.fileUrl" target="_blank">
-                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-
                                     <ng-container *ngIf="XoaFile">
-                                        <div *ngIf="!isChotHoSo" class="pointer-link" (click)="deleteDocument(hoso.id)"
-                                            title="Xóa">
+                                        <div *ngIf="!isChotHoSo" class="pointer-link" (click)="deleteDocument(hoso.id)" title="Xóa">
                                             <a>
                                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </a>
@@ -315,11 +305,11 @@
         </div>
     </div>
 </div>
-<app-view-detail-file [model]="currentItem" [currentMajorType]="{currentMajorTypeId: currentMajorTypeId, currentMajorTypeText: currentMajorTypeText}"
+<app-view-detail-file [model]="currentItem" [downLoadFile]="DownLoadFile" [currentMajorType]="{currentMajorTypeId: currentMajorTypeId, currentMajorTypeText: currentMajorTypeText}"
     *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-view-detail-file>
 
 
-<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
-    [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray"
+    (closed)="closeView()"></app-image-carousel>
 
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>

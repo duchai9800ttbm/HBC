@@ -12,6 +12,7 @@ export class ViewDetailFileComponent implements OnInit {
   @Output() closed = new EventEmitter<boolean>();
   @Input() model: any;
   @Input() currentMajorType;
+  @Input() downLoadFile;
 
   file;
   icon = `<i class="fa fa-search" aria-hidden="true"></i>`;
