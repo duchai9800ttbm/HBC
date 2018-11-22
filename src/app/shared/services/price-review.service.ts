@@ -242,8 +242,8 @@ export class PriceReviewService {
     modelRequest.documentName = formValue.documentName;
     modelRequest.projectInformation = {
       foudationPart: {
-        scopeOfWorkIsInclude: formValue.phanMongCheck,
-        scopeOfWorkDesc: formValue.phanMongDesc,
+        scopeOfWorkIsInclude: formValue.phanCocCheck,
+        scopeOfWorkDesc: formValue.phanCocDesc,
       },
       basementPart: {
         scopeOfWorkIsInclude: formValue.phanHamCheck,
@@ -276,6 +276,34 @@ export class PriceReviewService {
       bodyPartOtherWork: {
         scopeOfWorkIsInclude: formValue.phanThancongViecKhacCheck,
         scopeOfWorkDesc: formValue.phanThancongViecKhacDesc,
+      },
+      furniture: {
+        scopeOfWorkIsInclude: formValue.phanNoiThatCheck,
+        scopeOfWorkDesc: formValue.phanNoiThatDesc
+      },
+      view: {
+        scopeOfWorkIsInclude: formValue.phanCanhQuanCheck,
+        scopeOfWorkDesc: formValue.phanCanhQuanDesc
+      },
+      electromechanic: {
+        scopeOfWorkIsInclude: formValue.phanCoDienCheck,
+        scopeOfWorkDesc: formValue.phanCoDienDesc
+      },
+      electromechanicElectricity: {
+        scopeOfWorkIsInclude: formValue.phanDienCheck,
+        scopeOfWorkDesc: formValue.phanDienDesc
+      },
+      electromechanicMechanic: {
+        scopeOfWorkIsInclude: formValue.phanCoCheck,
+        scopeOfWorkDesc: formValue.phanCoDesc
+      },
+      electromechanicWater: {
+        scopeOfWorkIsInclude: formValue.phanNuocCheck,
+        scopeOfWorkDesc: formValue.phanNuocDesc
+      },
+      electromechanicOtherWork: {
+        scopeOfWorkIsInclude: formValue.phanCoDienCongViecKhacCheck,
+        scopeOfWorkDesc: formValue.phanCoDienCongViecKhacDesc
       },
       gfa: formValue.infoGfa
     };
@@ -364,7 +392,7 @@ export class PriceReviewService {
         alternativeTenderGFA: formValue.giaTriAlterGfa,
         note: formValue.giaTriNote
       },
-      costOfCapitalPCPSValue: {
+      costOfNSC: {
         baseTenderAmount: formValue.giaTriPCBaseAmount,
         baseTenderGFA: formValue.giaTriPCBaseGfa,
         alternativeTenderAmount: formValue.giaTriPCAlterAmount,
@@ -395,6 +423,13 @@ export class PriceReviewService {
         baseTenderGFA: formValue.tyleGfa,
         alternativeTenderAmount: formValue.tyleAlter,
         note: formValue.tyLeNote
+      },
+      directContractorCost: {
+        baseTenderAmount: formValue.giaTriNhaThauTrucTiepBaseAmount,
+        baseTenderGFA: formValue.giaTriNhaThauTrucTiepBaseGfa,
+        alternativeTenderAmount: formValue.giaTriNhaThauTrucTiepAlterAmount,
+        alternativeTenderGFA: formValue.giaTriNhaThauTrucTiepAlterGfa,
+        note: formValue.giaTriNhaThauTrucTiepNote
       }
     };
     modelRequest.updatedDesc = formValue.updatedDesc;
@@ -494,6 +529,37 @@ export class PriceReviewService {
           scopeOfWorkIsInclude: model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkDesc,
         },
+        // ---
+        furniture: model.projectInformation.furniture && {
+          scopeOfWorkIsInclude: model.projectInformation.furniture.scopeOfWorkIsInclude,
+          scopeOfWorkDesc: model.projectInformation.furniture.scopeOfWorkDesc
+        },
+        view: model.projectInformation.view && {
+          scopeOfWorkIsInclude: model.projectInformation.view.scopeOfWorkIsInclude,
+          scopeOfWorkDesc: model.projectInformation.view.scopeOfWorkDesc
+        },
+        electromechanic: model.projectInformation.electromechanic && {
+          scopeOfWorkIsInclude: model.projectInformation.electromechanic.scopeOfWorkIsInclude,
+          scopeOfWorkDesc: model.projectInformation.electromechanic.scopeOfWorkDesc
+        },
+        electromechanicElectricity: model.projectInformation.electromechanicElectricity && {
+          scopeOfWorkIsInclude: model.projectInformation.electromechanicElectricity.scopeOfWorkIsInclude,
+          scopeOfWorkDesc: model.projectInformation.electromechanicElectricity.scopeOfWorkDesc
+        },
+        electromechanicMechanic: model.projectInformation.electromechanicMechanic && {
+          scopeOfWorkIsInclude: model.projectInformation.electromechanicMechanic.scopeOfWorkIsInclude,
+          scopeOfWorkDesc: model.projectInformation.electromechanicMechanic.scopeOfWorkDesc
+        },
+        electromechanicWater: model.projectInformation.electromechanicWater && {
+          scopeOfWorkIsInclude: model.projectInformation.electromechanicWater.scopeOfWorkIsInclude,
+          scopeOfWorkDesc: model.projectInformation.electromechanicWater.scopeOfWorkDesc
+        },
+        electromechanicOtherWork: model.projectInformation.electromechanicOtherWork && {
+          scopeOfWorkIsInclude: model.projectInformation.electromechanicOtherWork.scopeOfWorkIsInclude,
+          scopeOfWorkDesc: model.projectInformation.electromechanicOtherWork.scopeOfWorkDesc
+        },
+
+        // ---
         gfa: model.projectInformation.gfa
       },
       technique: model.technique && {
@@ -579,12 +645,12 @@ export class PriceReviewService {
           alternativeTenderGFA: model.tentativeTenderPrice.costOfCapitalValue.alternativeTenderGFA,
           note: model.tentativeTenderPrice.costOfCapitalValue.note
         },
-        costOfCapitalPCPSValue: model.tentativeTenderPrice.costOfCapitalPCPSValue && {
-          baseTenderAmount: model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderAmount,
-          baseTenderGFA: model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderGFA,
-          alternativeTenderAmount: model.tentativeTenderPrice.costOfCapitalPCPSValue.alternativeTenderAmount,
-          alternativeTenderGFA: model.tentativeTenderPrice.costOfCapitalPCPSValue.alternativeTenderGFA,
-          note: model.tentativeTenderPrice.costOfCapitalPCPSValue.note
+        costOfNSC: model.tentativeTenderPrice.costOfNSC && {
+          baseTenderAmount: model.tentativeTenderPrice.costOfNSC.baseTenderAmount,
+          baseTenderGFA: model.tentativeTenderPrice.costOfNSC.baseTenderGFA,
+          alternativeTenderAmount: model.tentativeTenderPrice.costOfNSC.alternativeTenderAmount,
+          alternativeTenderGFA: model.tentativeTenderPrice.costOfNSC.alternativeTenderGFA,
+          note: model.tentativeTenderPrice.costOfNSC.note
         },
         totalCostOfCapital: model.tentativeTenderPrice.totalCostOfCapital && {
           baseTenderAmount: model.tentativeTenderPrice.totalCostOfCapital.baseTenderAmount,
@@ -610,6 +676,13 @@ export class PriceReviewService {
           baseTenderGFA: model.tentativeTenderPrice.oAndPPercentOfTotalCost.baseTenderGFA,
           alternativeTenderAmount: model.tentativeTenderPrice.oAndPPercentOfTotalCost.alternativeTenderAmount,
           note: model.tentativeTenderPrice.oAndPPercentOfTotalCost.note
+        },
+        directContractorCost: model.tentativeTenderPrice.directContractorCost && {
+          baseTenderAmount: model.tentativeTenderPrice.directContractorCost.baseTenderAmount,
+          baseTenderGFA: model.tentativeTenderPrice.directContractorCost.baseTenderGFA,
+          alternativeTenderAmount: model.tentativeTenderPrice.directContractorCost.alternativeTenderAmount,
+          alternativeTenderGFA: model.tentativeTenderPrice.directContractorCost.alternativeTenderGFA,
+          note: model.tentativeTenderPrice.directContractorCost.note
         }
       },
       updatedDesc: '',

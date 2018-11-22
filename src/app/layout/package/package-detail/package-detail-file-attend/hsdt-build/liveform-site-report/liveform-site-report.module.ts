@@ -4,6 +4,7 @@ import { LiveformSiteReportRoutingModule } from './liveform-site-report-routing.
 import { LiveformSiteReportComponent } from './liveform-site-report.component';
 import { SharedModule } from '../../../../../../shared/shared.module';
 import { SharedComponentsModule } from '../../../../../../shared/components/shared-components.module';
+import { ChangeHistoryPopupComponent } from './change-history-popup/change-history-popup.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { SharedComponentsModule } from '../../../../../../shared/components/shar
     SharedModule
   ],
   declarations: [
-    LiveformSiteReportComponent
+    LiveformSiteReportComponent,
+    ChangeHistoryPopupComponent
   ],
   providers: []
 })

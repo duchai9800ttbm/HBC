@@ -3,6 +3,7 @@ import { PackageService } from '../../../../../../../shared/services/package.ser
 import { AlertService } from '../../../../../../../shared/services';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { Router } from '@angular/router';
+import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 
 @Component({
   selector: 'app-need-create-tender-form-images-project',
@@ -25,24 +26,30 @@ export class NeedCreateTenderFormImagesProjectComponent implements OnInit {
     this.routerAction = this.packageService.routerAction;
     this.packageService.routerAction$.subscribe(router => {
       this.routerAction = router;
+      this.loadData();
     });
+  }
+  loadData() {
+    if (NeedCreateTenderFormComponent.formModel) {
+      this.imageProjects = [...NeedCreateTenderFormComponent.formModel.projectImage.projectImages];
+    }
   }
   uploadImageProject(event) {
     const files = event.target.files;
     this.packageService.uploadImageService(files).subscribe(imageUrls => {
       this.imageProjects = [...this.imageProjects, ...imageUrls];
+      NeedCreateTenderFormComponent.formModel.projectImage.projectImages = [...this.imageProjects, ...imageUrls];
     });
   }
   deleteImage(i) {
     const index = this.imageProjects.indexOf(i);
+    this.imageProjects.splice(index, 1);
     if (i.guid) {
-      this.packageService.deleteImageService(i.guid).subscribe(res => {
+      this.packageService.deleteImageService(i.guid).subscribe(() => {
 
-      }, err => {
-        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
       });
     }
-    this.imageProjects.splice(index, 1);
+    NeedCreateTenderFormComponent.formModel.projectImage.projectImages = [...this.imageProjects];
   }
   viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;

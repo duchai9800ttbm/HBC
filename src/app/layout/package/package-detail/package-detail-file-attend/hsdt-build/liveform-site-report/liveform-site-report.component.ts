@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SiteSurveyReport } from '../../../../../../shared/models/site-survey-report/site-survey-report';
-import { DocumentService } from '../../../../../../shared/services/document.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { PagedResult } from '../../../../../../shared/models';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
 import { Subject } from 'rxjs/Subject';
 import { SiteSurveyReportService } from '../../../../../../shared/services/site-survey-report.service';
-import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
-import { ScaleOverall, ConstructionItem } from '../../../../../../shared/models/site-survey-report/scale-overall.model';
+import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/history-liveform.model';
 import { groupBy } from '@progress/kendo-data-query';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
@@ -44,6 +42,8 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
   isChotHoSo: boolean;
   subscription: Subscription;
   dataDNDT;
+
+  showPopupDetail = false;
 
   listPermission: Array<PermissionModel>;
   listPermissionScreen2 = [];
@@ -177,5 +177,18 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
     const instance = this.dialog.content.instance;
     instance.type = 'LiveFormThamQuanBaoCaoCongTruong';
     instance.packageId = this.bidOpportunityId;
+  }
+
+  viewDetail() {
+    this.showPopupDetail = true;
+  }
+
+  closePopupDetail() {
+    this.showPopupDetail = false;
+  }
+  lineDisplay(amount) {
+    if (amount >= 3) { return 1; }
+    if (amount = 2) { return 2; }
+    if (amount = 1) { return 3; }
   }
 }

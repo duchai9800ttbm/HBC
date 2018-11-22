@@ -63,6 +63,36 @@ export class TenderPriceApproval {
             scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
         };
+        // RQ
+        furniture: {
+            scopeOfWorkIsInclude: boolean;
+            scopeOfWorkDesc: string;
+        },
+        view: {
+            scopeOfWorkIsInclude: boolean;
+            scopeOfWorkDesc: string;
+        },
+        electromechanic: {
+            scopeOfWorkIsInclude: boolean;
+            scopeOfWorkDesc: string;
+        },
+        electromechanicElectricity: {
+            scopeOfWorkIsInclude: boolean;
+            scopeOfWorkDesc: string;
+        },
+        electromechanicMechanic: {
+            scopeOfWorkIsInclude: boolean;
+            scopeOfWorkDesc: string;
+        },
+        electromechanicWater: {
+            scopeOfWorkIsInclude: boolean;
+            scopeOfWorkDesc: string;
+        },
+        electromechanicOtherWork: {
+            scopeOfWorkIsInclude: boolean;
+            scopeOfWorkDesc: string;
+        },
+        // RQ.
         gfa: number;
     };
     technique: {
@@ -148,7 +178,7 @@ export class TenderPriceApproval {
             alternativeTenderGFA: number;
             note: string
         };
-        costOfCapitalPCPSValue: {
+        costOfNSC: {
             baseTenderAmount: number;
             baseTenderGFA: number;
             alternativeTenderAmount: number;
@@ -179,6 +209,13 @@ export class TenderPriceApproval {
             baseTenderGFA: number;
             alternativeTenderAmount: number;
             // alternativeTenderGFA: number;
+            note: string
+        };
+        directContractorCost: {
+            baseTenderAmount: number;
+            baseTenderGFA: number;
+            alternativeTenderAmount: number
+            alternativeTenderGFA: number;
             note: string
         };
     };

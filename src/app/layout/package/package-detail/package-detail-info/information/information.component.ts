@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FakePackageData } from '../../../../../shared/fake-data/package-data';
-import { ActivatedRoute } from '../../../../../../../node_modules/@angular/router';
 import { PackageDetailComponent } from '../../package-detail.component';
-import { PackageModel } from '../../../../../shared/models/package/package.model';
 import { PackageService } from '../../../../../shared/services/package.service';
-import { PackageListItem } from '../../../../../shared/models/package/package-list-item';
-import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { Subject } from '../../../../../../../node_modules/rxjs';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
-import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../../../../environments/environment';
+import { AlertService } from '../../../../../shared/services';
 
 @Component({
   selector: 'app-package-detail-info',
@@ -25,34 +20,22 @@ export class InformationComponent implements OnInit {
   crm_site_domain = environment.crm_site_domain;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private packageService: PackageService,
-    private spinner: NgxSpinnerService,
-    private sanitizer: DomSanitizer
+    private alertService: AlertService
   ) { }
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
-    this.spinner.show();
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.package = result;
-      // this.package.documentLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.package.documentLink);
-      this.spinner.hide();
-    }, err => {
-      this.spinner.hide();
-    });
+    }, err => this.alertService.error('Tải thông tin gói thầu không thành công.'));
   }
   redirectToCRM(detail: string, id: number) {
     if (detail === 'tenKhachHang' || detail === 'donViTuVan') {
-        return `${this.crm_site_domain}#/customer/detail/${id}/overview`;
+      return `${this.crm_site_domain}#/customer/detail/${id}/overview`;
     }
     if (detail === 'lienHe') {
-        return `${this.crm_site_domain}#/contact/detail/${id}/overview`;
+      return `${this.crm_site_domain}#/contact/detail/${id}/overview`;
     }
     return null;
-}
-
-  // rerender(result: any) {
-  //   this.packageData = result.items;
-  //   this.dtTrigger.next();
-  // }
+  }
 }

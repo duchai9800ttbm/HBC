@@ -25,6 +25,15 @@ export class ProposeTenderParticipateRequest {
     contractCondition: ContractConditionTenderParticipate;
     tenderDirectorProposal: TenderDirectorProposal;
     decisionOfBoardOfGeneralDirector: DecisionBoardGeneralDirector;
+    projectImage: {
+        projectImages: ProjectImages[];
+    };
     isAgreedParticipating = true;
     updatedDesc: string;
+}
+
+class ProjectImages {
+    guid: string;
+    thumbSizeUrl: string;
+    largeSizeUrl: string;
 }

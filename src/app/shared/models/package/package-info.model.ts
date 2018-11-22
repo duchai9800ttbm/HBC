@@ -2,6 +2,7 @@ export class PackageInfoModel {
     id: number;
     classify: string;
     amount: number;
+    totalCostOfSubmission: number;
     opportunityName: string;
     projectName: string;
     projectType: {
