@@ -130,8 +130,25 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             this.ChapThuanKhongChapThuan = this.listPermissionScreen.includes('ChapThuanKhongChapThuan');
             this.TaiTemplate = this.listPermissionScreen.includes('TaiTemplate');
             setTimeout(() => {
-                if (!this.XemDNDT) {
-                    this.router.navigate(['not-found']);
+                switch (this.routerAction) {
+                    case 'create': {
+                        if (!this.TaoMoiDNDT) {
+                            this.router.navigate(['not-found']);
+                        }
+                        break;
+                    }
+                    case 'view': {
+                        if (!this.XemDNDT) {
+                            this.router.navigate(['not-found']);
+                        }
+                        break;
+                    }
+                    case 'edit': {
+                        if (!this.SuaDNDT) {
+                            this.router.navigate(['not-found']);
+                        }
+                        break;
+                    }
                 }
             }, 4000);
         });

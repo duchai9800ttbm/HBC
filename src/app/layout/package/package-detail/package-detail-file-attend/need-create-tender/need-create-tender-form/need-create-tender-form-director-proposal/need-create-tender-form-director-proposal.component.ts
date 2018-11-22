@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
@@ -7,26 +7,47 @@ import { SessionService, AlertService } from '../../../../../../../shared/servic
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { Router } from '../../../../../../../../../node_modules/@angular/router';
+import { PermissionService } from '../../../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../../../shared/models/permission/permission.model';
+import { Subscription } from '../../../../../../../../../node_modules/rxjs';
 
 @Component({
     selector: 'app-need-create-tender-form-director-proposal',
     templateUrl: './need-create-tender-form-director-proposal.component.html',
     styleUrls: ['./need-create-tender-form-director-proposal.component.scss']
 })
-export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
+export class NeedCreateTenderFormDirectorProposalComponent implements OnInit, OnDestroy {
     routerAction: string;
     directorProposalForm: FormGroup;
+    listPermission: Array<PermissionModel>;
+    XacNhanKy = false;
+    subscription: Subscription;
     constructor(
         private fb: FormBuilder,
         private packageService: PackageService,
         private sessionService: SessionService,
         private spinner: NgxSpinnerService,
         private alertService: AlertService,
-        private router: Router
+        private router: Router,
+        private permissionService: PermissionService
     ) { }
 
     ngOnInit() {
         this.routerAction = this.packageService.routerAction;
+        // phân quyền
+        this.subscription = this.permissionService.get().subscribe(data => {
+            this.listPermission = data;
+            const hsdt = this.listPermission.length &&
+                this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+            if (hsdt) {
+                const screen = hsdt.userPermissionDetails.length
+                    && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'PhieuDeNghiDuThau')[0];
+                if (screen) {
+                    const listPermissionScreen = screen.permissions.map(z => z.value);
+                    this.XacNhanKy = listPermissionScreen.includes('XacNhanKy');
+                }
+            }
+        });
         this.packageService.routerAction$.subscribe(router => {
             this.routerAction = router;
             this.createForm();
@@ -39,6 +60,10 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
             this.createForm();
             this.directorProposalForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
         });
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     createForm() {
