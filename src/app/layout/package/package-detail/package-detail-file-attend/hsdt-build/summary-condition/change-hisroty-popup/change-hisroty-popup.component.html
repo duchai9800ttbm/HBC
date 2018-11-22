@@ -1,0 +1,107 @@
+<div class="example-wrapper">
+    <kendo-dialog (close)="closePopup()" [width]="1200" class="width-kendo-dialog">
+        <div class="title d-flex justify-content-between">
+            <div class="flex-grow-1 d-flex justify-content-center">
+                <h4 class="text-uppercase">Chi tiết lịch sử thay đổi Tóm tắt điều kiện dự thầu</h4>
+            </div>
+            <div>
+                <img (click)="closePopup()" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
+            </div>
+        </div>
+        <div class="detail">
+            <div class="table-responsive">
+                <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" -->
+                <table class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
+                    <thead>
+                        <tr>
+                            <th class="w-10">Lần cập nhật</th>
+                            <th class="w-30">Chi tiết cập nhật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <ng-container *ngFor="let itemByChangedTimes of updateInfoList; let i = index">
+
+                            <tr *ngIf="i !== updateInfoList.length-1">
+                                <td class="text-center">
+                                    {{ updateInfoList.length - (i+1) }}
+                                </td>
+                                <td class="font-size-90">
+                                    <div class="overflow-scroll" *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
+                                        <div *ngFor="let itemByChangeTime of itemByChangedTimes.items">
+                                            <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
+
+                                                <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items">
+
+                                                    <div *ngIf="itemByLiveFormStep.liveFormStep !== 'OtherSpecialRequirement' && 
+                                                itemByLiveFormStep.liveFormTitle !=='TaxTypes' && 
+                                                itemByLiveFormStep.liveFormTitle !== 'AttentiveDocuments' &&
+                                                itemByLiveFormStep.liveFormTitle !== 'ProgressCompletionContractorDate' &&
+                                                itemByLiveFormStep.liveFormTitle !== 'IsProgressCompletionDate' &&
+                                                (itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue)
+                                                "
+                                                        class="d-flex" title="* {{
+                                                            itemByLiveFormStep.liveFormTitle ?
+                                                            (itemByLiveFormStep.liveFormTitle | translate) :
+                                                            ( itemByLiveFormStep.liveFormSubject ? 
+                                                                (itemByLiveFormStep.liveFormSubject | translate) :
+                                                                    (itemByLiveFormStep.liveFormStep | translate)
+                                                            )
+                                                        }}">
+                                                        <ng-container>
+                                                            *{{ itemByLiveFormStep.liveFormTitle | translate }}
+                                                            <ng-container *ngIf="itemByLiveFormStep.liveFormSubject">
+                                                                ({{ itemByLiveFormStep.liveFormSubject | translate }})
+
+                                                            </ng-container>
+                                                            :&nbsp;
+                                                        </ng-container>
+                                                        <div class="detail-changed pl-1">từ
+                                                            <!-- --- -->
+                                                            <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
+                                                                {{(itemByLiveFormStep.oldValue != 0) ?
+                                                                ((itemByLiveFormStep.oldValue)*1000 |
+                                                                date:'dd/MM/yyyy') :
+                                                                'không có'}}
+                                                            </span>
+                                                            <!-- --- -->
+                                                            <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
+                                                                {{itemByLiveFormStep.oldValue ?
+                                                                (itemByLiveFormStep.oldValue | translate) : 'không
+                                                                có'}}
+                                                            </span>
+                                                            thành
+                                                            <!-- --- -->
+                                                            <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
+                                                                {{(itemByLiveFormStep.newValue != 0) ?
+                                                                ((itemByLiveFormStep.newValue)*1000 |
+                                                                date:'dd/MM/yyyy') :
+                                                                'không có'}}
+                                                            </span>
+                                                            <!-- --- -->
+                                                            <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
+                                                                {{itemByLiveFormStep.newValue ?
+                                                                (itemByLiveFormStep.newValue | translate) : 'không
+                                                                có'}}
+                                                            </span>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+
+                        </ng-container>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </kendo-dialog>
+</div>

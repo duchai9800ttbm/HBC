@@ -41,6 +41,7 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
   listPermission: Array<PermissionModel>;
   listPermissionScreen2 = [];
   documentTypeId = DocumentTypeId;
+  showPopupDetail = false;
 
   ChotHSDT = false;
   TaoMoiLiveForm = false;
@@ -193,5 +194,20 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
       instance.typeChild = type;
     }
     instance.packageId = this.packageId;
+  }
+
+
+  viewDetail() {
+    this.showPopupDetail = true;
+  }
+
+  closePopupDetail() {
+    this.showPopupDetail = false;
+  }
+  lineDisplay(amount) {
+    if (amount >= 4) { return 1; }
+    if (amount = 3) { return 2; }
+    if (amount = 2) { return 3; }
+    return 4;
   }
 }

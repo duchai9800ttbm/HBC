@@ -187,8 +187,9 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
     this.showPopupDetail = false;
   }
   lineDisplay(amount) {
-    if (amount >= 3) { return 1; }
-    if (amount = 2) { return 2; }
-    if (amount = 1) { return 3; }
+    if (amount >= 4) { return 1; }
+    if (amount = 3) { return 2; }
+    if (amount = 2) { return 3; }
+    return 4;
   }
 }

@@ -120,11 +120,11 @@
                     <td class="font-size-90">
                         <div class="overflow-scroll" *ngIf="updateInfo.items && updateInfo.items !== 0">
                             <ng-container *ngFor="let itemByChangeTime of updateInfo.items; index as index">
-                                <div *ngIf="index < 3" class="testhang1">
+                                <div *ngIf="index < 3">
 
-                                    <div class="testhang2" *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
+                                    <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
                                         <ng-container *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items; index as count">
-                                            <div class="testhang3" *ngIf="count < lineDisplay(updateInfo.items.length)">
+                                            <div *ngIf="count < lineDisplay(updateInfo.items.length)">
 
                                                 <div *ngIf="itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue"
                                                     class="d-flex" title="* {{
