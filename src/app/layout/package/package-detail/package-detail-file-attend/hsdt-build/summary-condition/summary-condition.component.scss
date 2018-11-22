@@ -48,3 +48,11 @@
     .overflow-scroll {
         overflow: auto;
     }
+
+    .popup-detail {
+        color: #0e86b7 !important;
+
+        &:hover {
+            color: #f26522 !important;
+        }
+    }

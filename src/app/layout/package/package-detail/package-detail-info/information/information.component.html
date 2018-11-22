@@ -107,38 +107,40 @@
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.customer?.customerNewOldType | translate}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder field-name p-1">Tổng giá trị tạm tính (GĐ đầu)</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Tổng giá trị tạm tính
+                                    (GĐ đầu)</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control text-right">{{+package.amount | vnCurrency}}</div>
                                 </td>
                             </tr>
 
                             <tr>
-                                    <td class="w-15 bg-light text-right label no-boder field-name">Liên hệ</td>
-                                    <td class="w-35 no-boder">
-                                        <div class="w-75 form-control">
-                                            <a [href]="redirectToCRM('lienHe', package.customerContact?.id)" target="_blank">
-                                                {{package.customerContact?.text}}
-                                            </a>
-                                        </div>
-                                    </td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Liên hệ</td>
+                                <td class="w-35 no-boder">
+                                    <div class="w-75 form-control">
+                                        <a [href]="redirectToCRM('lienHe', package.customerContact?.id)" target="_blank">
+                                            {{package.customerContact?.text}}
+                                        </a>
+                                    </div>
+                                </td>
                                 <td class="w-15 bg-light text-right label no-boder field-name">Tổng giá trị nộp thầu</td>
                                 <td class="w-35 no-boder">
-                                    <div class="w-75 form-control text-right">{{+package.amount | vnCurrency}}</div>
+                                    <div class="w-75 form-control text-right">{{ package.totalCostOfSubmission ?
+                                        (+package.totalCostOfSubmission | vnCurrency) : '' }}</div>
                                 </td>
                             </tr>
 
 
                             <tr>
-                                    <td class="w-15 bg-light text-right label no-boder field-name">Đơn vị tư vấn</td>
-                                    <td class="w-35 no-boder">
-                                        <div class="w-75 form-control">
-                                            <a [href]="redirectToCRM('donViTuVan', package.consultantUnitCustomer?.id)"
-                                                target="_blank">
-                                                {{package.consultantUnitCustomer?.text}}
-                                            </a>
-                                        </div>
-                                    </td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Đơn vị tư vấn</td>
+                                <td class="w-35 no-boder">
+                                    <div class="w-75 form-control">
+                                        <a [href]="redirectToCRM('donViTuVan', package.consultantUnitCustomer?.id)"
+                                            target="_blank">
+                                            {{package.consultantUnitCustomer?.text}}
+                                        </a>
+                                    </div>
+                                </td>
                                 <td class="w-15 bg-light text-right label no-boder field-name">Tiến độ thực hiện</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control text-right">
@@ -148,17 +150,17 @@
                                 </td>
                             </tr>
                             <tr>
-                                    <td class="w-15 bg-light text-right label no-boder field-name">Địa chỉ ĐVTV</td>
-                                    <td class="w-35 no-boder">
-                                        <div class="w-75 form-control">{{package.consultantAddress}}</div>
-                                    </td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Địa chỉ ĐVTV</td>
+                                <td class="w-35 no-boder">
+                                    <div class="w-75 form-control">{{package.consultantAddress}}</div>
+                                </td>
                                 <td class="w-15 bg-light text-right label no-boder field-name">Lí do Thắng thầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.acceptanceReason}}</div>
                                 </td>
                             </tr>
                             <tr>
-                               <td class="w-15 bg-light text-right label no-boder field-name" style="border-top: none;border-right: none;">Số
+                                <td class="w-15 bg-light text-right label no-boder field-name" style="border-top: none;border-right: none;">Số
                                     điện thoại ĐVTV</td>
                                 <td class="w-35 no-boder" style="border-top: none;border-right: none;border-left: none;">
                                     <div class="w-75 form-control">{{package.consultantPhone}}</div>
@@ -184,7 +186,7 @@
                                 <td class="w-15 bg-light text-right label field-name" style="padding-bottom: 20px!important; border-top: none;border-right: none;">
                                 </td>
                                 <td class="w-35" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">
-                                    
+
                                 </td>
                                 <td class="w-15 bg-light text-right label field-name" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">Đánh
                                     giá dự án</td>

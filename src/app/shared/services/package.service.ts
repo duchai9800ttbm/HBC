@@ -443,6 +443,7 @@ export class PackageService {
                 id: result.bidOpportunityId,
                 classify: result.classify,
                 amount: result.amount,
+                totalCostOfSubmission: result.totalCostOfSubmission ? result.totalCostOfSubmission : null,
                 opportunityName: result.opportunityName,
                 projectName: result.projectName,
                 isSubmittedHSDT: result.isSubmittedHSDT,

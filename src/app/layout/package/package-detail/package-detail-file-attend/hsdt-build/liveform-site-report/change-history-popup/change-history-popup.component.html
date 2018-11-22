@@ -1,0 +1,84 @@
+<div class="example-wrapper">
+    <kendo-dialog (close)="closePopup()" [width]="1200" class="width-kendo-dialog">
+        <div class="title d-flex justify-content-between">
+            <div class="flex-grow-1 d-flex justify-content-center">
+                <h4 class="text-uppercase">Chi tiết lịch sử thay đổi Báo cáo công trường</h4>
+            </div>
+            <div>
+                <img (click)="closePopup()" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
+            </div>
+        </div>
+        <div class="detail">
+            <div class="table-responsive">
+                <table class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
+                    <thead>
+                        <tr>
+                            <th class="w-10">Lần cập nhật</th>
+                            <th class="text-center">Chi tiết cập nhật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let updateInfo of updateInfoList; index as i">
+                            <!-- --- -->
+                            <tr *ngIf="i !== updateInfoList.length-1">
+                                <td class="text-center">
+                                    {{ updateInfoList.length - (i+1) }}
+                                </td>
+                                <td class="font-size-90">
+                                    <div class="overflow-scroll" *ngIf="updateInfo.items">
+                                        <div *ngFor="let itemByChangeTime of updateInfo.items; index as index">
+
+                                            <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
+                                                <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items; index as count">
+
+                                                    <div *ngIf="itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue"
+                                                        class="d-flex" title="* {{
+                                                    itemByLiveFormStep.liveFormTitle ?
+                                                    (itemByLiveFormStep.liveFormTitle | translate) :
+                                                    ( itemByLiveFormStep.liveFormSubject ? 
+                                                        (itemByLiveFormStep.liveFormSubject | translate) :
+                                                            (itemByLiveFormStep.liveFormStep | translate)
+                                                    )
+                                                }}">*
+                                                        {{ itemByLiveFormStep.liveFormTitle ?
+                                                        (itemByLiveFormStep.liveFormTitle
+                                                        |
+                                                        translate)
+                                                        : ( itemByLiveFormStep.liveFormSubject ?
+                                                        (itemByLiveFormStep.liveFormSubject
+                                                        | translate) : (itemByLiveFormStep.liveFormStep | translate) )
+                                                        }}:
+
+                                                        <div class="pl-1">từ
+                                                            <span class="font-weight-bold">
+                                                                {{itemByLiveFormStep.oldValue ?
+                                                                itemByLiveFormStep.oldValue
+                                                                :
+                                                                'không có'}}
+                                                            </span>
+                                                            thành
+                                                            <span class="font-weight-bold">
+                                                                {{itemByLiveFormStep.newValue ?
+                                                                itemByLiveFormStep.newValue
+                                                                :
+                                                                'không có'}}
+                                                            </span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- --- -->
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </kendo-dialog>
+</div>

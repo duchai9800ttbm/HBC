@@ -33,7 +33,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   constructor(
     private fb: FormBuilder,
     private priceReviewService: PriceReviewService,
-    private spinner: NgxSpinnerService,
     private packageService: PackageService,
     private confirmService: ConfirmationService,
     private alertService: AlertService,
@@ -306,7 +305,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           && this.model.projectInformation.foudationPart.scopeOfWorkIsInclude,
         disabled: this.isModeView
       },
-      phanMongDesc: {
+      phanCocDesc: {
         value: this.model.projectInformation
           && this.model.projectInformation.foudationPart
           && this.model.projectInformation.foudationPart.scopeOfWorkDesc,
@@ -420,47 +419,88 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           && this.model.projectInformation.bodyPartOtherWork.scopeOfWorkDesc,
         disabled: this.isModeView
       },
-      // TODO: Update model - mapping to form
       phanNoiThatCheck: {
         value: this.model.projectInformation
-          && this.model.projectInformation // TODO:
-          && this.model.projectInformation, // TODO:
+          && this.model.projectInformation.furniture
+          && this.model.projectInformation.furniture.scopeOfWorkIsInclude,
+        disabled: this.isModeView
+      },
+      phanNoiThatDesc: {
+        value: this.model.projectInformation
+          && this.model.projectInformation.furniture
+          && this.model.projectInformation.furniture.scopeOfWorkDesc,
         disabled: this.isModeView
       },
       phanCanhQuanCheck: {
         value: this.model.projectInformation
-          && this.model.projectInformation // TODO:
-          && this.model.projectInformation, // TODO:
+          && this.model.projectInformation.view
+          && this.model.projectInformation.view.scopeOfWorkIsInclude,
+        disabled: this.isModeView
+      },
+      phanCanhQuanDesc: {
+        value: this.model.projectInformation
+          && this.model.projectInformation.view
+          && this.model.projectInformation.view.scopeOfWorkDesc,
         disabled: this.isModeView
       },
       phanCoDienCheck: {
         value: this.model.projectInformation
-          && this.model.projectInformation // TODO:
-          && this.model.projectInformation, // TODO:
+          && this.model.projectInformation.electromechanic
+          && this.model.projectInformation.electromechanic.scopeOfWorkIsInclude,
+        disabled: this.isModeView
+      },
+      phanCoDienDesc: {
+        value: this.model.projectInformation
+          && this.model.projectInformation.electromechanic
+          && this.model.projectInformation.electromechanic.scopeOfWorkDesc,
         disabled: this.isModeView
       },
       phanDienCheck: {
         value: this.model.projectInformation
-          && this.model.projectInformation // TODO:
-          && this.model.projectInformation, // TODO:
+          && this.model.projectInformation.electromechanicElectricity
+          && this.model.projectInformation.electromechanicElectricity.scopeOfWorkIsInclude,
+        disabled: this.isModeView
+      },
+      phanDienDesc: {
+        value: this.model.projectInformation
+          && this.model.projectInformation.electromechanicElectricity
+          && this.model.projectInformation.electromechanicElectricity.scopeOfWorkDesc,
         disabled: this.isModeView
       },
       phanCoCheck: {
         value: this.model.projectInformation
-          && this.model.projectInformation // TODO:
-          && this.model.projectInformation, // TODO:
+          && this.model.projectInformation.electromechanicMechanic
+          && this.model.projectInformation.electromechanicMechanic.scopeOfWorkIsInclude,
+        disabled: this.isModeView
+      },
+      phanCoDesc: {
+        value: this.model.projectInformation
+          && this.model.projectInformation.electromechanicMechanic
+          && this.model.projectInformation.electromechanicMechanic.scopeOfWorkDesc,
         disabled: this.isModeView
       },
       phanNuocCheck: {
         value: this.model.projectInformation
-          && this.model.projectInformation // TODO:
-          && this.model.projectInformation, // TODO:
+          && this.model.projectInformation.electromechanicWater
+          && this.model.projectInformation.electromechanicWater.scopeOfWorkIsInclude,
+        disabled: this.isModeView
+      },
+      phanNuocDesc: {
+        value: this.model.projectInformation
+          && this.model.projectInformation.electromechanicWater
+          && this.model.projectInformation.electromechanicWater.scopeOfWorkDesc,
         disabled: this.isModeView
       },
       phanCoDienCongViecKhacCheck: {
         value: this.model.projectInformation
-          && this.model.projectInformation // TODO:
-          && this.model.projectInformation, // TODO:
+          && this.model.projectInformation.electromechanicOtherWork
+          && this.model.projectInformation.electromechanicOtherWork.scopeOfWorkIsInclude,
+        disabled: this.isModeView
+      },
+      phanCoDienCongViecKhacDesc: {
+        value: this.model.projectInformation
+          && this.model.projectInformation.electromechanicOtherWork
+          && this.model.projectInformation.electromechanicOtherWork.scopeOfWorkDesc,
         disabled: this.isModeView
       },
       // Kỹ thuật
@@ -755,65 +795,65 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
       giaTriPCBaseAmount: {
         value: this.model.tentativeTenderPrice
-          && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
-          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderAmount),
+          && this.model.tentativeTenderPrice.costOfNSC
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfNSC.baseTenderAmount),
         disabled: this.isModeView
       },
       giaTriPCBaseGfa: {
         value: this.model.tentativeTenderPrice
-          && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
-          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderGFA),
+          && this.model.tentativeTenderPrice.costOfNSC
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfNSC.baseTenderGFA),
         disabled: this.isModeView
       },
       giaTriPCAlterAmount: {
         value: this.model.tentativeTenderPrice
-          && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
+          && this.model.tentativeTenderPrice.costOfNSC
           && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
-            .costOfCapitalPCPSValue.alternativeTenderAmount),
+            .costOfNSC.alternativeTenderAmount),
         disabled: this.isModeView
       },
       giaTriPCAlterGfa: {
         value: this.model.tentativeTenderPrice
-          && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
+          && this.model.tentativeTenderPrice.costOfNSC
           && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
-            .costOfCapitalPCPSValue.alternativeTenderGFA),
+            .costOfNSC.alternativeTenderGFA),
         disabled: this.isModeView
       },
       giaTriPCNote: {
         value: this.model.tentativeTenderPrice
-          && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
-          && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.note,
+          && this.model.tentativeTenderPrice.costOfNSC
+          && this.model.tentativeTenderPrice.costOfNSC.note,
         disabled: this.isModeView
       },
-      // RQ // TODO: Update Model vs Map to Form
       giaTriNhaThauTrucTiepBaseAmount: {
         value: this.model.tentativeTenderPrice
-          && this.model.tentativeTenderPrice // TODO:
-          && this.model.tentativeTenderPrice, // TODO:
+          && this.model.tentativeTenderPrice.directContractorCost
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.directContractorCost.baseTenderAmount),
         disabled: this.isModeView
       },
       giaTriNhaThauTrucTiepBaseGfa: {
         value: this.model.tentativeTenderPrice
-          && this.model.tentativeTenderPrice // TODO:
-          && this.model.tentativeTenderPrice, // TODO:
+          && this.model.tentativeTenderPrice.directContractorCost
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.directContractorCost.baseTenderGFA),
         disabled: this.isModeView
       },
       giaTriNhaThauTrucTiepAlterAmount: {
         value: this.model.tentativeTenderPrice
-          && this.model.tentativeTenderPrice // TODO:
-          && this.model.tentativeTenderPrice, // TODO:
+          && this.model.tentativeTenderPrice.directContractorCost
+          && PriceReviewFormComponent
+            .checkDecimalPositiveNumber(this.model.tentativeTenderPrice.directContractorCost.alternativeTenderAmount),
         disabled: this.isModeView
       },
       giaTriNhaThauTrucTiepAlterGfa: {
         value: this.model.tentativeTenderPrice
-          && this.model.tentativeTenderPrice // TODO:
-          && this.model.tentativeTenderPrice, // TODO:
+          && this.model.tentativeTenderPrice.directContractorCost
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.directContractorCost.alternativeTenderGFA),
         disabled: this.isModeView
       },
       giaTriNhaThauTrucTiepNote: {
         value: this.model.tentativeTenderPrice
-          && this.model.tentativeTenderPrice // TODO:
-          && this.model.tentativeTenderPrice, // TODO:
+          && this.model.tentativeTenderPrice.directContractorCost
+          && this.model.tentativeTenderPrice.directContractorCost.note,
         disabled: this.isModeView
       },
       // RQ.

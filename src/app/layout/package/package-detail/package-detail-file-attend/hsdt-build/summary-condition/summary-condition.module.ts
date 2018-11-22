@@ -11,6 +11,7 @@ import { SummaryConditionDetailComponent } from './summary-condition-detail/summ
 import { SummaryConditionOverviewComponent } from './summary-condition-overview/summary-condition-overview.component';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { PopupConfirmTypeFormInComponent } from './components/popup-confirm-type-form-in/popup-confirm-type-form-in.component';
+import { ChangeHisrotyPopupComponent } from './change-hisroty-popup/change-hisroty-popup.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { PopupConfirmTypeFormInComponent } from './components/popup-confirm-type
     SummaryConditionEditComponent,
     SummaryConditionDetailComponent,
     SummaryConditionOverviewComponent,
-    PopupConfirmTypeFormInComponent
+    PopupConfirmTypeFormInComponent,
+    ChangeHisrotyPopupComponent
   ],
   providers: [
     HoSoDuThauService

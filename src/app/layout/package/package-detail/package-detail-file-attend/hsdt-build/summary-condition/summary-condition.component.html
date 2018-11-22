@@ -120,18 +120,25 @@
                     </td>
                     <td class="font-size-90">
                         <div class="overflow-scroll" *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
-                            <div *ngFor="let itemByChangeTime of itemByChangedTimes.items">
-                                <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
 
-                                    <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items">
+                            <ng-container *ngFor="let itemByChangeTime of itemByChangedTimes.items; index as index">
 
-                                        <div *ngIf="itemByLiveFormStep.liveFormStep !== 'OtherSpecialRequirement' && 
+                                <div *ngIf="index < 3">
+                                    <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
+
+                                        <ng-container *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items; index as count">
+
+
+                                            <div  *ngIf="count < lineDisplay(itemByChangedTimes.items.length)">
+
+                                                <div *ngIf="itemByLiveFormStep.liveFormStep !== 'OtherSpecialRequirement' && 
                                         itemByLiveFormStep.liveFormTitle !=='TaxTypes' && 
                                         itemByLiveFormStep.liveFormTitle !== 'AttentiveDocuments' &&
                                         itemByLiveFormStep.liveFormTitle !== 'ProgressCompletionContractorDate' &&
                                         itemByLiveFormStep.liveFormTitle !== 'IsProgressCompletionDate' &&
                                         (itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue)
-                                        " class="d-flex" title="* {{
+                                        "
+                                                    class="d-flex" title="* {{
                                                     itemByLiveFormStep.liveFormTitle ?
                                                     (itemByLiveFormStep.liveFormTitle | translate) :
                                                     ( itemByLiveFormStep.liveFormSubject ? 
@@ -139,38 +146,57 @@
                                                             (itemByLiveFormStep.liveFormStep | translate)
                                                     )
                                                 }}">
-                                            <ng-container>
-                                                *{{ itemByLiveFormStep.liveFormTitle | translate }}
-                                                <ng-container *ngIf="itemByLiveFormStep.liveFormSubject">
-                                                    ({{ itemByLiveFormStep.liveFormSubject | translate }})
+                                                    <ng-container>
+                                                        *{{ itemByLiveFormStep.liveFormTitle | translate }}
+                                                        <ng-container *ngIf="itemByLiveFormStep.liveFormSubject">
+                                                            ({{ itemByLiveFormStep.liveFormSubject | translate }})
 
-                                                </ng-container>
-                                                :&nbsp;
-                                            </ng-container>
-                                            <div class="detail-changed pl-1">từ
-                                                <!-- --- -->
-                                                <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
-                                                    {{(itemByLiveFormStep.oldValue != 0) ? ((itemByLiveFormStep.oldValue)*1000 | date:'dd/MM/yyyy') : 'không có'}}
-                                                </span>
-                                                <!-- --- -->
-                                                <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
-                                                    {{itemByLiveFormStep.oldValue ? (itemByLiveFormStep.oldValue | translate) : 'không có'}}
-                                                </span>
-                                                thành
-                                                <!-- --- -->
-                                                <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
-                                                    {{(itemByLiveFormStep.newValue != 0) ? ((itemByLiveFormStep.newValue)*1000 | date:'dd/MM/yyyy') : 'không có'}}
-                                                </span>
-                                                <!-- --- -->
-                                                <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
-                                                    {{itemByLiveFormStep.newValue ? (itemByLiveFormStep.newValue | translate) : 'không có'}}
-                                                </span>
+                                                        </ng-container>
+                                                        :&nbsp;
+                                                    </ng-container>
+                                                    <div class="detail-changed pl-1">từ
+                                                        <!-- --- -->
+                                                        <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
+                                                            {{(itemByLiveFormStep.oldValue != 0) ?
+                                                            ((itemByLiveFormStep.oldValue)*1000 | date:'dd/MM/yyyy') :
+                                                            'không có'}}
+                                                        </span>
+                                                        <!-- --- -->
+                                                        <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
+                                                            {{itemByLiveFormStep.oldValue ?
+                                                            (itemByLiveFormStep.oldValue |
+                                                            translate) : 'không có'}}
+                                                        </span>
+                                                        thành
+                                                        <!-- --- -->
+                                                        <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
+                                                            {{(itemByLiveFormStep.newValue != 0) ?
+                                                            ((itemByLiveFormStep.newValue)*1000 | date:'dd/MM/yyyy') :
+                                                            'không có'}}
+                                                        </span>
+                                                        <!-- --- -->
+                                                        <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
+                                                            {{itemByLiveFormStep.newValue ?
+                                                            (itemByLiveFormStep.newValue |
+                                                            translate) : 'không có'}}
+                                                        </span>
+                                                    </div>
+
+
+                                                </div>
                                             </div>
 
 
-                                        </div>
+                                        </ng-container>
+
                                     </div>
                                 </div>
+
+                            </ng-container>
+
+
+                            <div class="d-flex justify-content-center py-1">
+                                <a class="popup-detail" (click)="viewDetail()">Xem thêm</a>
                             </div>
                         </div>
                     </td>
@@ -187,3 +213,5 @@
 <app-popup-comfirm-form-in-dkdt *ngIf="isShowPopupFormIn" (closed)="closePopup($event)">
 
 </app-popup-comfirm-form-in-dkdt>
+
+<app-change-hisroty-popup [updateInfoList]="historyList" *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-change-hisroty-popup>
