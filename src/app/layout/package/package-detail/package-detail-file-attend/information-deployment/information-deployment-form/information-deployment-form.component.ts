@@ -160,6 +160,28 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             this.GuiPCTD = this.listPermissionScreen.includes('GuiPCTD');
             this.TaiTemplatePCTD = this.listPermissionScreen.includes('TaiTemplatePCTD');
             this.BatDauLapHSDT = this.listPermissionScreen.includes('BatDauLapHSDT');
+            setTimeout(() => {
+                switch (this.routerAction) {
+                    case 'create': {
+                        if (!this.TaoMoiBangPCTD) {
+                            this.router.navigate(['not-found']);
+                        }
+                        break;
+                    }
+                    case 'view': {
+                        if (!this.XemBangPCTD) {
+                            this.router.navigate(['not-found']);
+                        }
+                        break;
+                    }
+                    case 'edit': {
+                        if (!this.SuaBangPCTD) {
+                            this.router.navigate(['not-found']);
+                        }
+                        break;
+                    }
+                }
+            }, 4000);
         });
         this.userService.getAllUser('').subscribe(data => {
             this.userList = data;

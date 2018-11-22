@@ -170,13 +170,10 @@
                                             </select>
                                         </span> -->
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Tiến độ thực hiện</td>
+                                    <td class="w-15 bg-light text-right label no-boder field-name">Tổng giá trị nộp thầu</td>
                                     <td class="w-35 no-boder">
-                                        <div class=" w-75 autocomplete-wrapper-2 ui-fluid fix-m2-floor-area">
-                                            <input appEnterPreventDefault appInputNumber class="w-100 form-control cus-input text-right align-placeholder" tabindex="21"
-                                                type="text" formControlName="progress">
-                                            <span class="span-m2">%</span>
-                                        </div>
+                                        <div class="w-75 form-control text-right div-disabled--background">{{ package.totalCostOfSubmission ? (+package.totalCostOfSubmission | vnCurrency)
+                                            : '' }}</div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -193,10 +190,13 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder field-name">Tổng giá trị nộp thầu</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Tiến độ thực hiện</td>
                                     <td class="w-35 no-boder">
-                                        <div class="w-75 form-control text-right div-disabled--background">{{ package.totalCostOfSubmission ? (+package.totalCostOfSubmission | vnCurrency)
-                                            : '' }}</div>
+                                        <div class=" w-75 autocomplete-wrapper-2 ui-fluid fix-m2-floor-area">
+                                            <input appEnterPreventDefault appInputNumber class="w-100 form-control cus-input text-right align-placeholder" tabindex="21"
+                                                type="text" formControlName="progress">
+                                            <span class="span-m2">%</span>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
