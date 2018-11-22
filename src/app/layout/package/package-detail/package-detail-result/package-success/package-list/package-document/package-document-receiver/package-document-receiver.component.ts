@@ -1,9 +1,9 @@
-import { Component, OnInit, TemplateRef, Input } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../../shared/configs/datepicker.config';
 import { DATATABLE_CONFIG } from '../../../../../../../../shared/configs';
-import { Observable, BehaviorSubject, Subject } from '../../../../../../../../../../node_modules/rxjs';
+import { Observable, BehaviorSubject, Subject, Subscription } from '../../../../../../../../../../node_modules/rxjs';
 import { DocumentItem } from '../../../../../../../../shared/models/document-item';
 import { PackageSuccessService } from '../../../../../../../../shared/services/package-success.service';
 import { SessionService, DataService } from '../../../../../../../../shared/services/index';
@@ -26,6 +26,8 @@ import { StatusDocTranfered } from '../../../../../../../../shared/models/result
 import { DocmentParent } from '../../../../../../../../shared/models/result-attend/docment-parent.model';
 import { DialogService } from '../../../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../../../../shared/components/form-in/form-in.component';
+import { PermissionModel } from '../../../../../../../../shared/models/permission/permission.model';
+import { PermissionService } from '../../../../../../../../shared/services/permission.service';
 
 @Component({
   selector: 'app-package-document-receiver',
@@ -36,7 +38,7 @@ import { FormInComponent } from '../../../../../../../../shared/components/form-
     HoSoDuThauService
   ]
 })
-export class PackageDocumentReceiverComponent implements OnInit {
+export class PackageDocumentReceiverComponent implements OnInit, OnDestroy {
 
   datePickerConfig = DATETIME_PICKER_CONFIG;
   dtTrigger: Subject<any> = new Subject();
@@ -76,6 +78,28 @@ export class PackageDocumentReceiverComponent implements OnInit {
   dialogPrintLiveForm;
   dialogPopupFormIn;
   isShowPopupFormIn = false;
+  // ==========
+  subscription: Subscription;
+  listPermission: Array<PermissionModel>;
+  // Hồ sơ mời thầu
+  docHSMT = false;
+  // Trình duyệt giá
+  XemTDG = false;
+  InTDG = false;
+  // liveForm lập HSDT - Bảng tóm tắt ĐKDT
+  XemLiveFormBangTomTatDK = false;
+  InLiveFormBangTomTatDK = false;
+  // liveForm tham quan công trình
+  XemLiveFormThamquanCT = false;
+  InLiveFormThamquanCT = false;
+  // Các tài liệu khác
+  yeuCauBaoGia = false;
+  bangTongHopDuToan = false;
+  bangTinhChiPhiChung = false;
+  bangCauHoiLamRoHSMT = false;
+  cacHSKTLienQuan = false;
+  hoSoPhapLy = false;
+  hoSoKhac = false;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -88,11 +112,116 @@ export class PackageDocumentReceiverComponent implements OnInit {
     private documentService: DocumentService,
     private hoSoDuThauService: HoSoDuThauService,
     private router: Router,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private permissionService: PermissionService
   ) { }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      // Hồ sơ mời thầu
+      const hsmt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSMT')[0];
+      if (hsmt) {
+        const screenDocHSMT = hsmt.userPermissionDetails.length
+          && hsmt.userPermissionDetails.filter(y => y.permissionGroup.value === 'HSMT')[0];
+        if (screenDocHSMT) {
+          const permissionHSMT = screenDocHSMT.permissions.map(z => z.value);
+          this.docHSMT = permissionHSMT.includes('DownloadFile');
+        }
+      }
+      // Hồ sơ dự thầu
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (hsdt) {
+        // ==========
+        // Screen Hồ sơ dự thầu đã phê duyệt
+        // B4 - Trình duyệt giá
+        const screenPriceReview = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrinhDuyetGia')[0];
+        if (screenPriceReview) {
+          let tempArray = [];
+          tempArray = screenPriceReview.permissions.map(z => z.value);
+          this.XemTDG = tempArray.includes('XemTDG');
+          this.InTDG = tempArray.includes('InTDG');
+        }
+        // B3 - LiveForm
+        const screenDocsApprovedLiveForm = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauLiveForm')[0];
+        // Tài liệu HSDT
+        const screenDocHSDT = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
+        if (screenDocHSDT || screenDocsApprovedLiveForm) {
+          this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.currentPackageId).subscribe(response => {
+            // Screen Hồ sơ dự thầu đã phê duyệt
+            (response || []).forEach(item => {
+              let tempArray = [];
+              switch (item.item.name) {
+                case 'Bảng Tóm Tắt ĐKDT': {
+                  tempArray = screenDocsApprovedLiveForm.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  // Bảng tóm tắt ĐKDT
+                  this.XemLiveFormBangTomTatDK = tempArray.includes('XemLiveForm');
+                  this.InLiveFormBangTomTatDK = tempArray.includes('InLiveForm');
+                  break;
+                }
+                case 'Yêu cầu báo giá vật tư, thầu phụ': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.yeuCauBaoGia = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Báo cáo tham quan công trình': {
+                  tempArray = screenDocsApprovedLiveForm.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  // Tham quan công trình
+                  this.XemLiveFormThamquanCT = tempArray.includes('XemLiveForm');
+                  this.InLiveFormThamquanCT = tempArray.includes('InLiveForm');
+                  break;
+                }
+                case 'Bảng tổng hợp dự toán': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.bangTongHopDuToan = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Bảng tính chi phí chung': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.bangTinhChiPhiChung = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Bảng câu hỏi làm rõ HSMT': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.bangCauHoiLamRoHSMT = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Các HSKT có liên quan': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.cacHSKTLienQuan = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Hồ sơ pháp lý': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.hoSoPhapLy = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Hồ sơ khác': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.hoSoKhac = tempArray.includes('DownloadFile');
+                  break;
+                }
+              }
+            });
+          });
+        }
+      }
+    });
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
     });
@@ -115,6 +244,10 @@ export class PackageDocumentReceiverComponent implements OnInit {
         this.filterFuc(false);
       });
     this.getListFilter();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   // getListFilter() {
@@ -209,6 +342,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
       this.filter
     ).subscribe(response => {
       this.transferredDocList = response;
+      console.log('this.transferredDocList', this.transferredDocList);
       for (let i = 0; i < response.length; i++) {
         for (let j = 0; j < (response[i].bidTransferDocDetails || []).length; j++) {
           if (response[i].bidTransferDocDetails[j].sendEmployee) {
@@ -237,6 +371,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
         });
         this.docHSMTListTranferred = groupBy(this.docHSMTListTranferred, [{ field: 'documentTypeStr' }]);
       }
+      console.log('docHSDTListTranferred-before', this.docHSDTListTranferred);
       // Hồ sơ dự thầu
       if (this.docHSDTListTranferred && this.docHSDTListTranferred.length !== 0) {
         this.docHSDTListTranferred.forEach((itemPra, indexPra) => {
@@ -244,6 +379,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
         });
         this.docHSDTListTranferred = groupBy(this.docHSDTListTranferred, [{ field: 'documentTypeStr' }]);
       }
+      console.log('this.this.docHSDTListTranferred', this.docHSDTListTranferred);
       if (alertShow) {
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
       }
@@ -325,11 +461,11 @@ export class PackageDocumentReceiverComponent implements OnInit {
   viewDetailLiveForm(typeLiveForm) {
     switch (typeLiveForm) {
       case 'TenderConditionalSummary': {
-        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/summary`], { queryParams: { direction: false } });
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/summary/form/detail/info`], { queryParams: { direction: false } });
         break;
       }
       case 'SiteSurveyingReport': {
-        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/liveformsite`], { queryParams: { direction: false } });
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/liveformsite/form/info`], { queryParams: { direction: false } });
         break;
       }
       case 'TenderPriceApproval': {

@@ -132,14 +132,6 @@
                                     <tr>
                                         <td class="stt w5 bg-default wstt">
                                             <div class="d-flex justify-content-around">
-                                                <!-- <div class="w-40">
-                                                    <div class="center-parent">
-                                                        <label class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="documents.checkboxSelected">
-                                                            <span class="custom-control-indicator"></span>
-                                                        </label>
-                                                    </div>
-                                                </div> -->
                                                 <div class="center-parent w-35">
                                                     <div>{{renderIndexHSMT(i, j)}}</div>
                                                 </div>
@@ -174,16 +166,18 @@
                                                         </div>
                                                     </ng-container>
                                                     <ng-container *ngIf="documents.isFirstTransfer">
-                                                        <div id="mr" *ngIf="!documents.document.filerUrl">
-                                                            <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
-                                                                <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div *ngIf="documents.document.filerUrl">
-                                                            <a title="Mở link" [href]="documents.document.filerUrl" target="_blank">
-                                                                <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                                            </a>
-                                                        </div>
+                                                        <ng-container *ngIf="docHSMT">
+                                                            <div id="mr" *ngIf="!documents.document.filerUrl">
+                                                                <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
+                                                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div *ngIf="documents.document.filerUrl">
+                                                                <a title="Mở link" [href]="documents.document.filerUrl" target="_blank">
+                                                                    <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                                </a>
+                                                            </div>
+                                                        </ng-container>
                                                     </ng-container>
                                                 </div>
                                             </ng-container>
@@ -234,7 +228,7 @@
                                         </td>
                                         <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
                                             <div *ngIf="j === 0" class="text-truncate" [title]="documents.documentType?.value">
-                                                {{documents.documentType?.value}}
+                                                {{documents?.documentType?.value}}
                                             </div>
                                         </td>
                                         <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
@@ -271,24 +265,49 @@
                                                         </div>
                                                     </ng-container>
                                                     <ng-container *ngIf="documents.document && !documents.document.isLiveForm">
-                                                        <div id="mr" *ngIf="!documents.document.filerUrl">
-                                                            <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
-                                                                <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div id="mr" *ngIf="documents.document.filerUrl">
-                                                            <a title="Mở link" [href]="documents.document.filerUrl" target="_blank">
-                                                                <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                                            </a>
-                                                        </div>
+                                                        <ng-container *ngIf="(documents?.documentType?.value === 'Yêu cầu báo giá vật tư, thầu phụ' && yeuCauBaoGia)
+                                                        || (documents?.documentType?.value === 'Bảng tổng hợp dự toán' && bangTongHopDuToan)
+                                                        || (documents?.documentType?.value === 'Bảng tính chi phí chung' && bangTinhChiPhiChung)
+                                                        || (documents?.documentType?.value === 'Bảng câu hỏi làm rõ HSMT' && bangCauHoiLamRoHSMT)
+
+                                                        || (documents?.documentType?.value === 'Tiến độ thi công công trình' && cacHSKTLienQuan)
+                                                        || (documents?.documentType?.value === 'Mô tả giải pháp thi công công trình' && cacHSKTLienQuan)
+                                                        || (documents?.documentType?.value === 'Biện pháp đảm bảo an toàn lao động' && cacHSKTLienQuan)
+                                                        || (documents?.documentType?.value === 'Biểu đồ cung ứng máy móc thiết bị thi công' && cacHSKTLienQuan)
+                                                        || (documents?.documentType?.value === 'Sơ đồ tổ chức công trường' && cacHSKTLienQuan)
+                                                        || (documents?.documentType?.value === 'Bố trí tổng mặt bằng thi công công trường' && cacHSKTLienQuan)
+                                                        || (documents?.documentType?.value === 'Danh sách máy móc thiết bị thi công' && cacHSKTLienQuan)
+                                                        || (documents?.documentType?.value === 'Các hồ sơ kỹ thuật khác' && cacHSKTLienQuan)
+                                                
+                                                        || (documents?.documentType?.value === 'Bảo lãnh dự thầu' && hoSoPhapLy)
+                                                        || (documents?.documentType?.value === 'Danh sách hồ sơ kinh nghiệm' && hoSoPhapLy)
+                                                        || (documents?.documentType?.value === 'Danh sách mẫu báo cáo tài chính' && hoSoPhapLy)
+                                                        || (documents?.documentType?.value === 'Các hồ sơ pháp lý khác' && hoSoPhapLy)
+
+                                                        || (documents?.documentType?.value === 'Hồ sơ khác' && hoSoKhac)">
+                                                            <div id="mr" *ngIf="!documents.document.filerUrl">
+                                                                <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
+                                                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div id="mr" *ngIf="documents.document.filerUrl">
+                                                                <a title="Mở link" [href]="documents.document.filerUrl" target="_blank">
+                                                                    <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                                </a>
+                                                            </div>
+                                                        </ng-container>
                                                     </ng-container>
                                                     <ng-container *ngIf="documents.document && documents.document.isLiveForm">
-                                                        <div id="mr">
+                                                        <div id="mr" *ngIf="(documents?.document?.type === 'TenderConditionalSummary' && XemLiveFormBangTomTatDK)
+                                                        || (documents?.document?.type === 'SiteSurveyingReport' && XemLiveFormThamquanCT)
+                                                        || (documents?.document?.type === 'TenderPriceApproval' && XemTDG)">
                                                             <a title="Xem chi tiết" (click)="viewDetailLiveForm(documents?.document?.type)">
                                                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                                                             </a>
                                                         </div>
-                                                        <div>
+                                                        <div *ngIf="(documents?.document?.type === 'TenderConditionalSummary' && InLiveFormBangTomTatDK)
+                                                        || (documents?.document?.type === 'SiteSurveyingReport' && InLiveFormThamquanCT)
+                                                        || (documents?.document?.type === 'TenderPriceApproval' && InTDG)">
                                                             <a title="In" (click)="inLiveForm(documents?.document?.type)">
                                                                 <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                                                             </a>

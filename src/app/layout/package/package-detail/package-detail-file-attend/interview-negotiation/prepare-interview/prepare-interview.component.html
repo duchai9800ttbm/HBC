@@ -85,26 +85,47 @@
                                                         <div>{{renderIndex(i, k)}}</div>
                                                     </div>
                                                 </td>
-                                                <td valign="baseline" [attr.rowspan]="item.childs?.length" *ngIf="k === 0" [title]="item.typeName">{{item.typeName}}</td>
+                                                <td valign="baseline" [attr.rowspan]="item.childs?.length" *ngIf="k === 0" [title]="item.typeName">{{item?.typeName}}</td>
                                                 <td [title]="itemchirld.typeName">{{itemchirld.typeName}}</td>
                                                 <td [title]="itemchirld.document && itemchirld.document.name ? itemchirld.document.name : ''">{{itemchirld.document?.name}}</td>
                                                 <td class="text-center">{{itemchirld.document?.interviewTime}}</td>
                                                 <td class="text-center">
-                                                    <div *ngIf="!itemchirld.isLiveForm && !itemchirld?.document?.filerUrl" title="Tải file" (click)="dowloadDocument(itemchirld.document.id)">
-                                                        <a>
-                                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div *ngIf="!itemchirld.isLiveForm && itemchirld?.document?.filerUrl" title="Mở link">
-                                                        <a [href]="itemchirld.document.filerUrl" target="_blank">
-                                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div *ngIf="itemchirld.isLiveForm" title="Xem chi tiết" (click)="viewDetailLiveForm(item.document.type)">
-                                                        <a>
-                                                            <i class="fa fa-eye text-warning" aria-hidden="true"></i>
-                                                        </a>
-                                                    </div>
+                                                    <ng-container *ngIf="(item?.typeName === 'Yêu cầu báo giá vật tư, thầu phụ' && yeuCauBaoGia)
+                                                    || (item?.typeName === 'Bảng tổng hợp dự toán' && bangTongHopDuToan)
+                                                    || (item?.typeName === 'Bảng tính chi phí chung' && bangTinhChiPhiChung)
+                                                    || (item?.typeName === 'Bảng câu hỏi làm rõ HSMT' && bangCauHoiLamRoHSMT)
+                                                    || (item?.typeName === 'Các HSKT có liên quan' && cacHSKTLienQuan)
+                                                    || (item?.typeName === 'Hồ sơ pháp lý' && hoSoPhapLy)
+                                                    || (item?.typeName === 'Hồ sơ khác' && hoSoKhac)">
+                                                        <div *ngIf="!itemchirld.isLiveForm && !itemchirld?.document?.filerUrl" title="Tải file" (click)="dowloadDocument(itemchirld?.document?.id)">
+                                                            <a>
+                                                                <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div *ngIf="!itemchirld.isLiveForm && itemchirld?.document?.filerUrl" title="Mở link">
+                                                            <a [href]="itemchirld.document.filerUrl" target="_blank">
+                                                                <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="itemchirld?.document?.isLiveForm">
+                                                        <div *ngIf="(itemchirld?.document?.type === 'TenderConditionalSummary' && XemLiveFormBangTomTatDK)
+                                                        || (itemchirld?.document?.type === 'SiteSurveyingReport' && XemLiveFormThamquanCT)
+                                                        || (itemchirld?.document?.type === 'TenderPriceApproval' && XemTDG)"
+                                                            title="Xem chi tiết" (click)="viewDetailLiveForm(itemchirld?.document?.type)">
+                                                            <a>
+                                                                <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div *ngIf="(itemchirld?.document?.type === 'TenderConditionalSummary' && InLiveFormBangTomTatDK)
+                                                                || (itemchirld?.document?.type === 'SiteSurveyingReport' && InLiveFormThamquanCT)
+                                                                || (itemchirld?.document?.type === 'TenderPriceApproval' && InTDG)"
+                                                            style="cursor: pointer;" title="In">
+                                                            <a (click)="inLiveForm(item?.typeName)" class="text-success">
+                                                                <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    </ng-container>
                                                 </td>
                                             </tr>
                                         </ng-container>
@@ -126,9 +147,9 @@
                                                             <div>{{renderIndex(i,j)}}</div>
                                                         </div>
                                                     </td>
-                                                    <td [title]="item.typeName">
+                                                    <td [title]="item?.typeName">
                                                         <div class="text-truncate" *ngIf="j === 0">
-                                                            {{item.typeName}}
+                                                            {{item?.typeName}}
                                                         </div>
                                                     </td>
                                                     <td></td>
@@ -136,28 +157,43 @@
                                                     <td class="text-center">{{itemDocument.interviewTime}}</td>
                                                     <td class="text-center">
                                                         <div class="d-flex justify-content-around">
-                                                            <div *ngIf="!itemDocument.isLiveForm && !itemDocument.filerUrl" title="Tải file" (click)="dowloadDocument(item.document.id)">
-                                                                <a>
-                                                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div *ngIf="!itemDocument.isLiveForm && itemDocument.filerUrl" title="Mở link">
-                                                                <a [href]="itemDocument.filerUrl" target="_blank">
-                                                                    <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div *ngIf="itemDocument?.isLiveForm" title="Xem chi tiết" (click)="viewDetailLiveForm(itemDocument.type)">
-                                                                <a>
-                                                                    <i class="fa fa-eye text-warning" aria-hidden="true"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div style="cursor: pointer;" title="In" *ngIf="itemDocument?.isLiveForm">
-                                                                <a (click)="inLiveForm(item.typeName)" class="text-success">
-                                                                    <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
-                                                                </a>
-                                                            </div>
+                                                            <ng-container *ngIf="(item?.typeName === 'Yêu cầu báo giá vật tư, thầu phụ' && yeuCauBaoGia)
+                                                            || (item?.typeName === 'Bảng tổng hợp dự toán' && bangTongHopDuToan)
+                                                            || (item?.typeName === 'Bảng tính chi phí chung' && bangTinhChiPhiChung)
+                                                            || (item?.typeName === 'Bảng câu hỏi làm rõ HSMT' && bangCauHoiLamRoHSMT)
+                                                            || (item?.typeName === 'Các HSKT có liên quan' && cacHSKTLienQuan)
+                                                            || (item?.typeName === 'Hồ sơ pháp lý' && hoSoPhapLy)
+                                                            || (item?.typeName === 'Hồ sơ khác' && hoSoKhac)">
+                                                                <div *ngIf="!itemDocument?.isLiveForm && !itemDocument.filerUrl" title="Tải file" (click)="dowloadDocument(itemDocument.id)">
+                                                                    <a>
+                                                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </div>
+                                                                <div *ngIf="!itemDocument.isLiveForm && itemDocument.filerUrl" title="Mở link">
+                                                                    <a [href]="itemDocument.filerUrl" target="_blank">
+                                                                        <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="itemDocument?.isLiveForm">
+                                                                <div *ngIf="(itemDocument?.type === 'TenderConditionalSummary' && XemLiveFormBangTomTatDK)
+                                                                || (itemDocument?.type === 'SiteSurveyingReport' && XemLiveFormThamquanCT)
+                                                                || (itemDocument?.type === 'TenderPriceApproval' && XemTDG)"
+                                                                    title="Xem chi tiết" (click)="viewDetailLiveForm(itemDocument?.type)">
+                                                                    <a>
+                                                                        <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </div>
+                                                                <div *ngIf="(itemDocument?.type === 'TenderConditionalSummary' && InLiveFormBangTomTatDK)
+                                                                || (itemDocument?.type === 'SiteSurveyingReport' && InLiveFormThamquanCT)
+                                                                || (itemDocument?.type === 'TenderPriceApproval' && InTDG)"
+                                                                    style="cursor: pointer;" title="In">
+                                                                    <a (click)="inLiveForm(item?.typeName)" class="text-success">
+                                                                        <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </ng-container>
                                                         </div>
-
                                                     </td>
                                                 </tr>
                                             </ng-container>

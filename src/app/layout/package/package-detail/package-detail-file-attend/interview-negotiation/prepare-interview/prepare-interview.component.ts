@@ -1,30 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '../../../../../../../../node_modules/@angular/router';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { InterviewInvitationService } from '../../../../../../shared/services/interview-invitation.service';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
-import { Subject, BehaviorSubject } from '../../../../../../../../node_modules/rxjs';
+import { Subject, BehaviorSubject, Subscription } from '../../../../../../../../node_modules/rxjs';
 import { ApprovedDossiersList } from '../../../../../../shared/models/interview-invitation/approved-dossiers-list.model';
 import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spinner';
 import { AlertService } from '../../../../../../shared/services';
 import { NgbDropdownConfig } from '../../../../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
 import { DialogService } from '@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
+import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 
 @Component({
   selector: 'app-prepare-interview',
   templateUrl: './prepare-interview.component.html',
   styleUrls: ['./prepare-interview.component.scss'],
-  providers: [NgbDropdownConfig],
+  providers: [NgbDropdownConfig, HoSoDuThauService],
 })
-export class PrepareInterviewComponent implements OnInit {
+export class PrepareInterviewComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private interviewInvitationService: InterviewInvitationService,
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private permissionService: PermissionService,
+    private hoSoDuThauService: HoSoDuThauService
   ) { }
   packageId: number;
   dtOptions: any = DATATABLE_CONFIG;
@@ -37,8 +42,120 @@ export class PrepareInterviewComponent implements OnInit {
   dialog;
   dialogPopupFormIn;
   isShowPopupFormIn = false;
+  subscription: Subscription;
+  listPermission: Array<PermissionModel>;
+  // Trình duyệt giá
+  XemTDG = false;
+  InTDG = false;
+  // liveForm lập HSDT - Bảng tóm tắt ĐKDT
+  XemLiveFormBangTomTatDK = false;
+  InLiveFormBangTomTatDK = false;
+  // liveForm tham quan công trình
+  XemLiveFormThamquanCT = false;
+  InLiveFormThamquanCT = false;
+  // Các tài liệu khác
+  yeuCauBaoGia = false;
+  bangTongHopDuToan = false;
+  bangTinhChiPhiChung = false;
+  bangCauHoiLamRoHSMT = false;
+  cacHSKTLienQuan = false;
+  hoSoPhapLy = false;
+  hoSoKhac = false;
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (hsdt) {
+        // ==========
+        // Screen Hồ sơ dự thầu đã phê duyệt
+        // B4 - Trình duyệt giá
+        const screenPriceReview = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrinhDuyetGia')[0];
+        if (screenPriceReview) {
+          let tempArray = [];
+          tempArray = screenPriceReview.permissions.map(z => z.value);
+          this.XemTDG = tempArray.includes('XemTDG');
+          this.InTDG = tempArray.includes('InTDG');
+        }
+        // B3 - LiveForm
+        const screenDocsApprovedLiveForm = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauLiveForm')[0];
+        // Tài liệu HSDT
+        const screenDocHSDT = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
+        if (screenDocHSDT || screenDocsApprovedLiveForm) {
+          this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(response => {
+            // Screen Hồ sơ dự thầu đã phê duyệt
+            (response || []).forEach(item => {
+              let tempArray = [];
+              switch (item.item.name) {
+                case 'Bảng Tóm Tắt ĐKDT': {
+                  tempArray = screenDocsApprovedLiveForm.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  // Bảng tóm tắt ĐKDT
+                  this.XemLiveFormBangTomTatDK = tempArray.includes('XemLiveForm');
+                  this.InLiveFormBangTomTatDK = tempArray.includes('InLiveForm');
+                  break;
+                }
+                case 'Yêu cầu báo giá vật tư, thầu phụ': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.yeuCauBaoGia = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Báo cáo tham quan công trình': {
+                  tempArray = screenDocsApprovedLiveForm.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  // Tham quan công trình
+                  this.XemLiveFormThamquanCT = tempArray.includes('XemLiveForm');
+                  this.InLiveFormThamquanCT = tempArray.includes('InLiveForm');
+                  break;
+                }
+                case 'Bảng tổng hợp dự toán': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.bangTongHopDuToan = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Bảng tính chi phí chung': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.bangTinhChiPhiChung = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Bảng câu hỏi làm rõ HSMT': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.bangCauHoiLamRoHSMT = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Các HSKT có liên quan': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.cacHSKTLienQuan = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Hồ sơ pháp lý': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.hoSoPhapLy = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Hồ sơ khác': {
+                  tempArray = screenDocHSDT.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  this.hoSoKhac = tempArray.includes('DownloadFile');
+                  break;
+                }
+              }
+
+            });
+          });
+        }
+      }
+    });
     this.interviewInvitationService.watchRefeshPrepareInterview().subscribe(value => {
       if (this.isNgOnInit) {
         this.spinner.show();
@@ -77,6 +194,10 @@ export class PrepareInterviewComponent implements OnInit {
             this.isNgOnInit = true;
           });
       });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   routerLink(link: string) {
@@ -128,17 +249,17 @@ export class PrepareInterviewComponent implements OnInit {
     switch (type) {
       // Bản tóm tắt điều kiện dự thầu
       case 'TenderConditionalSummary': {
-        this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
+        this.router.navigate([`package/detail/${this.packageId}/attend/build/summary/form/detail/info`]);
         break;
       }
       // Bảo cáo tham quan công trình
       case 'SiteSurveyingReport': {
-        this.router.navigate([`/package/detail/${this.packageId}/attend/build/liveformsite`]);
+        this.router.navigate([`package/detail/${this.packageId}/attend/build/liveformsite/form/info`]);
         break;
       }
       // Trình duyệt giá
       case 'TenderPriceApproval': {
-        this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/detail`]);
+        this.router.navigate([`package/detail/${this.packageId}/attend/price-review/detail`]);
         break;
       }
     }

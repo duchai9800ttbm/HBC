@@ -56,7 +56,6 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   listPermissionScreen2 = [];
   bangTomDKDT = [];
   thamquanCT = [];
-  uploadDocHSDT = [];
 
   TaoMoiTDG = false;
   XemTDG = false;
@@ -78,6 +77,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   InLiveFormBangTomTatDK = false;
   // liveForm tham quan công trình
   XemLiveFormThamquanCT = false;
+  InLiveFormThamquanCT = false;
   // Các tài liệu khác
   yeuCauBaoGia = false;
   bangTongHopDuToan = false;
@@ -86,8 +86,6 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   cacHSKTLienQuan = false;
   hoSoPhapLy = false;
   hoSoKhac = false;
-
-  InLiveFormThamquanCT = false;
   documentTypeId = DocumentTypeId;
   constructor(
     private priceReviewService: PriceReviewService,
@@ -139,10 +137,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
         // Tài liệu HSDT
         const screenDocHSDT = hsdt.userPermissionDetails.length
           && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
-        if (!screenDocHSDT) {
-          this.uploadDocHSDT = [];
-        }
-        if (screenDocHSDT) {
+        if (screenDocHSDT || screenDocsApprovedLiveForm) {
           this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(response => {
             // Screen Hồ sơ dự thầu đã phê duyệt
             (response || []).forEach(item => {
@@ -251,7 +246,6 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   }
 
   viewLiveForm(typeLiveForm) {
-    console.log('viewLiveForm', typeLiveForm);
     switch (typeLiveForm) {
       case 'Trình Duyệt Giá': {
         this.router.navigate([`package/detail/${this.packageId}/attend/price-review/detail`]);
