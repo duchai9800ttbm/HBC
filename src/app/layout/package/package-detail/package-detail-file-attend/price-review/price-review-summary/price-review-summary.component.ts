@@ -136,16 +136,6 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
         // LiveForm
         const screenDocsApprovedLiveForm = hsdt.userPermissionDetails.length
           && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauLiveForm')[0];
-        if (!screenDocsApprovedLiveForm) {
-          this.bangTomDKDT = [];
-          this.thamquanCT = [];
-        }
-        if (screenDocsApprovedLiveForm) {
-          this.bangTomDKDT = screenDocsApprovedLiveForm.permissions
-            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTomTatDK).map(z => z.value);
-          this.thamquanCT = screenDocsApprovedLiveForm.permissions
-            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BaoCaoThamQuanCongTrinh).map(z => z.value);
-        }
         // Tài liệu HSDT
         const screenDocHSDT = hsdt.userPermissionDetails.length
           && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
@@ -154,13 +144,30 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
         }
         if (screenDocHSDT) {
           this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(response => {
+            // Screen Hồ sơ dự thầu đã phê duyệt
             (response || []).forEach(item => {
               let tempArray = [];
               switch (item.item.name) {
+                case 'Bảng Tóm Tắt ĐKDT': {
+                  tempArray = screenDocsApprovedLiveForm.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  // Bảng tóm tắt ĐKDT
+                  this.XemLiveFormBangTomTatDK = tempArray.includes('XemLiveForm');
+                  this.InLiveFormBangTomTatDK = tempArray.includes('InLiveForm');
+                  break;
+                }
                 case 'Yêu cầu báo giá vật tư, thầu phụ': {
                   tempArray = screenDocHSDT.permissions
                     .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
                   this.yeuCauBaoGia = tempArray.includes('DownloadFile');
+                  break;
+                }
+                case 'Báo cáo tham quan công trình': {
+                  tempArray = screenDocsApprovedLiveForm.permissions
+                    .filter(t => t.tenderDocumentTypeId === item.item.id).map(z => z.value);
+                  // Tham quan công trình
+                  this.XemLiveFormThamquanCT = tempArray.includes('XemLiveForm');
+                  this.InLiveFormThamquanCT = tempArray.includes('InLiveForm');
                   break;
                 }
                 case 'Bảng tổng hợp dự toán': {
@@ -220,13 +227,6 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
       this.ChotHoSo = this.listPermissionScreen2.includes('ChotHoSo');
       this.NopHSDT = this.listPermissionScreen2.includes('NopHSDT');
       this.HieuChinhHSDT = this.listPermissionScreen2.includes('HieuChinhHSDT');
-      // Screen Hồ sơ dự thầu đã phê duyệt
-      // Bảng tóm tắt ĐKDT
-      this.XemLiveFormBangTomTatDK = this.bangTomDKDT.includes('XemLiveForm');
-      this.InLiveFormBangTomTatDK = this.bangTomDKDT.includes('InLiveForm');
-      // Tham quan công trình
-      this.XemLiveFormThamquanCT = this.thamquanCT.includes('XemLiveForm');
-      this.InLiveFormThamquanCT = this.thamquanCT.includes('XemLiveForm');
     });
 
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
@@ -251,6 +251,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   }
 
   viewLiveForm(typeLiveForm) {
+    console.log('viewLiveForm', typeLiveForm);
     switch (typeLiveForm) {
       case 'Trình Duyệt Giá': {
         this.router.navigate([`package/detail/${this.packageId}/attend/price-review/detail`]);

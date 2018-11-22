@@ -456,7 +456,7 @@
                                                     <div style="cursor: pointer;" title="Xem" *ngIf="(item?.document?.type === 'TenderConditionalSummary' && XemLiveFormBangTomTatDK)
                                                     || (item?.document?.type === 'SiteSurveyingReport' && XemLiveFormThamquanCT)
                                                     || (item?.document?.type === 'TenderPriceApproval' && XemTDG)">
-                                                        <a (click)="viewLiveForm(item?.document?.typeName)">
+                                                        <a (click)="viewLiveForm(items?.typeName)">
                                                             <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
@@ -486,7 +486,7 @@
                                                     <div style="cursor: pointer;" title="In" *ngIf="(item?.document?.type === 'TenderConditionalSummary' && InLiveFormBangTomTatDK)
                                                     || (item?.document?.type === 'SiteSurveyingReport' && InLiveFormThamquanCT)
                                                     || (item?.document?.type === 'TenderPriceApproval' && InTDG)">
-                                                        <a class="text-success" (click)="print()">
+                                                        <a class="text-success" (click)="inLiveForm(items?.typeName)">
                                                             <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
@@ -518,10 +518,10 @@
                                         <td class="min-width-action">
                                             <div class="d-flex justify-content-around">
                                                 <ng-container *ngIf="item?.isLiveForm">
-                                                    <div style="cursor: pointer;" title="Xem" *ngIf="(item.type === 'TenderConditionalSummary' && XemLiveFormBangTomTatDK)
-                                                    || (item.type === 'SiteSurveyingReport' && XemLiveFormThamquanCT)
-                                                    || (item.type === 'TenderPriceApproval' && XemTDG)">
-                                                        <a (click)="viewLiveForm(item.typeName)">
+                                                    <div style="cursor: pointer;" title="Xem" *ngIf="(item?.type === 'TenderConditionalSummary' && XemLiveFormBangTomTatDK)
+                                                    || (item?.type === 'SiteSurveyingReport' && XemLiveFormThamquanCT)
+                                                    || (item?.type === 'TenderPriceApproval' && XemTDG)">
+                                                        <a (click)="viewLiveForm(items?.typeName)">
                                                             <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
@@ -551,7 +551,7 @@
                                                     <div style="cursor: pointer;" title="In" *ngIf="(item.type === 'TenderConditionalSummary' && InLiveFormBangTomTatDK)
                                                     || (item.type === 'SiteSurveyingReport' && InLiveFormThamquanCT)
                                                     || (item.type === 'TenderPriceApproval' && InTDG)">
-                                                        <a (click)="inLiveForm(item?.typeName)" class="text-success">
+                                                        <a (click)="inLiveForm(items?.typeName)" class="text-success">
                                                             <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
