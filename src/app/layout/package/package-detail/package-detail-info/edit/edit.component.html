@@ -193,9 +193,10 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Lí do thắng thầu</td>
+                                    <td class="w-15 bg-light text-right label no-boder field-name">Tổng giá trị nộp thầu</td>
                                     <td class="w-35 no-boder">
-                                        <input appEnterPreventDefault class="w-75 form-control" tabindex="22" disabled type="text" formControlName="acceptanceReason">
+                                        <div class="w-75 form-control text-right div-disabled--background">{{ package.totalCostOfSubmission ? (+package.totalCostOfSubmission | vnCurrency)
+                                            : '' }}</div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -212,9 +213,9 @@
                                             </span>
                                         </span>
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Lí do trật thầu</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Lí do thắng thầu</td>
                                     <td class="w-35 no-boder">
-                                        <input appEnterPreventDefault class="w-75 form-control" tabindex="23" disabled type="text" formControlName="unacceptanceReason">
+                                        <input appEnterPreventDefault class="w-75 form-control" tabindex="22" disabled type="text" formControlName="acceptanceReason">
                                     </td>
                                 </tr>
                                 <tr>
@@ -223,9 +224,9 @@
                                         <input appEnterPreventDefault disabled class="w-75 form-control" tabindex="11" placeholder="" type="text" formControlName="consultantAddress"
                                             [value]="packageForm.get('consultantAddress').value">
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Lý do hủy thầu</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Lí do trật thầu</td>
                                     <td class="w-35 no-boder">
-                                        <input appEnterPreventDefault class="w-75 form-control" tabindex="24" disabled type="text" formControlName="cancelReason">
+                                        <input appEnterPreventDefault class="w-75 form-control" tabindex="23" disabled type="text" formControlName="unacceptanceReason">
                                     </td>
                                 </tr>
                                 <tr>
@@ -234,16 +235,9 @@
                                         <input appEnterPreventDefault disabled appInputNumber class="w-75 form-control" tabindex="12" placeholder="" type="text"
                                             formControlName="consultantPhone" [value]="packageForm.get('consultantPhone').value">
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Đánh giá dự án</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Lý do hủy thầu</td>
                                     <td class="w-35 no-boder">
-                                        <span class="custom-dropdown w-75">
-                                            <select class="form-control" appEnterPreventDefault tabindex="25" formControlName="evaluationId">
-                                                <option [ngValue]="null">---Chọn---</option>
-                                                <option *ngFor="let item of dataEvaluation" [value]="item.key">
-                                                    {{ item.value }}
-                                                </option>
-                                            </select>
-                                        </span>
+                                        <input appEnterPreventDefault class="w-75 form-control" tabindex="24" disabled type="text" formControlName="cancelReason">
                                     </td>
                                 </tr>
                                 <tr>
@@ -258,9 +252,18 @@
                                                 type="text" formControlName="floorArea">
                                         </div>
                                     </td>
-                                    <td class="w-15 bg-light text-right label" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;"></td>
+                                    <!-- <td class="w-15 bg-light text-right label" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;"></td>
+                                    <td class="w-35" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;"></td> -->
+                                    <td class="w-15 bg-light text-right label" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">Đánh giá dự án</td>
                                     <td class="w-35" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">
-                                        <!-- <input class="w-75 form-control" tabindex="23" type="text" formControlName="evaluation"> -->
+                                        <span class="custom-dropdown w-75">
+                                            <select class="form-control" appEnterPreventDefault tabindex="25" formControlName="evaluationId">
+                                                <option [ngValue]="null">---Chọn---</option>
+                                                <option *ngFor="let item of dataEvaluation" [value]="item.key">
+                                                    {{ item.value }}
+                                                </option>
+                                            </select>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -291,8 +294,8 @@
                                             <span [owlDateTimeTrigger]="dtProjectEstimatedStartDate" class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span> -->
-                                            <kendo-datepicker [max]="packageForm.get('projectEstimatedEndDate').value" appEnterPreventDefault
-                                                class="w-100" tabindex="30" formControlName="projectEstimatedStartDate"></kendo-datepicker>
+                                            <kendo-datepicker [max]="packageForm.get('projectEstimatedEndDate').value" appEnterPreventDefault class="w-100" tabindex="30"
+                                                formControlName="projectEstimatedStartDate"></kendo-datepicker>
                                         </div>
                                     </td>
                                 </tr>
@@ -327,8 +330,8 @@
                                             <span [owlDateTimeTrigger]="dtProjectEstimatedEndDate" class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span> -->
-                                            <kendo-datepicker [min]="packageForm.get('projectEstimatedStartDate').value" appEnterPreventDefault
-                                                class="w-100" tabindex="31" formControlName="projectEstimatedEndDate"></kendo-datepicker>
+                                            <kendo-datepicker [min]="packageForm.get('projectEstimatedStartDate').value" appEnterPreventDefault class="w-100" tabindex="31"
+                                                formControlName="projectEstimatedEndDate"></kendo-datepicker>
                                         </div>
                                     </td>
                                 </tr>
