@@ -1279,4 +1279,26 @@ export class PackageService {
         const dateSent = { guid: id };
         return this.apiService.post(url, dateSent);
     }
+    // UPload hình ảnh tab 9 - phiếu đề nghị dự thầu
+    // Upload ảnh
+    uploadImagTender(
+        listImage: any,
+        bidOpportunityId: number
+    ) {
+        const url = `proposedtenderparticipatinngreport/uploadimage`;
+        const imageUploadForm = new FormData();
+        for (const image of listImage) {
+            imageUploadForm.append('Images', image);
+        }
+        imageUploadForm.append('BidOpportunityId', `${bidOpportunityId}`);
+        return this.apiService
+            .postFile(url, imageUploadForm)
+            .map(res => res.result)
+            .share();
+    }
+    // Xóa hình ảnh của tab 9 - phiếu đề nghị dự thầu
+    deleteImageTender(guid) {
+        const url = `bidopportunity/tendersitesurveyingreport/deleteimage`;
+        return this.apiService.post(url, guid);
+    }
 }

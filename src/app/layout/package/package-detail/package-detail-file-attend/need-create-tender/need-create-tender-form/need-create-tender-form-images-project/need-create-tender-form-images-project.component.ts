@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { AlertService } from '../../../../../../../shared/services';
 import { PackageDetailComponent } from '../../../../package-detail.component';
@@ -11,11 +11,13 @@ import { NeedCreateTenderFormComponent } from '../need-create-tender-form.compon
   styleUrls: ['./need-create-tender-form-images-project.component.scss']
 })
 export class NeedCreateTenderFormImagesProjectComponent implements OnInit {
+  @ViewChild('uploadImage') uploadImage;
   routerAction: string;
   imageProjects = [];
   showPopupViewImage = false;
   indexOfImage: number;
   imageUrlArray = [];
+  bidOpportunityId: number;
   constructor(
     private packageService: PackageService,
     private alertService: AlertService,
@@ -23,6 +25,7 @@ export class NeedCreateTenderFormImagesProjectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.bidOpportunityId = PackageDetailComponent.packageId;
     this.routerAction = this.packageService.routerAction;
     this.packageService.routerAction$.subscribe(router => {
       this.routerAction = router;
@@ -30,23 +33,24 @@ export class NeedCreateTenderFormImagesProjectComponent implements OnInit {
     });
   }
   loadData() {
-    if (NeedCreateTenderFormComponent.formModel) {
+    // tslint:disable-next-line:max-line-length
+    if (NeedCreateTenderFormComponent.formModel && NeedCreateTenderFormComponent.formModel.projectImage && NeedCreateTenderFormComponent.formModel.projectImage.projectImages) {
       this.imageProjects = [...NeedCreateTenderFormComponent.formModel.projectImage.projectImages];
     }
   }
   uploadImageProject(event) {
     const files = event.target.files;
-    this.packageService.uploadImageService(files).subscribe(imageUrls => {
+    this.packageService.uploadImagTender(files, this.bidOpportunityId).subscribe(imageUrls => {
       this.imageProjects = [...this.imageProjects, ...imageUrls];
-      NeedCreateTenderFormComponent.formModel.projectImage.projectImages = [...this.imageProjects, ...imageUrls];
+      NeedCreateTenderFormComponent.formModel.projectImage.projectImages = this.imageProjects;
+      this.uploadImage.nativeElement.value = null;
     });
   }
   deleteImage(i) {
     const index = this.imageProjects.indexOf(i);
     this.imageProjects.splice(index, 1);
     if (i.guid) {
-      this.packageService.deleteImageService(i.guid).subscribe(() => {
-
+      this.packageService.deleteImageTender(i.guid).subscribe(() => {
       });
     }
     NeedCreateTenderFormComponent.formModel.projectImage.projectImages = [...this.imageProjects];

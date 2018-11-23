@@ -7,6 +7,7 @@ import { ContractConditionTenderParticipate } from '../../package/contract-condi
 import { TenderDirectorProposal } from '../../package/tender-director-proposal';
 import { DecisionBoardGeneralDirector } from '../../package/decision-board-general-director';
 import { EmployeeModel } from '../../employee/employee-model';
+import { ProjectImages } from '../../package/project-images';
 
 export class ProposeTenderParticipateRequest {
     id: number;
@@ -32,8 +33,8 @@ export class ProposeTenderParticipateRequest {
     updatedDesc: string;
 }
 
-class ProjectImages {
-    guid: string;
-    thumbSizeUrl: string;
-    largeSizeUrl: string;
-}
+// class ProjectImages {
+//     guid: string;
+//     thumbSizeUrl: string;
+//     largeSizeUrl: string;
+// }

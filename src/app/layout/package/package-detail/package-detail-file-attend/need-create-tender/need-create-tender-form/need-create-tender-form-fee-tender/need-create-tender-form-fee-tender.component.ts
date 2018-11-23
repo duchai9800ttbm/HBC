@@ -31,7 +31,6 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
         this.feeTenderForm.disable();
       }
       this.feeTenderForm.valueChanges.subscribe(data => {
-        console.log('mapping-data-1');
         this.mappingToLiveFormData(data);
       });
     });
@@ -39,7 +38,6 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
       this.createForm();
       this.feeTenderForm.valueChanges.subscribe(data => {
         this.mappingToLiveFormData(data);
-        console.log('mapping-data-2');
       });
     });
   }

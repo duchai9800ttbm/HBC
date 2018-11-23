@@ -24,6 +24,7 @@ import { DecisionBoardGeneralDirector } from '../../../../../../shared/models/pa
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { Subscription, Observable } from '../../../../../../../../node_modules/rxjs';
+import { ProjectImages } from '../../../../../../shared/models/package/project-images';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -230,6 +231,11 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         // DecisionBoardGeneralDirector
         NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = new DecisionBoardGeneralDirector();
         NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.reason = '';
+        // ====================
+        // projectImage
+        NeedCreateTenderFormComponent.formModel.projectImage = {
+            projectImages: new Array<ProjectImages>(),
+        };
     }
 
     startUp() {
