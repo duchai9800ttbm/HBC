@@ -72,9 +72,9 @@
                                     </div>
                                     <div>
                                         <span style="margin-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control" formControlName="userName">
+                                            <select class="form-control" formControlName="userName" (change)="hiddenUserNameKQDT()">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id" [hidden]="userNameKQDT.includes(user.id)">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>
@@ -192,9 +192,9 @@
                                     </div>
                                     <div>
                                         <span style="margin-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control" formControlName="userName">
+                                            <select class="form-control" formControlName="userName" (change)="hiddenUserNameHopDongKyKet()">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id" [hidden]="userNameHopDongKyKet.includes(user.id)">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>
@@ -281,9 +281,9 @@
                                     </div>
                                     <div>
                                         <span style="margin-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control" formControlName="userName">
+                                            <select class="form-control" formControlName="userName" (change)="hiddenUserNameHopKickOff()">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id" [hidden]="userNameHopKickOff.includes(user.id)">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>

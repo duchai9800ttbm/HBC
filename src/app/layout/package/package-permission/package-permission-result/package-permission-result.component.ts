@@ -28,7 +28,9 @@ export class PackagePermissionResultComponent implements OnInit {
         list: BidPermissionUserGroupResponsive[]
     }[] = [];
     listFormData: BidPermissionGroupResponsive[];
-
+    userNameKQDT = [];
+    userNameHopDongKyKet = [];
+    userNameHopKickOff = [];
     constructor(
         private fb: FormBuilder,
         private packageService: PackageService,
@@ -61,6 +63,9 @@ export class PackagePermissionResultComponent implements OnInit {
             });
             this.listFormData = data;
             this.createForms(data);
+            this.hiddenUserNameKQDT();
+            this.hiddenUserNameHopDongKyKet();
+            this.hiddenUserNameHopKickOff();
             setTimeout(() => {
                 this.dtTrigger.next();
             });
@@ -115,8 +120,23 @@ export class PackagePermissionResultComponent implements OnInit {
     }
 
     removeFormItem(formData, idx: number) {
+        console.log('this.formData.bidPermissionGroupName', formData.bidPermissionGroupName);
         const formArrayControl = this.packagePermissionReviewForm.get(formData.bidPermissionGroupName).get('permission') as FormArray;
         formArrayControl.removeAt(idx);
+        switch (formData.bidPermissionGroupName) {
+            case 'KetQuaDuThau': {
+                this.hiddenUserNameKQDT();
+                break;
+            }
+            case 'HopDongKiKet': {
+                this.hiddenUserNameHopDongKyKet();
+                break;
+            }
+            case 'HopKickOff': {
+                this.hiddenUserNameHopKickOff();
+                break;
+            }
+        }
         setTimeout(() => {
             this.dtTrigger.next();
         });
@@ -163,5 +183,26 @@ export class PackagePermissionResultComponent implements OnInit {
     }
     routeToPackageInfo() {
         return this.router.navigate([`/package/detail/${this.packageId}/`]);
+    }
+    hiddenUserNameKQDT() {
+        this.userNameKQDT = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('KetQuaDuThau').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            this.userNameKQDT.push(+itemControl.get('userName').value);
+        });
+    }
+    hiddenUserNameHopDongKyKet() {
+        this.userNameHopDongKyKet = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('HopDongKiKet').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            this.userNameHopDongKyKet.push(+itemControl.get('userName').value);
+        });
+    }
+    hiddenUserNameHopKickOff() {
+        this.userNameHopKickOff = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('HopKickOff').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            this.userNameHopKickOff.push(+itemControl.get('userName').value);
+        });
     }
 }
