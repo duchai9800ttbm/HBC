@@ -17,6 +17,7 @@ import { BidPermissionGroupResponsive } from '../../../../shared/models/api-resp
 import { BidPermissionResponsive } from '../../../../shared/models/api-response/setting/bid-permission-responsive';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { forkJoin } from '../../../../../../node_modules/rxjs/observable/forkJoin';
 
 @Component({
     selector: 'app-package-permission-review',
@@ -24,7 +25,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./package-permission-review.component.scss']
 })
 export class PackagePermissionReviewComponent implements OnInit {
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
     dtOptions: any = DATATABLE_CONFIG;
     packagePermissionReviewForm: FormGroup;
     packageId: number;
@@ -35,6 +36,7 @@ export class PackagePermissionReviewComponent implements OnInit {
     listFormData: BidPermissionGroupResponsive[];
     listBidGroupUser: BidGroupUserResponsive[];
     checkAllHSMT = true;
+    userNameChoosed = [];
     constructor(
         private fb: FormBuilder,
         private packageService: PackageService,
@@ -47,31 +49,36 @@ export class PackagePermissionReviewComponent implements OnInit {
     ngOnInit() {
         this.spinner.show();
         this.packageId = PackagePermissionComponent.packageId;
-        this.dataService.getListBidUserGroup().subscribe(data => {
-            this.listBidGroupUser = data;
-        });
-        this.packageService.getBidPermissionGroupByStage(this.packageId, SETTING_BID_STAGE.Hsmt).subscribe(data => {
-            data.forEach(e => {
-                const listItem = {
-                    type: e.bidPermissionGroupName,
-                    list: []
-                };
-                e.bidPermissions.forEach(i => {
-                    i.bidUserGroupPermissions.forEach(user => {
-                        if (!listItem.list.find(item => item.userGroupDesc === user.userGroupDesc)) {
-                            listItem.list.push(user);
-                        }
+        forkJoin(
+            this.dataService.getListBidUserGroup(),
+            this.packageService.getBidPermissionGroupByStage(this.packageId, SETTING_BID_STAGE.Hsmt),
+        )
+            .subscribe(([listBidGroupUser, data]) => {
+                // listBidGroupUser
+                this.listBidGroupUser = listBidGroupUser;
+                // data
+                data.forEach(e => {
+                    const listItem = {
+                        type: e.bidPermissionGroupName,
+                        list: []
+                    };
+                    e.bidPermissions.forEach(i => {
+                        i.bidUserGroupPermissions.forEach(user => {
+                            if (!listItem.list.find(item => item.userGroupDesc === user.userGroupDesc)) {
+                                listItem.list.push(user);
+                            }
+                        });
                     });
+                    this.listBidPermissionUserGroup.push(listItem);
                 });
-                this.listBidPermissionUserGroup.push(listItem);
+                this.listFormData = data;
+                this.createForms(data);
+                this.hiddenUserName();
+                // setTimeout(() => {
+                //     this.dtTrigger.next();
+                // });
+                this.spinner.hide();
             });
-            this.listFormData = data;
-            this.createForms(data);
-            setTimeout(() => {
-                this.dtTrigger.next();
-            });
-            this.spinner.hide();
-        });
     }
 
     createForms(formData: any[]) {
@@ -127,9 +134,10 @@ export class PackagePermissionReviewComponent implements OnInit {
     removeFormItem(formData, idx: number) {
         const formArrayControl = this.packagePermissionReviewForm.get(formData.bidPermissionGroupName).get('permission') as FormArray;
         formArrayControl.removeAt(idx);
-        setTimeout(() => {
-            this.dtTrigger.next();
-        });
+        this.hiddenUserName();
+        // setTimeout(() => {
+        //     this.dtTrigger.next();
+        // });
     }
 
     onSubmit() {
@@ -173,5 +181,12 @@ export class PackagePermissionReviewComponent implements OnInit {
     }
     routeToPackageInfo() {
         return this.router.navigate([`/package/detail/${this.packageId}/`]);
+    }
+    hiddenUserName() {
+        this.userNameChoosed = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('HSMT').get('permission') as FormArray;
+        formArrayControl.controls.forEach( itemControl => {
+            this.userNameChoosed.push(+itemControl.get('userName').value);
+        });
     }
 }

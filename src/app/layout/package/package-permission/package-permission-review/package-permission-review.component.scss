@@ -50,6 +50,8 @@
 
 .grid-container-3 {
     display: grid;
-    grid-template-columns: 32px 32px 200px;
-    
+    grid-template-columns: 32px 32px 200px;   
+}
+.set-width-hsmt{
+    width: 21rem !important;
 }

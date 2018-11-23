@@ -12,10 +12,11 @@
         </div>
         <div style="margin-top: -1rem; margin-right: 1rem">
             <h5 class="mb-3 text-uppercase">Quản lý hồ sơ mời thầu</h5>
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+            <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover" -->
+            <table class="zui-table table table-striped table-hover">
                 <thead>
                     <tr style="width: 100%">
-                        <th style="width: 280px !important">
+                        <th class="set-width-hsmt">
                             <div class="text-center">Hồ sơ mời thầu</div>
                         </th>
                         <th></th>
@@ -53,9 +54,9 @@
                                     </div>
                                     <div>
                                         <span style="margin-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control" formControlName="userName">
+                                            <select class="form-control" formControlName="userName" (change)="hiddenUserName()">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                <option *ngFor="let user of listBidGroupUser; let i = index" [value]="user.id" [hidden]="userNameChoosed.includes(user.id)">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>
