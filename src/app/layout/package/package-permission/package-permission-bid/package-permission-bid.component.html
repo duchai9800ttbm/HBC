@@ -71,11 +71,11 @@
                                     </div>
                                     <div>
                                         <span style="margin-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control" formControlName="userName">
+                                            <select class="form-control" formControlName="userName" (change)="hiddenUserNamePDNDT()">
                                                 <option [ngValue]="null">--Chọn--</option>
                                                 <ng-container *ngFor="let user of listBidGroupUser">
                                                     <ng-container *ngIf="checkOption(user.id, index)">
-                                                        <option [value]="user.id">{{user.desc}}</option>
+                                                        <option [value]="user.id" [hidden]="userNameChoosedPDNDT.includes(user.id)">{{user.desc}}</option>
                                                     </ng-container>
                                                 </ng-container>
                                             </select>
@@ -215,9 +215,9 @@
                                     </div>
                                     <div>
                                         <span style="margin-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control" formControlName="userName">
+                                            <select class="form-control" formControlName="userName" (change)="hiddenUserNamePCTD()">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id" [hidden]="userNameChoosedPCTD.includes(user.id)">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>
@@ -341,9 +341,9 @@
                                         </div>
                                         <div>
                                             <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                                <select class="form-control" formControlName="userName">
+                                                <select class="form-control" formControlName="userName" (change)="hiddenUserNameLapHSDTUploadFile()">
                                                     <option [ngValue]="null">--Chọn--</option>
-                                                    <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                    <option *ngFor="let user of listBidGroupUser" [value]="user.id" [hidden]="userNameChoosedLapHSDTUploadFile.includes(user.id)">{{user.desc}}</option>
                                                 </select>
                                             </span>
                                         </div>
@@ -471,9 +471,9 @@
                                         </div>
                                         <div>
                                             <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                                <select class="form-control" formControlName="userName">
+                                                <select class="form-control" formControlName="userName" (change)="hiddenUserNameLapHSDTLiveForm()">
                                                     <option [ngValue]="null">--Chọn--</option>
-                                                    <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                    <option *ngFor="let user of listBidGroupUser" [value]="user.id" [hidden]="userNameChoosedLapHSDTLiveForm.includes(user.id)">{{user.desc}}</option>
                                                 </select>
                                             </span>
                                         </div>
@@ -613,9 +613,9 @@
                                     </div>
                                     <div>
                                         <span style="margin-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control" formControlName="userName">
+                                            <select class="form-control" formControlName="userName" (change)="hiddenUserNameTDG()">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id" [hidden]="userNameChoosedTDG.includes(user.id)">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>
@@ -724,9 +724,9 @@
                                     </div>
                                     <div>
                                         <span style="margin-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control" formControlName="userName">
+                                            <select class="form-control" formControlName="userName" (change)="hiddenUserNameChotVaNop()">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id" [hidden]="userNameChoosedChotVaNop.includes(user.id)">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>
@@ -809,9 +809,9 @@
                                     </div>
                                     <div>
                                         <span style="margin-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control" formControlName="userName">
+                                            <select class="form-control" formControlName="userName" (change)="hiddenUserNameQuanLyPV()">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id" [hidden]="userNameChoosedQuanLyPV.includes(user.id)">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>

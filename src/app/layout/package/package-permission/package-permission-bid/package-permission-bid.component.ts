@@ -12,6 +12,7 @@ import { PackagePermissionComponent } from '../package-permission.component';
 import { SETTING_BID_STAGE } from '../../../../shared/configs/common.config';
 import { DictionaryItem } from '../../../../shared/models';
 import { Router } from '@angular/router';
+import { forkJoin } from '../../../../../../node_modules/rxjs/observable/forkJoin';
 
 @Component({
     selector: 'app-package-permission-bid',
@@ -32,7 +33,13 @@ export class PackagePermissionBidComponent implements OnInit {
     listDocumentType: DictionaryItem[];
     listLiveformType: DictionaryItem[];
     listFormDocumentType: any[];
-
+    userNameChoosedPDNDT = [];
+    userNameChoosedPCTD = [];
+    userNameChoosedLapHSDTUploadFile = [];
+    userNameChoosedLapHSDTLiveForm = [];
+    userNameChoosedTDG = [];
+    userNameChoosedChotVaNop = [];
+    userNameChoosedQuanLyPV = [];
     constructor(
         private fb: FormBuilder,
         private packageService: PackageService,
@@ -45,21 +52,20 @@ export class PackagePermissionBidComponent implements OnInit {
     ngOnInit() {
         this.spinner.show();
         this.packageId = PackagePermissionComponent.packageId;
-        this.dataService.getListBidUserGroup().subscribe(data => {
-            this.listBidGroupUser = data;
-        });
-        this.dataService.getListTenderDocumentType().subscribe(data => {
-            this.listDocumentType = data;
-        });
-        this.dataService.getLiveFormTypes().subscribe(data => {
-            this.listLiveformType = data;
-        });
-        this.packageService
-            .getBidPermissionGroupByStage(
-                this.packageId,
-                SETTING_BID_STAGE.Hsdt
-            )
-            .subscribe(data => {
+        forkJoin(
+            this.dataService.getListBidUserGroup(),
+            this.dataService.getListTenderDocumentType(),
+            this.dataService.getLiveFormTypes(),
+            this.packageService
+                .getBidPermissionGroupByStage(
+                    this.packageId,
+                    SETTING_BID_STAGE.Hsdt
+                )
+        )
+            .subscribe(([listBidGroupUser, listDocumentType, listLiveformType, data]) => {
+                this.listBidGroupUser = listBidGroupUser;
+                this.listDocumentType = listDocumentType;
+                this.listLiveformType = listLiveformType;
                 data.forEach(e => {
                     const listItem = {
                         type: e.bidPermissionGroupName,
@@ -90,13 +96,77 @@ export class PackagePermissionBidComponent implements OnInit {
                     this.listBidPermissionUserGroup.push(listItem);
                 });
                 this.listFormData = data;
-
                 this.createForms(data);
+                this.hiddenUserNamePDNDT();
+                this.hiddenUserNamePCTD();
+                this.hiddenUserNameLapHSDTUploadFile();
+                this.hiddenUserNameLapHSDTLiveForm();
+                this.hiddenUserNameTDG();
+                this.hiddenUserNameChotVaNop();
+                this.hiddenUserNameQuanLyPV();
                 setTimeout(() => {
                     this.dtTrigger.next();
                 });
                 this.spinner.hide();
             });
+        // this.dataService.getListBidUserGroup().subscribe(data => {
+        //     this.listBidGroupUser = data;
+        // });
+        // this.dataService.getListTenderDocumentType().subscribe(data => {
+        //     this.listDocumentType = data;
+        // });
+        // this.dataService.getLiveFormTypes().subscribe(data => {
+        //     this.listLiveformType = data;
+        // });
+        // this.packageService
+        //     .getBidPermissionGroupByStage(
+        //         this.packageId,
+        //         SETTING_BID_STAGE.Hsdt
+        //     )
+        //     .subscribe(data => {
+        //         data.forEach(e => {
+        //             const listItem = {
+        //                 type: e.bidPermissionGroupName,
+        //                 list: []
+        //             };
+        //             e.bidPermissions.forEach(i => {
+        //                 i.bidUserGroupPermissions.forEach(user => {
+        //                     user.allDocumentTypes = [];
+        //                     if (
+        //                         !listItem.list.find(
+        //                             item =>
+        //                                 item.userGroupDesc ===
+        //                                 user.userGroupDesc
+        //                         )
+        //                     ) {
+        //                         listItem.list.push(user);
+        //                     }
+        //                     user.documentTypes.forEach(doc => {
+        //                         if (doc) {
+        //                             const userOfList = listItem.list.find(li => li.userGroupId === user.userGroupId);
+        //                             if (!userOfList.allDocumentTypes.find(dt => dt.key === doc.key)) {
+        //                                 userOfList.allDocumentTypes.push(doc);
+        //                             }
+        //                         }
+        //                     });
+        //                 });
+        //             });
+        //             this.listBidPermissionUserGroup.push(listItem);
+        //         });
+        //         this.listFormData = data;
+        //         this.createForms(data);
+        //         this.hiddenUserNamePDNDT();
+        //         this.hiddenUserNamePCTD();
+        //         this.hiddenUserNameLapHSDTUploadFile();
+        //         this.hiddenUserNameLapHSDTLiveForm();
+        //         this.hiddenUserNameTDG();
+        //         this.hiddenUserNameChotVaNop();
+        //         this.hiddenUserNameQuanLyPV();
+        //         setTimeout(() => {
+        //             this.dtTrigger.next();
+        //         });
+        //         this.spinner.hide();
+        //     });
     }
 
     createForms(formData: any[]) {
@@ -230,6 +300,36 @@ export class PackagePermissionBidComponent implements OnInit {
     removeFormItem(formData, idx: number) {
         const formArrayControl = this.packagePermissionReviewForm.get(formData.bidPermissionGroupName).get('permission') as FormArray;
         formArrayControl.removeAt(idx);
+        switch (formData.bidPermissionGroupName) {
+            case 'PhieuDeNghiDuThau': {
+                this.hiddenUserNamePDNDT();
+                break;
+            }
+            case 'TrienKhaiVaPhanCongTienDo': {
+                this.hiddenUserNamePCTD();
+                break;
+            }
+            case 'LapHoSoDuThauFile': {
+                this.hiddenUserNameLapHSDTUploadFile();
+                break;
+            }
+            case 'LapHoSoDuThauLiveForm': {
+                this.hiddenUserNameLapHSDTLiveForm();
+                break;
+            }
+            case 'TrinhDuyetGia': {
+                this.hiddenUserNameTDG();
+                break;
+            }
+            case 'ChotVaNopHSDT': {
+                this.hiddenUserNameChotVaNop();
+                break;
+            }
+            case 'QuanLyPhongVanThuongThao': {
+                this.hiddenUserNameQuanLyPV();
+                break;
+            }
+        }
         setTimeout(() => {
             this.dtTrigger.next();
         });
@@ -389,5 +489,54 @@ export class PackagePermissionBidComponent implements OnInit {
     }
     routeToPackageInfo() {
         return this.router.navigate([`/package/detail/${this.packageId}/`]);
+    }
+    hiddenUserNamePDNDT() {
+        this.userNameChoosedPDNDT = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('PhieuDeNghiDuThau').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            this.userNameChoosedPDNDT.push(+itemControl.get('userName').value);
+        });
+    }
+    hiddenUserNamePCTD() {
+        this.userNameChoosedPCTD = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('TrienKhaiVaPhanCongTienDo').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            this.userNameChoosedPCTD.push(+itemControl.get('userName').value);
+        });
+    }
+    hiddenUserNameLapHSDTUploadFile() {
+        this.userNameChoosedLapHSDTUploadFile = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThauFile').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            this.userNameChoosedLapHSDTUploadFile.push(+(itemControl.get('documentTypes') as FormArray).controls[0].value.userName);
+        });
+    }
+    hiddenUserNameLapHSDTLiveForm() {
+        this.userNameChoosedLapHSDTLiveForm = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThauLiveForm').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            this.userNameChoosedLapHSDTLiveForm.push(+itemControl.get('userName').value);
+        });
+    }
+    hiddenUserNameTDG() {
+        this.userNameChoosedTDG = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('TrinhDuyetGia').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            this.userNameChoosedTDG.push(+itemControl.get('userName').value);
+        });
+    }
+    hiddenUserNameChotVaNop() {
+        this.userNameChoosedChotVaNop = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('ChotVaNopHSDT').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            this.userNameChoosedChotVaNop.push(+itemControl.get('userName').value);
+        });
+    }
+    hiddenUserNameQuanLyPV() {
+        this.userNameChoosedQuanLyPV = [];
+        const formArrayControl = this.packagePermissionReviewForm.get('QuanLyPhongVanThuongThao').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            this.userNameChoosedQuanLyPV.push(+itemControl.get('userName').value);
+        });
     }
 }
