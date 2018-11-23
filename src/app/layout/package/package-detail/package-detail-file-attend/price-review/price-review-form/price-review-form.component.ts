@@ -1449,9 +1449,10 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   }
   countRateONPbaseTender() {
     const value = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value ?
-      +this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0) / Number(this.priceReviewForm.get('giaDiNopThauAmount').value);
+      +this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0) / Number(this.priceReviewForm.get('giaDiNopThauAmount').value) * 100;
+      console.log('value-countRateONPbaseTender', value);
     if (Number(value.toFixed(2)) >= 0.01) {
-      this.priceReviewForm.get('tyleAmount').patchValue(Number(value.toFixed(4)));
+      this.priceReviewForm.get('tyleAmount').patchValue(Number(value.toFixed(2)));
     } else {
       this.priceReviewForm.get('tyleAmount').patchValue(0);
     }
@@ -1459,9 +1460,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   countRateONPalterTender() {
     const value = (this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value ?
       +this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value : 0) /
-      Number(this.priceReviewForm.get('giaDiNopThauAlterAmount').value);
+      Number(this.priceReviewForm.get('giaDiNopThauAlterAmount').value) * 100;
     if (Number(value.toFixed(2)) >= 0.01) {
-      this.priceReviewForm.get('tyleAlter').patchValue(Number(value.toFixed(4)));
+      this.priceReviewForm.get('tyleAlter').patchValue(Number(value.toFixed(2)));
     } else {
       this.priceReviewForm.get('tyleAlter').patchValue(0);
     }
