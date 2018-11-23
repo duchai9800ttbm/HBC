@@ -104,6 +104,28 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       this.DuyetTDGTPDuThau = this.listPermissionScreen.includes('DuyetTDGTPDuThau');
       this.GuiDuyet = this.listPermissionScreen.includes('GuiDuyet');
       this.DuyetTDGBGD = this.listPermissionScreen.includes('DuyetTDGBGD');
+      setTimeout(() => {
+        switch (this.type) {
+            case 'create': {
+                if (!this.TaoMoiTDG) {
+                    this.router.navigate(['not-found']);
+                }
+                break;
+            }
+            case 'detail': {
+                if (!this.XemTDG) {
+                    this.router.navigate(['not-found']);
+                }
+                break;
+            }
+            case 'edit': {
+                if (!this.SuaTDG) {
+                    this.router.navigate(['not-found']);
+                }
+                break;
+            }
+        }
+    }, 4000);
     });
 
     const sub = this.permissionService.getUser().subscribe(data => {
@@ -1194,34 +1216,34 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
   truongNhomKhongDuyet() {
     const isApprovedByTenderLeader = this.priceReviewForm.get('isApprovedByTenderLeader').value;
-    if (isApprovedByTenderLeader) {
+    // if (isApprovedByTenderLeader) {
       this.priceReviewService.truongNhomKhongDuyet(this.packageId).subscribe(() => {
       }, err => this.alertService.error('Đã có lỗi xảy ra. Xin vui lòng thử lại.'));
-    }
+    // }
   }
 
   truongNhomDuyet() {
     const isApprovedByTenderLeader = this.priceReviewForm.get('isApprovedByTenderLeader').value;
-    if (!isApprovedByTenderLeader) {
+    // if (!isApprovedByTenderLeader) {
       this.priceReviewService.truongNhomDuyet(this.packageId).subscribe(() => {
       }, err => this.alertService.error('Đã có lỗi xảy ra. Xin vui lòng thử lại.'));
-    }
+    // }
   }
 
   truongPhongDuyet() {
     const isApprovedByTenderManager = this.priceReviewForm.get('isApprovedByTenderManager').value;
-    if (!isApprovedByTenderManager) {
+    // if (!isApprovedByTenderManager) {
       this.priceReviewService.truongPhongDuyet(this.packageId).subscribe(() => {
       }, err => this.alertService.error('Đã có lỗi xảy ra. Xin vui lòng thử lại.'));
-    }
+    // }
   }
 
   truongPhongKhongDuyet() {
     const isApprovedByTenderManager = this.priceReviewForm.get('isApprovedByTenderManager').value;
-    if (isApprovedByTenderManager) {
+    // if (isApprovedByTenderManager) {
       this.priceReviewService.truongPhongKhongDuyet(this.packageId).subscribe(() => {
       }, err => this.alertService.error('Đã có lỗi xảy ra. Xin vui lòng thử lại.'));
-    }
+    // }
   }
 
   giamDocDuyet() {
