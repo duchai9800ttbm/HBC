@@ -21,7 +21,7 @@
                             </button>
                         </ng-container>
                         <ng-container *ngIf="GuiDuyet">
-                            <button type="button" class="btn btn-primary mr-1" *ngIf="model?.isDraftVersion === false && package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'" (click)="guiDuyet()">Gửi lại trình duyệt giá</button>
+                            <button type="button" class="btn btn-primary mr-1" *ngIf="model?.isDraftVersion === false && package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'" (click)="guiDuyetLai()">Gửi lại trình duyệt giá</button>
                         </ng-container>
                     </ng-container>
                     <button *ngIf="isModeCreate || isModeEdit" class="btn btn-secondary ml-1" routerLink="../summary">Hủy</button>

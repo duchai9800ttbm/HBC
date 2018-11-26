@@ -91,7 +91,7 @@ export class PriceReviewService {
   }
 
   guiDuyetLaiTrinhDuyetGia(bidOpportunityId: number) {
-    const url = `bidopportunity/hsdt/${bidOpportunityId}/guilaiduyettrinhduyetgia`;
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/guilaitrinhduyetgia`;
     return this.apiService.post(url);
   }
 

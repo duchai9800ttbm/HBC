@@ -235,7 +235,6 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
     });
     this.priceReviewService.getDanhSachHSDTChinhThucInstantSearch(this.packageId, this.searchTerm$).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
-      console.log('this.listItemHSDTChinhThuc', this.listItemHSDTChinhThuc);
     });
     this.getChangeHistory(0, 10);
   }
@@ -433,7 +432,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   }
 
   guiDuyet() {
-    if (this.priceReview.isApprovedByTenderLeader == null || this.priceReview.isApprovedByTenderManager == null) {
+    if (this.priceReview.isApprovedByTenderLeader == null && this.priceReview.isApprovedByTenderManager == null) {
       this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`,
         `/package/detail/${this.packageId}/attend/price-review/detail`);
     } else {
@@ -454,19 +453,24 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   }
 
   guiDuyetLai() {
-    const that = this;
-    if (this.priceReview.isDraftVersion) {
-      this.alertService.error('Chưa đủ bản chính thức!');
-      return null;
-    }
-    this.confirmService.confirm('Bạn có chắc muốn gửi duyệt lại trình duyệt giá?', () => {
-      this.priceReviewService.guiDuyetLaiTrinhDuyetGia(this.packageId).subscribe(data => {
-        that.refresh(false);
-        that.alertService.success('Gửi duyệt lại trình duyệt giá thành công!');
-      }, err => {
-        that.alertService.error('Gửi duyệt lại trình duyệt giá thất bại, vui lòng thử lại sau!');
+    if (this.priceReview.isApprovedByTenderLeader == null && this.priceReview.isApprovedByTenderManager == null) {
+      this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`,
+        `/package/detail/${this.packageId}/attend/price-review/detail`);
+    } else {
+      const that = this;
+      if (this.priceReview.isDraftVersion) {
+        this.alertService.error('Chưa đủ bản chính thức!');
+        return null;
+      }
+      this.confirmService.confirm('Bạn có chắc muốn gửi duyệt lại trình duyệt giá?', () => {
+        this.priceReviewService.guiDuyetLaiTrinhDuyetGia(this.packageId).subscribe(data => {
+          that.refresh(false);
+          that.alertService.success('Gửi duyệt lại trình duyệt giá thành công!');
+        }, err => {
+          that.alertService.error('Gửi duyệt lại trình duyệt giá thất bại, vui lòng thử lại sau!');
+        });
       });
-    });
+    }
   }
 
   chotHoSo() {

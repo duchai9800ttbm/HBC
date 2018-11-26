@@ -470,7 +470,7 @@
             </div>
             <div class="body-ckeditor">
                 <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (change)="onChange($event)"
-                    (paster)="onPaste($event)">
+                    (paste)="onPaste($event)">
                     <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
                         [toolbar]="'clipboard,1'">
                     </ckbutton>
