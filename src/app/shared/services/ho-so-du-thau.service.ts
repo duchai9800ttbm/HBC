@@ -212,7 +212,7 @@ export class HoSoDuThauService {
   uploadImageService(imageFile: File) {
     const url = `image/upload`;
     const formData = new FormData();
-    formData.append('imageFile', imageFile);
+    formData.append('ImageFile', imageFile);
     return this.apiService.postFile(url, formData).map(res => res.result);
   }
   // Xóa ảnh trên server - chung cho các form upload

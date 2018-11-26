@@ -432,7 +432,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   }
 
   guiDuyet() {
-    if (this.priceReview.isApprovedByTenderLeader == null && this.priceReview.isApprovedByTenderManager == null) {
+    if (this.priceReview.isApprovedByTenderLeader == null || this.priceReview.isApprovedByTenderManager == null) {
       this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`,
         `/package/detail/${this.packageId}/attend/price-review/detail`);
     } else {
@@ -453,7 +453,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   }
 
   guiDuyetLai() {
-    if (this.priceReview.isApprovedByTenderLeader == null && this.priceReview.isApprovedByTenderManager == null) {
+    if (this.priceReview.isApprovedByTenderLeader == null || this.priceReview.isApprovedByTenderManager == null) {
       this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`,
         `/package/detail/${this.packageId}/attend/price-review/detail`);
     } else {

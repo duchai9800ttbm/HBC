@@ -1295,9 +1295,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
   // Gủi duyệt
   guiDuyet() {
-    const dieuKienGuiDuyet = (this.priceReviewForm.get('isApprovedByTenderLeader').value !== null ||
+    const dieuKienGuiDuyet = (this.priceReviewForm.get('isApprovedByTenderLeader').value !== null &&
       this.priceReviewForm.get('isApprovedByTenderManager').value !== null);
-    if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) && !dieuKienGuiDuyet) {
+    if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) || !dieuKienGuiDuyet) {
       this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`, null);
     } else {
       const that = this;
@@ -1319,9 +1319,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   }
 
   guiDuyetLai() {
-    const dieuKienGuiDuyet = (this.priceReviewForm.get('isApprovedByTenderLeader').value !== null ||
+    const dieuKienGuiDuyet = (this.priceReviewForm.get('isApprovedByTenderLeader').value !== null &&
       this.priceReviewForm.get('isApprovedByTenderManager').value !== null);
-    if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) && !dieuKienGuiDuyet) {
+    if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) || !dieuKienGuiDuyet) {
       this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`, null);
     } else {
       const that = this;
@@ -1494,7 +1494,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   countRateONPbaseTender() {
     const value = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value ?
       +this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0) / Number(this.priceReviewForm.get('giaDiNopThauAmount').value) * 100;
-    console.log('value-countRateONPbaseTender', value);
     if (Number(value.toFixed(2)) >= 0.01) {
       this.priceReviewForm.get('tyleAmount').patchValue(Number(value.toFixed(2)));
     } else {

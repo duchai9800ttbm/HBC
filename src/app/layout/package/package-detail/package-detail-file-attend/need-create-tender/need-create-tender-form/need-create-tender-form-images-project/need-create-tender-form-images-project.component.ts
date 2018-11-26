@@ -31,6 +31,9 @@ export class NeedCreateTenderFormImagesProjectComponent implements OnInit {
       this.routerAction = router;
       this.loadData();
     });
+    this.packageService.dataProposals$.subscribe(value => {
+      this.loadData();
+    });
   }
   loadData() {
     // tslint:disable-next-line:max-line-length
