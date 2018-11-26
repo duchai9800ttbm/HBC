@@ -6,6 +6,7 @@ import { InformationDeploymentComponent } from './information-deployment.compone
 import { SharedModule } from '../../../../../shared/shared.module';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { InformationDeploymentFormComponent } from './information-deployment-form/information-deployment-form.component';
+import { ChangeHistoryPopupComponent } from './change-history-popup/change-history-popup.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { InformationDeploymentFormComponent } from './information-deployment-for
   ],
   declarations: [
     InformationDeploymentComponent,
-    InformationDeploymentFormComponent
+    InformationDeploymentFormComponent,
+    ChangeHistoryPopupComponent
   ]
 })
 export class InformationDeploymentModule { }

@@ -165,7 +165,7 @@
                                 </div>
 
                             </ng-container>
-                            <div class="d-flex justify-content-center py-1">
+                            <div *ngIf="updateInfo.items[0].liveFormChangeds.length > 0" class="d-flex justify-content-center py-1">
                                 <a class="popup-detail" (click)="viewDetail()">Xem thêm</a>
                             </div>
                         </div>

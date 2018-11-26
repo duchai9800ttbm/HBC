@@ -8,11 +8,13 @@
                 <div class="rule mr-2">
                 </div>
                 <div class="center-parent mr-4" style="font-size: 18px">
-                    <div *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau">Chưa thông báo triển khai</div>
+                    <div *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau">Chưa
+                        thông báo triển khai</div>
                     <div *ngIf="packageInfo?.stageStatus.id == bidStatus.DaThongBaoTrienKhai">Đã thông báo triển khai</div>
                     <div *ngIf="packageInfo?.stageStatus.id == bidStatus.DaXacNhanPhanCong">Đã xác nhận phân công</div>
                     <div *ngIf="(packageInfo?.stageStatus.id !== bidStatus.ChuaThongBaoTrienKhai) && (packageInfo?.stageStatus.id !== bidStatus.ThamGiaDuThau)
-                    && (packageInfo?.stageStatus.id !== bidStatus.DaThongBaoTrienKhai) && (packageInfo?.stageStatus.id !== bidStatus.DaXacNhanPhanCong)">Đã gửi phân công tiến độ</div>
+                    && (packageInfo?.stageStatus.id !== bidStatus.DaThongBaoTrienKhai) && (packageInfo?.stageStatus.id !== bidStatus.DaXacNhanPhanCong)">Đã
+                        gửi phân công tiến độ</div>
                 </div>
             </div>
         </div>
@@ -24,12 +26,14 @@
                 </ng-container>
 
                 <ng-container *ngIf="GuiPCTD">
-                    <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
+                    <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}"
+                        class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
                 </ng-container>
 
                 <ng-container *ngIf="ThongBaoTrienKhai || (currentUserInfo?.department?.text === 'PHÒNG DỰ THẦU' && currentUserInfo?.level?.text === 'Trưởng phòng')">
                     <button type="button" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau"
-                        class="btn btn-up btn-dep" (click)="openModalDeployment(informationDeployment)">Thông báo triển khai
+                        class="btn btn-up btn-dep" (click)="openModalDeployment(informationDeployment)">Thông báo triển
+                        khai
                     </button>
                 </ng-container>
                 <ng-container *ngIf="TaiTemplatePCTD">
@@ -38,11 +42,13 @@
                     </button>
                 </ng-container>
                 <ng-container *ngIf="GuiPCTD">
-                    <button class="btn btn-primary mr-1" *ngIf="packageInfo?.stageStatus.id == bidStatus.DaXacNhanPhanCong" (click)="sendTenderPlan()">Gửi phân công tiến độ</button>
+                    <button class="btn btn-primary mr-1" *ngIf="packageInfo?.stageStatus.id == bidStatus.DaXacNhanPhanCong"
+                        (click)="sendTenderPlan()">Gửi phân công tiến độ</button>
 
                 </ng-container>
                 <ng-container *ngIf="TaoMoiBangPCTD">
-                    <button *ngIf="tenderPlan?.isDraftVersion" class="btn btn-primary mr-1" (click)="confirmTenderPlan()">Xác nhận phân công tiến độ</button>
+                    <button *ngIf="tenderPlan?.isDraftVersion" class="btn btn-primary mr-1" (click)="confirmTenderPlan()">Xác
+                        nhận phân công tiến độ</button>
 
                 </ng-container>
 
@@ -76,7 +82,8 @@
                                 {{tenderPlan.projectInformation}}
                             </ng-container>
                         </td>
-                        <td class="text-truncate">{{tenderPlan.approvedEmployee?.employeeName ? tenderPlan.approvedEmployee?.employeeName : 'Chưa duyệt'}}
+                        <td class="text-truncate">{{tenderPlan.approvedEmployee?.employeeName ?
+                            tenderPlan.approvedEmployee?.employeeName : 'Chưa duyệt'}}
                         </td>
                         <td class="text-truncate">{{tenderPlan.createdEmployee?.employeeName}}</td>
                         <td class="text-truncate">{{tenderPlan.createDate * 1000 | date: 'dd/MM/yyyy HH:mm':'+0000'}}</td>
@@ -159,179 +166,223 @@
                         <div [title]="itemByChangedTimes.items[0].updateDesc">{{itemByChangedTimes.items[0].updateDesc}}</div>
                     </td>
                     <td>
-                        <div *ngFor="let changedTime of itemByChangedTimes.items; let i = index">
-                            <div *ngIf="changedTime.liveFormChangeds && changedTime.liveFormChangeds.length !== 0">
-                                <div *ngFor="let liveFormSubject of changedTime.liveFormChangeds">
-                                    <div *ngFor="let liveFormBySubjectItem of liveFormSubject.items">
-                                        <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'SignedByApprovalPerson'">
-                                            <strong>Người duyệt</strong>
-                                            <span>:</span>
-                                            <strong>Chưa ký
-                                            </strong> thành
-                                            <strong>Đã ký
-                                            </strong>
-                                        </span>
-                                        <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'KeyPersonnel'">
-                                            <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'SignedByPreparedPerson'">
-                                                <strong>Người tạo</strong>
-                                                <span>:</span>
-                                                <strong>{{liveFormBySubjectItem.oldValue ? 'Đã ký' : 'Chưa ký'}}
-                                                </strong> thành
-                                                <strong>{{liveFormBySubjectItem.newValue ? 'Đã ký' : 'Chưa ký'}}
-                                                </strong>
-                                            </div>
-                                            <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'ProjectDirectorEmployeeName' || liveFormBySubjectItem.liveFormTitle === 'TenderDepartmentEmployeeName'
-                                            || liveFormBySubjectItem.liveFormTitle === 'TechnicalDepartmentEmployeeName' || liveFormBySubjectItem.liveFormTitle === 'BIMDepartmentEmployeeName'">
-                                                <strong>KEY PERSONNEL</strong>
-                                                <span>:</span>
-                                                <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'ProjectDirectorEmployeeName'">
-                                                    Project Director: từ
-                                                    <strong>{{liveFormBySubjectItem.oldValue ? liveFormBySubjectItem.oldValue : 'không
-                                                        có'}}
+                        <ng-container *ngFor="let changedTime of itemByChangedTimes.items; index as index">
+                            <div *ngIf="index < 3">
+                                <div *ngIf="changedTime.liveFormChangeds && changedTime.liveFormChangeds.length !== 0">
+                                    <div *ngFor="let liveFormSubject of changedTime.liveFormChangeds">
+                                        <ng-container *ngFor="let liveFormBySubjectItem of liveFormSubject.items; index as count">
+                                            <div *ngIf="count < lineDisplay(itemByChangedTimes.items.length)">
+                                                <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'SignedByApprovalPerson'">
+                                                    <strong>Người duyệt</strong>
+                                                    <span>:</span>
+                                                    <strong>Chưa ký
                                                     </strong> thành
-                                                    <strong>{{liveFormBySubjectItem.newValue ? liveFormBySubjectItem.newValue : 'không
-                                                        có'}}
-                                                    </strong>
-                                                </div>
-                                                <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'TenderDepartmentEmployeeName'">
-                                                    Tender Dept: từ
-                                                    <strong>{{liveFormBySubjectItem.oldValue ? liveFormBySubjectItem.oldValue : 'không
-                                                        có'}}
-                                                    </strong> thành
-                                                    <strong>{{liveFormBySubjectItem.newValue ? liveFormBySubjectItem.newValue : 'không
-                                                        có'}}
-                                                    </strong>
-                                                </div>
-                                                <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'TechnicalDepartmentEmployeeName'">
-                                                    Technical Dept: từ
-                                                    <strong>{{liveFormBySubjectItem.oldValue ? liveFormBySubjectItem.oldValue : 'không
-                                                        có'}}
-                                                    </strong> thành
-                                                    <strong>{{liveFormBySubjectItem.newValue ? liveFormBySubjectItem.newValue : 'không
-                                                        có'}}
-                                                    </strong>
-                                                </div>
-                                                <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'BIMDepartmentEmployeeName'">
-                                                    BIM Dept: từ
-                                                    <strong>{{liveFormBySubjectItem.oldValue ? liveFormBySubjectItem.oldValue : 'không
-                                                        có'}}
-                                                    </strong> thành
-                                                    <strong>{{liveFormBySubjectItem.newValue ? liveFormBySubjectItem.newValue : 'không
-                                                        có'}}
-                                                    </strong>
-                                                </div>
-                                            </div>
-                                            <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'QueryDeadline'">
-                                                Query's Deadline: từ
-                                                <strong>{{liveFormBySubjectItem.oldValue ? liveFormBySubjectItem.oldValue : 'không
-                                                    có'}}
-                                                </strong> thành
-                                                <strong>{{liveFormBySubjectItem.newValue ? liveFormBySubjectItem.newValue : 'không
-                                                    có'}}
-                                                </strong>
-                                            </div>
-                                        </span>
-                                        <span *ngIf="!liveFormBySubjectItem.liveFormSubject">
-                                            Tên tài liệu: từ
-                                            <strong>{{liveFormBySubjectItem.oldValue ? liveFormBySubjectItem.oldValue : 'không có'}}</strong>
-                                            thành
-                                            <strong>{{liveFormBySubjectItem.newValue ? liveFormBySubjectItem.newValue : 'không có'}}</strong>
-                                        </span>
-                                        <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'AssigmentTask'">
-                                            <strong>{{scheduleAssignments[liveFormBySubjectItem.oldValue.ItemId].idConfig}}. {{liveFormBySubjectItem.oldValue.ItemName}}
-                                            </strong>:
-                                            <div *ngIf="liveFormBySubjectItem.oldValue.ItemDesc !== liveFormBySubjectItem.newValue.ItemDesc">
-                                                Công việc: từ
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.oldValue.ItemDesc ? liveFormBySubjectItem.oldValue.ItemDesc
-                                                        : 'không có'}}</strong>
-                                                </span>
-                                                thành
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.newValue.ItemDesc ? liveFormBySubjectItem.newValue.ItemDesc
-                                                        : 'không có'}}</strong>
-                                                </span>
-                                            </div>
-                                            <div *ngIf="liveFormBySubjectItem.oldValue.WhoIsInChargeName !== liveFormBySubjectItem.newValue.WhoIsInChargeName">
-                                                Mô tả: từ
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.oldValue.WhoIsInChargeName ? liveFormBySubjectItem.oldValue.WhoIsInChargeName
-                                                        : 'không có'}}</strong>
-                                                </span>
-                                                thành
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.newValue.WhoIsInChargeName ? liveFormBySubjectItem.newValue.WhoIsInChargeName
-                                                        : 'không có'}}</strong>
-                                                </span>
-                                            </div>
-                                            <div *ngIf="liveFormBySubjectItem.oldValue.IsFinish !== liveFormBySubjectItem.newValue.IsFinish">
-                                                Phân công cho: từ
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.oldValue.IsFinish ? 'Hoàn thành' : 'Chưa hoàn
-                                                        thành'}}
+                                                    <strong>Đã ký
                                                     </strong>
                                                 </span>
-                                                thành
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.newValue.IsFinish ? 'Hoàn thành' : 'Chưa hoàn
-                                                        thành'}}
-                                                    </strong>
+                                                <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'KeyPersonnel'">
+                                                    <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'SignedByPreparedPerson'">
+                                                        <strong>Người tạo</strong>
+                                                        <span>:</span>
+                                                        <strong>{{liveFormBySubjectItem.oldValue ? 'Đã ký' : 'Chưa
+                                                            ký'}}
+                                                        </strong> thành
+                                                        <strong>{{liveFormBySubjectItem.newValue ? 'Đã ký' : 'Chưa
+                                                            ký'}}
+                                                        </strong>
+                                                    </div>
+                                                    <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'ProjectDirectorEmployeeName' || liveFormBySubjectItem.liveFormTitle === 'TenderDepartmentEmployeeName'
+                                                        || liveFormBySubjectItem.liveFormTitle === 'TechnicalDepartmentEmployeeName' || liveFormBySubjectItem.liveFormTitle === 'BIMDepartmentEmployeeName'">
+                                                        <strong>KEY PERSONNEL</strong>
+                                                        <span>:</span>
+                                                        <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'ProjectDirectorEmployeeName'">
+                                                            Project Director: từ
+                                                            <strong>{{liveFormBySubjectItem.oldValue ?
+                                                                liveFormBySubjectItem.oldValue : 'không
+                                                                có'}}
+                                                            </strong> thành
+                                                            <strong>{{liveFormBySubjectItem.newValue ?
+                                                                liveFormBySubjectItem.newValue : 'không
+                                                                có'}}
+                                                            </strong>
+                                                        </div>
+                                                        <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'TenderDepartmentEmployeeName'">
+                                                            Tender Dept: từ
+                                                            <strong>{{liveFormBySubjectItem.oldValue ?
+                                                                liveFormBySubjectItem.oldValue : 'không
+                                                                có'}}
+                                                            </strong> thành
+                                                            <strong>{{liveFormBySubjectItem.newValue ?
+                                                                liveFormBySubjectItem.newValue : 'không
+                                                                có'}}
+                                                            </strong>
+                                                        </div>
+                                                        <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'TechnicalDepartmentEmployeeName'">
+                                                            Technical Dept: từ
+                                                            <strong>{{liveFormBySubjectItem.oldValue ?
+                                                                liveFormBySubjectItem.oldValue : 'không
+                                                                có'}}
+                                                            </strong> thành
+                                                            <strong>{{liveFormBySubjectItem.newValue ?
+                                                                liveFormBySubjectItem.newValue : 'không
+                                                                có'}}
+                                                            </strong>
+                                                        </div>
+                                                        <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'BIMDepartmentEmployeeName'">
+                                                            BIM Dept: từ
+                                                            <strong>{{liveFormBySubjectItem.oldValue ?
+                                                                liveFormBySubjectItem.oldValue : 'không
+                                                                có'}}
+                                                            </strong> thành
+                                                            <strong>{{liveFormBySubjectItem.newValue ?
+                                                                liveFormBySubjectItem.newValue : 'không
+                                                                có'}}
+                                                            </strong>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'QueryDeadline'">
+                                                        Query's Deadline: từ
+                                                        <strong>{{liveFormBySubjectItem.oldValue ?
+                                                            liveFormBySubjectItem.oldValue : 'không
+                                                            có'}}
+                                                        </strong> thành
+                                                        <strong>{{liveFormBySubjectItem.newValue ?
+                                                            liveFormBySubjectItem.newValue : 'không
+                                                            có'}}
+                                                        </strong>
+                                                    </div>
+                                                </span>
+                                                <span *ngIf="!liveFormBySubjectItem.liveFormSubject">
+                                                    Tên tài liệu: từ
+                                                    <strong>{{liveFormBySubjectItem.oldValue ?
+                                                        liveFormBySubjectItem.oldValue :
+                                                        'không có'}}</strong>
+                                                    thành
+                                                    <strong>{{liveFormBySubjectItem.newValue ?
+                                                        liveFormBySubjectItem.newValue :
+                                                        'không có'}}</strong>
+                                                </span>
+                                                <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'AssigmentTask'">
+                                                    <strong>{{scheduleAssignments[liveFormBySubjectItem.oldValue.ItemId].idConfig}}.
+                                                        {{liveFormBySubjectItem.oldValue.ItemName}}
+                                                    </strong>:
+                                                    <div *ngIf="liveFormBySubjectItem.oldValue.ItemDesc !== liveFormBySubjectItem.newValue.ItemDesc">
+                                                        Công việc: từ
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.oldValue.ItemDesc ?
+                                                                liveFormBySubjectItem.oldValue.ItemDesc
+                                                                : 'không có'}}</strong>
+                                                        </span>
+                                                        thành
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.newValue.ItemDesc ?
+                                                                liveFormBySubjectItem.newValue.ItemDesc
+                                                                : 'không có'}}</strong>
+                                                        </span>
+                                                    </div>
+                                                    <div *ngIf="liveFormBySubjectItem.oldValue.WhoIsInChargeName !== liveFormBySubjectItem.newValue.WhoIsInChargeName">
+                                                        Mô tả: từ
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.oldValue.WhoIsInChargeName
+                                                                ?
+                                                                liveFormBySubjectItem.oldValue.WhoIsInChargeName
+                                                                : 'không có'}}</strong>
+                                                        </span>
+                                                        thành
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.newValue.WhoIsInChargeName
+                                                                ?
+                                                                liveFormBySubjectItem.newValue.WhoIsInChargeName
+                                                                : 'không có'}}</strong>
+                                                        </span>
+                                                    </div>
+                                                    <div *ngIf="liveFormBySubjectItem.oldValue.IsFinish !== liveFormBySubjectItem.newValue.IsFinish">
+                                                        Phân công cho: từ
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.oldValue.IsFinish ? 'Hoàn
+                                                                thành' :
+                                                                'Chưa hoàn
+                                                                thành'}}
+                                                            </strong>
+                                                        </span>
+                                                        thành
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.newValue.IsFinish ? 'Hoàn
+                                                                thành' :
+                                                                'Chưa hoàn
+                                                                thành'}}
+                                                            </strong>
+                                                        </span>
+                                                    </div>
+                                                    <div *ngIf="liveFormBySubjectItem.oldValue.IsFinish !== liveFormBySubjectItem.newValue.IsFinish">
+                                                        Hoàn thành: từ
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.oldValue.IsFinish ? 'Hoàn
+                                                                thành' :
+                                                                'Chưa hoàn
+                                                                thành'}}
+                                                            </strong>
+                                                        </span>
+                                                        thành
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.newValue.IsFinish ? 'Hoàn
+                                                                thành' :
+                                                                'Chưa hoàn
+                                                                thành'}}
+                                                            </strong>
+                                                        </span>
+                                                    </div>
+                                                    <div *ngIf="liveFormBySubjectItem.oldValue.StartDate !== liveFormBySubjectItem.newValue.StartDate">
+                                                        Ngày bắt đầu: từ
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.oldValue.StartDate ?
+                                                                (liveFormBySubjectItem.oldValue.StartDate*1000
+                                                                | date: 'dd/MM/yyyy' : '+0000' ) : 'không có'}}</strong>
+                                                        </span>
+                                                        thành
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.newValue.StartDate ?
+                                                                (liveFormBySubjectItem.newValue.StartDate*1000
+                                                                | date: 'dd/MM/yyyy' : '+0000') : 'không có'}}</strong>
+                                                        </span>
+                                                    </div>
+                                                    <div *ngIf="liveFormBySubjectItem.oldValue.FinishDate !== liveFormBySubjectItem.newValue.FinishDate">
+                                                        Ngày bắt đầu: từ
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.oldValue.FinishDate ?
+                                                                (liveFormBySubjectItem.oldValue.FinishDate*1000
+                                                                | date: 'dd/MM/yyyy' : '+0000' ) : 'không có'}}</strong>
+                                                        </span>
+                                                        thành
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.newValue.FinishDate ?
+                                                                (liveFormBySubjectItem.newValue.FinishDate*1000
+                                                                | date: 'dd/MM/yyyy' : '+0000') : 'không có'}}</strong>
+                                                        </span>
+                                                    </div>
+                                                    <div *ngIf="liveFormBySubjectItem.oldValue.Duration !== liveFormBySubjectItem.newValue.Duration">
+                                                        Tổng thời gian: từ
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.oldValue.Duration ?
+                                                                liveFormBySubjectItem.oldValue.Duration
+                                                                : 'không có'}}</strong>
+                                                        </span>
+                                                        thành
+                                                        <span>
+                                                            <strong>{{liveFormBySubjectItem.newValue.Duration ?
+                                                                liveFormBySubjectItem.newValue.Duration
+                                                                : 'không có'}}</strong>
+                                                        </span>
+                                                    </div>
                                                 </span>
                                             </div>
-                                            <div *ngIf="liveFormBySubjectItem.oldValue.IsFinish !== liveFormBySubjectItem.newValue.IsFinish">
-                                                Hoàn thành: từ
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.oldValue.IsFinish ? 'Hoàn thành' : 'Chưa hoàn
-                                                        thành'}}
-                                                    </strong>
-                                                </span>
-                                                thành
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.newValue.IsFinish ? 'Hoàn thành' : 'Chưa hoàn
-                                                        thành'}}
-                                                    </strong>
-                                                </span>
-                                            </div>
-                                            <div *ngIf="liveFormBySubjectItem.oldValue.StartDate !== liveFormBySubjectItem.newValue.StartDate">
-                                                Ngày bắt đầu: từ
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.oldValue.StartDate ? (liveFormBySubjectItem.oldValue.StartDate*1000
-                                                        | date: 'dd/MM/yyyy' : '+0000' ) : 'không có'}}</strong>
-                                                </span>
-                                                thành
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.newValue.StartDate ? (liveFormBySubjectItem.newValue.StartDate*1000
-                                                        | date: 'dd/MM/yyyy' : '+0000') : 'không có'}}</strong>
-                                                </span>
-                                            </div>
-                                            <div *ngIf="liveFormBySubjectItem.oldValue.FinishDate !== liveFormBySubjectItem.newValue.FinishDate">
-                                                Ngày bắt đầu: từ
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.oldValue.FinishDate ? (liveFormBySubjectItem.oldValue.FinishDate*1000
-                                                        | date: 'dd/MM/yyyy' : '+0000' ) : 'không có'}}</strong>
-                                                </span>
-                                                thành
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.newValue.FinishDate ? (liveFormBySubjectItem.newValue.FinishDate*1000
-                                                        | date: 'dd/MM/yyyy' : '+0000') : 'không có'}}</strong>
-                                                </span>
-                                            </div>
-                                            <div *ngIf="liveFormBySubjectItem.oldValue.Duration !== liveFormBySubjectItem.newValue.Duration">
-                                                Tổng thời gian: từ
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.oldValue.Duration ? liveFormBySubjectItem.oldValue.Duration
-                                                        : 'không có'}}</strong>
-                                                </span>
-                                                thành
-                                                <span>
-                                                    <strong>{{liveFormBySubjectItem.newValue.Duration ? liveFormBySubjectItem.newValue.Duration
-                                                        : 'không có'}}</strong>
-                                                </span>
-                                            </div>
-                                        </span>
+                                        </ng-container>
                                     </div>
                                 </div>
                             </div>
+                        </ng-container>
+                        <div *ngIf="itemByChangedTimes.items[0].liveFormChangeds.length > 0" class="d-flex justify-content-center py-1">
+                            <a class="popup-detail" (click)="viewDetail()">Xem thêm</a>
                         </div>
                     </td>
                 </tr>
@@ -362,9 +413,9 @@
         <div class="modal-body">
             <div class="input-group mb-3">
                 <span class="input-group-addon">To:</span>
-                <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:" clearAllText="Xóa tất cả"
-                    [addTag]="true" (change)="validateEmailTo($event)" [hideSelected]="true" multiple="true" bindLabel="employeeName"
-                    [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
+                <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:"
+                    clearAllText="Xóa tất cả" [addTag]="true" (change)="validateEmailTo($event)" [hideSelected]="true"
+                    multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
                     <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                         <table class="table-email--box-shadow">
                             <tr>{{item.employeeName}}</tr>
@@ -376,8 +427,9 @@
 
             <div class="input-group mb-3" *ngIf="isSendCc">
                 <span class="input-group-addon" id="basic-addon1">Cc:</span>
-                <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
-                    multiple="true" bindLabel="employeeName" (change)="validateEmailCc($event)" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
+                <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả"
+                    [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" (change)="validateEmailCc($event)"
+                    [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
                     <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                         <table class="table-email--box-shadow">
                             <tr>{{item.employeeName}}</tr>
@@ -389,9 +441,9 @@
 
             <div class="input-group mb-3" *ngIf="isSendBcc">
                 <span class="input-group-addon" id="basic-addon1">Bcc:</span>
-                <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
-                    [hideSelected]="true" (change)="validateEmailBcc($event)" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn"
-                    [(ngModel)]="emailModel.bcc">
+                <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả"
+                    [addTag]="true" [hideSelected]="true" (change)="validateEmailBcc($event)" multiple="true" bindLabel="employeeName"
+                    [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
                     <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                         <table class="table-email--box-shadow">
                             <tr>{{item.employeeName}}</tr>
@@ -413,12 +465,14 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
                 </div>
-                <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder="" aria-label="Tiede"
-                    aria-describedby="basic-addon1">
+                <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder=""
+                    aria-label="Tiede" aria-describedby="basic-addon1">
             </div>
             <div class="body-ckeditor">
-                <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (change)="onChange($event)" (paster)="onPaste($event)">
-                    <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'" [toolbar]="'clipboard,1'">
+                <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (change)="onChange($event)"
+                    (paster)="onPaste($event)">
+                    <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
+                        [toolbar]="'clipboard,1'">
                     </ckbutton>
                 </ckeditor>
             </div>
@@ -514,8 +568,8 @@
           <span class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </span> -->
-                        <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar" readonly [owlDateTimeTrigger]="dt"
-                            [owlDateTime]="dt">
+                        <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
+                            readonly [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
                         <owl-date-time #dt pickerType="calendar"></owl-date-time>
                         <span [owlDateTimeTrigger]="dt" class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -561,7 +615,8 @@
                                     <div style="width: 40%;">
                                         <div class="center-parent">
                                             <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" [checked]="checked" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                                                <input type="checkbox" class="custom-control-input" [checked]="checked"
+                                                    [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                                                 <span class="custom-control-indicator"></span>
                                             </label>
                                         </div>
@@ -602,7 +657,8 @@
                                     <div style="width: 40%;">
                                         <div class="center-parent">
                                             <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" [checked]="data.checkboxSelected" [(ngModel)]="data.checkboxSelected">
+                                                <input type="checkbox" class="custom-control-input" [checked]="data.checkboxSelected"
+                                                    [(ngModel)]="data.checkboxSelected">
                                                 <span class="custom-control-indicator"></span>
                                             </label>
                                         </div>
@@ -657,7 +713,8 @@
                 </div>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-default-w" (click)="sendConfirmAssignment()">Gửi phân công
+                <button type="submit" class="btn btn-primary btn-default-w" (click)="sendConfirmAssignment()">Gửi phân
+                    công
                 </button>
                 <button type="button" class="btn btn-cancel btn-default-w" (click)="modelSendAssignment.hide()">Hủy</button>
             </div>
@@ -727,4 +784,8 @@
     <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner> -->
 
 </div>
+
+
+<app-change-history-popup [updateInfoList]="historyList" *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-change-history-popup>
+
 <ngx-loading [show]="loading"></ngx-loading>

@@ -170,9 +170,6 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
-      // setTimeout(() => {
-      //   this.dtTrigger2.next();
-      // });
     });
   }
 

@@ -15,6 +15,7 @@ import { PriceReviewService } from '../../../../../shared/services/price-review.
 import { UploadFileAttachComponent } from './components/upload-file-attach/upload-file-attach.component';
 import { PopupDescriptionComponent } from './price-review-form/popup-description/popup-description.component';
 import { HoSoDuThauService } from '../../../../../shared/services/ho-so-du-thau.service';
+import { ChangeHistoryPopupComponent } from './components/change-history-popup/change-history-popup.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { HoSoDuThauService } from '../../../../../shared/services/ho-so-du-thau.
     PriceReviewComponent,
     CommentComponent,
     UploadFileAttachComponent,
-    PopupDescriptionComponent
+    PopupDescriptionComponent,
+    ChangeHistoryPopupComponent
   ],
   providers: [
     PriceReviewService,

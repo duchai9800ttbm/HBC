@@ -15,7 +15,7 @@
                     <thead>
                         <tr>
                             <th class="w-10">Lần cập nhật</th>
-                            <th class="w-30">Chi tiết cập nhật</th>
+                            <th class="text-center">Chi tiết cập nhật</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,7 +24,7 @@
 
                             <tr *ngIf="i !== updateInfoList.length-1">
                                 <td class="text-center">
-                                    {{ updateInfoList.length - (i+1) }}
+                                    {{ updateInfoList.length - i }}
                                 </td>
                                 <td class="font-size-90">
                                     <div class="overflow-scroll" *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">

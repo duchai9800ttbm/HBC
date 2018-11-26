@@ -57,6 +57,8 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   ChapThuanKhongChapThuan = false;
   TaiTemplate = false;
   subscription: Subscription;
+  showPopupDetail = false;
+
   constructor(
     private packageService: PackageService,
     private alertService: AlertService,
@@ -265,5 +267,19 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
       this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhận ký bởi giám đốc dự thầu',
         `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`);
     }
+  }
+
+  viewDetail() {
+    this.showPopupDetail = true;
+  }
+
+  closePopupDetail() {
+    this.showPopupDetail = false;
+  }
+  lineDisplay(amount) {
+    if (amount >= 4) { return 1; }
+    if (amount = 3) { return 2; }
+    if (amount = 2) { return 3; }
+    return 4;
   }
 }

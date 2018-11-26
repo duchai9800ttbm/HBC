@@ -87,6 +87,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   hoSoPhapLy = false;
   hoSoKhac = false;
   documentTypeId = DocumentTypeId;
+  showPopupDetail = false;
   constructor(
     private priceReviewService: PriceReviewService,
     private alertService: AlertService,
@@ -550,5 +551,19 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
 
   downloadFileAttach(id: number) {
     this.priceReviewService.download(id).subscribe();
+  }
+
+  viewDetail() {
+    this.showPopupDetail = true;
+  }
+
+  closePopupDetail() {
+    this.showPopupDetail = false;
+  }
+  lineDisplay(amount) {
+    if (amount >= 4) { return 1; }
+    if (amount = 3) { return 2; }
+    if (amount = 2) { return 3; }
+    return 4;
   }
 }

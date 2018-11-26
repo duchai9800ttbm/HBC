@@ -141,6 +141,7 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   ];
   isShowActionStage = false;
   currentUserInfo;
+  showPopupDetail = false;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -608,6 +609,19 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   validateEmailBcc(e) {
     this.emailModel.bcc = this.emailModel.bcc
       .filter(x => x.employeeId || (!x.employeeId && CustomValidator.validateEmail(x.employeeName)));
+  }
+  viewDetail() {
+    this.showPopupDetail = true;
+  }
+
+  closePopupDetail() {
+    this.showPopupDetail = false;
+  }
+  lineDisplay(amount) {
+    if (amount >= 4) { return 1; }
+    if (amount = 3) { return 2; }
+    if (amount = 2) { return 3; }
+    return 4;
   }
 
 }

@@ -6,10 +6,6 @@
     width: 10%;
 }
 
-.pl-5r {
-    padding-left: 5rem;
-}
-
 .label-index {
     position: relative;
     top: -4px;
@@ -27,18 +23,9 @@
     color: #0e86b7 !important;
 }
 
-.icon-print {
-    color: #f26522;
-    outline: none;
-
-}
 
 .whitespace-normal {
     white-space: normal;
-}
-
-.table-data__title--maxwidth {
-    max-width: 200px;
 }
 
 .table-layout--fixed {
@@ -53,11 +40,6 @@
     overflow: auto;
 }
 
-.popup-detail {
-    color: #0e86b7 !important;
-    cursor: pointer;
-
-    &:hover {
-        color: #f26522 !important;
-    }
+.flex-grow-1 {
+    flex-grow: 1;
 }

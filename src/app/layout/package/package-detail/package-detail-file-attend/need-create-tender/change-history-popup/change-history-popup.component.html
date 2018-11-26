@@ -1,0 +1,303 @@
+<div class="example-wrapper">
+    <kendo-dialog (close)="closePopup()" [width]="1200" class="width-kendo-dialog">
+        <div class="title d-flex justify-content-between">
+            <div class="flex-grow-1 d-flex justify-content-center">
+                <h4 class="text-uppercase">Chi tiết lịch sử thay đổi Phiếu đề nghị dự thầu</h4>
+            </div>
+            <div>
+                <img (click)="closePopup()" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
+            </div>
+        </div>
+        <div class="detail">
+            <div class="table-responsive">
+                <table class="table-layout--fixed zui-table row-border cell-border w-100">
+                    <thead>
+                        <tr>
+                            <th class="w-10">Lần cập nhật</th>
+                            <th class="text-center">Chi tiết cập nhật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let itemByChangedTimes of updateInfoList; let i = index">
+                            <tr *ngIf="i !== updateInfoList.length-1">
+                                <td class="text-center">
+                                    {{ updateInfoList.length - i }}
+                                </td>
+                                <td class="font-size-90">
+                                    <div class="overflow-scroll" *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
+                                        <div *ngFor="let itemByChangeTime of itemByChangedTimes.items">
+                                            <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
+                                                <div [class.d-flex]="!itemByChangeTime.liveFormChangeds[0].value" title="* {{itemByChangeTime.liveFormChangeds[0].value ? (itemByChangeTime.liveFormChangeds[0].value | translate) :
+                                            ('Tên tài liệu: từ ' +  (itemByLiveFormChanged.items[0].oldValue ? itemByLiveFormChanged.items[0].oldValue : 'không có') +' thành ' ) + (itemByLiveFormChanged.items[0].newValue ? itemByLiveFormChanged.items[0].newValue : 'không có')}}:">*
+                                                    {{itemByChangeTime.liveFormChangeds[0].value ?
+                                                    (itemByChangeTime.liveFormChangeds[0].value
+                                                    | translate) : 'Tên tài liệu'}}:
+                                                    <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items">
+                                                        <div *ngIf="!itemByChangeTime.liveFormChangeds[0].value">&nbsp;
+                                                            từ
+
+                                                            <span *ngIf="((itemByLiveFormStep.liveFormTitle == 'DraftBudgetOfPackage') || 
+                                                        (itemByLiveFormStep.liveFormTitle == 'TenderDocumentDeposit') || 
+                                                        (itemByLiveFormStep.liveFormTitle == 'TenderSecurity') ||
+                                                        (itemByLiveFormStep.liveFormTitle == 'FeeOfTenderInvitationDocument'))"
+                                                                class="font-weight-bold">
+                                                                {{itemByLiveFormStep.oldValue ?
+                                                                (itemByLiveFormStep.oldValue | thousandSeparate ) :
+                                                                'không
+                                                                có'}}
+                                                            </span>
+
+                                                            <span *ngIf="!((itemByLiveFormStep.liveFormTitle == 'DraftBudgetOfPackage') ||
+                                                         (itemByLiveFormStep.liveFormTitle == 'TenderDocumentDeposit') || 
+                                                         (itemByLiveFormStep.liveFormTitle == 'TenderSecurity') ||
+                                                         (itemByLiveFormStep.liveFormTitle == 'FeeOfTenderInvitationDocument'))"
+                                                                class="font-weight-bold">
+                                                                {{itemByLiveFormStep.oldValue ?
+                                                                (
+                                                                (itemByLiveFormStep.liveFormTitle ==
+                                                                'PerformanceSecurity' ||
+                                                                itemByLiveFormStep.liveFormTitle ==
+                                                                'DelayDamagesForTheWorks' ||
+                                                                itemByLiveFormStep.liveFormTitle == 'AdvancePayment' ||
+                                                                itemByLiveFormStep.liveFormTitle == 'RetentionMoney') ?
+                                                                (itemByLiveFormStep.oldValue + ' %') :
+                                                                itemByLiveFormStep.oldValue
+                                                                )
+                                                                : 'không có'}}
+                                                            </span>
+
+                                                            thành
+                                                            <span *ngIf="((itemByLiveFormStep.liveFormTitle == 'DraftBudgetOfPackage') || 
+                                                        (itemByLiveFormStep.liveFormTitle == 'TenderDocumentDeposit') || 
+                                                        (itemByLiveFormStep.liveFormTitle == 'TenderSecurity') ||
+                                                        (itemByLiveFormStep.liveFormTitle == 'FeeOfTenderInvitationDocument'))"
+                                                                class="font-weight-bold">
+                                                                {{itemByLiveFormStep.newValue ?
+                                                                (itemByLiveFormStep.newValue | thousandSeparate ) :
+                                                                'không
+                                                                có'}}
+                                                            </span>
+
+                                                            <span *ngIf="!((itemByLiveFormStep.liveFormTitle == 'DraftBudgetOfPackage') ||
+                                                         (itemByLiveFormStep.liveFormTitle == 'TenderDocumentDeposit') || 
+                                                         (itemByLiveFormStep.liveFormTitle == 'TenderSecurity') ||
+                                                         (itemByLiveFormStep.liveFormTitle == 'FeeOfTenderInvitationDocument'))"
+                                                                class="font-weight-bold">
+                                                                {{itemByLiveFormStep.newValue ?
+                                                                (
+                                                                (itemByLiveFormStep.liveFormTitle ==
+                                                                'PerformanceSecurity' ||
+                                                                itemByLiveFormStep.liveFormTitle ==
+                                                                'DelayDamagesForTheWorks' ||
+                                                                itemByLiveFormStep.liveFormTitle == 'AdvancePayment' ||
+                                                                itemByLiveFormStep.liveFormTitle == 'RetentionMoney') ?
+                                                                (itemByLiveFormStep.newValue + ' %') :
+                                                                itemByLiveFormStep.newValue
+                                                                )
+                                                                : 'không có'}}
+                                                            </span>
+
+
+                                                        </div>
+                                                        <div *ngIf="itemByChangeTime.liveFormChangeds[0].value && itemByChangeTime.liveFormChangeds[0].value !== 'TenderDirectorProposal' && itemByChangeTime.liveFormChangeds[0].value !== 'DecisionOfBoardOfGeneralDirector'">
+                                                            <span *ngIf="itemByLiveFormStep.liveFormTitle === 'CommencementDate'"
+                                                                title="- {{itemByLiveFormStep.liveFormTitle | translate}}: từ {{itemByLiveFormStep.oldValue ? ((itemByLiveFormStep.oldValue)*1000 | date:'dd/MM/yyyy':'+0000') : 'không có'}} thành {{itemByLiveFormStep.newValue ? ((itemByLiveFormStep.newValue)*1000 | date:'dd/MM/yyyy':'+0000') : 'không có'}}">
+                                                                -
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.liveFormTitle
+                                                                    | translate}}
+                                                                </span>: từ
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.oldValue
+                                                                    ? ((itemByLiveFormStep.oldValue)*1000 |
+                                                                    date:'dd/MM/yyyy':'+0000') : 'không có'}}</span>
+                                                                thành
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.newValue
+                                                                    ? ((itemByLiveFormStep.newValue)*1000 |
+                                                                    date:'dd/MM/yyyy':'+0000') : 'không có'}}</span>
+                                                            </span>
+                                                            <span *ngIf="itemByLiveFormStep.liveFormTitle !== 'CommencementDate'"
+                                                                title="- {{itemByLiveFormStep.liveFormTitle | translate}}: từ {{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue : 'không có'}} thành {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue : 'không có'}}">
+                                                                -
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.liveFormTitle
+                                                                    | translate}}
+                                                                </span>: từ
+
+                                                                <span *ngIf="((itemByLiveFormStep.liveFormTitle == 'DraftBudgetOfPackage') || 
+                                                            (itemByLiveFormStep.liveFormTitle == 'TenderDocumentDeposit') || 
+                                                            (itemByLiveFormStep.liveFormTitle == 'TenderSecurity') ||
+                                                            (itemByLiveFormStep.liveFormTitle == 'FeeOfTenderInvitationDocument'))"
+                                                                    class="font-weight-bold">{{itemByLiveFormStep.oldValue
+                                                                    ? (itemByLiveFormStep.oldValue | thousandSeparate)
+                                                                    : 'không có'}}
+                                                                </span>
+
+                                                                <span *ngIf="!((itemByLiveFormStep.liveFormTitle == 'DraftBudgetOfPackage') || 
+                                                            (itemByLiveFormStep.liveFormTitle == 'TenderDocumentDeposit') || 
+                                                            (itemByLiveFormStep.liveFormTitle == 'TenderSecurity') ||
+                                                            (itemByLiveFormStep.liveFormTitle == 'FeeOfTenderInvitationDocument'))"
+                                                                    class="font-weight-bold">
+                                                                    {{itemByLiveFormStep.oldValue ?
+                                                                    (
+                                                                    (itemByLiveFormStep.liveFormTitle ==
+                                                                    'PerformanceSecurity' ||
+                                                                    itemByLiveFormStep.liveFormTitle ==
+                                                                    'DelayDamagesForTheWorks' ||
+                                                                    itemByLiveFormStep.liveFormTitle ==
+                                                                    'AdvancePayment' ||
+                                                                    itemByLiveFormStep.liveFormTitle ==
+                                                                    'RetentionMoney') ? (itemByLiveFormStep.oldValue +
+                                                                    ' %') : itemByLiveFormStep.oldValue
+                                                                    )
+                                                                    : 'không có'}}
+                                                                </span>
+
+                                                                thành
+
+                                                                <span *ngIf="((itemByLiveFormStep.liveFormTitle == 'DraftBudgetOfPackage') || 
+                                                            (itemByLiveFormStep.liveFormTitle == 'TenderDocumentDeposit') || 
+                                                            (itemByLiveFormStep.liveFormTitle == 'TenderSecurity') ||
+                                                            (itemByLiveFormStep.liveFormTitle == 'FeeOfTenderInvitationDocument'))"
+                                                                    class="font-weight-bold">{{itemByLiveFormStep.newValue
+                                                                    ? (itemByLiveFormStep.newValue | thousandSeparate)
+                                                                    : 'không có'}}
+                                                                </span>
+
+                                                                <span *ngIf="!((itemByLiveFormStep.liveFormTitle == 'DraftBudgetOfPackage') || 
+                                                            (itemByLiveFormStep.liveFormTitle == 'TenderDocumentDeposit') || 
+                                                            (itemByLiveFormStep.liveFormTitle == 'TenderSecurity') ||
+                                                            (itemByLiveFormStep.liveFormTitle == 'FeeOfTenderInvitationDocument'))"
+                                                                    class="font-weight-bold">
+                                                                    {{itemByLiveFormStep.newValue ?
+                                                                    (
+                                                                    (itemByLiveFormStep.liveFormTitle ==
+                                                                    'PerformanceSecurity' ||
+                                                                    itemByLiveFormStep.liveFormTitle ==
+                                                                    'DelayDamagesForTheWorks' ||
+                                                                    itemByLiveFormStep.liveFormTitle ==
+                                                                    'AdvancePayment' ||
+                                                                    itemByLiveFormStep.liveFormTitle ==
+                                                                    'RetentionMoney') ?
+                                                                    (itemByLiveFormStep.newValue + ' %') :
+                                                                    itemByLiveFormStep.newValue
+                                                                    )
+                                                                    : 'không có'}}
+                                                                </span>
+
+                                                            </span>
+                                                        </div>
+                                                        <div *ngIf="itemByChangeTime.liveFormChangeds[0].value && (itemByChangeTime.liveFormChangeds[0].value === 'TenderDirectorProposal')">
+                                                            <span *ngIf="itemByLiveFormStep.liveFormTitle === 'IsAgreed'"
+                                                                title="- {{itemByLiveFormStep.liveFormTitle | translate}}: từ {{itemByLiveFormStep.oldValue ? (itemByLiveFormStep.oldValue === 'True' ?
+                                                    'Đông ý tham gia' : 'Không đồng ý tham gia') : 'không có'}} thành {{itemByLiveFormStep.newValue ? (itemByLiveFormStep.newValue === 'True' ?
+                                                    'Đồng ý tham gia' : 'Không đồng ý tham gia') : 'không có'}}">
+                                                                -
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.liveFormTitle
+                                                                    | translate}}
+                                                                </span>: từ
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.oldValue
+                                                                    ? (itemByLiveFormStep.oldValue === 'True'
+                                                                    ? 'Đông ý tham gia' : 'Không đồng ý tham gia') :
+                                                                    'không
+                                                                    có'}}</span>
+                                                                thành
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.newValue
+                                                                    ? (itemByLiveFormStep.newValue === 'True'
+                                                                    ? 'Đồng ý tham gia' : 'Không đồng ý tham gia') :
+                                                                    'không
+                                                                    có'}}</span>
+                                                            </span>
+                                                            <span *ngIf="(itemByLiveFormStep.liveFormTitle === 'Date' || itemByLiveFormStep.liveFormTitle === 'ExpectedDate')"
+                                                                title="- {{itemByLiveFormStep.liveFormTitle | translate}}: từ {{itemByLiveFormStep.oldValue ? ((itemByLiveFormStep.oldValue)*1000 | date:'dd/MM/yyyy':'+0000')
+                                                    : 'không có'}} thành {{itemByLiveFormStep.newValue ? ((itemByLiveFormStep.newValue)*1000 | date:'dd/MM/yyyy':'+0000')
+                                                    : 'không có'}}">
+                                                                -
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.liveFormTitle
+                                                                    | translate}}
+                                                                </span>: từ
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.oldValue
+                                                                    ? ((itemByLiveFormStep.oldValue)*1000 |
+                                                                    date:'dd/MM/yyyy':'+0000') : 'không có'}}</span>
+                                                                thành
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.newValue
+                                                                    ? ((itemByLiveFormStep.newValue)*1000 |
+                                                                    date:'dd/MM/yyyy':'+0000') : 'không có'}}</span>
+                                                            </span>
+                                                            <span *ngIf="itemByLiveFormStep.liveFormTitle === 'Reason'"
+                                                                title="- {{itemByLiveFormStep.liveFormTitle | translate}}: từ {{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue : 'không có'}} thành {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue : 'không có'}}">
+                                                                -
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.liveFormTitle
+                                                                    | translate}}
+                                                                </span>: từ
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.oldValue
+                                                                    ? itemByLiveFormStep.oldValue : 'không
+                                                                    có'}}
+                                                                </span>
+                                                                thành
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.newValue
+                                                                    ? itemByLiveFormStep.newValue : 'không
+                                                                    có'}}
+                                                                </span>
+                                                            </span>
+                                                            <span *ngIf="itemByLiveFormStep.liveFormTitle === 'IsSigned'"
+                                                                title="- {{itemByLiveFormStep.liveFormTitle | translate}}: từ {{itemByLiveFormStep.oldValue ? (itemByLiveFormStep.oldValue === 'True' ?
+                                                    'Đã ký' : 'Chưa ký') : 'không có'}} thành {{itemByLiveFormStep.newValue ? (itemByLiveFormStep.newValue === 'True' ?
+                                                    'Đã ký' : 'Chưa ký') : 'không có'}}">
+                                                                -
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.liveFormTitle
+                                                                    | translate}}
+                                                                </span>: từ
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.oldValue
+                                                                    ? (itemByLiveFormStep.oldValue === 'True'
+                                                                    ? 'Đã ký' : 'Chưa ký') : 'không có'}}</span> thành
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.newValue
+                                                                    ? (itemByLiveFormStep.newValue === 'True'
+                                                                    ? 'Đã ký' : 'Chưa ký') : 'không có'}}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div *ngIf="itemByChangeTime.liveFormChangeds[0].value && itemByChangeTime.liveFormChangeds[0].value === 'DecisionOfBoardOfGeneralDirector'">
+                                                            <span *ngIf="itemByLiveFormStep.liveFormTitle === 'Reason'"
+                                                                title="- {{itemByLiveFormStep.liveFormTitle | translate}}: từ {{itemByLiveFormStep.oldValue ? ((itemByLiveFormStep.oldValue)*1000 | date:'dd/MM/yyyy':'+0000') : 'không có'}} thành {{itemByLiveFormStep.newValue ? ((itemByLiveFormStep.newValue)*1000 | date:'dd/MM/yyyy':'+0000') : 'không có'}}">
+                                                                -
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.liveFormTitle
+                                                                    | translate}}
+                                                                </span>: từ
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.oldValue
+                                                                    ? itemByLiveFormStep.oldValue : 'không
+                                                                    có'}}
+                                                                </span>
+                                                                thành
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.newValue
+                                                                    ? itemByLiveFormStep.newValue : 'không
+                                                                    có'}}
+                                                                </span>
+                                                            </span>
+                                                            <span *ngIf="itemByLiveFormStep.liveFormTitle === 'IsSigned'"
+                                                                title="- {{itemByLiveFormStep.liveFormTitle | translate}}: từ {{itemByLiveFormStep.oldValue ? (itemByLiveFormStep.oldValue === 'True' ?
+                                                    'Đã ký' : 'Chưa ký') : 'không có'}} thành {{itemByLiveFormStep.newValue ? (itemByLiveFormStep.newValue === 'True' ?
+                                                    'Đã ký' : 'Chưa ký') : 'không có'}}">
+                                                                -
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.liveFormTitle
+                                                                    | translate}}
+                                                                </span>: từ
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.oldValue
+                                                                    ? (itemByLiveFormStep.oldValue === 'True'
+                                                                    ? 'Đã ký' : 'Chưa ký') : 'không có'}}</span> thành
+                                                                <span class="font-weight-bold">{{itemByLiveFormStep.newValue
+                                                                    ? (itemByLiveFormStep.newValue === 'True'
+                                                                    ? 'Đã ký' : 'Chưa ký') : 'không có'}}</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </kendo-dialog>
+</div>
