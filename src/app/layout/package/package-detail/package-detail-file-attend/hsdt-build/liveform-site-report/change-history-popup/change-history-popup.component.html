@@ -13,17 +13,12 @@
                 <table class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
                     <thead>
                         <tr>
-                            <th class="w-10">Lần cập nhật</th>
-                            <th class="text-center">Chi tiết cập nhật</th>
+                            <th class="text-center">Chi tiết cập nhật lần {{ index }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-container *ngFor="let updateInfo of updateInfoList; index as i">
                             <!-- --- -->
-                            <tr *ngIf="i !== updateInfoList.length-1">
-                                <td class="text-center">
-                                    {{ updateInfoList.length - i }}
-                                </td>
+                            <tr>
                                 <td class="font-size-90">
                                     <div class="overflow-scroll" *ngIf="updateInfo.items">
                                         <div *ngFor="let itemByChangeTime of updateInfo.items; index as index">
@@ -74,7 +69,6 @@
                                 </td>
                             </tr>
                             <!-- --- -->
-                        </ng-container>
                     </tbody>
                 </table>
             </div>

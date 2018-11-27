@@ -52,6 +52,9 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
   TaiTemplate = false;
 
   isShowPopupFormIn = false;
+  dataChangeHistory: any;
+  index: number;
+  isShowMore = false;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private packageService: PackageService,
@@ -194,17 +197,30 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
   }
 
 
-  viewDetail() {
+  viewDetail(data, index) {
+    this.dataChangeHistory = data;
+    this.index = index;
     this.showPopupDetail = true;
   }
 
   closePopupDetail() {
     this.showPopupDetail = false;
   }
-  lineDisplay(amount) {
-    if (amount >= 4) { return 1; }
-    if (amount = 3) { return 2; }
-    if (amount = 2) { return 3; }
-    return 4;
+  lineDisplay(data, amount) {
+    if (amount >= 4) {
+      this.isShowMore = true;
+      return 1;
+    }
+    if (amount === 2) {
+      if (data.length === 2) { this.isShowMore = true; }
+      return 2;
+    }
+    if (amount === 3) {
+      this.isShowMore = true;
+      return 1;
+    } else {
+      this.isShowMore = false;
+      return 50;
+    }
   }
 }

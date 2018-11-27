@@ -6,7 +6,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./change-history-popup.component.scss']
 })
 export class ChangeHistoryPopupComponent implements OnInit {
-  @Input() updateInfoList;
+  @Input() updateInfo;
+  @Input() index;
   @Output() closed = new EventEmitter<boolean>();
   constructor() { }
 

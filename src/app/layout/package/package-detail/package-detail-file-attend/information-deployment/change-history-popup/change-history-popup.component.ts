@@ -7,7 +7,8 @@ import { ScheduleAssignments } from '../../../../../../shared/constants/schedule
   styleUrls: ['./change-history-popup.component.scss']
 })
 export class ChangeHistoryPopupComponent implements OnInit {
-  @Input() updateInfoList;
+  @Input() updateInfo;
+  @Input() index;
   @Output() closed = new EventEmitter<boolean>();
   scheduleAssignments = ScheduleAssignments;
   constructor() { }

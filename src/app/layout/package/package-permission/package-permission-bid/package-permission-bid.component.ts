@@ -460,6 +460,11 @@ export class PackagePermissionBidComponent implements OnInit {
             }
         }
     }
+    removeCheckAll(checked: boolean, name: string, idx: number) {
+        const formArrayControl = this.packagePermissionReviewForm.get(name).get('permission') as FormArray;
+        const formItemControl = formArrayControl.controls[idx] as FormGroup;
+        if (!checked) { formItemControl.get('all').patchValue(checked); }
+    }
 
     checkAllBidItem(checked: boolean, parentIdx: number, childIdx: number) {
         const parentArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThauFile').get('permission') as FormArray;
@@ -469,6 +474,14 @@ export class PackagePermissionBidComponent implements OnInit {
             if (fControl !== 'userName' && fControl !== 'documentId') {
                 childGroupControl.get(fControl).patchValue(checked);
             }
+        }
+    }
+    removeCheckAllBidItem(checked: boolean, parentIdx: number, childIdx: number) {
+        const parentArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThauFile').get('permission') as FormArray;
+        const childArrayControl = parentArrayControl.controls[parentIdx].get('documentTypes') as FormArray;
+        const childGroupControl = childArrayControl.controls[childIdx] as FormGroup;
+        if (!checked) {
+            childGroupControl.get('all').patchValue(checked);
         }
     }
 
@@ -481,6 +494,15 @@ export class PackagePermissionBidComponent implements OnInit {
             if (fControl !== 'userName' && fControl !== 'documentId') {
                 childGroupControl.get(fControl).patchValue(checked);
             }
+        }
+    }
+
+    removeCheckAllBidItemLiveForm(checked: boolean, parentIdx: number, childIdx: number) {
+        const parentArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThauLiveForm').get('permission') as FormArray;
+        const childArrayControl = parentArrayControl.controls[parentIdx].get('documentTypes') as FormArray;
+        const childGroupControl = childArrayControl.controls[childIdx] as FormGroup;
+        if (!checked) {
+            childGroupControl.get('all').patchValue(checked);
         }
     }
 

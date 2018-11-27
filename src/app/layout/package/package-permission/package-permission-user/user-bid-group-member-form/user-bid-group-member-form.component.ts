@@ -34,7 +34,6 @@ export class UserBidGroupMemberFormComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private userService: UserService,
-        private dataService: DataService,
         private packageService: PackageService,
         private alertService: AlertService,
         private router: Router,

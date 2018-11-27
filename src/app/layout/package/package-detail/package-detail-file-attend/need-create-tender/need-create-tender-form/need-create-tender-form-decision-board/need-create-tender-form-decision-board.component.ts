@@ -120,15 +120,17 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         if (this.routerAction === 'view') {
             if (this.decisionBoardForm.get('isAgreed').value) {
                 if (NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed) {
-                    this.approveBidProposal('Xác nhận tham gia dự thầu thành công!', 'Xác nhận tham gia dự thầu không thành công!');
+                    this.approveBidProposal('Chấp thuận đề nghị dự thầu thành công.', 'Chấp thuận đề nghị dự thầu không thành công.');
                 } else {
-                    this.approveBidProposal('Từ chối tham gia dự thầu thành công!', 'Từ chối tham gia dự thầu không thành công!');
+                    this.approveBidProposal('Không chấp thuận đề nghị dự thầu thành công.',
+                        'Không chấp thuận đề nghị dự thầu không thành công.');
                 }
             } else {
                 if (NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed) {
-                    this.notApproveBidProposal('Từ chối tham gia dự thầu thành công!', 'Từ chối tham gia dự thầu không thành công!');
+                    this.notApproveBidProposal('Không chấp thuận đề nghị dự thầu thành công.',
+                        'Không chấp thuận đề nghị dự thầu không thành công.');
                 } else {
-                    this.notApproveBidProposal('Xác nhận tham gia dự thầu thành công!', 'Xác nhận tham gia dự thầu không thành công!');
+                    this.notApproveBidProposal('Chấp thuận đề nghị dự thầu thành công.', 'Chấp thuận đề nghị dự thầu không thành công.');
                 }
             }
         }

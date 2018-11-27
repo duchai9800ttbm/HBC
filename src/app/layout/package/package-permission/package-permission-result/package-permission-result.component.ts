@@ -181,6 +181,13 @@ export class PackagePermissionResultComponent implements OnInit {
             }
         }
     }
+    removeCheckAll(checked: boolean, name: string, idx: number) {
+        const formArrayControl = this.packagePermissionReviewForm.get(name).get('permission') as FormArray;
+        const formItemControl = formArrayControl.controls[idx] as FormGroup;
+        if (!checked) { formItemControl.get('all').patchValue(checked); }
+    }
+
+
     routeToPackageInfo() {
         return this.router.navigate([`/package/detail/${this.packageId}/`]);
     }

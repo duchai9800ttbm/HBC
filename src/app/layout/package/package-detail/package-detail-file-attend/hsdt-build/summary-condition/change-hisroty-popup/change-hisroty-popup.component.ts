@@ -6,7 +6,8 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
   styleUrls: ['./change-hisroty-popup.component.scss']
 })
 export class ChangeHisrotyPopupComponent implements OnInit {
-  @Input() updateInfoList;
+  @Input() updateInfo;
+  @Input() index;
   @Output() closed = new EventEmitter<boolean>();
   constructor() { }
 

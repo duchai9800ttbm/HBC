@@ -120,11 +120,11 @@
                     <td class="font-size-90">
                         <div class="overflow-scroll" *ngIf="updateInfo.items && updateInfo.items !== 0">
                             <ng-container *ngFor="let itemByChangeTime of updateInfo.items; index as index">
-                                <div *ngIf="index < 3">
+                                <div *ngIf="index < 4">
 
                                     <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
                                         <ng-container *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items; index as count">
-                                            <div *ngIf="count < lineDisplay(updateInfo.items.length)">
+                                            <div *ngIf="count < lineDisplay(itemByLiveFormChanged.items, updateInfo.items.length)">
 
                                                 <div *ngIf="itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue"
                                                     class="d-flex" title="* {{
@@ -165,8 +165,8 @@
                                 </div>
 
                             </ng-container>
-                            <div *ngIf="updateInfo.items[0].liveFormChangeds.length > 0" class="d-flex justify-content-center py-1">
-                                <a class="popup-detail" (click)="viewDetail()">Xem thêm</a>
+                            <div *ngIf="updateInfo.items[0].liveFormChangeds.length > 0 && isShowMore" class="d-flex justify-content-center py-1">
+                                <a class="popup-detail" (click)="viewDetail(updateInfo, indexItemHistoryChange - i)">Xem thêm</a>
                             </div>
                         </div>
                     </td>
@@ -178,4 +178,4 @@
     <app-pagination [(pagedResult)]="pagedResultChangeHistoryList" (pagedResultChange)="pagedResultChangeHistory($event)"></app-pagination>
 </div>
 
-<app-change-history-popup [updateInfoList]="updateInfoList" *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-change-history-popup>
+<app-change-history-popup [updateInfo]="dataChangeHistory" [index]="index" *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-change-history-popup>

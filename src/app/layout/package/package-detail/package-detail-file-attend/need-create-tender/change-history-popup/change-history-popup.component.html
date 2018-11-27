@@ -13,19 +13,14 @@
                 <table class="table-layout--fixed zui-table row-border cell-border w-100">
                     <thead>
                         <tr>
-                            <th class="w-10">Lần cập nhật</th>
-                            <th class="text-center">Chi tiết cập nhật</th>
+                            <th class="text-center">Chi tiết cập nhật lần {{ index }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-container *ngFor="let itemByChangedTimes of updateInfoList; let i = index">
-                            <tr *ngIf="i !== updateInfoList.length-1">
-                                <td class="text-center">
-                                    {{ updateInfoList.length - i }}
-                                </td>
+                            <tr>
                                 <td class="font-size-90">
-                                    <div class="overflow-scroll" *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
-                                        <div *ngFor="let itemByChangeTime of itemByChangedTimes.items">
+                                    <div class="overflow-scroll" *ngIf="updateInfo.items && updateInfo.items !== 0">
+                                        <div *ngFor="let itemByChangeTime of updateInfo.items">
                                             <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
                                                 <div [class.d-flex]="!itemByChangeTime.liveFormChangeds[0].value" title="* {{itemByChangeTime.liveFormChangeds[0].value ? (itemByChangeTime.liveFormChangeds[0].value | translate) :
                                             ('Tên tài liệu: từ ' +  (itemByLiveFormChanged.items[0].oldValue ? itemByLiveFormChanged.items[0].oldValue : 'không có') +' thành ' ) + (itemByLiveFormChanged.items[0].newValue ? itemByLiveFormChanged.items[0].newValue : 'không có')}}:">*
@@ -293,7 +288,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        </ng-container>
                     </tbody>
                 </table>
             </div>

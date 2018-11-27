@@ -15,18 +15,13 @@
                 <table class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
                     <thead>
                         <tr>
-                            <th class="w-10">Lần cập nhật</th>
-                            <th class="text-center">Chi tiết cập nhật</th>
+                            <th class="text-center">Chi tiết cập nhật lần {{ index }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-container *ngFor="let itemByChangedTimes of updateInfoList; let i = index">
-                                <tr *ngIf="i !== updateInfoList.length-1">
-                                        <td class="text-center">
-                                                {{ updateInfoList.length - i }}
-                                        </td>
+                                <tr>
                                         <td>
-                                            <div *ngFor="let changedTime of itemByChangedTimes.items; let i = index">
+                                            <div *ngFor="let changedTime of updateInfo.items; let i = index">
                                                 <div *ngIf="changedTime.liveFormChangeds && changedTime.liveFormChangeds.length !== 0">
                                                     <div *ngFor="let liveFormSubject of changedTime.liveFormChangeds">
                                                         <div *ngFor="let liveFormBySubjectItem of liveFormSubject.items">
@@ -242,7 +237,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                        </ng-container>
                     </tbody>
                 </table>
             </div>

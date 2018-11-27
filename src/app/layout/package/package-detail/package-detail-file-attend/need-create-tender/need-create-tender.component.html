@@ -141,7 +141,6 @@
             </thead>
             <tbody>
                 <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
-                    <!-- <td class="text-center">{{i + 1}}</td> -->
                     <td class="text-center">
                         {{indexItemHistoryChange - i}}
                     </td>
@@ -153,7 +152,7 @@
                     <td class="font-size-90">
                         <div class="overflow-scroll" *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
                             <ng-container *ngFor="let itemByChangeTime of itemByChangedTimes.items; index as index">
-                                <div *ngIf="index < 3">
+                                <div *ngIf="index < 4">
                                     <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
                                         <div [class.d-flex]="!itemByChangeTime.liveFormChangeds[0].value" title="* {{itemByChangeTime.liveFormChangeds[0].value ? (itemByChangeTime.liveFormChangeds[0].value | translate) :
                                         ('Tên tài liệu: từ ' +  (itemByLiveFormChanged.items[0].oldValue ? itemByLiveFormChanged.items[0].oldValue : 'không có') +' thành ' ) + (itemByLiveFormChanged.items[0].newValue ? itemByLiveFormChanged.items[0].newValue : 'không có')}}:">*
@@ -161,7 +160,7 @@
                                             (itemByChangeTime.liveFormChangeds[0].value
                                             | translate) : 'Tên tài liệu'}}:
                                             <ng-container *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items; index as count">
-                                                <div *ngIf="count < lineDisplay(itemByChangedTimes.items.length)">
+                                                <div *ngIf="count < lineDisplay(itemByLiveFormChanged.items, itemByChangedTimes.items.length)">
                                                     <div *ngIf="!itemByChangeTime.liveFormChangeds[0].value">&nbsp; từ
 
                                                         <span *ngIf="((itemByLiveFormStep.liveFormTitle == 'DraftBudgetOfPackage') || 
@@ -415,8 +414,8 @@
                                 </div>
                             </ng-container>
 
-                            <div *ngIf="itemByChangedTimes.items[0].liveFormChangeds.length > 0" class="d-flex justify-content-center py-1">
-                                <a class="popup-detail" (click)="viewDetail()">Xem thêm</a>
+                            <div *ngIf="itemByChangedTimes.items[0].liveFormChangeds.length > 0 && isShowMore" class="d-flex justify-content-center py-1">
+                                <a class="popup-detail" (click)="viewDetail(itemByChangedTimes, indexItemHistoryChange - i)">Xem thêm</a>
                             </div>
                         </div>
                     </td>
@@ -507,4 +506,4 @@
     <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner> -->
 </div>
 
-<app-change-history-popup [updateInfoList]="historyList" *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-change-history-popup>
+<app-change-history-popup [updateInfo]="dataChangeHistory" [index]="index" *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-change-history-popup>
