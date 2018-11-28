@@ -30,7 +30,6 @@ import { slideToLeft } from '../../../../../router.animations';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 import { ScheduleAssignments } from '../../../../../shared/constants/schedule-assignments';
-import { UploadResultFileAttendComponent } from '../../package-detail-result/package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
 
 
@@ -623,21 +622,31 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   closePopupDetail() {
     this.showPopupDetail = false;
   }
-  lineDisplay(data, amount) {
-    if (amount >= 4) {
-      this.isShowMore = true;
+  lineDisplay(length1, length2) {
+    if (length2 >= 4) {
       return 1;
     }
-    if (amount === 2) {
-      if (data.length === 2) { this.isShowMore = true; }
-      return 2;
+    if (length2 < 4) {
+      if (length1 >= 3) {
+        return 1;
+      }
+      if (length1 < 3) {
+        return length1;
+      }
     }
-    if (amount === 3) {
-      this.isShowMore = true;
-      return 1;
-    } else {
-      this.isShowMore = false;
-      return 50;
+  }
+  brief(data) {
+    if (data.length > 4) {
+      return true;
+    }
+    if (data[0].liveFormChangeds[0] && data[0].liveFormChangeds[0].items.length > 2) {
+      return true;
+    }
+    if (data[1] && data[1].liveFormChangeds[0] && data[0].liveFormChangeds[0].items.length > 2) {
+      return true;
+    }
+    if (data[2] && data[2].liveFormChangeds[0] && data[0].liveFormChangeds[0].items.length > 2) {
+      return true;
     }
   }
 

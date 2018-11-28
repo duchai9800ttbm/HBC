@@ -91,7 +91,6 @@ export class PackageSuccessComponent implements OnInit {
   }
 
   onClickList() {
-    console.log('onClickList');
     this.arrow = true;
     this.arrowSuccess = false;
     this.showArrow = false;

@@ -129,7 +129,7 @@
                                         <ng-container *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items; index as count">
 
 
-                                            <div *ngIf="count < lineDisplay(itemByLiveFormChanged.items, itemByChangedTimes.items.length)">
+                                            <div *ngIf="count < lineDisplay(itemByLiveFormChanged.items.length, itemByChangedTimes.items.length)">
 
                                                 <div *ngIf="itemByLiveFormStep.liveFormStep !== 'OtherSpecialRequirement' && 
                                         itemByLiveFormStep.liveFormTitle !=='TaxTypes' && 
@@ -195,7 +195,7 @@
                             </ng-container>
 
 
-                            <div *ngIf="itemByChangedTimes.items[0].liveFormChangeds.length > 0 && isShowMore" class="d-flex justify-content-center py-1">
+                            <div *ngIf="brief(itemByChangedTimes.items)" class="d-flex justify-content-center py-1">
                                 <a class="popup-detail" (click)="viewDetail(itemByChangedTimes, indexItemHistoryChange - i)">Xem thêm</a>
                             </div>
                         </div>

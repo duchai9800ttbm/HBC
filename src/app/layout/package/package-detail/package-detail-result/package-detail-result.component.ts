@@ -36,7 +36,6 @@ export class PackageDetailResultComponent implements OnInit, OnDestroy {
     }
 
     getInforPackageID() {
-        console.log('Điều hướng Result');
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageService.statusPackageValue2 = this.checkStatusPackage[result.stageStatus.id];
             this.packageService.changeStatusPackageValue(result.stageStatus.id);

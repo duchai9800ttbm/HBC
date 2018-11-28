@@ -171,7 +171,7 @@
                                 <div *ngIf="changedTime.liveFormChangeds && changedTime.liveFormChangeds.length !== 0">
                                     <div *ngFor="let liveFormSubject of changedTime.liveFormChangeds">
                                         <ng-container *ngFor="let liveFormBySubjectItem of liveFormSubject.items; index as count">
-                                            <div *ngIf="count < lineDisplay(liveFormSubject.items, itemByChangedTimes.items.length)">
+                                            <div *ngIf="count < lineDisplay(liveFormSubject.items.length, itemByChangedTimes.items.length)">
                                                 <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'SignedByApprovalPerson'">
                                                     <strong>Người duyệt</strong>
                                                     <span>:</span>
@@ -381,7 +381,7 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div *ngIf="itemByChangedTimes.items[0].liveFormChangeds.length > 0 && isShowMore" class="d-flex justify-content-center py-1">
+                        <div *ngIf="brief(itemByChangedTimes.items)" class="d-flex justify-content-center py-1">
                             <a class="popup-detail" (click)="viewDetail(itemByChangedTimes, indexItemHistoryChange - i)">Xem thêm</a>
                         </div>
                     </td>

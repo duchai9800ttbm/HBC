@@ -120,7 +120,6 @@ export class PackagePermissionResultComponent implements OnInit {
     }
 
     removeFormItem(formData, idx: number) {
-        console.log('this.formData.bidPermissionGroupName', formData.bidPermissionGroupName);
         const formArrayControl = this.packagePermissionReviewForm.get(formData.bidPermissionGroupName).get('permission') as FormArray;
         formArrayControl.removeAt(idx);
         switch (formData.bidPermissionGroupName) {
@@ -185,6 +184,21 @@ export class PackagePermissionResultComponent implements OnInit {
         const formArrayControl = this.packagePermissionReviewForm.get(name).get('permission') as FormArray;
         const formItemControl = formArrayControl.controls[idx] as FormGroup;
         if (!checked) { formItemControl.get('all').patchValue(checked); }
+    }
+    autoCheckAll(name: string, idx: number) {
+        const formArrayControl = this.packagePermissionReviewForm.get(name).get('permission') as FormArray;
+        const formItemControl = formArrayControl.controls[idx] as FormGroup;
+        let arr = new Array();
+        setTimeout(() => {
+            for (const fControl in formItemControl.controls) {
+                if (fControl !== 'userName' && fControl !== 'all') {
+                    arr.push(formItemControl.get(fControl).value);
+                }
+            }
+            if (arr.every(value => value === true)) {
+                formItemControl.get('all').patchValue(true);
+            }
+        });
     }
 
 

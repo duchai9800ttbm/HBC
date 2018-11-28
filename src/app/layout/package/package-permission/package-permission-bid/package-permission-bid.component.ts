@@ -465,6 +465,22 @@ export class PackagePermissionBidComponent implements OnInit {
         const formItemControl = formArrayControl.controls[idx] as FormGroup;
         if (!checked) { formItemControl.get('all').patchValue(checked); }
     }
+    autoCheckAll(name: string, idx: number) {
+        const formArrayControl = this.packagePermissionReviewForm.get(name).get('permission') as FormArray;
+        const formItemControl = formArrayControl.controls[idx] as FormGroup;
+        let arr = new Array();
+        setTimeout(() => {
+            for (const fControl in formItemControl.controls) {
+                // fControl !== 'ChapThuanKhongChapThuan' && fControl !== 'DuyetTDGBGD' 2 Condition Not Use
+                if (fControl !== 'userName' && fControl !== 'all' && fControl !== 'ChapThuanKhongChapThuan' && fControl !== 'DuyetTDGBGD') {
+                    arr.push(formItemControl.get(fControl).value);
+                }
+            }
+            if (arr.every(value => value === true)) {
+                formItemControl.get('all').patchValue(true);
+            }
+        });
+    }
 
     checkAllBidItem(checked: boolean, parentIdx: number, childIdx: number) {
         const parentArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThauFile').get('permission') as FormArray;
@@ -483,6 +499,23 @@ export class PackagePermissionBidComponent implements OnInit {
         if (!checked) {
             childGroupControl.get('all').patchValue(checked);
         }
+    }
+    autoCheckAllBidItem(parentIdx: number, childIdx: number) {
+        const parentArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThauFile').get('permission') as FormArray;
+        const childArrayControl = parentArrayControl.controls[parentIdx].get('documentTypes') as FormArray;
+        const childGroupControl = childArrayControl.controls[childIdx] as FormGroup;
+        let arr = new Array();
+        setTimeout(() => {
+            for (const fControl in childGroupControl.controls) {
+                // fControl !== 'documentId' Condition not use
+                if (fControl !== 'userName' && fControl !== 'all' && fControl !== 'documentId') {
+                    arr.push(childGroupControl.get(fControl).value);
+                }
+            }
+            if (arr.every(value => value === true)) {
+                childGroupControl.get('all').patchValue(true);
+            }
+        });
     }
 
 
@@ -504,6 +537,36 @@ export class PackagePermissionBidComponent implements OnInit {
         if (!checked) {
             childGroupControl.get('all').patchValue(checked);
         }
+    }
+    autoCheckAllBidItemLiveForm(parentIdx: number, childIdx: number) {
+        const parentArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThauLiveForm').get('permission') as FormArray;
+        const childArrayControl = parentArrayControl.controls[parentIdx].get('documentTypes') as FormArray;
+        const childGroupControl = childArrayControl.controls[childIdx] as FormGroup;
+        let arr = new Array();
+        setTimeout(() => {
+            if (childIdx === 1) {
+                for (const fControl in childGroupControl.controls) {
+                    // fControl !== 'documentId' && fControl !== 'ChotHSDT'  Condition not use
+                    if (fControl !== 'userName' && fControl !== 'all' && fControl !== 'documentId' && fControl !== 'ChotHSDT') {
+                        arr.push(childGroupControl.get(fControl).value);
+                    }
+                }
+                if (arr.every(value => value === true)) {
+                    childGroupControl.get('all').patchValue(true);
+                }
+            } else {
+                for (const fControl in childGroupControl.controls) {
+                    // fControl !== 'documentId' Condition not use
+                    if (fControl !== 'userName' && fControl !== 'all' && fControl !== 'documentId') {
+                        arr.push(childGroupControl.get(fControl).value);
+                    }
+                }
+                if (arr.every(value => value === true)) {
+                    childGroupControl.get('all').patchValue(true);
+                }
+            }
+
+        });
     }
 
     checkOption(id, index) {

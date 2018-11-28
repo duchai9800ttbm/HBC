@@ -70,25 +70,25 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="UploadHSMT" (click)="removeCheckAll($event.target.checked, 'HSMT', i)">
+                                    <input type="checkbox" class="custom-control-input" formControlName="UploadHSMT" (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="DownloadFile" (click)="removeCheckAll($event.target.checked, 'HSMT', i)">
+                                    <input type="checkbox" class="custom-control-input" formControlName="DownloadFile" (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="XoaFile" (click)="removeCheckAll($event.target.checked, 'HSMT', i)">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XoaFile" (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="XacNhanDaDuHSMT" (click)="removeCheckAll($event.target.checked, 'HSMT', i)">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XacNhanDaDuHSMT" (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>

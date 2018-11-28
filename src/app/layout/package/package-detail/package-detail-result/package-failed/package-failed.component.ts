@@ -138,7 +138,6 @@ export class PackageFailedComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.detailResultPackageService.getListFileResult(this.currentPackageId).subscribe(response => {
       this.listFileResult = response;
-      console.log('response-Result', response);
       this.maxVersion = (response && (response || []).length !== 0)
         ? Math.max.apply(Math, this.listFileResult.map(item => item.version)) : 0;
       this.maxInterviewTimes = (response && (response || []).length !== 0)

@@ -124,7 +124,7 @@
 
                                     <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
                                         <ng-container *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items; index as count">
-                                            <div *ngIf="count < lineDisplay(itemByLiveFormChanged.items, updateInfo.items.length)">
+                                            <div *ngIf="count < lineDisplay(itemByLiveFormChanged.items.length, updateInfo.items.length)">
 
                                                 <div *ngIf="itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue"
                                                     class="d-flex" title="* {{
@@ -165,7 +165,7 @@
                                 </div>
 
                             </ng-container>
-                            <div *ngIf="updateInfo.items[0].liveFormChangeds.length > 0 && isShowMore" class="d-flex justify-content-center py-1">
+                            <div *ngIf="brief(updateInfo.items)" class="d-flex justify-content-center py-1">
                                 <a class="popup-detail" (click)="viewDetail(updateInfo, indexItemHistoryChange - i)">Xem thêm</a>
                             </div>
                         </div>

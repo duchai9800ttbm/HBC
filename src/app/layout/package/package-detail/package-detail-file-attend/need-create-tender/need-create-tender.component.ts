@@ -5,7 +5,7 @@ import { ProposeTenderParticipateRequest } from '../../../../../shared/models/ap
 import { PackageService } from '../../../../../shared/services/package.service';
 import { AlertService, ConfirmationService } from '../../../../../shared/services';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
-import { Subject, Subscription, Observable } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
@@ -14,7 +14,7 @@ import { NotificationService } from '../../../../../shared/services/notification
 // tslint:disable-next-line:max-line-length
 import { ProposedTenderParticipationHistory } from '../../../../../shared/models/api-response/package/proposed-tender-participation-history.model';
 import { PagedResult } from '../../../../../shared/models';
-import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-data-query';
+import { groupBy } from '@progress/kendo-data-query';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../shared/components/form-in/form-in.component';
 import { slideToLeft } from '../../../../../router.animations';
@@ -60,7 +60,6 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   showPopupDetail = false;
   dataChangeHistory: any;
   index: number;
-  isShowMore = false;
 
   constructor(
     private packageService: PackageService,
@@ -281,21 +280,32 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   closePopupDetail() {
     this.showPopupDetail = false;
   }
-  lineDisplay(data, amount) {
-    if (amount >= 4) {
-      this.isShowMore = true;
+  lineDisplay(length1, length2) {
+    if (length2 >= 4) {
       return 1;
     }
-    if (amount === 2) {
-      if (data.length === 2) { this.isShowMore = true; }
-      return 2;
-    }
-    if (amount === 3) {
-      this.isShowMore = true;
-      return 1;
-    } else {
-      this.isShowMore = false;
-      return 50;
+    if (length2 < 4) {
+      if (length1 >= 3) {
+        return 1;
+      }
+      if (length1 < 3) {
+        return length1;
+      }
     }
   }
+  brief(data) {
+    if (data.length > 4) {
+      return true;
+    }
+    if (data[0].liveFormChangeds[0] && data[0].liveFormChangeds[0].items.length > 2) {
+      return true;
+    }
+    if (data[1] && data[1].liveFormChangeds[0] && data[0].liveFormChangeds[0].items.length > 2) {
+      return true;
+    }
+    if (data[2] && data[2].liveFormChangeds[0] && data[0].liveFormChangeds[0].items.length > 2) {
+      return true;
+    }
+  }
+
 }

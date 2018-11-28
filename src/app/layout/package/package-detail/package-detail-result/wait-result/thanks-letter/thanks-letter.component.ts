@@ -107,7 +107,6 @@ export class ThanksLetterComponent implements OnInit {
   }
 
   closePopupAndNegative() {
-    console.log('closePopupAndNegative');
     this.callBackAndNavigate();
   }
 }

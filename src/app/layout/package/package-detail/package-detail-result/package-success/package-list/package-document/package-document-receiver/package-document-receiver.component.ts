@@ -342,7 +342,6 @@ export class PackageDocumentReceiverComponent implements OnInit, OnDestroy {
       this.filter
     ).subscribe(response => {
       this.transferredDocList = response;
-      console.log('this.transferredDocList', this.transferredDocList);
       for (let i = 0; i < response.length; i++) {
         for (let j = 0; j < (response[i].bidTransferDocDetails || []).length; j++) {
           if (response[i].bidTransferDocDetails[j].sendEmployee) {
@@ -371,7 +370,6 @@ export class PackageDocumentReceiverComponent implements OnInit, OnDestroy {
         });
         this.docHSMTListTranferred = groupBy(this.docHSMTListTranferred, [{ field: 'documentTypeStr' }]);
       }
-      console.log('docHSDTListTranferred-before', this.docHSDTListTranferred);
       // Hồ sơ dự thầu
       if (this.docHSDTListTranferred && this.docHSDTListTranferred.length !== 0) {
         this.docHSDTListTranferred.forEach((itemPra, indexPra) => {
@@ -379,7 +377,6 @@ export class PackageDocumentReceiverComponent implements OnInit, OnDestroy {
         });
         this.docHSDTListTranferred = groupBy(this.docHSDTListTranferred, [{ field: 'documentTypeStr' }]);
       }
-      console.log('this.this.docHSDTListTranferred', this.docHSDTListTranferred);
       if (alertShow) {
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
       }
