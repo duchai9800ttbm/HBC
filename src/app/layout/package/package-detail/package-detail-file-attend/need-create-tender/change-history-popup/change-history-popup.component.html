@@ -13,7 +13,7 @@
                 <table class="table-layout--fixed zui-table row-border cell-border w-100">
                     <thead>
                         <tr>
-                            <th class="text-center">Chi tiết cập nhật lần {{ index }}</th>
+                                <th>{{ updateInfo.items[0].employee?.employeeName }} đã cập nhật cập nhật lần {{ index }} vào lúc {{ (updateInfo.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</th>
                         </tr>
                     </thead>
                     <tbody>

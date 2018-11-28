@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DATATABLE_CONFIG } from '../../../../shared/configs';
-import { Subject, Observable } from '../../../../../../node_modules/rxjs';
 import {
     FormGroup,
     FormBuilder,
@@ -14,10 +13,10 @@ import { BidPermissionUserGroupResponsive } from '../../../../shared/models/api-
 import { DataService, AlertService } from '../../../../shared/services';
 import { BidGroupUserResponsive } from '../../../../shared/models/api-response/user/group-user/bid-group-user-responsive';
 import { BidPermissionGroupResponsive } from '../../../../shared/models/api-response/setting/bid-permission-group-responsive';
-import { BidPermissionResponsive } from '../../../../shared/models/api-response/setting/bid-permission-responsive';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { forkJoin } from '../../../../../../node_modules/rxjs/observable/forkJoin';
+import { BidUserGroupMemberResponsive } from '../../../../shared/models/api-response/setting/bid-user-group-member-responsive';
 
 @Component({
     selector: 'app-package-permission-review',
@@ -25,7 +24,6 @@ import { forkJoin } from '../../../../../../node_modules/rxjs/observable/forkJoi
     styleUrls: ['./package-permission-review.component.scss']
 })
 export class PackagePermissionReviewComponent implements OnInit {
-    // dtTrigger: Subject<any> = new Subject();
     dtOptions: any = DATATABLE_CONFIG;
     packagePermissionReviewForm: FormGroup;
     packageId: number;
@@ -35,6 +33,7 @@ export class PackagePermissionReviewComponent implements OnInit {
     }[] = [];
     listFormData: BidPermissionGroupResponsive[];
     listBidGroupUser: BidGroupUserResponsive[];
+    listBidUserGroupMember: BidUserGroupMemberResponsive[];
     checkAllHSMT = true;
     userNameChoosed = [];
     constructor(
@@ -50,10 +49,12 @@ export class PackagePermissionReviewComponent implements OnInit {
         this.spinner.show();
         this.packageId = PackagePermissionComponent.packageId;
         forkJoin(
+            this.packageService.getBidGroupMembers(this.packageId, 'bidusergroupmembers'),
             this.dataService.getListBidUserGroup(),
             this.packageService.getBidPermissionGroupByStage(this.packageId, SETTING_BID_STAGE.Hsmt),
         )
-            .subscribe(([listBidGroupUser, data]) => {
+            .subscribe(([listBidUserGroupMember, listBidGroupUser, data]) => {
+                this.listBidUserGroupMember = listBidUserGroupMember;
                 this.listBidGroupUser = listBidGroupUser;
                 // data
                 data.forEach(e => {
@@ -89,6 +90,9 @@ export class PackagePermissionReviewComponent implements OnInit {
             } else {
                 this.addFormArrayItem(e, {});
             }
+        });
+        setTimeout(_ => {
+            this.runOnceThenDie();
         });
     }
 
@@ -206,6 +210,32 @@ export class PackagePermissionReviewComponent implements OnInit {
         const formArrayControl = this.packagePermissionReviewForm.get('HSMT').get('permission') as FormArray;
         formArrayControl.controls.forEach(itemControl => {
             this.userNameChoosed.push(+itemControl.get('userName').value);
+        });
+    }
+
+    checkAssignment(groupCheckId, i) {
+        if (groupCheckId) {
+            const isNotAssignment = (this.listBidUserGroupMember
+                .find(item => item.groupName == this.listBidGroupUser
+                    .find(group => group.id == groupCheckId).name) && this.listBidUserGroupMember
+                        .find(item => item.groupName == this.listBidGroupUser
+                            .find(group => group.id == groupCheckId).name).users.length === 0);
+
+            const element = document.getElementById(`isCheckAssignment${i}`);
+            if (isNotAssignment && element) {
+                element.classList.add('d-show');
+            }
+            if (!isNotAssignment && element) {
+                element.classList.remove('d-show');
+            }
+        }
+    }
+    runOnceThenDie() {
+        const formArrayControl = this.packagePermissionReviewForm.get('HSMT').get('permission') as FormArray;
+        formArrayControl.controls.forEach(itemControl => {
+            for (let i = 0; i <= this.listBidGroupUser.length; i++) {
+                this.checkAssignment(itemControl.get('userName').value, i);
+            }
         });
     }
 }

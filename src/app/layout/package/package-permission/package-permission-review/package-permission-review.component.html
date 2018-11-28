@@ -40,65 +40,77 @@
                 </thead>
                 <tbody [formGroupName]="'HSMT'">
                     <ng-container [formArrayName]="'permission'">
-                        <tr *ngFor="let item of packagePermissionReviewForm.get('HSMT').get('permission').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
-                            <td>
-                                <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('HSMT').get('permission').value.length < this.listBidGroupUser.length" (click)="addFormArrayItem(listFormData[0], {})">
-                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
-                                    </div>
-                                    <div *ngIf="!(packagePermissionReviewForm.get('HSMT').get('permission').value.length < this.listBidGroupUser.length)">
+                        <ng-container *ngFor="let item of packagePermissionReviewForm.get('HSMT').get('permission').controls; let i = index;"
+                            [formGroupName]="i" [class.odd]="i % 2 == 0">
+                            <span id="isCheckAssignment{{i}}" class="font-italic ml-3 alert-text d-none" [routerLink]="['../user']">
+                                Chưa phần quyền người sử dụng cho vị trí này</span>
+                            <tr>
+                                <td>
+                                    <div class="grid-container-3">
+                                        <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('HSMT').get('permission').value.length < this.listBidGroupUser.length"
+                                            (click)="addFormArrayItem(listFormData[0], {})">
+                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        </div>
+                                        <div *ngIf="!(packagePermissionReviewForm.get('HSMT').get('permission').value.length < this.listBidGroupUser.length)">
 
+                                        </div>
+                                        <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[0], i)">
+                                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
+                                        </div>
+                                        <div>
+                                            <span style="margin-left: 12px" class="custom-dropdown w-100">
+                                                <select class="form-control" formControlName="userName" (change)="hiddenUserName(); checkAssignment($event.target.value, i);">
+                                                    <option [ngValue]="null">--Chọn--</option>
+                                                    <option *ngFor="let user of listBidGroupUser; let i = index"
+                                                        [value]="user.id" [hidden]="userNameChoosed.includes(user.id)">{{user.desc}}</option>
+                                                </select>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[0], i)">
-                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
-                                    </div>
-                                    <div>
-                                        <span style="margin-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control" formControlName="userName" (change)="hiddenUserName()">
-                                                <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser; let i = index" [value]="user.id" [hidden]="userNameChoosed.includes(user.id)">{{user.desc}}</option>
-                                            </select>
-                                        </span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-center">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" formControlName="all" class="custom-control-input" (click)="checkAll($event.target.checked, 'HSMT', i)">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="UploadHSMT" (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="DownloadFile" (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="XoaFile" (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="XacNhanDaDuHSMT" (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </td>
-                            <!-- <td class="text-center">
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" formControlName="all" class="custom-control-input"
+                                            (click)="checkAll($event.target.checked, 'HSMT', i)">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" formControlName="UploadHSMT"
+                                            (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" formControlName="DownloadFile"
+                                            (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" formControlName="XoaFile"
+                                            (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" formControlName="XacNhanDaDuHSMT"
+                                            (click)="removeCheckAll($event.target.checked, 'HSMT', i); autoCheckAll('HSMT', i)">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </td>
+                                <!-- <td class="text-center">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" formControlName="DanhGiaHSMT">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td> -->
-                        </tr>
+                            </tr>
+                        </ng-container>
                     </ng-container>
                 </tbody>
             </table>
@@ -206,7 +218,7 @@
                     </ng-container>
                 </tbody>
             </table> -->
-           
+
         </div>
     </div>
 

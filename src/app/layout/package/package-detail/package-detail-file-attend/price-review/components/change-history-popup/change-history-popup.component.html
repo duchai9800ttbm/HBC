@@ -13,7 +13,7 @@
                 <table class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
                     <thead>
                         <tr>
-                            <th class="text-center">Chi tiết cập nhật lần {{ index }}</th>
+                                <th>{{ updateInfo.items[0].employee?.employeeName }} đã cập nhật cập nhật lần {{ index }} vào lúc {{ (updateInfo.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,7 +24,7 @@
                                         <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
                                             <div>
                                                 <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items">
-                                                    <div *ngIf="!itemByChangeTime.liveFormChangeds[0].value">
+                                                    <div *ngIf="!((!itemByLiveFormStep.oldValue || itemByLiveFormStep.oldValue == '0') && (!itemByLiveFormStep.newValue || itemByLiveFormStep.newValue == '0'))">
                                                         <div *ngIf="!(itemByLiveFormStep.liveFormTitle === 'CostOfCapital' ||
                                                                                           itemByLiveFormStep.liveFormTitle === 'CostOfCapitalGeneralCost' ||
                                                                                           itemByLiveFormStep.liveFormTitle === 'CostOfCapitalPCPSValue' ||

@@ -58,7 +58,7 @@ export class HeaderNotificationComponent implements OnInit {
   getInterval() {
     var self = this;
 
-    setInterval(function () {
+    (function () {
 
         if (!self.sessionService.currentUser) {
             return;

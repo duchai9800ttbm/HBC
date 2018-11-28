@@ -1,29 +1,35 @@
-.no-boder{
+.no-boder {
     border: none;
 }
-.textarea-content{
+
+.textarea-content {
     resize: none;
     width: 90%;
     background-color: white;
 }
-.pre-content{
+
+.pre-content {
     width: 90%;
     background-color: white;
 }
-.boder-table{
+
+.boder-table {
     // border: 1px solid #dadada;
     padding: 20px 0px 35px 30px;
     // border-top: none;
     box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
     background-color: #ffff;
 }
-.layout-table{
+
+.layout-table {
     table-layout: fixed;
 }
-.form-control{
+
+.form-control {
     min-height: 33px;
 }
-.text-right-m2{
+
+.text-right-m2 {
     float: right;
 }
 
@@ -50,8 +56,19 @@
 
 .grid-container-3 {
     display: grid;
-    grid-template-columns: 32px 32px 200px;   
+    grid-template-columns: 32px 32px 200px;
 }
-.set-width-hsmt{
+
+.set-width-hsmt {
     width: 21rem !important;
+}
+
+.alert-text {
+    color: #ff0000;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.d-show {
+    display: unset !important;
 }

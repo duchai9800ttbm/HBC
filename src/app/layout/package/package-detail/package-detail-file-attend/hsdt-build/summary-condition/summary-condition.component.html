@@ -136,7 +136,7 @@
                                         itemByLiveFormStep.liveFormTitle !== 'AttentiveDocuments' &&
                                         itemByLiveFormStep.liveFormTitle !== 'ProgressCompletionContractorDate' &&
                                         itemByLiveFormStep.liveFormTitle !== 'IsProgressCompletionDate' &&
-                                        (itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue)
+                                        !((!itemByLiveFormStep.oldValue || itemByLiveFormStep.oldValue == '0' || itemByLiveFormStep.oldValue == '[]') && (!itemByLiveFormStep.newValue || itemByLiveFormStep.newValue == '0' || itemByLiveFormStep.newValue == '[]'))
                                         "
                                                     class="d-flex" title="* {{
                                                     itemByLiveFormStep.liveFormTitle ?
