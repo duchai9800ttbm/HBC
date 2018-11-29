@@ -6,20 +6,18 @@ import { PackageInfoModel } from '../../../../../../shared/models/package/packag
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 // tslint:disable-next-line:import-blacklist
-import { Subject, Observable, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { TenderPreparationPlanItem } from '../../../../../../shared/models/package/tender-preparation-plan-item';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 import { UserService, AlertService, SessionService, ConfirmationService } from '../../../../../../shared/services';
 import { UserItemModel } from '../../../../../../shared/models/user/user-item.model';
 import { TenderPreparationPlanningRequest } from '../../../../../../shared/models/api-request/package/tender-preparation-planning-request';
-import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
-import { StakeHolder } from '../../../../../../shared/models/ho-so-du-thau/stack-holder.model';
 import { forkJoin } from '../../../../../../../../node_modules/rxjs/observable/forkJoin';
 import { EmployeeModel } from '../../../../../../shared/models/employee/employee-model';
 declare let kendo: any;

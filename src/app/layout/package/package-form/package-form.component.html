@@ -7,7 +7,8 @@
                         <!-- <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i> -->
                         <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-bottom: 1px;">
                     </a>
-                    <h4 class="d-inline mb-0 text-dark">{{ package.id ? 'CHỈNH SỬA THÔNG TIN GÓI THẦU' : 'TẠO MỚI GÓI THẦU'}}
+                    <h4 class="d-inline mb-0 text-dark">{{ package.id ? 'CHỈNH SỬA THÔNG TIN GÓI THẦU' : 'TẠO MỚI GÓI
+                        THẦU'}}
                     </h4>
                     <!-- <span class="action-bar alignment-but">
                         <button type="submit" class="btn btn-primary ml-2" (click)="submitForm()" tabindex="30">Lưu &nbsp;
@@ -40,7 +41,8 @@
                         <div class="w-100  mr-auto">
 
                             <div class="card-collapse">
-                                <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+                                <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain"
+                                    aria-controls="info-main">
                                     <i *ngIf="!isCollapsedMain" class="fa fa-caret-down mr-3"></i>
                                     <i *ngIf="isCollapsedMain" class="fa fa-caret-right mr-3"></i>
                                     Thông tin chi tiết
@@ -51,29 +53,31 @@
                                             <tr>
                                                 <td class="w-15 bg-light text-right label no-boder">Tên dự án</td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="1" placeholder="" type="text" formControlName="projectName"
-                                                        [class.is-invalid]="formErrors.projectName">
-                                                    <div class="invalid-feedback" *ngIf="formErrors.projectName">
-                                                        {{formErrors.projectName}}
-                                                    </div>
+                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="1"
+                                                        placeholder="" type="text" formControlName="projectName">
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder">Quy mô</td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="14" placeholder="" type="text" formControlName="magnitude">
+                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="14"
+                                                        placeholder="" type="text" formControlName="magnitude">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="w-15 bg-light text-right label no-boder">Mã số dự án</td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="2" placeholder="" type="text" formControlName="projectNo">
+                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="2"
+                                                        placeholder="" type="text" formControlName="projectNo">
                                                 </td>
-                                                <td class="w-15 bg-light text-right label required no-boder">Loại công trình
+                                                <td class="w-15 bg-light text-right label required no-boder">Loại công
+                                                    trình
                                                 </td>
                                                 <td class="w-35 no-boder">
                                                     <span class="custom-dropdown w-75">
-                                                        <select class="form-control" appEnterPreventDefault tabindex="15" formControlName="constructionTypeId" [class.is-invalid]="formErrors.constructionTypeId">
+                                                        <select class="form-control" appEnterPreventDefault tabindex="15"
+                                                            formControlName="constructionTypeId" [class.is-invalid]="formErrors.constructionTypeId">
                                                             <option [ngValue]="null">---Chọn---</option>
-                                                            <option *ngFor="let item of listBuildingProjectType | async" [value]="item.id">{{item.text }}</option>
+                                                            <option *ngFor="let item of listBuildingProjectType | async"
+                                                                [value]="item.id">{{item.text }}</option>
                                                         </select>
                                                     </span>
                                                     <div class="invalid-feedback" *ngIf="formErrors.constructionTypeId">
@@ -82,20 +86,26 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="w-15 bg-light text-right label required no-boder">Tên gói thầu
+                                                <td class="w-15 bg-light text-right label required no-boder">Tên gói
+                                                    thầu
                                                 </td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="3" type="text" formControlName="opportunityName" [class.is-invalid]="formErrors.opportunityName">
+                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="3"
+                                                        type="text" formControlName="opportunityName"
+                                                        [class.is-invalid]="formErrors.opportunityName">
                                                     <div class="invalid-feedback" *ngIf="formErrors.opportunityName">
                                                         {{formErrors.opportunityName}}
                                                     </div>
                                                 </td>
-                                                <td class="w-15 bg-light text-right label required no-boder">Hạng mục thi công chính</td>
+                                                <td class="w-15 bg-light text-right label required no-boder">Hạng mục
+                                                    thi công chính</td>
                                                 <td class="w-35 no-boder">
                                                     <span class="custom-dropdown w-75">
-                                                        <select class="form-control" appEnterPreventDefault tabindex="16" formControlName="constructionCategoryId" [class.is-invalid]="formErrors.constructionTypeId">
+                                                        <select class="form-control" appEnterPreventDefault tabindex="16"
+                                                            formControlName="constructionCategoryId" [class.is-invalid]="formErrors.constructionTypeId">
                                                             <option [ngValue]="null">---Chọn---</option>
-                                                            <option *ngFor="let item of listMainBuildingCategory | async" [value]="item.id">{{item.text }}</option>
+                                                            <option *ngFor="let item of listMainBuildingCategory | async"
+                                                                [value]="item.id">{{item.text }}</option>
                                                         </select>
                                                     </span>
                                                     <div class="invalid-feedback" *ngIf="formErrors.constructionCategoryId">
@@ -107,14 +117,17 @@
 
                                                 <td class="w-15 bg-light text-right label no-boder">Địa điểm</td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="4" placeholder="" type="text" formControlName="place">
+                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="4"
+                                                        placeholder="" type="text" formControlName="place">
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder">Vai trò</td>
                                                 <td class="w-35 no-boder">
                                                     <span class="custom-dropdown w-75">
-                                                        <select class="form-control" appEnterPreventDefault tabindex="17" formControlName="hbcRole">
+                                                        <select class="form-control" appEnterPreventDefault tabindex="17"
+                                                            formControlName="hbcRole">
                                                             <option [ngValue]="null">---Chọn---</option>
-                                                            <option *ngFor="let item of listRoleContractors | async" [value]="item.id">{{item.text }}</option>
+                                                            <option *ngFor="let item of listRoleContractors | async"
+                                                                [value]="item.id">{{item.text }}</option>
                                                         </select>
                                                     </span>
                                                 </td>
@@ -123,9 +136,11 @@
                                                 <td class="w-15 bg-light text-right required label no-boder">Khu vực</td>
                                                 <td class="w-35 no-boder">
                                                     <span class="custom-dropdown w-75">
-                                                        <select class="form-control" tabindex="5" formControlName="locationId" [class.is-invalid]="formErrors.locationId">
+                                                        <select class="form-control" tabindex="5" formControlName="locationId"
+                                                            [class.is-invalid]="formErrors.locationId">
                                                             <option [ngValue]="null">---Chọn---</option>
-                                                            <option *ngFor="let item of listZone | async" [value]="item.id">{{item.text }}
+                                                            <option *ngFor="let item of listZone | async" [value]="item.id">{{item.text
+                                                                }}
                                                             </option>
                                                         </select>
                                                     </span>
@@ -135,7 +150,8 @@
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder">Link tài liệu</td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="18" placeholder="" type="text" formControlName="documentLink">
+                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="18"
+                                                        placeholder="" type="text" formControlName="documentLink">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -144,7 +160,8 @@
                                                     <span class="custom-dropdown w-75">
                                                         <select class="form-control" tabindex="6" formControlName="quarter">
                                                             <option [ngValue]="null">---Chọn---</option>
-                                                            <option *ngFor="let item of listQuarterOfYear | async" [value]="item.id">{{item.text }}</option>
+                                                            <option *ngFor="let item of listQuarterOfYear | async"
+                                                                [value]="item.id">{{item.text }}</option>
                                                         </select>
                                                     </span>
                                                 </td>
@@ -165,10 +182,11 @@
                                                 <td class="w-15 bg-light text-right label no-boder">Tên khách hàng</td>
                                                 <td class="w-100 no-boder d-flex">
                                                     <span class="w-75 autocomplete-wrapper-2 ui-fluid">
-                                                        <p-autoComplete formControlName="customerId" [suggestions]="customersSearchResults" [forceSelection]="true" [delay]="'400'"
-                                                            [emptyMessage]="'Không có dữ liệu'" placeholder="---Chọn---" [immutable]="true"
-                                                            (completeMethod)="searchCustomers($event.query)" field="text" dataKey="id"
-                                                            [multiple]="false" [tabindex]="'7'" (onSelect)="customerSelectedChange($event)">
+                                                        <p-autoComplete formControlName="customerId" [suggestions]="customersSearchResults"
+                                                            [forceSelection]="true" [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
+                                                            placeholder="---Chọn---" [immutable]="true"
+                                                            (completeMethod)="searchCustomers($event.query)" field="text"
+                                                            dataKey="id" [multiple]="false" [tabindex]="'7'" (onSelect)="customerSelectedChange($event)">
                                                         </p-autoComplete>
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-search"></i>
@@ -178,43 +196,32 @@
                                                 <i class="fa fa-plus"> </i>
                                             </span> -->
                                                 </td>
-                                                <td class="w-15 bg-light text-right label no-boder required p-1">Tổng giá trị tạm tính (GĐ đầu)
+                                                <td class="w-15 bg-light text-right label no-boder required p-1">Tổng
+                                                    giá trị tạm tính (GĐ đầu)
                                                 </td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control text-right align-placeholder" appEnterPreventDefault appInputMoney tabindex="20" placeholder=""
+                                                    <input class="w-75 form-control text-right align-placeholder"
+                                                        appEnterPreventDefault appInputMoney tabindex="20" placeholder=""
                                                         type="text" formControlName="amount" [class.is-invalid]="formErrors.amount">
                                                     <div class="invalid-feedback" *ngIf="formErrors.amount">
                                                         {{formErrors.amount}}
                                                     </div>
                                                 </td>
-                                                <!-- <td class="w-15 bg-light text-right label required no-boder">Tình trạng</td>
-                                        <td class="w-35 no-boder">
-                                            <input class="w-75 form-control" autofocus tabindex="1" placeholder="" type="text" formControlName="status">
-                                            <span class="custom-dropdown w-75">
-                                                <select class="form-control" tabindex="14" formControlName="bidStatusId" [class.is-invalid]="formErrors.bidStatusId">
-                                                    <option [ngValue]="null">---Chọn---</option>
-                                                    <option *ngFor="let item of listStatus | async" [value]="item.id">{{item.text }}</option>
-                                                </select>
-                                            </span>
-                                            <div class="invalid-feedback" *ngIf="formErrors.bidStatusId">
-                                                {{formErrors.bidStatusId}}
-                                            </div>
-                                        </td> -->
                                             </tr>
                                             <tr>
                                                 <td class="w-15 bg-light text-right label no-boder">Loại khách hàng</td>
                                                 <td class="w-35 no-boder">
-                                                    <!-- <input class="w-75 form-control" appEnterPreventDefault tabindex="8" disabled placeholder="" type="text" formControlName="customerNewOldType"
-                                                        [value]="packageForm.get('customerNewOldType').value | translate"> -->
-                                                        <div class="w-75 form-control form-customer-type">
-                                                                <span>{{packageForm.get('customerNewOldType').value | translate}}</span>
-                                                        </div>
-                                                    
+                                                    <div class="w-75 form-control form-customer-type">
+                                                        <span>{{packageForm.get('customerNewOldType').value |
+                                                            translate}}</span>
+                                                    </div>
+
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder">Đánh giá dự án</td>
                                                 <td class="w-35 no-boder">
                                                     <span class="custom-dropdown w-75">
-                                                        <select class="form-control" appEnterPreventDefault tabindex="21" formControlName="evaluationId">
+                                                        <select class="form-control" appEnterPreventDefault tabindex="21"
+                                                            formControlName="evaluationId">
                                                             <option [ngValue]="null">---Chọn---</option>
                                                             <option *ngFor="let item of dataEvaluation" [value]="item.key">
                                                                 {{ item.value }}
@@ -227,10 +234,12 @@
                                                 <td class="w-15 bg-light text-right label no-boder">Liên hệ</td>
                                                 <td class="w-35 no-boder">
                                                     <div class=" w-75 autocomplete-wrapper-2 ui-fluid">
-                                                        <p-autoComplete appEnterPreventDefault formControlName="customerContactId" [suggestions]="contactsSearchResults" [forceSelection]="true"
-                                                            [delay]="'400'" [emptyMessage]="'Không có dữ liệu'" placeholder="---Chọn---"
-                                                            [immutable]="true" (completeMethod)="searchContacts($event.query)"
-                                                            field="text" dataKey="id" [multiple]="false" [tabindex]="'9'">
+                                                        <p-autoComplete appEnterPreventDefault formControlName="customerContactId"
+                                                            [suggestions]="contactsSearchResults" [forceSelection]="true"
+                                                            [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
+                                                            placeholder="---Chọn---" [immutable]="true"
+                                                            (completeMethod)="searchContacts($event.query)" field="text"
+                                                            dataKey="id" [multiple]="false" [tabindex]="'9'">
 
                                                         </p-autoComplete>
                                                         <span class="input-group-addon">
@@ -247,10 +256,13 @@
                                                 <td class="w-15 bg-light text-right label no-boder">Đơn vị tư vấn</td>
                                                 <td class="w-100 no-boder d-flex">
                                                     <span class="w-75 autocomplete-wrapper-2 ui-fluid">
-                                                        <p-autoComplete appEnterPreventDefault formControlName="consultantUnitCustomerId" [suggestions]="consultantSearchResults"
-                                                            [forceSelection]="true" [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
-                                                            placeholder="---Chọn---" [immutable]="true" (completeMethod)="searchConsultants($event.query)"
-                                                            field="text" dataKey="id" [multiple]="false" [tabindex]="'10'" (onSelect)="changeConsultant($event)">
+                                                        <p-autoComplete appEnterPreventDefault formControlName="consultantUnitCustomerId"
+                                                            [suggestions]="consultantSearchResults" [forceSelection]="true"
+                                                            [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
+                                                            placeholder="---Chọn---" [immutable]="true"
+                                                            (completeMethod)="searchConsultants($event.query)" field="text"
+                                                            dataKey="id" [multiple]="false" [tabindex]="'10'"
+                                                            (onSelect)="changeConsultant($event)">
                                                         </p-autoComplete>
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-search"></i>
@@ -262,11 +274,12 @@
                                                 </td>
 
                                             </tr>
-                                            
+
                                             <tr>
                                                 <td class="w-15 bg-light text-right label no-boder">Địa chỉ ĐVTV</td>
                                                 <td class="w-35 no-boder">
-                                                    <input disabled appEnterPreventDefault class="w-75 form-control" tabindex="11" placeholder="" type="text" formControlName="consultantAddress"
+                                                    <input disabled appEnterPreventDefault class="w-75 form-control"
+                                                        tabindex="11" placeholder="" type="text" formControlName="consultantAddress"
                                                         [value]="packageForm.get('consultantAddress').value">
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder"></td>
@@ -277,12 +290,9 @@
                                             <tr>
                                                 <td class="w-15 bg-light text-right label  no-boder">Số điện thoại ĐVTV</td>
                                                 <td class="w-35  no-boder">
-                                                    <input appEnterPreventDefault disabled appInputNumber class="w-75 form-control" tabindex="12" placeholder="" type="text"
-                                                        formControlName="consultantPhone" [class.is-invalid]="formErrors.consultantPhone"
+                                                    <input appEnterPreventDefault disabled appInputNumber class="w-75 form-control"
+                                                        tabindex="12" placeholder="" type="text" formControlName="consultantPhone"
                                                         [value]="packageForm.get('consultantPhone').value">
-                                                    <div class="invalid-feedback" *ngIf="formErrors.consultantPhone">
-                                                        {{formErrors.consultantPhone}}
-                                                    </div>
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder"></td>
                                                 <td class="w-35 no-boder">
@@ -292,11 +302,12 @@
 
                                             <tr>
 
-                                                <td class="w-15 bg-light text-right label pb-1" style="padding-bottom: 20px!important; border-top: none;border-right: none;">Diện tích sàn (m2)</td>
+                                                <td class="w-15 bg-light text-right label pb-1" style="padding-bottom: 20px!important; border-top: none;border-right: none;">Diện
+                                                    tích sàn (m2)</td>
                                                 <td class="w-35" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">
                                                     <div class=" w-75 autocomplete-wrapper-2 ui-fluid">
-                                                        <input appEnterPreventDefault appInputArea class="form-control cus-input text-right align-placeholder" tabindex="13" placeholder=""
-                                                            type="text" formControlName="floorArea">
+                                                        <input appEnterPreventDefault appInputArea class="form-control cus-input text-right align-placeholder"
+                                                            tabindex="13" placeholder="" type="text" formControlName="floorArea">
                                                     </div>
                                                 </td>
                                                 <td class="w-15 bg-light text-right label pb-1" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;"></td>
@@ -304,91 +315,61 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="w-15 bg-light text-right label no-boder" style="padding-top: 20px!important;">Ngày bắt đầu</td>
+                                                <td class="w-15 bg-light text-right label no-boder" style="padding-top: 20px!important;">Ngày
+                                                    bắt đầu</td>
                                                 <td class="w-35 no-boder" style="padding-top: 20px!important;">
                                                     <div class="input-group w-75">
-                                                        <!-- <owl-date-time formControlName="startTrackingDate" [tabindex]="'14'">
-                                                        </owl-date-time>
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span> -->
-                                                        <!-- <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="startTrackingDate"
-                                                            tabindex="27" [owlDateTimeTrigger]="dtStartTrackingDate" [owlDateTime]="dtStartTrackingDate">
-                                                        <owl-date-time #dtStartTrackingDate pickerType="calendar"></owl-date-time> -->
-                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="27" [max]="packageForm.get('submissionDate').value  ? packageForm.get('submissionDate').value : packageForm.get('resultEstimatedDate').value"
+                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="27"
+                                                            [max]="packageForm.get('submissionDate').value  ? packageForm.get('submissionDate').value : packageForm.get('resultEstimatedDate').value"
                                                             formControlName="startTrackingDate"></kendo-datepicker>
-                                                        <!-- <span [owlDateTimeTrigger]="dtStartTrackingDate" class="input-group-addon">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span> -->
                                                     </div>
                                                 </td>
-                                                <td class="w-15 bg-light text-right label no-boder" style="padding-top: 20px!important;">Ngày khởi công dự án
+                                                <td class="w-15 bg-light text-right label no-boder" style="padding-top: 20px!important;">Ngày
+                                                    khởi công dự án
                                                 </td>
                                                 <td class="w-35 no-boder" style="padding-top: 20px!important;">
                                                     <div class="input-group w-75">
-                                                        <!-- <owl-date-time formControlName="projectEstimatedStartDate"
-                                                            [tabindex]="'25'">
-                                                        </owl-date-time>
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span> -->
-                                                        <!-- <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="projectEstimatedStartDate"
-                                                            tabindex="30" [owlDateTimeTrigger]="dtProjectEstimatedStartDate"
-                                                            [owlDateTime]="dtProjectEstimatedStartDate">
-                                                        <owl-date-time #dtProjectEstimatedStartDate pickerType="calendar"></owl-date-time>
-                                                        <span [owlDateTimeTrigger]="dtProjectEstimatedStartDate" class="input-group-addon">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span> -->
-                                                        <kendo-datepicker [max]="packageForm.get('projectEstimatedEndDate').value" appEnterPreventDefault
-                                                            class="w-100" tabindex="30" formControlName="projectEstimatedStartDate"></kendo-datepicker>
+                                                        <kendo-datepicker [max]="packageForm.get('projectEstimatedEndDate').value"
+                                                            appEnterPreventDefault class="w-100" tabindex="30"
+                                                            formControlName="projectEstimatedStartDate"></kendo-datepicker>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="w-15 bg-light text-right label no-boder">Ngày nộp hồ sơ mời thầu
+                                                <td class="w-15 bg-light text-right label no-boder">Ngày nộp hồ sơ mời
+                                                    thầu
                                                 </td>
                                                 <td class="w-35 no-boder">
                                                     <div class="input-group w-75">
-                                                        <!-- <owl-date-time formControlName="submissionDate" [tabindex]="'15'">
-                                                        </owl-date-time>
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span> -->
-                                                        <!-- <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="submissionDate"
-                                                            tabindex="28" [owlDateTimeTrigger]="dtSubmissionDate" [owlDateTime]="dtSubmissionDate">
-                                                        <owl-date-time #dtSubmissionDate pickerType="calendar"></owl-date-time>
-                                                        <span [owlDateTimeTrigger]="dtSubmissionDate" class="input-group-addon">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span> -->
-                                                        <kendo-datepicker appEnterPreventDefault class="w-100" [min]="packageForm.get('startTrackingDate').value" [max]="packageForm.get('resultEstimatedDate').value"
+                                                        <kendo-datepicker appEnterPreventDefault class="w-100" [min]="packageForm.get('startTrackingDate').value"
+                                                            [max]="packageForm.get('resultEstimatedDate').value"
                                                             tabindex="28" formControlName="submissionDate"></kendo-datepicker>
                                                     </div>
-                                                    <div class="invalid-feedback" *ngIf="formErrors.submissionDate">
-                                                        {{formErrors.submissionDate}}
-                                                    </div>
+
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder">Ngày kết thúc dự án</td>
                                                 <td class="w-35 no-boder">
                                                     <div class="input-group w-75">
-                                                        <kendo-datepicker [min]="packageForm.get('projectEstimatedStartDate').value" appEnterPreventDefault
-                                                            class="w-100" tabindex="31" formControlName="projectEstimatedEndDate"></kendo-datepicker>
+                                                        <kendo-datepicker [min]="packageForm.get('projectEstimatedStartDate').value"
+                                                            appEnterPreventDefault class="w-100" tabindex="31"
+                                                            formControlName="projectEstimatedEndDate"></kendo-datepicker>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="w-15 bg-light text-right label no-boder">Ngày dự kiến kết quả thầu</td>
+                                                <td class="w-15 bg-light text-right label no-boder">Ngày dự kiến kết
+                                                    quả thầu</td>
                                                 <td class="w-35 no-boder">
                                                     <div class="input-group w-75">
                                                         <kendo-datepicker appEnterPreventDefault [min]="packageForm.get('submissionDate').value ? packageForm.get('submissionDate').value : packageForm.get('startTrackingDate').value"
                                                             class="w-100" tabindex="29" formControlName="resultEstimatedDate"></kendo-datepicker>
                                                     </div>
-                                                    <div class="invalid-feedback" *ngIf="formErrors.resultEstimatedDate">
-                                                        {{formErrors.resultEstimatedDate}}
-                                                    </div>
+
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder">Tổng thời gian</td>
                                                 <td class="w-35 no-boder">
-                                                    <input disabled appEnterPreventDefault class="w-75 form-control" tabindex="32" placeholder="" type="text" formControlName="totalTime">
+                                                    <input disabled appEnterPreventDefault class="w-75 form-control"
+                                                        tabindex="32" placeholder="" type="text" formControlName="totalTime">
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -396,7 +377,8 @@
                                 </div>
                             </div>
                             <div class="mr-auto card-collapse">
-                                <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
+                                <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc"
+                                    aria-controls="info-desc">
                                     <i *ngIf="!isCollapsedDesc" class="fa fa-caret-down mr-3"></i>
                                     <i *ngIf="isCollapsedDesc" class="fa fa-caret-right mr-3"></i>
                                     Mô tả chi tiết
@@ -411,8 +393,8 @@
                                                     </div>
                                                 </td>
                                                 <td class="w-85 no-boder">
-                                                    <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" formControlName="description" placeholder=""
-                                                        tabindex="33"></textarea>
+                                                    <textarea class="form-control textarea-content" name="" id="" cols="30"
+                                                        rows="3" formControlName="description" placeholder="" tabindex="33"></textarea>
                                                 </td>
                                             </tr>
                                         </tbody>

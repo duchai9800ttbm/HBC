@@ -12,7 +12,6 @@ export class ChangeHisrotyPopupComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.updateInfo);
   }
   closePopup() {
     this.closed.emit(true);

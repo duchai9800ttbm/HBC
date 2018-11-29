@@ -91,9 +91,9 @@ export class PackagePermissionReviewComponent implements OnInit {
                 this.addFormArrayItem(e, {});
             }
         });
-        setTimeout(_ => {
-            this.runOnceThenDie();
-        });
+        // setTimeout(_ => {
+        //     this.runOnceThenDie();
+        // });
     }
 
     addFormControl(formData): FormGroup {
@@ -214,21 +214,21 @@ export class PackagePermissionReviewComponent implements OnInit {
     }
 
     checkAssignment(groupCheckId, i) {
-        if (groupCheckId) {
-            const isNotAssignment = (this.listBidUserGroupMember
-                .find(item => item.groupName == this.listBidGroupUser
-                    .find(group => group.id == groupCheckId).name) && this.listBidUserGroupMember
-                        .find(item => item.groupName == this.listBidGroupUser
-                            .find(group => group.id == groupCheckId).name).users.length === 0);
+        // if (groupCheckId) {
+        //     const isNotAssignment = (this.listBidUserGroupMember
+        //         .find(item => item.groupName == this.listBidGroupUser
+        //             .find(group => group.id == groupCheckId).name) && this.listBidUserGroupMember
+        //                 .find(item => item.groupName == this.listBidGroupUser
+        //                     .find(group => group.id == groupCheckId).name).users.length === 0);
 
-            const element = document.getElementById(`isCheckAssignment${i}`);
-            if (isNotAssignment && element) {
-                element.classList.add('d-show');
-            }
-            if (!isNotAssignment && element) {
-                element.classList.remove('d-show');
-            }
-        }
+        //     const element = document.getElementById(`isCheckAssignment${i}`);
+        //     if (isNotAssignment && element) {
+        //         element.classList.add('d-show');
+        //     }
+        //     if (!isNotAssignment && element) {
+        //         element.classList.remove('d-show');
+        //     }
+        // }
     }
     runOnceThenDie() {
         const formArrayControl = this.packagePermissionReviewForm.get('HSMT').get('permission') as FormArray;

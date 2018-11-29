@@ -464,17 +464,31 @@
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
-                </div>
+                </div>  
                 <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder=""
                     aria-label="Tiede" aria-describedby="basic-addon1">
             </div>
             <div class="body-ckeditor">
-                <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (change)="onChange($event)"
+                <!-- <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (change)="onChange($event)"
                     (paste)="onPaste($event)">
                     <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
                         [toolbar]="'clipboard,1'">
                     </ckbutton>
-                </ckeditor>
+                </ckeditor> -->
+
+                <ckeditor #ckeditor debounce="500" id="editorcke"
+                [editor]="Editor" 
+                [(ngModel)]="emailModel.content"
+                [config]="ckeConfig"
+                (ready)="onReady($event)"
+                (change)="onChange($event)"
+                (paste)="onPaste($event)"
+                (drop)="onDrop($event)"
+                ></ckeditor>
+
+
+
+
             </div>
             <!-- <div *ngFor="let item of file; let i = index" class="d-flex justify-content-start pt-2">
             <div class="center-parent">

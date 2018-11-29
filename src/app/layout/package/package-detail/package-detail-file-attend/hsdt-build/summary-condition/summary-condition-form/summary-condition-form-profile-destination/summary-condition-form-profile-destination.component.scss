@@ -1,4 +1,9 @@
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
     color: #ced4da;
     font-style: italic;
+}
+
+.cursor-default {
+    cursor: default;
 }

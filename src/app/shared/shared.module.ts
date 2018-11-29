@@ -26,7 +26,8 @@ import { TagInputModule } from 'ngx-chips';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { MenuModule } from '@progress/kendo-angular-menu';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { CKEditorModule } from 'ng2-ckeditor';
+// import { CKEditorModule } from 'ng2-ckeditor';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 // Imports the ComboBox module
 import { ComboBoxModule } from '@progress/kendo-angular-dropdowns';
@@ -83,6 +84,7 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
         DropDownsModule,
         MenuModule,
         ModalModule.forRoot(),
+        // CKEditorModule,
         CKEditorModule,
         NgSelectModule,
         BsDropdownModule.forRoot(),

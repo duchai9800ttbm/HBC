@@ -6,7 +6,6 @@ import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker
 import { UploadItem } from '../../../../../shared/models/upload/upload-item.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GridDataResult, } from '@progress/kendo-angular-grid';
-import { SortDescriptor } from '@progress/kendo-data-query';
 import { Router } from '@angular/router';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { BehaviorSubject, Subject, Subscription, Observable } from '../../../../../../../node_modules/rxjs';
@@ -31,7 +30,7 @@ import { PermissionService } from '../../../../../shared/services/permission.ser
 import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 import { ScheduleAssignments } from '../../../../../shared/constants/schedule-assignments';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
-
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
   selector: 'app-information-deployment',
@@ -145,6 +144,18 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   index: number;
   isShowMore = false;
 
+  public model = {
+    editorData: '<p>Hello world!</p>'
+  };
+  public Editor = DecoupledEditor;
+
+  public onReady(editor) {
+    editor.ui.view.editable.element.parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.view.editable.element
+    );
+  }
+
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -163,6 +174,7 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.emailModel.content = '';
     this.currentUserInfo = this.sessionService.currentUserInfo;
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.loading = true;
@@ -211,16 +223,30 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
 
     this.ckeConfig = {
       toolbar: [
-        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
-        { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-        { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] },
-        { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
-        { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'Undo', 'Redo'] },
-
+        'heading',
+        'fontsize',
+        'fontfamily',
+        'bold',
+        'italic',
+        'underline',
+        'strikethrough',
+        'highlight',
+        // 'alignment:left', 'alignment:right', 'alignment:center', 'alignment:justify',
+        'alignment',
+        'numberedlist',
+        'bulletedlist',
+        'link',
+        'blockQuote',
+        'imageUpload',
+        // 'insertTable',
+        // 'mediaEmbed',
+        'undo',
+        'redo'
       ],
+      // plugins: [Table, TableToolbar],
+
       allowedContent: true,
       extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle,autolink,uploadimage',
-
       pasteFromWord_inlineImages: true,
       forcePasteAsPlainText: false,
     };
@@ -248,15 +274,6 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
     this.textConfirmProgress = 'Gửi phân công tiến độ';
     this.toggleTextUpFile = '';
     this.currentPackageId = +PackageDetailComponent.packageId;
-
-    // this.searchTermTo$
-    //   .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
-    //   .distinctUntilChanged()
-    //   .subscribe(term => {
-    //     this.emailService.searchbymail(term).subscribe(response => {
-    //       this.listEmailSearchTo = response;
-    //     });
-    //   });
   }
 
   ngOnDestroy(): void {
@@ -288,6 +305,10 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   }
 
   onPaste(e) {
+    console.log(e);
+  }
+  onDrop(e) {
+    console.log(e);
   }
 
   getPackageInfo() {
@@ -297,8 +318,8 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
         this.packageInfo = data;
         this.isShowActionStage = this.trangThaiGoiThau.includes(this.packageInfo.stageStatus.id);
         const isTrienKhai = this.packageInfo.stageStatus.id === this.bidStatus.DaThongBaoTrienKhai;
-        // tslint:disable-next-line:max-line-length
-        this.toggleTextUpFile = isTrienKhai ? 'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ thực hiện';
+        this.toggleTextUpFile = isTrienKhai ?
+          'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ thực hiện';
       });
   }
 
@@ -307,7 +328,13 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
       template,
       Object.assign({}, { class: 'gray modal-lg-max' })
     );
-
+    setTimeout(_ => {
+      const temp: HTMLElement = document.getElementsByClassName('ck-editor__editable_inline')[0] as HTMLElement;
+      temp.style.height = '10rem';
+      temp.style.border = '1px solid #ccc';
+      temp.style.margin = '1rem 0 0 0';
+      temp.style.boxShadow = 'none';
+    });
   }
   openModalUpload(template: TemplateRef<any>) {
     this.modelUp = this.modalService.show(template);

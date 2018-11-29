@@ -297,6 +297,10 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
     if (data.length > 4) {
       return true;
     }
+    if (data[0].liveFormChangeds[0] && data[0].liveFormChangeds[0].items.length <= 2 &&
+      (data[1] && data[1].liveFormChangeds[0] && data[0].liveFormChangeds[0].items.length > 1)) {
+      return true;
+    }
     if (data[0].liveFormChangeds[0] && data[0].liveFormChangeds[0].items.length > 2) {
       return true;
     }
