@@ -469,14 +469,14 @@
                     aria-label="Tiede" aria-describedby="basic-addon1">
             </div>
             <div class="body-ckeditor">
-                <!-- <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (change)="onChange($event)"
+                <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (change)="onChange($event)"
                     (paste)="onPaste($event)">
                     <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
                         [toolbar]="'clipboard,1'">
                     </ckbutton>
-                </ckeditor> -->
+                </ckeditor>
 
-                <ckeditor #ckeditor debounce="500" id="editorcke"
+                <!-- <ckeditor #ckeditor debounce="500" id="editorcke"
                 [editor]="Editor" 
                 [(ngModel)]="emailModel.content"
                 [config]="ckeConfig"
@@ -484,7 +484,7 @@
                 (change)="onChange($event)"
                 (paste)="onPaste($event)"
                 (drop)="onDrop($event)"
-                ></ckeditor>
+                ></ckeditor> -->
 
 
 
