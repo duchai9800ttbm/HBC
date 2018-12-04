@@ -11,7 +11,7 @@ import { Router } from '../../../../../../../../node_modules/@angular/router';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { Subscription } from '../../../../../../../../node_modules/rxjs/Subscription';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { UserModel } from '../../../../../../shared/models/user/user.model';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';

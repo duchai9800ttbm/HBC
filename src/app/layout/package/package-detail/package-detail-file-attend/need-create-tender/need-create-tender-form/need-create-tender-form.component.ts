@@ -22,7 +22,7 @@ import { ContractConditionTenderParticipate } from '../../../../../../shared/mod
 import { TenderDirectorProposal } from '../../../../../../shared/models/package/tender-director-proposal';
 import { DecisionBoardGeneralDirector } from '../../../../../../shared/models/package/decision-board-general-director';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { Subscription, Observable } from '../../../../../../../../node_modules/rxjs';
 import { ProjectImages } from '../../../../../../shared/models/package/project-images';
 

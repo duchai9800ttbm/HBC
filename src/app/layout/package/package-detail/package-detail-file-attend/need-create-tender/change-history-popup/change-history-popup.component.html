@@ -23,7 +23,10 @@
                                         <div *ngFor="let itemByChangeTime of updateInfo.items">
                                             <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
                                                 <div [class.d-flex]="!itemByChangeTime.liveFormChangeds[0].value" title="* {{itemByChangeTime.liveFormChangeds[0].value ? (itemByChangeTime.liveFormChangeds[0].value | translate) :
-                                            ('Tên tài liệu: từ ' +  (itemByLiveFormChanged.items[0].oldValue ? itemByLiveFormChanged.items[0].oldValue : 'không có') +' thành ' ) + (itemByLiveFormChanged.items[0].newValue ? itemByLiveFormChanged.items[0].newValue : 'không có')}}:">*
+                                            ('Tên tài liệu: từ ' +  (itemByLiveFormChanged.items[0].oldValue ? itemByLiveFormChanged.items[0].oldValue : 'không có') +' thành ' ) + (itemByLiveFormChanged.items[0].newValue ? itemByLiveFormChanged.items[0].newValue : 'không có')}}:"
+                                            *ngIf="!(itemByChangeTime.liveFormChangeds[0].value == 'DecisionOfBoardOfGeneralDirector' && 
+                                            itemByChangeTime.liveFormChangeds[0].items[0].liveFormTitle == 'ExpectedDate')">
+                                            *
                                                     {{itemByChangeTime.liveFormChangeds[0].value ?
                                                     (itemByChangeTime.liveFormChangeds[0].value
                                                     | translate) : 'Tên tài liệu'}}:
@@ -109,7 +112,14 @@
                                                                     ? ((itemByLiveFormStep.newValue)*1000 |
                                                                     date:'dd/MM/yyyy':'+0000') : 'không có'}}</span>
                                                             </span>
-                                                            <span *ngIf="itemByLiveFormStep.liveFormTitle !== 'CommencementDate'"
+                                                            <!-- maintain -->
+                                                            <span *ngIf="itemByLiveFormStep.liveFormTitle === 'ProjectImages'">
+                                                                <span *ngIf="itemByLiveFormStep.oldValue && itemByLiveFormStep.newValue">
+                                                                    - Đã thay đổi hình ảnh
+                                                                </span>
+                                                            </span>
+                                                            <!-- .maintain -->
+                                                            <span *ngIf="itemByLiveFormStep.liveFormTitle !== 'CommencementDate' && itemByLiveFormStep.liveFormTitle !== 'ProjectImages'"
                                                                 title="- {{itemByLiveFormStep.liveFormTitle | translate}}: từ {{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue : 'không có'}} thành {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue : 'không có'}}">
                                                                 -
                                                                 <span class="font-weight-bold">{{itemByLiveFormStep.liveFormTitle

@@ -1,61 +1,62 @@
 <div>
-  <div class="title-detail center-parent" [class.title-detail-toggle]="isToggle" *ngIf="packageData">
-    <div class="mr-auto col-md-12">
-      <div class="media-header header-title p-0">
-        <div class="d-flex justify-content-between">
-          <div class="text-truncate ellipsis">
-            <a [routerLink]='["/package/list"]' class="pointer">
-              <!-- <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i> -->
-              <img width="12" height="12" class="pointer not-outline header-img--mar" src="assets\images\nghia.png">
+    <div class="title-detail center-parent" [class.title-detail-toggle]="isToggle" *ngIf="packageData">
+        <div class="mr-auto col-md-12">
+            <div class="media-header header-title p-0">
+                <div class="d-flex justify-content-between">
+                    <div class="text-truncate ellipsis">
+                        <a [routerLink]='["/package/list"]' class="pointer">
+                            <!-- <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i> -->
+                            <img width="12" height="12" class="pointer not-outline header-img--mar" src="assets\images\nghia.png">
+                        </a>
+                        <h4 class="d-inline mb-0 text-dark">
+                            <span>
+                                CHI TIẾT GÓI THẦU "{{packageData.opportunityName | uppercase}}"
+                            </span>
+                        </h4>
+                    </div>
+                    <div class="set-min-width-image">
+                        <span class="gr-icon">
+                            <ng-container *ngIf="isPermision">
+                                <img class="mr-3 pointer" src="assets\images\ic_permission_set.png" [routerLink]="['/package/permission', packageId]">
+                            </ng-container>
+                            <img class="pointer" src="assets\images\ic_email_manage.png" (click)="routerEmail()">
+                            <!-- [routerLink]="['/package/email', packageId]" -->
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-detail">
+        <div class="menu toolbar" id="bigMenu">
+            <a class="action set-width" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'info']">
+                THÔNG TIN CHI TIẾT
             </a>
-            <h4 class="d-inline mb-0 text-dark">
-              <span>
-                CHI TIẾT GÓI THẦU "{{packageData.opportunityName | uppercase}}"
-              </span>
-            </h4>
-          </div>
-          <div class="set-min-width-image">
-            <span class="gr-icon">
-              <ng-container *ngIf="isPermision">
-                <img class="mr-3 pointer" src="assets\images\ic_permission_set.png" [routerLink]="['/package/permission', packageId]">
-              </ng-container>
-              <img class="pointer" src="assets\images\ic_email_manage.png" (click)="routerEmail()">
-              <!-- [routerLink]="['/package/email', packageId]" -->
-            </span>
-          </div>
+            <a class="action set-width" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'invitation']">
+                HỒ SƠ MỜI THẦU
+            </a>
+            <!-- [routerLink]="['/package/detail', packageId ,'attend']" -->
+            <a class="action set-width" [routerLinkActive]="['router-link-active']" (click)="directionalTabAttendFuc()"
+                [routerLink]="['/package/detail', packageId ,'attend']">
+                DỰ THẦU
+            </a>
+            <ng-container *ngIf="(statusPackage?.id >= checkStatusPackage.ChoKetQuaDuThau?.id)">
+                <a class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id"
+                    [class.no-action]="!(statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id)" (click)="directionalTabResultFuc()"
+                    [routerLink]="['/package/detail', packageId ,'result']">
+                    KẾT QUẢ DỰ THẦU
+                </a>
+            </ng-container>
+            <ng-container *ngIf="!(statusPackage?.id >= checkStatusPackage.ChoKetQuaDuThau.id)">
+                <div class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage?.id >= checkStatusPackage.ChoKetQuaDuThau.id"
+                    [class.no-action]="!(statusPackage?.id >= checkStatusPackage.ChoKetQuaDuThau.id)">
+                    KẾT QUẢ DỰ THẦU
+                </div>
+            </ng-container>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="main-detail">
-    <div class="menu toolbar" id="bigMenu">
-      <div class="action set-width" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'info']">
-        THÔNG TIN CHI TIẾT
-      </div>
-      <div class="action set-width" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'invitation']">
-        HỒ SƠ MỜI THẦU
-      </div>
-      <!-- [routerLink]="['/package/detail', packageId ,'attend']" -->
-      <div class="action set-width" [routerLinkActive]="['router-link-active']" (click)="directionalTabAttendFuc()" [routerLink]="['/package/detail', packageId ,'attend']">
-        DỰ THẦU
-      </div>
-      <ng-container *ngIf="(statusPackage?.id >= checkStatusPackage.ChoKetQuaDuThau?.id)">
-        <div class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id"
-          [class.no-action]="!(statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id)" (click)="directionalTabResultFuc()"
-          [routerLink]="['/package/detail', packageId ,'result']">
-          KẾT QUẢ DỰ THẦU
+        <div>
+            <router-outlet></router-outlet>
         </div>
-      </ng-container>
-      <ng-container *ngIf="!(statusPackage?.id >= checkStatusPackage.ChoKetQuaDuThau.id)">
-        <div class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage?.id >= checkStatusPackage.ChoKetQuaDuThau.id"
-          [class.no-action]="!(statusPackage?.id >= checkStatusPackage.ChoKetQuaDuThau.id)">
-          KẾT QUẢ DỰ THẦU
-        </div>
-      </ng-container>
-    </div>
-    <div>
-      <router-outlet></router-outlet>
-    </div>
 
-  </div>
+    </div>
 </div>

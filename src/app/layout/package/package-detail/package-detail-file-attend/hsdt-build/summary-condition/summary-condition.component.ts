@@ -155,7 +155,6 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
   }
 
   getChangeHistory(page: number | string, pageSize: number | string) {
-    this.spinner.show();
     this.hoSoDuThauService.getChangeHistoryListProposedTender(this.packageId, page, pageSize).subscribe(respone => {
       this.pagedResultChangeHistoryList = respone;
       this.historyList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);

@@ -131,59 +131,101 @@
 
                                             <div *ngIf="count < lineDisplay(itemByLiveFormChanged.items.length, itemByChangedTimes.items.length)">
 
-                                                <div *ngIf="itemByLiveFormStep.liveFormStep !== 'OtherSpecialRequirement' && 
-                                        itemByLiveFormStep.liveFormTitle !=='TaxTypes' && 
-                                        itemByLiveFormStep.liveFormTitle !== 'AttentiveDocuments' &&
-                                        itemByLiveFormStep.liveFormTitle !== 'ProgressCompletionContractorDate' &&
-                                        itemByLiveFormStep.liveFormTitle !== 'IsProgressCompletionDate' &&
-                                        !((!itemByLiveFormStep.oldValue || itemByLiveFormStep.oldValue == '0' || itemByLiveFormStep.oldValue == '[]') && (!itemByLiveFormStep.newValue || itemByLiveFormStep.newValue == '0' || itemByLiveFormStep.newValue == '[]'))
-                                        "
-                                                    class="d-flex" title="* {{
-                                                    itemByLiveFormStep.liveFormTitle ?
-                                                    (itemByLiveFormStep.liveFormTitle | translate) :
-                                                    ( itemByLiveFormStep.liveFormSubject ? 
-                                                        (itemByLiveFormStep.liveFormSubject | translate) :
-                                                            (itemByLiveFormStep.liveFormStep | translate)
-                                                    )
-                                                }}">
-                                                    <ng-container>
-                                                        *{{ itemByLiveFormStep.liveFormTitle | translate }}
-                                                        <ng-container *ngIf="itemByLiveFormStep.liveFormSubject">
-                                                            ({{ itemByLiveFormStep.liveFormSubject | translate }})
+                                                <ng-container *ngIf="!(itemByLiveFormStep.liveFormStep == 'ScopeOfWork' || itemByLiveFormStep.liveFormStep == 'NonminatedSubContractor' || itemByLiveFormStep.liveFormStep == 'MaterialsTobeSuppliedOrAppointedByOwner' || itemByLiveFormStep.liveFormStep == 'OtherSpecialRequirement')">
+                                                    <div *ngIf="itemByLiveFormStep.liveFormTitle !=='TaxTypes' &&
+                                                        itemByLiveFormStep.liveFormTitle !== 'ProgressCompletionContractorDate' &&
+                                                        itemByLiveFormStep.liveFormTitle !== 'IsProgressCompletionDate' &&
+                                                        !((!itemByLiveFormStep.oldValue || itemByLiveFormStep.oldValue == '0' || itemByLiveFormStep.oldValue == '[]') && (!itemByLiveFormStep.newValue || itemByLiveFormStep.newValue == '0' || itemByLiveFormStep.newValue == '[]'))
+                                                        "
+                                                        class="d-flex" title="* {{
+                                                                    itemByLiveFormStep.liveFormTitle ?
+                                                                    (itemByLiveFormStep.liveFormTitle | translate) :
+                                                                    ( itemByLiveFormStep.liveFormSubject ? 
+                                                                        (itemByLiveFormStep.liveFormSubject | translate) :
+                                                                            (itemByLiveFormStep.liveFormStep | translate)
+                                                                    )
+                                                                }}">
+                                                        <ng-container *ngIf="!(itemByLiveFormStep.liveFormTitle == 'AttentiveDocuments' || itemByLiveFormStep.liveFormTitle == 'TaxTypes' || itemByLiveFormStep.liveFormTitle == 'InsurranceMachineOfContractor')">
+                                                            <ng-container>
+                                                                *{{ itemByLiveFormStep.liveFormTitle | translate }}
+                                                                <ng-container *ngIf="itemByLiveFormStep.liveFormSubject">
+                                                                    ({{ itemByLiveFormStep.liveFormSubject | translate
+                                                                    }})
 
+                                                                </ng-container>
+                                                                :&nbsp;
+                                                            </ng-container>
+                                                            <div class="detail-changed pl-1">từ
+                                                                <!-- --- -->
+                                                                <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
+                                                                    {{(itemByLiveFormStep.oldValue != 0) ?
+                                                                    ((itemByLiveFormStep.oldValue)*1000 |
+                                                                    date:'dd/MM/yyyy') :
+                                                                    'không có'}}
+                                                                </span>
+                                                                <!-- --- -->
+                                                                <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
+                                                                    {{itemByLiveFormStep.oldValue ?
+                                                                    (itemByLiveFormStep.oldValue |
+                                                                    translate) : 'không có'}}
+                                                                </span>
+                                                                thành
+                                                                <!-- --- -->
+                                                                <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
+                                                                    {{(itemByLiveFormStep.newValue != 0) ?
+                                                                    ((itemByLiveFormStep.newValue)*1000 |
+                                                                    date:'dd/MM/yyyy') :
+                                                                    'không có'}}
+                                                                </span>
+                                                                <!-- --- -->
+                                                                <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
+                                                                    {{itemByLiveFormStep.newValue ?
+                                                                    (itemByLiveFormStep.newValue |
+                                                                    translate) : 'không có'}}
+                                                                </span>
+                                                            </div>
                                                         </ng-container>
-                                                        :&nbsp;
-                                                    </ng-container>
-                                                    <div class="detail-changed pl-1">từ
-                                                        <!-- --- -->
-                                                        <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
-                                                            {{(itemByLiveFormStep.oldValue != 0) ?
-                                                            ((itemByLiveFormStep.oldValue)*1000 | date:'dd/MM/yyyy') :
-                                                            'không có'}}
-                                                        </span>
-                                                        <!-- --- -->
-                                                        <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
-                                                            {{itemByLiveFormStep.oldValue ?
-                                                            (itemByLiveFormStep.oldValue |
-                                                            translate) : 'không có'}}
-                                                        </span>
-                                                        thành
-                                                        <!-- --- -->
-                                                        <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
-                                                            {{(itemByLiveFormStep.newValue != 0) ?
-                                                            ((itemByLiveFormStep.newValue)*1000 | date:'dd/MM/yyyy') :
-                                                            'không có'}}
-                                                        </span>
-                                                        <!-- --- -->
-                                                        <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
-                                                            {{itemByLiveFormStep.newValue ?
-                                                            (itemByLiveFormStep.newValue |
-                                                            translate) : 'không có'}}
-                                                        </span>
+                                                        <!-- ---Maintain--- -->
+                                                        <ng-container *ngIf="itemByLiveFormStep.liveFormTitle == 'AttentiveDocuments'">
+                                                            *Đã thay đổi dữ liệu tại: Những tài liệu lưu ý khi nộp hồ
+                                                            sơ
+                                                        </ng-container>
+                                                        <ng-container *ngIf="itemByLiveFormStep.liveFormTitle == 'InsurranceMachineOfContractor'">
+                                                            *Đã thay đổi dữ liệu tại: BH máy móc thiết bị nhà thầu
+                                                        </ng-container>
+                                                        <ng-container *ngIf="itemByLiveFormStep.liveFormTitle == 'TaxTypes'">
+                                                            *Đã thay đổi dữ liệu tại: Các loại thuế
+                                                        </ng-container>
+
+                                                        <!-- ---Maintain--- -->
+
+
                                                     </div>
+                                                </ng-container>
+                                                <!-- ---Maintain--- -->
 
-
+                                                <div *ngIf="itemByLiveFormStep.liveFormStep == 'ScopeOfWork'">
+                                                    <ng-container *ngIf="itemByLiveFormStep.liveFormTitle == 'IncludedWorks'">
+                                                        *Đã thay đổi đữ liệu tại: Phạm vi công việc bao gồm
+                                                    </ng-container>
+                                                    <ng-container *ngIf="itemByLiveFormStep.liveFormTitle == 'NonIncludedWorks'">
+                                                        *Đã thay đổi đữ liệu tại: Phạm vi công việc không bao gồm
+                                                    </ng-container>
                                                 </div>
+
+                                                <div *ngIf="itemByLiveFormStep.liveFormStep == 'NonminatedSubContractor'">
+                                                    *Đã thay đổi đữ liệu tại: Danh sách các nhà thầu phụ được chỉ định
+                                                </div>
+
+                                                <div *ngIf="itemByLiveFormStep.liveFormStep == 'MaterialsTobeSuppliedOrAppointedByOwner'">
+                                                    *Đã thay đổi đữ liệu tại: Danh sách vật tư do CĐT cung cấp/chỉ định
+                                                </div>
+
+                                                <div *ngIf="itemByLiveFormStep.liveFormStep == 'OtherSpecialRequirement'">
+                                                    *Đã thay đổi đữ liệu tại: Yêu cầu đặc biệt khác
+                                                </div>
+
+                                                <!-- ---.Maintain--- -->
                                             </div>
 
 
@@ -196,7 +238,8 @@
 
 
                             <div *ngIf="brief(itemByChangedTimes.items)" class="d-flex justify-content-center py-1">
-                                <a class="popup-detail" (click)="viewDetail(itemByChangedTimes, indexItemHistoryChange - i)">Xem thêm</a>
+                                <a class="popup-detail" (click)="viewDetail(itemByChangedTimes, indexItemHistoryChange - i)">Xem
+                                    thêm</a>
                             </div>
                         </div>
                     </td>

@@ -1067,10 +1067,8 @@ export class PackageService {
         return this.apiService.get(url).map(response => {
             const result = response.result;
             return {
-                // currentPage: result.pageIndex,
-                currentPage: page,
-                // pageSize: result.pageSize,
-                pageSize: pageSize,
+                currentPage: result.pageIndex,
+                pageSize: result.pageSize,
                 pageCount: result.totalPages,
                 total: result.totalCount,
                 items: (result.items || []).map(

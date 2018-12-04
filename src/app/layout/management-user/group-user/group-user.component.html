@@ -2,12 +2,12 @@
     <div class="main-detail">
         <div class="d-flex justify-content-between menu">
             <!-- <div> -->
-            <div *ngIf="isManageUserGroups" class="center-parent action cus-menu" [routerLinkActive]="['router-link-active']" [routerLink]="['./group-user-detail']">
+            <a *ngIf="isManageUserGroups" class="center-parent action cus-menu" [routerLinkActive]="['router-link-active']" [routerLink]="['./group-user-detail']">
                 <div class="text-uppercase custom-filter-bar" style="padding-left: 2px; padding-right: 2px">NHÓM NGƯỜI DÙNG</div>
-            </div>
-            <div *ngIf="isManageUsers" class="center-parent action cus-menu" [routerLinkActive]="['router-link-active']" [routerLink]="['./manage-user-list']">
+            </a>
+            <a *ngIf="isManageUsers" class="center-parent action cus-menu" [routerLinkActive]="['router-link-active']" [routerLink]="['./manage-user-list']">
                 <div class="text-uppercase custom-filter-bar" style="padding-left: 2px; padding-right: 2px">QUẢN LÝ NGƯỜI DÙNG</div>
-            </div>
+            </a>
             <!-- </div> -->
             <div class="cus-menu-space"></div>
         </div>
