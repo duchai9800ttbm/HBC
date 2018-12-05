@@ -147,7 +147,11 @@ export class InterviewNoticeComponent implements OnInit {
         { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] },
         { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
         { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'Undo', 'Redo'] },
-      ]
+      ],
+      allowedContent: true,
+      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle,autolink,uploadimage',
+      pasteFromWord_inlineImages: true,
+      forcePasteAsPlainText: false,
     };
   }
 
