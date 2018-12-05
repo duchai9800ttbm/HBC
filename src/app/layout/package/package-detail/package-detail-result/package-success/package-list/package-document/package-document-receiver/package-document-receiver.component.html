@@ -168,7 +168,7 @@
                                                     <ng-container *ngIf="documents.isFirstTransfer">
                                                         <ng-container *ngIf="docHSMT">
                                                             <div id="mr" *ngIf="!documents.document.filerUrl">
-                                                                <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
+                                                                <a title="Tải file" (click)="downloadFileItemHSMT(documents.document.id)">
                                                                     <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                                                 </a>
                                                             </div>
@@ -286,7 +286,7 @@
 
                                                         || (documents?.documentType?.value === 'Hồ sơ khác' && hoSoKhac)">
                                                             <div id="mr" *ngIf="!documents.document.filerUrl">
-                                                                <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
+                                                                <a title="Tải file" (click)="downloadFileItemHSDT(documents.document.id)">
                                                                     <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                                                 </a>
                                                             </div>

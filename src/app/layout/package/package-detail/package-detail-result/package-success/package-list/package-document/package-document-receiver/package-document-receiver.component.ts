@@ -628,4 +628,20 @@ export class PackageDocumentReceiverComponent implements OnInit, OnDestroy {
     }
     instance.packageId = this.currentPackageId;
   }
+
+  downloadFileItemHSMT(bidDocumentId) {
+    this.documentService.download(bidDocumentId).subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải tài liệu không thành công!');
+      });
+  }
+
+  downloadFileItemHSDT(bidDocumentId) {
+    this.hoSoDuThauService.taiHoSoDuThau(bidDocumentId).subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải tài liệu không thành công!');
+      });
+  }
 }
