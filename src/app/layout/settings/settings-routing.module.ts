@@ -5,6 +5,7 @@ import { SettingLocationComponent } from './setting-location/setting-location.co
 import { SettingContractComponent } from './setting-contract/setting-contract.component';
 import { SettingContractCreateComponent } from './setting-contract/setting-contract-create/setting-contract-create.component';
 import { SettingContractEditComponent } from './setting-contract/setting-contract-edit/setting-contract-edit.component';
+import { SettingKpiTargetComponent } from './setting-kpi-target/setting-kpi-target.component';
 
 const routes: Routes = [
   {
@@ -46,7 +47,8 @@ const routes: Routes = [
       {
         path: 'contract/edit/:id',
         component: SettingContractEditComponent
-      }
+      },
+      { path: 'kpi-target', component: SettingKpiTargetComponent }
     ]
   }
 ];

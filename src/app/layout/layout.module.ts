@@ -16,6 +16,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ProspectService } from '../shared/services';
 import { GroupUserService } from '../shared/services/group-user.service';
 import { ChangeListComponent } from './change-list/change-list.component';
+import { MonitoringReportComponent } from './monitoring-report/monitoring-report.component';
 
 @NgModule({
     imports: [
@@ -35,6 +36,7 @@ import { ChangeListComponent } from './change-list/change-list.component';
         NotificationListComponent,
         MenuComponent,
         ChangeListComponent,
+        MonitoringReportComponent,
     ],
     entryComponents: [
         ChangePasswordModalComponent,

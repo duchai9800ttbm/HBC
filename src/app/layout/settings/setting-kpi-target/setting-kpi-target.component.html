@@ -1,0 +1,36 @@
+<div class="wrapper d-flex" id="wrapper-report">
+    <div class="menu-report" id="menu-report">
+        <h5 class="menu-report__year text-uppercase p-2 mb-0 font-weight-bold text-center">
+            Danh mục chỉ tiêu KPI
+        </h5>
+        <ul class="p-0 mb-0">
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC01'"
+                id="BC01" name="list-report" (click)="toggleCollapseMenu('BC01')" title="- Cấu hình nhóm">
+                - Cấu hình nhóm
+            </li>
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC02'"
+                id="BC02" name="list-report" (click)="toggleCollapseMenu('BC02')" title="- KPI theo chủ trì">
+                - KPI theo chủ trì
+            </li>
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC03'"
+                id="BC03" name="list-report" (click)="toggleCollapseMenu('BC03')" title="- Chỉ tiêu trúng thầu">
+                - Chỉ tiêu trúng thầu
+            </li>
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC04'"
+                id="BC04" name="list-report" (click)="toggleCollapseMenu('BC04')" title="- Chỉ tiêu KPI khu vực">
+                - Chỉ tiêu KPI khu vực
+            </li>
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC06'"
+                id="BC06" name="list-report" (click)="toggleCollapseMenu('BC06')" title="- Chỉ tiêu KPI hạng mục thi công">
+                - Chỉ tiêu KPI hạng mục thi công
+            </li>
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC07'"
+                id="BC07" name="list-report" (click)="toggleCollapseMenu('BC07')" title="- Chỉ tiêu KPI loại công trình">
+                - Chỉ tiêu KPI loại công trình
+            </li>
+        </ul>
+    </div>
+
+
+    
+</div>

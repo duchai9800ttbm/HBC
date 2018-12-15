@@ -18,7 +18,7 @@ import { groupBy } from '@progress/kendo-data-query';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../shared/components/form-in/form-in.component';
 import { slideToLeft } from '../../../../../router.animations';
-import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 
 @Component({
