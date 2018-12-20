@@ -1179,4 +1179,13 @@ export class DetailResultPackageService {
     };
     return this.apiService.post(url, request);
   }
+
+  // Kiểm tra người dùng đã xác nhận tài liệu
+  checkUserComfirm(bidOpportunityId: number) {
+    const url = `bidtransferdoc/checkconfirmdocs/bidopportunity/${bidOpportunityId}`;
+    return this.apiService.get(url).map(response => {
+      return response.result;
+    })
+  }
+
 }

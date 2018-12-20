@@ -100,6 +100,7 @@ export class PackageDocumentReceiverComponent implements OnInit, OnDestroy {
   cacHSKTLienQuan = false;
   hoSoPhapLy = false;
   hoSoKhac = false;
+  comfirmRecive = false;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -244,6 +245,10 @@ export class PackageDocumentReceiverComponent implements OnInit, OnDestroy {
         this.filterFuc(false);
       });
     this.getListFilter();
+    this.detailResultPackageService.checkUserComfirm(this.currentPackageId).subscribe( response => {
+      this.comfirmRecive = response;
+      console.log('this.DaPhanHoiDenPhongHopDong', response);
+    });
   }
 
   ngOnDestroy() {
