@@ -43,6 +43,7 @@ export class GroupUserService implements OnInit {
       isActive: result.isActive,
       phoneNumber: result.phoneNumber,
       address: result.address,
+      systemType: result.systemType
     };
   }
   // GroupUser
