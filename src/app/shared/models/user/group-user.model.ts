@@ -12,4 +12,5 @@ export class GroupUserModel {
     isActive: boolean = true;
     phoneNumber: number;
     address: string;
+    systemType: string;
 }

@@ -113,6 +113,7 @@ export class EditUserComponent implements OnInit {
           rePassword: ['', [CustomValidator.password]],
           phoneNumber: [this.groupUserModel.phoneNumber, [CustomValidator.phoneNumber]],
           address: this.groupUserModel.address,
+          systemType: this.groupUserModel.systemType
         });
         this.formEditUser.valueChanges.subscribe(data => {
           this.onFormValueChanged(data);
@@ -157,6 +158,7 @@ export class EditUserComponent implements OnInit {
         isActive: this.formEditUser.value.isActive,
         phoneNumber: this.formEditUser.value.phoneNumber,
         address: this.formEditUser.value.address,
+        systemType: this.formEditUser.value.systemType
       };
       this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
         const message = 'Chỉnh sửa người dùng thành công!';

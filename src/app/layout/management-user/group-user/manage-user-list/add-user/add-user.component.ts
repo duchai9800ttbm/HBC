@@ -107,6 +107,7 @@ export class AddUserComponent implements OnInit {
       isActive: null,
       phoneNumber: null,
       address: '',
+      systemType: 'ALL'
     };
 
     this.formAddUser = this.formBuilder.group({
@@ -122,6 +123,7 @@ export class AddUserComponent implements OnInit {
       isActive: [true],
       phoneNumber: ['', [CustomValidator.phoneNumber]],
       address: '',
+      systemType: 'ALL'
     });
     this.formAddUser.valueChanges
       .subscribe(data => this.onFormValueChanged(data));
@@ -155,6 +157,7 @@ export class AddUserComponent implements OnInit {
         isActive: this.formAddUser.value.isActive,
         phoneNumber: this.formAddUser.value.phoneNumber,
         address: this.formAddUser.value.address,
+        systemType: this.formAddUser.value.systemType
       };
       this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
         const message = 'Thêm người dùng thành công';

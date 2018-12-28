@@ -116,6 +116,7 @@ export class UserFormComponent implements OnInit {
             isActive: null,
             phoneNumber: null,
             address: '',
+            systemType: 'ALL'
         };
 
     }
