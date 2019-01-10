@@ -81,6 +81,27 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
         const obj = new DuLieuLiveFormDKDT();
         obj.thongTinDuAn = new ThongTinDuAn();
         obj.thongTinDuAn.lanPhongVan = 1;
+        // Initialization OtherRequirement
+        const otherRequirement = {
+          tenderEvaluation: 'Tender Evaluation',
+          tenderEvaluationSteps: 'Two (02) steps',
+          tenderEvaluationStep1: 'Preliminary Evaluation',
+          tenderEvaluationStep2: 'Detail Evaluation',
+          requirementDetails: [
+            {
+              requirementName: 'Green Building Standard',
+              requirementDesc: '',
+              requirementLink: 'Green Mark'
+            },
+            {
+              requirementName: 'Profit, Overhead and Attendance',
+              requirementDesc: 'Maximum',
+              requirementLink: '3%'
+            }
+          ]
+        };
+        obj.yeuCauDacBietKhac = otherRequirement;
+
         this.hoSoDuThauService.emitDataAll(obj);
       }
     });
