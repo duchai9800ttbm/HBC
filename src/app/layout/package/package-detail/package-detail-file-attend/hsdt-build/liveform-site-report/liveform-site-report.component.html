@@ -86,7 +86,7 @@
     </div>
 </div>
 <!-- *ngIf="updateInfoList?.length > 0" -->
-<div class="mt-5 p-3" >
+<div class="mt-5 p-3" *ngIf="updateInfoList && updateInfoList?.length !== 0">
     <div class="d-flex justify-content-between">
         <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
     </div>
