@@ -131,16 +131,16 @@ export class EditComponent implements OnInit, OnDestroy {
               checked: false
             },
             {
-              text: 'Khác (Other)',
-              value: '',
-              checked: false
-            },
-            {
               text: 'Nâng cấp, cải tiến (Renovation)',
               value: '',
               checked: false
             }, {
               text: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
+              value: '',
+              checked: false
+            },
+            {
+              text: 'Khác (Other)',
               value: '',
               checked: false
             }
