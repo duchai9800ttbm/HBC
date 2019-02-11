@@ -1,7 +1,7 @@
 .header {
     height: 50px;
     background-color: #ff8661;
-    color: #ffffff;
+    color: white;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     font-size: 130%;
@@ -21,7 +21,7 @@
         border-left: 2px solid #36a9e1;
         min-height: 50px;
         height: calc(100% - 20px);
-        background-color: #ffffff;
+        background-color: white;
         width: calc(100% - 30px);
 
         .logo {
@@ -75,7 +75,7 @@
 
 
 ::-webkit-scrollbar-track {
-    background-color:#ffffff;    
+    background-color: white;    
 }
 .avatar {
     border-radius: 50%;

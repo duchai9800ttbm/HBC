@@ -355,7 +355,7 @@ a {
     // width: calc(100% - 200px);
     width: 100%;
     //  min-width: calc(100% - 70px);
-    background-color: #ffff;
+    background-color: white;
     // z-index: 10000;
     z-index: 100;
 }
@@ -371,15 +371,15 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .input-checkbox {
-    background-color: #ffff !important;
+    background-color: white !important;
 }
 
 .custom-control-input {
-    background-color: #ffff !important;
+    background-color: white !important;
 }
 
 .custom-checkbox {
-    //background-color: #ffff!important;
+    //background-color: white !important;
 }
 
 .range {

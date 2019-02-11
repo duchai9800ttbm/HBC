@@ -17,12 +17,12 @@
 
 button:focus {
     outline: 1px dotted;
-    outline: #fff !important;
+    outline: white !important;
 }
 
 table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
-    background-color: #ffff !important;
+    background-color: white !important;
     border: 1px solid #dddddd;
 }
 
@@ -47,7 +47,7 @@ table.dataTable th {
                 cursor: pointer;
                 outline: none;
                 color: #009CE2;
-                background-color: #FFFFFF;
+                background-color: white;
                 width: 210px;
                 height: 45px;
                 box-sizing: border-box;
@@ -63,7 +63,7 @@ table.dataTable th {
 
                 &:hover {
                     background-color: #009CE2;
-                    color: #FFFFFF;
+                    color: white;
                 }
 
                 &:first-child {
@@ -82,7 +82,7 @@ table.dataTable th {
             outline: none;
             border-right: #009CE2 solid 1px;
             color: #009CE2;
-            background-color: #FFFFFF;
+            background-color: white;
             width: 210px;
             height: 45px;
             box-sizing: border-box;
@@ -95,7 +95,7 @@ table.dataTable th {
 
             &:hover {
                 background-color: #009CE2;
-                color: #FFFFFF;
+                color: white;
             }
         }
 
@@ -106,7 +106,7 @@ table.dataTable th {
             align-items: center;
             justify-content: center;
             font-size: 15px;
-            color: #FFFFFF;
+            color: white;
             background-color: #009CE2;
             width: 25px;
             height: 25px;
@@ -125,7 +125,7 @@ table.dataTable th {
 
 .active-menu {
     background-color: #009CE2 !important;
-    color: #FFFFFF !important;
+    color: white !important;
 }
 
 .resize {

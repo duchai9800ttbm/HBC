@@ -139,7 +139,7 @@ a {
     margin-bottom: 0px !important;
     background-color: #49a7e6;
     border: none;
-    color: #ffff;
+    color: white;
     padding: 0.4rem 1.25rem;
 }
 
@@ -161,12 +161,12 @@ a {
 }
 
 .th {
-    background-color: #ffff !important;
+    background-color: white !important;
 }
 
 table.zui-table th {
     border-bottom: 1px solid #dddddd !important;
-    background-color: #ffff !important;
+    background-color: white !important;
     border: 1px solid #dddddd;
     text-align: center !important;
 }
@@ -505,7 +505,7 @@ button:focus {
 
 table.zui-table th {
     border-bottom: 1px solid #dddddd !important;
-    background-color: #ffff !important;
+    background-color: white !important;
     border: 1px solid #dddddd;
 }
 
@@ -537,7 +537,7 @@ table.zui-table th {
                 cursor: pointer;
                 outline: none;
                 color: #009CE2;
-                background-color: #FFFFFF;
+                background-color: white;
                 width: 210px;
                 height: 45px;
                 box-sizing: border-box;
@@ -550,7 +550,7 @@ table.zui-table th {
 
                 &:hover {
                     background-color: #009CE2;
-                    color: #FFFFFF;
+                    color: white;
                 }
 
                 &:first-child {
@@ -565,7 +565,7 @@ table.zui-table th {
             cursor: pointer;
             outline: none;
             color: #009CE2;
-            background-color: #FFFFFF;
+            background-color: white;
             width: 210px;
             height: 45px;
             box-sizing: border-box;
@@ -578,12 +578,12 @@ table.zui-table th {
 
             &:hover {
                 background-color: #009CE2;
-                color: #FFFFFF!important;
+                color: white!important;
             }
 
             .router-link-active {
                 background-color: #009CE2;
-                color: #FFFFFF;
+                color: white;
             }
         }
 
@@ -595,7 +595,7 @@ table.zui-table th {
             align-items: center;
             justify-content: center;
             font-size: 15px;
-            color: #FFFFFF;
+            color: white;
             background-color: #009CE2;
             width: 25px;
             height: 25px;
@@ -653,7 +653,7 @@ table.zui-table {
 
 .active-menu {
     background-color: #009CE2 !important;
-    color: #FFFFFF !important;
+    color: white !important;
 }
 
 .hight-light {
@@ -869,7 +869,7 @@ table.zui-table {
 table th {
     border-bottom: 1px solid #f68e56 !important;
     background-color: #f68e56;
-    color: #ffff;
+    color: white;
     font-weight: bold;
     padding: 6px 8px !important;
     box-sizing: content-box;

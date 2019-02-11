@@ -3,7 +3,7 @@
 
     .overview-package {
         background-color: #ff8661;
-        color: #ffffff;
+        color: white;
         padding: 10px 20px;
 
         .row-item {
@@ -142,7 +142,7 @@
         }
 
         .row-title {
-            color: #FFFFFF;
+            color: white;
             font-size: 110%;
             width: 100%;
             background-color: #ff8661;
@@ -275,7 +275,7 @@
             font-size: 110%;
             width: 100%;
             background-color: #ff8661;
-            color: #ffffff;
+            color: white;
 
             .first {
                 width: 40%;
@@ -532,7 +532,7 @@
             height: 30px;
             width: 100%;
             background-color: #ff8661;
-            color: #ffffff;
+            color: white;
         }
 
         .row-last-item {
@@ -620,7 +620,7 @@
 
         .row-price {
             height: 60px;
-            color: #FFFFFF;
+            color: white;
             font-size: 110%;
             width: 100%;
             background-color: #ff8661;
@@ -988,7 +988,7 @@
         top: 4px;
         width: 5px;
         height: 10px;
-        border: solid #FFFFFF;
+        border: solid white;
         border-width: 0 3px 3px 0;
         -webkit-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
@@ -1009,7 +1009,7 @@ input.customer__input {
 }
 
 input {
-    background-color: #ffffff;
+    background-color: white;
     border: none;
     width: calc(100% - 10px);
     margin: 3px 5px;
@@ -1017,7 +1017,7 @@ input {
 }
 
 textarea {
-    background-color: #ffffff;
+    background-color: white;
     border: none;
     width: calc(100% - 10px);
     margin: 3px 5px;
@@ -1068,7 +1068,7 @@ textarea {
     max-width: 200px;
     font-weight: 900;
     border: none;
-    color: #FFFFFF;
+    color: white;
     background-color: #ff8661;
 }
 
