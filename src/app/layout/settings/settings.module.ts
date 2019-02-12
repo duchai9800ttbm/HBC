@@ -10,7 +10,6 @@ import { SettingContractComponent } from './setting-contract/setting-contract.co
 import { SettingContractCreateComponent } from './setting-contract/setting-contract-create/setting-contract-create.component';
 import { SettingContractEditComponent } from './setting-contract/setting-contract-edit/setting-contract-edit.component';
 import { SettingContractFormComponent } from './setting-contract/setting-contract-form/setting-contract-form.component';
-import { SettingKpiTargetComponent } from './setting-kpi-target/setting-kpi-target.component';
 
 @NgModule({
   imports: [
@@ -25,7 +24,6 @@ import { SettingKpiTargetComponent } from './setting-kpi-target/setting-kpi-targ
     SettingContractCreateComponent,
     SettingContractEditComponent,
     SettingContractFormComponent,
-    SettingKpiTargetComponent
   ]
 })
 export class SettingsModule { }

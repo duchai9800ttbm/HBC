@@ -4,33 +4,39 @@
             Danh mục chỉ tiêu KPI
         </h5>
         <ul class="p-0 mb-0">
-            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC01'"
-                id="BC01" name="list-report" (click)="toggleCollapseMenu('BC01')" title="- Cấu hình nhóm">
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'groupConfig'"
+                id="groupConfig" name="list-report" (click)="toggleCollapseMenu('groupConfig')" title="- Cấu hình nhóm">
                 - Cấu hình nhóm
             </li>
-            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC02'"
-                id="BC02" name="list-report" (click)="toggleCollapseMenu('BC02')" title="- KPI theo chủ trì">
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'toChair'"
+                id="toChair" name="list-report" (click)="toggleCollapseMenu('toChair')" title="- KPI theo chủ trì">
                 - KPI theo chủ trì
             </li>
-            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC03'"
-                id="BC03" name="list-report" (click)="toggleCollapseMenu('BC03')" title="- Chỉ tiêu trúng thầu">
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'targetsWinBid'"
+                id="targetsWinBid" name="list-report" (click)="toggleCollapseMenu('targetsWinBid')" title="- Chỉ tiêu trúng thầu">
                 - Chỉ tiêu trúng thầu
             </li>
-            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC04'"
-                id="BC04" name="list-report" (click)="toggleCollapseMenu('BC04')" title="- Chỉ tiêu KPI khu vực">
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'targetsArea'"
+                id="targetsArea" name="list-report" (click)="toggleCollapseMenu('targetsArea')" title="- Chỉ tiêu KPI khu vực">
                 - Chỉ tiêu KPI khu vực
             </li>
-            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC06'"
-                id="BC06" name="list-report" (click)="toggleCollapseMenu('BC06')" title="- Chỉ tiêu KPI hạng mục thi công">
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'targetsConstructionItems'"
+                id="targetsConstructionItems" name="list-report" (click)="toggleCollapseMenu('targetsConstructionItems')"
+                title="- Chỉ tiêu KPI hạng mục thi công">
                 - Chỉ tiêu KPI hạng mục thi công
             </li>
-            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'BC07'"
-                id="BC07" name="list-report" (click)="toggleCollapseMenu('BC07')" title="- Chỉ tiêu KPI loại công trình">
+            <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'targetsTypeConstruction'"
+                id="targetsTypeConstruction" name="list-report" (click)="toggleCollapseMenu('targetsTypeConstruction')"
+                title="- Chỉ tiêu KPI loại công trình">
                 - Chỉ tiêu KPI loại công trình
             </li>
         </ul>
     </div>
 
+    <div class="reports w-100">
+        <router-outlet></router-outlet>
+    </div>
 
-    
+
+
 </div>

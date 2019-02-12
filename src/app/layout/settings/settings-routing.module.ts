@@ -48,7 +48,11 @@ const routes: Routes = [
         path: 'contract/edit/:id',
         component: SettingContractEditComponent
       },
-      { path: 'kpi-target', component: SettingKpiTargetComponent }
+      // { path: 'kpi-target', component: SettingKpiTargetComponent }
+      {
+        path: 'kpi-target',
+        loadChildren: './setting-kpi-target/setting-kpi-target.module#SettingKpiTargetModule'
+      },
     ]
   }
 ];

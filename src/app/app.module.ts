@@ -70,7 +70,7 @@ registerLocaleData(localeFrCa, localeFrCaExtra);
             }
         }),
         AppRoutingModule,
-        NgxSpinnerModule
+        NgxSpinnerModule,
     ],
     declarations: [AppComponent, AlertComponent],
     bootstrap: [AppComponent],

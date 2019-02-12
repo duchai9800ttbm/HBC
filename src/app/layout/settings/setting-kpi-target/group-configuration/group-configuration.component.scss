@@ -1,42 +1,3 @@
-.menu-report {
-    color: white;
-    max-width: 16rem;
-    width: 16rem;
-    min-width: 16rem;
-
-    h5 {
-        background-color: #135377;
-    }
-
-    li {
-        font-size: 0.9rem;
-        background-color: #34a5e4;
-        border-bottom: .5px solid white;
-    }
-
-    &__toggle {
-        padding-right: 2rem !important;
-        position: relative;
-
-        &::after {
-            content: '\f13a';
-            position: absolute;
-            right: 0.5rem;
-            font-family: FontAwesome;
-        }
-    }
-
-    .active-item {
-        background-color: #1671a5;
-        font-weight: 600;
-    }
-
-}
-
-.menu-report--fixed {
-    position: fixed;
-}
-
 .reports {
     table {
         min-width: 50rem;
@@ -83,4 +44,3 @@ input.icon {
 .but-with-80px{
     width: 80px;
 }
-
