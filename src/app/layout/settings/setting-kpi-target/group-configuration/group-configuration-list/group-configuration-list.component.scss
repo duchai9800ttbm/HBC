@@ -1,0 +1,46 @@
+.reports {
+    table {
+        min-width: 50rem;
+    }
+
+    .manipulation{
+        width: 50px;
+    }
+    
+    .check-box--width{
+        width: 40px;
+    }
+
+    tr>td>textarea {
+        border: none;
+    }
+
+    tbody>tr>th:first-child,
+    tbody>tr>td:first-child {
+        border-left: none;
+    }
+
+    tbody>tr>th:last-child,
+    tbody>tr>td:last-child {
+        border-right: none;
+    }
+
+    .table-header>th {
+        background-color: #ef732f !important;
+    }
+}
+
+.reports--margintop {
+    margin-top: 6.1rem;
+}
+
+input.icon {
+    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+
+.but-with-80px{
+    width: 80px;
+}

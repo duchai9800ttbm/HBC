@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../shared/shared.module';
 import { SettingKpiTargetComponent } from './setting-kpi-target.component';
 import { SettingKpiTargetRoutingModule } from './setting-kpi-target-routing.module';
-import { GroupConfigurationComponent } from './group-configuration/group-configuration.component';
 import { KpiChairComponent } from './kpi-chair/kpi-chair.component';
 import { WinBidComponent } from './win-bid/win-bid.component';
 import { KpiAreaComponent } from './kpi-area/kpi-area.component';
@@ -17,7 +16,6 @@ import { TypeConstructionComponent } from './type-construction/type-construction
   ],
   declarations: [
     SettingKpiTargetComponent,
-    GroupConfigurationComponent,
     KpiChairComponent,
     WinBidComponent,
     KpiAreaComponent,
