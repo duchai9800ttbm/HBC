@@ -17,7 +17,7 @@ import { retry } from 'rxjs/operator/retry';
 import { GroupKPIList } from '../models/setting/targets-kpi/group-kpi/group-kpi-list.model';
 @Injectable()
 export class SettingService {
-    private searchTermGroupKPI: any;
+    public searchTermGroupKPI: any;
     constructor(
         private apiService: ApiService,
         private sessionService: SessionService,
@@ -513,9 +513,6 @@ export class SettingService {
     saveSearchTermGroupKPI(searchTerm) {
         this.searchTermGroupKPI = searchTerm;
     }
-    getSearchTermGroupKPI() {
-        return this.searchTermGroupKPI;
-    }
     // Tạo mới nhóm chỉ tiêu KPI
     createGroupKPI(groupConfigFormValue: any) {
         const url = `kpigroups/create`;
@@ -580,7 +577,7 @@ export class SettingService {
                         return this.mappingListGroupKPI(item);
                     }),
                 };
-            })
+            });
     }
     // Sửa nhóm chỉ tiêu KPI
     editGroupKPI(groupConfigFormValue: any, id: number) {
