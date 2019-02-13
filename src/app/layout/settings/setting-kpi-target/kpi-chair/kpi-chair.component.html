@@ -7,11 +7,13 @@
       <div class="row">
         <div class="col-md-3">
           <span class="font-weight-bold required">Năm:&nbsp;</span>&nbsp;&nbsp;
-          <select>
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-          </select>
+          <span>
+            <select>
+              <option value="2018">2018</option>
+              <option value="2019">2019</option>
+              <option value="2020">2020</option>
+            </select>
+          </span>
         </div>
         <div class="col-md-6">
           <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
@@ -101,11 +103,11 @@
         <i class="fa fa-times" aria-hidden="true"></i>
       </a>
     </div>
-    <div class="text-center text-uppercase font-weight-bold">
+    <div class="text-center text-uppercase font-weight-bold title-name--font-size">
       Danh sách chủ trì
     </div>
     <div class="text-center">
-      <span>Nhóm</span>&nbsp;
+      <span>Nhóm:</span>&nbsp;
       <span>Tender HCM</span>
     </div>
     <div class="div-required">Vui lòng chọn chủ trì thuộc nhóm:&nbsp;</div>
@@ -143,7 +145,8 @@
       </div>
       <div class="col-md-5 form-group">
         <div class="title-action field-name-cloum--bg pl-3 py-1" for="exampleFormControlSelect2">Chủ trì đã chọn</div>
-        <select multiple class="form-control form-select list-chair-choosed--height" id="exampleFormControlSelect2" (ngModelChange)="selectEachFieldEditUser($event)">
+        <select multiple class="form-control form-select list-chair-choosed--height" id="exampleFormControlSelect2"
+          (ngModelChange)="selectEachFieldEditUser($event)">
           <!-- <option [ngValue]="privilege" *ngFor="let privilege of groupEditOrCreate.privileges">
             {{privilege.text | translate}}
           </option> -->
@@ -151,8 +154,8 @@
       </div>
     </div>
     <div class="pd-b20 d-flex justify-content-center">
-        <button type="button" class="btn btn-default" (click)="closedPopup()" style="margin-right: 8px">Hủy</button>
-        <button type="submit" class="btn btn-primary" (click)="ediGroupUser();">Lưu</button>
-      </div>
+      <button type="button" class="btn btn-default" (click)="closedPopup()" style="margin-right: 8px">Hủy</button>
+      <button type="submit" class="btn btn-primary" (click)="ediGroupUser();">Lưu</button>
+    </div>
   </div>
 </ng-template>
