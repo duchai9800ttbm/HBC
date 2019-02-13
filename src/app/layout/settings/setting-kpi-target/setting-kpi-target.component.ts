@@ -16,7 +16,6 @@ export class SettingKpiTargetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('this.this.router.url;', this.router.url);
     this.checkActiveTab();
   }
 

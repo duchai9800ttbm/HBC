@@ -506,5 +506,16 @@ export class SettingService {
             .share();
     }
     // ---
+    // Setting chỉ tiêu KPI
+    // - Tab cấu hình nhóm
+    // Tạo mới nhóm chỉ tiêu KPI
+    createGroupKPI(groupConfigFormValue: any) {
+        const url = `kpigroups/create`;
+        const requestModel = {
+            name: groupConfigFormValue.groupConfigName,
+            desc: groupConfigFormValue.groupConfigDes
+        };
+        return this.apiService.post(url, requestModel);
+    }
 
 }

@@ -12,11 +12,11 @@
             <span class="input-group-addon">Tìm kiếm</span>
             <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, mô tả" (keyup)="searchTerm$.next($event.target.value)">
           </div>
-          <button type="submit" class="btn btn-primary btn-rg but-with-80px pull-right ml-1" (click)="createGroupConfig()">
+          <button type="submit" class="btn btn-primary btn-rg but-with-80px pull-right ml-2" (click)="createGroupConfig()">
             Thêm mới
           </button>
 
-          <button type="button" class="btn btn-primary btn-rg pull-right ml-1" (click)="refesh(true)">
+          <button type="button" class="btn btn-primary btn-rg pull-right ml-2" (click)="refesh(true)">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
           </button>
         </div>

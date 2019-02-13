@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
 import { ActivatedRoute } from '@angular/router';
 import ValidationHelper from '../../../../../shared/helpers/validation.helper';
+import { SettingService } from '../../../../../shared/services/setting.service';
 @Component({
   selector: 'app-group-configuration-form',
   templateUrl: './group-configuration-form.component.html',
@@ -18,7 +19,8 @@ export class GroupConfigurationFormComponent implements OnInit {
   isSubmitted: boolean;
   constructor(
     private fb: FormBuilder,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private settingService: SettingService
   ) { }
 
   ngOnInit() {
@@ -52,7 +54,9 @@ export class GroupConfigurationFormComponent implements OnInit {
   submitForm() {
     this.isSubmitted = true;
     if (this.validateForm()) {
-      // my code
+      this.settingService.createGroupKPI(this.groupConfigForm.value).subscribe(response => {
+        console.log('response', response);
+      });
     }
   }
 
