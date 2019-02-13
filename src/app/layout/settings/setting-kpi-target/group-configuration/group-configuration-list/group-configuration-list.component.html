@@ -10,19 +10,19 @@
         <div class="btn-toolbar pull-right menu" style="flex-wrap: nowrap;">
           <div class="input-group btn-rg">
             <span class="input-group-addon">Tìm kiếm</span>
-            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, mô tả" (keyup)="searchTerm$.next($event.target.value)">
+            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, mô tả" [value]="searchTerm$.value"
+              (keyup)="searchTerm$.next($event.target.value)">
           </div>
-          <button type="submit" class="btn btn-primary btn-rg but-with-80px pull-right ml-2" (click)="createGroupConfig()">
+          <button type="submit" class="btn btn-primary btn-rg but-with-90px pull-right ml-2" (click)="createGroupConfig()">
             Thêm mới
           </button>
-
-          <button type="button" class="btn btn-primary btn-rg pull-right ml-2" (click)="refesh(true)">
+          <button type="button" class="btn btn-primary btn-rg pull-right ml-2" (click)="multiDeleteGroupConfig(true)">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
           </button>
         </div>
       </div>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive position-relative">
       <table class="row-border cell-border dataTable pt-2">
         <thead>
           <tr>
@@ -54,7 +54,7 @@
                 <div class="col-md-6 center-parent cursor-pointer" (click)="editGroupConfig(1)">
                   <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
                 </div>
-                <div class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
+                <div class="col-md-6 center-parent cursor-pointer" (click)="deleteGroupConfig(1)">
                   <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
                 </div>
               </div>
@@ -62,7 +62,8 @@
           </tr>
         </tbody>
       </table>
+      <ngx-loading [show]="loading"></ngx-loading>
+      <app-pagination *ngIf="!loading" [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
     </div>
   </ng-container>
 </div>
-

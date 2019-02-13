@@ -16,6 +16,7 @@ export class InstantSearchService {
     ) {}
 
     search(baseUrl: string, terms: Observable<string>) {
+        console.log('12312312', terms);
         return terms
             .debounceTime(600)
             .distinctUntilChanged()

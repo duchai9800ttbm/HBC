@@ -14,9 +14,10 @@ import Utils from '../helpers/utils.helper';
 import { LevelListItem } from '../models/setting/level-list-item';
 import { Contract } from '../models/setting/contract';
 import { retry } from 'rxjs/operator/retry';
-
+import { GroupKPIList } from '../models/setting/targets-kpi/group-kpi/group-kpi-list.model';
 @Injectable()
 export class SettingService {
+    private searchTermGroupKPI: any;
     constructor(
         private apiService: ApiService,
         private sessionService: SessionService,
@@ -508,6 +509,13 @@ export class SettingService {
     // ---
     // Setting chỉ tiêu KPI
     // - Tab cấu hình nhóm
+    // Save search
+    saveSearchTermGroupKPI(searchTerm) {
+        this.searchTermGroupKPI = searchTerm;
+    }
+    getSearchTermGroupKPI() {
+        return this.searchTermGroupKPI;
+    }
     // Tạo mới nhóm chỉ tiêu KPI
     createGroupKPI(groupConfigFormValue: any) {
         const url = `kpigroups/create`;
@@ -517,5 +525,84 @@ export class SettingService {
         };
         return this.apiService.post(url, requestModel);
     }
-
+    // mapping danh sách nhóm chỉ tiêu KPI
+    mappingListGroupKPI(result: any): GroupKPIList {
+        return {
+            id: result.id,
+            name: result.name,
+            desc: result.desc,
+            status: result.status && {
+                key: result.status.key,
+                value: result.status.value,
+                displayText: result.status.displayText,
+            },
+        };
+    }
+    // Danh sách nhóm chỉ tiêu KPI có search
+    searchKeyWordListGroupKPI(
+        terms: Observable<string>,
+        page: number | string,
+        pageSize: number | string
+    ): Observable<PagedResult<GroupKPIList>> {
+        const searchUrl = `kpigroups/filter/${page}/${pageSize}?searchTerm=`;
+        return this.instantSearchService.search(
+            searchUrl,
+            terms
+        )
+            .map(result => {
+                return {
+                    currentPage: result.pageIndex,
+                    pageSize: result.pageSize,
+                    pageCount: result.totalPages,
+                    total: result.totalCount,
+                    items: result.items.map(item => {
+                        return this.mappingListGroupKPI(item);
+                    }),
+                };
+            });
+    }
+    // Danh sách nhóm chỉ tiêu KPI KHÔNG có search
+    getListGroupKPI(
+        terms: string,
+        page: number | string,
+        pageSize: number | string
+    ): Observable<PagedResult<GroupKPIList>> {
+        const urlParam = Utils.createSearchParam(terms);
+        return this.apiService
+            .get(`kpigroups/filter/${page}/${pageSize}`, urlParam)
+            .map(response => {
+                return {
+                    currentPage: response.result.pageIndex,
+                    pageSize: pageSize,
+                    pageCount: response.result.totalPages,
+                    total: response.result.totalCount,
+                    items: response.result.items.map(item => {
+                        return this.mappingListGroupKPI(item);
+                    }),
+                };
+            })
+    }
+    // Sửa nhóm chỉ tiêu KPI
+    editGroupKPI(groupConfigFormValue: any, id: number) {
+        const url = `kpigroups/create`;
+        const requestModel = {
+            id: id,
+            name: groupConfigFormValue.groupConfigName,
+            desc: groupConfigFormValue.groupConfigDes
+        };
+        return this.apiService.post(url, requestModel);
+    }
+    // Xóa một nhóm KPI
+    deleteGroupKPI(kpiGroupId: number) {
+        const url = `kpigroups/${kpiGroupId}/delete`;
+        return this.apiService.post(url);
+    }
+    // Xóa nhiều nhóm KPI
+    deleteMutipleGroupKPI(kpiGroupIdArray: number[]) {
+        const requestModel = {
+            ids: kpiGroupIdArray
+        };
+        const url = `kpigroups/deletemultiple`;
+        return this.apiService.post(url, requestModel);
+    }
 }
