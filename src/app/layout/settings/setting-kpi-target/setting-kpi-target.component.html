@@ -9,7 +9,7 @@
                 - Cấu hình nhóm
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'toChair'"
-                id="toChair" name="list-report" (click)="toggleCollapseMenu('toChair')" title="- KPI theo chủ trì" [routerLink]="['./kpi-chair']">
+                id="toChair" name="list-report" (click)="toggleCollapseMenu('toChair')" title="- KPI theo chủ trì" [routerLink]="['./kpi-chair']" [queryParams]="{action:'view'}">
                 - KPI theo chủ trì
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'targetsWinBid'"

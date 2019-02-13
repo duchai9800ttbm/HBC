@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
 import { ActivatedRoute } from '@angular/router';
-
+import ValidationHelper from '../../../../../shared/helpers/validation.helper';
 @Component({
   selector: 'app-group-configuration-form',
   templateUrl: './group-configuration-form.component.html',
@@ -15,6 +15,7 @@ export class GroupConfigurationFormComponent implements OnInit {
     groupConfigName: ''
   };
   invalidMessages: string[];
+  isSubmitted: boolean;
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute
@@ -33,19 +34,26 @@ export class GroupConfigurationFormComponent implements OnInit {
       groupConfigName: ['', CustomValidator.required],
       groupConfigDes: [''],
     });
-    // this.groupConfigForm.valueChanges
-    //   .subscribe(data => this.onFormValueChanged(data));
+    this.groupConfigForm.valueChanges
+      .subscribe(data => this.onFormValueChanged(data));
   }
 
-  // validateForm() {
-  //   this.invalidMessages = ValidationHelper.getInvalidMessages(this.changePasswordForm, this.formErrors);
-  //   return this.invalidMessages.length === 0;
-  // }
+  validateForm() {
+    this.invalidMessages = ValidationHelper.getInvalidMessages(this.groupConfigForm, this.formErrors);
+    return this.invalidMessages.length === 0;
+  }
 
-  // onFormValueChanged(data?: any) {
-  //   if (this.isSubmitted) {
-  //     this.validateForm();
-  //   }
-  // }
+  onFormValueChanged(data?: any) {
+    if (this.isSubmitted) {
+      this.validateForm();
+    }
+  }
+
+  submitForm() {
+    this.isSubmitted = true;
+    if (this.validateForm()) {
+      // my code
+    }
+  }
 
 }
