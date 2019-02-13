@@ -605,4 +605,10 @@ export class SettingService {
         const url = `kpigroups/deletemultiple`;
         return this.apiService.post(url, requestModel);
     }
+    // ====
+    // KPI theo chủ trì
+    // Danh sách chỉ tiêu KPI chủ trì theo năm
+    getListChairToYear() {
+        
+    }
 }
