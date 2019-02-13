@@ -47,7 +47,9 @@
               <option value="2019">Tender HN</option>
             </select>
             <div class="text-right">
-              <a href="javascript:void(0)" class="add-chair">Thêm chủ trì vào nhóm >></a>
+              <a href="javascript:void(0)" class="add-chair-icon" (click)="addChairToGroupFuc(addChairToGroup)">Thêm
+                chủ trì
+                vào nhóm >></a>
             </div>
             <div class="font-weight-bold pt-3">
               Tổng chỉ tiêu nhóm:
@@ -90,3 +92,67 @@
     </div>
   </form>
 </div>
+
+
+<ng-template #addChairToGroup>
+  <div class="p-3 add-chair">
+    <div class="w-100">
+      <a class="close pull-right pointer" (click)="closedPopup()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </a>
+    </div>
+    <div class="text-center text-uppercase font-weight-bold">
+      Danh sách chủ trì
+    </div>
+    <div class="text-center">
+      <span>Nhóm</span>&nbsp;
+      <span>Tender HCM</span>
+    </div>
+    <div class="div-required">Vui lòng chọn chủ trì thuộc nhóm:&nbsp;</div>
+
+    <div class="modal-header no-boder-bottom">
+      <div class="col-md-5 form-group">
+        <div class="title-action field-name-cloum--bg pl-3 py-1" for="exampleFormControlSelect2">Danh sách chủ trì</div>
+        <div class="search">
+          <input type="text" placeholder="Tìm kiếm theo tên" (keyup)="searchTerm$.next($event.target.value)"
+            [(ngModel)]="searchTerm$.value" class="w-100 search__input pl-4" />
+          <span class="icon-search">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </span>
+        </div>
+        <select multiple class="form-control form-select list-chair-choose--height" id="exampleFormControlSelect2"
+          (ngModelChange)="selectEachFieldEditNotUser($event)">
+          <!-- <option [ngValue]="notPrivilege" *ngFor="let notPrivilege of groupEditOrCreate.notPrivileges">
+                {{notPrivilege.text | translate}}
+              </option> -->
+        </select>
+      </div>
+      <div class="col-md-2 group-button">
+        <button type="button" class="btn btn-default btn-next mg-b-2" (click)="selectAllPrivilegesEditUse()">
+          <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-default btn-next mg-b-2 mt-2" (click)="changePrivilegesEditNotUse()">
+          <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-default btn-next mg-b-2 mt-2" (click)="changePrivilegesEditUse()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-default btn-next mg-b-2 mt-2" (click)="selectAllPrivilegesEditNotUse()">
+          <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="col-md-5 form-group">
+        <div class="title-action field-name-cloum--bg pl-3 py-1" for="exampleFormControlSelect2">Chủ trì đã chọn</div>
+        <select multiple class="form-control form-select list-chair-choosed--height" id="exampleFormControlSelect2" (ngModelChange)="selectEachFieldEditUser($event)">
+          <!-- <option [ngValue]="privilege" *ngFor="let privilege of groupEditOrCreate.privileges">
+            {{privilege.text | translate}}
+          </option> -->
+        </select>
+      </div>
+    </div>
+    <div class="pd-b20 d-flex justify-content-center">
+        <button type="button" class="btn btn-default" (click)="closedPopup()" style="margin-right: 8px">Hủy</button>
+        <button type="submit" class="btn btn-primary" (click)="ediGroupUser();">Lưu</button>
+      </div>
+  </div>
+</ng-template>
