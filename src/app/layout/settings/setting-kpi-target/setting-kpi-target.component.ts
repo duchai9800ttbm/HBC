@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-setting-kpi-target',
@@ -7,12 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingKpiTargetComponent implements OnInit {
   isCollapseMenu = false;
-  idReport = 'groupConfig';
+  idReport = 'group-config';
   widthReport: number;
-  constructor() { }
+  urlArray = ['group-config', 'kpi-chair', 'group-config', 'win-bid', 'kpi-area', 'construction-items', 'type-construction'];
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit() {
+    console.log('this.this.router.url;', this.router.url);
+    this.checkActiveTab();
   }
+
+  checkActiveTab() {
+    this.urlArray.forEach(item => {
+      if (this.router.url.includes(item)) {
+        this.idReport = item;
+        return;
+      }
+    });
+  }
+
   toggleCollapseMenu(idreport) {
     this.widthReport = document.getElementById('wrapper-report').offsetWidth;
     this.idReport = idreport;

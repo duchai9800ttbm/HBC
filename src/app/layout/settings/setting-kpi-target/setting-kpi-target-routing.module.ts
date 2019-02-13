@@ -28,7 +28,7 @@ const routes: Routes = [
         component: WinBidComponent
       },
       {
-        path: 'kpi-are',
+        path: 'kpi-area',
         component: KpiAreaComponent
       },
       {
