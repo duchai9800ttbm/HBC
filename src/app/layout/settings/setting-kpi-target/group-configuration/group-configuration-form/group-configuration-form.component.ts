@@ -14,6 +14,7 @@ export class GroupConfigurationFormComponent implements OnInit {
   formErrors = {
     groupConfigName: ''
   };
+  invalidMessages: string[];
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute
@@ -35,5 +36,16 @@ export class GroupConfigurationFormComponent implements OnInit {
     // this.groupConfigForm.valueChanges
     //   .subscribe(data => this.onFormValueChanged(data));
   }
+
+  // validateForm() {
+  //   this.invalidMessages = ValidationHelper.getInvalidMessages(this.changePasswordForm, this.formErrors);
+  //   return this.invalidMessages.length === 0;
+  // }
+
+  // onFormValueChanged(data?: any) {
+  //   if (this.isSubmitted) {
+  //     this.validateForm();
+  //   }
+  // }
 
 }
