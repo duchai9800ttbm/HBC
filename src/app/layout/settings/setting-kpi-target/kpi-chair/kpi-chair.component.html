@@ -7,8 +7,8 @@
       <div class="row">
         <div class="col-md-3">
           <span class="font-weight-bold required">Năm:&nbsp;</span>&nbsp;&nbsp;
-          <span>
-            <select>
+          <span class="custom-dropdown">
+            <select class="form-control" style="width: 122px;">
               <option value="2018">2018</option>
               <option value="2019">2019</option>
               <option value="2020">2020</option>
@@ -16,7 +16,7 @@
           </span>
         </div>
         <div class="col-md-6">
-          <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
+          <span class="font-weight-bold d-flex align-items-center">Tổng chỉ tiêu:&nbsp;</span>
           <span>{{ 123456 | truncateDecimal}}</span>
         </div>
         <div class="text-right col-md-3" *ngIf="param === 'view'">
@@ -32,24 +32,26 @@
           </button>
         </div>
       </div>
-      <div class="font-weight-bold required">
+      <div class="font-weight-bold required pt-1">
         Nhóm:
       </div>
       <div class="row pt-2">
         <div class="col-md-3 d-flex">
-          <div class="btn-icon btn-icon-plus">
+          <div class="btn-icon btn-icon-plus mt-2">
             <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
           </div>
-          <div class="btn-icon btn-icon-minus">
+          <div class="btn-icon btn-icon-minus mt-2">
             <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
           </div>
           <div class="pl-2 group--width">
-            <select class="w-100">
-              <option value="2018">Tender HCM</option>
-              <option value="2019">Tender HN</option>
-            </select>
-            <div class="text-right">
-              <a href="javascript:void(0)" class="add-chair-icon" (click)="addChairToGroupFuc(addChairToGroup)">Thêm
+            <span class="custom-dropdown w-100">
+              <select class="w-100 form-control">
+                <option value="2018">Tender HCM</option>
+                <option value="2019">Tender HN</option>
+              </select>
+            </span>
+            <div class="text-right mt-2">
+              <a href="javascript:void(0)" class="add-chair-icon pt-2" (click)="addChairToGroupFuc(addChairToGroup)">Thêm
                 chủ trì
                 vào nhóm >></a>
             </div>

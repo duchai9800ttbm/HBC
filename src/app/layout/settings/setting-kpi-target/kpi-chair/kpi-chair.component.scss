@@ -35,6 +35,15 @@
     width: calc(100% - 40px);
 }
 
+.form-select-cus::before{
+    background-color: #fafafa;
+    width: 2.2rem;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 0 3px 3px 0;
+}
+
 
 .add-chair {
     .title-name--font-size{

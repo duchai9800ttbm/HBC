@@ -1,45 +1,47 @@
 <div class="px-3">
-    <div class="menu">
-      <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">chỉ tiêu trúng thầu </h5>
-    </div>
-    <form [formGroup]="groupKpiChair" novalidate (ngSubmit)="submitForm()" class="pt-3">
-      <div class="card p-3">
-        <div class="row">
-          <div class="col-md-3">
-            <span class="font-weight-bold required">Năm:&nbsp;</span>&nbsp;&nbsp;
-            <select>
+  <div class="menu">
+    <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">chỉ tiêu trúng thầu </h5>
+  </div>
+  <form [formGroup]="groupKpiChair" novalidate (ngSubmit)="submitForm()" class="pt-3">
+    <div class="card p-3">
+      <div class="row">
+        <div class="col-md-3">
+          <span class="font-weight-bold required">Năm:&nbsp;</span>&nbsp;&nbsp;
+          <span class="custom-dropdown">
+            <select class="form-control select-year--width">
               <option value="2018">2018</option>
               <option value="2019">2019</option>
               <option value="2020">2020</option>
             </select>
-          </div>
-          <div class="text-right col-md-9">
-            <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
-            </button>
-            <button type="submit" class="btn btn-primary ml-1">Thêm mới chỉ tiêu
-            </button>
-          </div>
+          </span>
         </div>
-        <div class="row pt-2">
-          <div class="col-md-12">
-            <table class="zui-table table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th class="font-weight-bold">Tổng giá trị</th>
-                  <th class="text-right font-weight-bold">Tỷ lệ cần đạt (%)</th>
-                  <th class="text-right font-weight-bold">Giá trị cần đạt (VND)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{ 49616584341 | truncateDecimal}}</td>
-                  <td class="text-right">100 %</td>
-                  <td class="text-right">{{ 20000000000 | truncateDecimal}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="text-right col-md-9">
+          <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
+          </button>
+          <button type="submit" class="btn btn-primary ml-1">Thêm mới chỉ tiêu
+          </button>
         </div>
       </div>
-    </form>
-  </div>
+      <div class="row pt-2">
+        <div class="col-md-12">
+          <table class="zui-table table table-striped table-hover mt-1">
+            <thead>
+              <tr>
+                <th class="font-weight-bold">Tổng giá trị</th>
+                <th class="text-right font-weight-bold">Tỷ lệ cần đạt (%)</th>
+                <th class="text-right font-weight-bold">Giá trị cần đạt (VND)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ 49616584341 | truncateDecimal}}</td>
+                <td class="text-right">100 %</td>
+                <td class="text-right">{{ 20000000000 | truncateDecimal}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
