@@ -1250,6 +1250,26 @@ export class PackageService {
         });
     }
 
+    // Danh sách người dùng nhóm chủ trì, phân trang Cho phép SEARCH
+    searchKeyWordListGroupChaired(page: number, pageSize: number, searchTerm: Observable<string>): Observable<PagedResult<GroupChaired>> {
+        const searchUrl = `user/chairuser/${page}/${pageSize}?searchTerm=`;
+        return this.instantSearchService.search(
+            searchUrl,
+            searchTerm
+        )
+        .map(result => {
+            return {
+                currentPage: result.pageIndex,
+                pageSize: result.pageSize,
+                pageCount: result.totalPages,
+                total: result.totalCount,
+                items: (result.items || []).map(
+                    this.toGetListGroupChaired
+                )
+            };
+        });
+    }
+
     directionalTabAttendFuc() {
         this.directionalTabAttend = true;
     }

@@ -9,9 +9,9 @@
         <span class="font-weight-bold required">Năm:&nbsp;</span>&nbsp;&nbsp;
         <span class="custom-dropdown">
           <select class="form-control" style="width: 122px;" [(ngModel)]="yearkpi" (change)="changeYearKpiFuc()">
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
+            <option value="{{currentYear - 2}}">{{currentYear - 2}}</option>
+            <option value="{{currentYear - 1}}">{{currentYear - 1}}</option>
+            <option value="{{currentYear}}">{{currentYear}}</option>
           </select>
         </span>
       </div>
@@ -19,13 +19,13 @@
         <div class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</div>
         <div>{{ 123456 | truncateDecimal}}</div>
       </div>
-      <div class="text-right col-md-3" *ngIf="param === 'view'">
+      <div class="text-right col-md-3" *ngIf="paramAction === 'view'">
         <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
         </button>
         <button type="submit" class="btn btn-primary ml-1">Thêm mới chỉ tiêu
         </button>
       </div>
-      <div class="text-right col-md-3" *ngIf="param === 'edit'">
+      <div class="text-right col-md-3" *ngIf="paramAction === 'edit'">
         <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-chair']" [queryParams]="{action:'view'}">Hủy
         </button>
         <button type="submit" class="btn btn-primary ml-1">Lưu
@@ -50,12 +50,11 @@
                 <span class="custom-dropdown w-100">
                   <select class="w-100 form-control" formControlName="groupName">
                     <option value="null">--Lựa chọn--</option>
-                    <option value="Tender HCM">Tender HCM</option>
-                    <option value="Tender HN">Tender HN</option>
+                    <option *ngFor="let item of listGroupkpi" [ngValue]="item">{{item.name}}</option>
                   </select>
                 </span>
                 <div class="text-right mt-2">
-                  <a href="javascript:void(0)" class="add-chair-icon pt-2" (click)="addChairToGroupFuc(addChairToGroup)">Thêm
+                  <a href="javascript:void(0)" class="add-chair-icon pt-2" (click)="addChairToGroupFuc(addChairToGroup, i)">Thêm
                     chủ trì
                     vào nhóm >></a>
                 </div>
@@ -80,8 +79,8 @@
                     <div *ngFor="let chairEmployeeControl of chairEmployeesFA.controls; let j = index" [formGroupName]="j">
                       <tr>
                         <td>Nguyễn Đăng Độ</td>
-                        <td class="text-right" *ngIf="param === 'view'">{{ 20000000000 | truncateDecimal}}</td>
-                        <td class="text-right" *ngIf="param === 'edit'">
+                        <td class="text-right" *ngIf="paramAction === 'view'">{{ 20000000000 | truncateDecimal}}</td>
+                        <td class="text-right" *ngIf="paramAction === 'edit'">
                           <input type="text" class="w-100 m-0 p-0">
                         </td>
                       </tr>
@@ -111,7 +110,7 @@
     </div>
     <div class="text-center">
       <span>Nhóm:</span>&nbsp;
-      <span>Tender HCM</span>
+      <span>{{GroupNameAddChair}}</span>
     </div>
     <div class="div-required">Vui lòng chọn chủ trì thuộc nhóm:&nbsp;</div>
 
@@ -119,17 +118,17 @@
       <div class="col-md-5 form-group">
         <div class="title-action field-name-cloum--bg pl-3 py-1" for="exampleFormControlSelect2">Danh sách chủ trì</div>
         <div class="search">
-          <input type="text" placeholder="Tìm kiếm theo tên" (keyup)="searchTerm$.next($event.target.value)"
-            [(ngModel)]="searchTerm$.value" class="w-100 search__input pl-4" />
+          <input type="text" placeholder="Tìm kiếm theo tên" (keyup)="searchTermChairName$.next($event.target.value)"
+            [(ngModel)]="searchTermChairName$.value" class="w-100 search__input pl-4" />
           <span class="icon-search">
             <i class="fa fa-search" aria-hidden="true"></i>
           </span>
         </div>
         <select multiple class="form-control form-select list-chair-choose--height" id="exampleFormControlSelect2"
           (ngModelChange)="selectEachFieldEditNotUser($event)">
-          <!-- <option [ngValue]="notPrivilege" *ngFor="let notPrivilege of groupEditOrCreate.notPrivileges">
-                {{notPrivilege.text | translate}}
-              </option> -->
+          <option [ngValue]="itemChairCanChoose" *ngFor="let itemChairCanChoose of listChairEmployee">
+                {{itemChairCanChoose.employeeName}}
+              </option>
         </select>
       </div>
       <div class="col-md-2 group-button">
