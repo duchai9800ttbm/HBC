@@ -66,7 +66,7 @@ export class DocumentPriceReviewService {
         formData.append('BidOpportunityId', `${id}`);
         formData.append('DocumentType', documentType);
         formData.append('DocumentName', documentName);
-        formData.append('DocumentDesc', description)
+        formData.append('DocumentDesc', description);
         formData.append('DocumentFile', file);
         return this.apiService.postFile(url, formData)
             .map(response => response)

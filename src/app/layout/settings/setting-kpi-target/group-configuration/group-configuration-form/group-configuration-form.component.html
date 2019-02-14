@@ -3,7 +3,7 @@
   <span *ngIf="!config">Thêm mới nhóm</span>
   <span *ngIf="config">Chỉnh sửa nhóm</span>
 </h5>
-<form [formGroup]="groupConfigForm" novalidate (ngSubmit)="submitForm()">
+<form [formGroup]="groupConfigForm" novalidate>
   <div>
     <div class="card p-3">
       <div class="row form-group">

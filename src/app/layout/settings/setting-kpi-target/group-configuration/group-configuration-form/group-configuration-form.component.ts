@@ -52,6 +52,7 @@ export class GroupConfigurationFormComponent implements OnInit {
   }
 
   submitForm() {
+    console.log('Phúc code sai');
     this.isSubmitted = true;
     if (this.validateForm()) {
       this.settingService.createGroupKPI(this.groupConfigForm.value).subscribe(response => {
