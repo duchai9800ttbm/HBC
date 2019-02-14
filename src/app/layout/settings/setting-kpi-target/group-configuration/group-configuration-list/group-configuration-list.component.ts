@@ -30,7 +30,6 @@ export class GroupConfigurationListComponent implements OnInit {
     this.settingService
       .searchKeyWordListGroupKPI(this.searchTerm$, 0, 10)
       .subscribe(result => {
-        console.log('searchKeyWordListGroupKPI');
         this.settingService.saveSearchTermGroupKPI(this.searchTerm$);
         this.rerender(result);
         this.loading = false;
