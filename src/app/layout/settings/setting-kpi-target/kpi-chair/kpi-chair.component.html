@@ -22,10 +22,10 @@
       <div class="text-right col-md-3" *ngIf="paramAction === 'view'">
         <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
         </button>
-        <button type="submit" class="btn btn-primary ml-1">Thêm mới chỉ tiêu
+        <button type="submit" class="btn btn-primary ml-1" (click)="addTargetForYear()">Thêm mới chỉ tiêu
         </button>
       </div>
-      <div class="text-right col-md-3" *ngIf="paramAction === 'edit'">
+      <div class="text-right col-md-3" *ngIf="paramAction === 'edit' || paramAction === 'create'">
         <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-chair']" [queryParams]="{action:'view'}">Hủy
         </button>
         <button type="submit" class="btn btn-primary ml-1">Lưu
@@ -53,7 +53,7 @@
                     <option *ngFor="let item of listGroupkpi" [ngValue]="item">{{item.name}}</option>
                   </select>
                 </span>
-                <div class="text-right mt-2">
+                <div class="text-right mt-2" *ngIf="paramAction === 'edit' || paramAction === 'create'">
                   <a href="javascript:void(0)" class="add-chair-icon pt-2" (click)="addChairToGroupFuc(addChairToGroup, i)">Thêm
                     chủ trì
                     vào nhóm >></a>
@@ -110,7 +110,7 @@
     </div>
     <div class="text-center">
       <span>Nhóm:</span>&nbsp;
-      <span>{{GroupNameAddChair}}</span>
+      <span>{{GroupNameAddChair.name}}</span>
     </div>
     <div class="div-required">Vui lòng chọn chủ trì thuộc nhóm:&nbsp;</div>
 
@@ -127,12 +127,12 @@
         <select multiple class="form-control form-select list-chair-choose--height" id="exampleFormControlSelect2"
           (ngModelChange)="selectEachFieldEditNotUser($event)">
           <option [ngValue]="itemChairCanChoose" *ngFor="let itemChairCanChoose of listChairEmployee">
-                {{itemChairCanChoose.employeeName}}
-              </option>
+            {{itemChairCanChoose.employeeName}}
+          </option>
         </select>
       </div>
       <div class="col-md-2 group-button">
-        <button type="button" class="btn btn-default btn-next mg-b-2" (click)="selectAllPrivilegesEditUse()">
+        <button type="button" class="btn btn-default btn-next mg-b-2" (click)="addAllChairEmployee()">
           <i class="fa fa-angle-double-right" aria-hidden="true"></i>
         </button>
         <button type="button" class="btn btn-default btn-next mg-b-2 mt-2" (click)="changePrivilegesEditNotUse()">
@@ -149,15 +149,15 @@
         <div class="title-action field-name-cloum--bg pl-3 py-1" for="exampleFormControlSelect2">Chủ trì đã chọn</div>
         <select multiple class="form-control form-select list-chair-choosed--height" id="exampleFormControlSelect2"
           (ngModelChange)="selectEachFieldEditUser($event)">
-          <!-- <option [ngValue]="privilege" *ngFor="let privilege of groupEditOrCreate.privileges">
-            {{privilege.text | translate}}
-          </option> -->
+          <option [ngValue]="itemChairChoosed" *ngFor="let itemChairChoosed of listChairEmployeeChoosedTemp">
+            {{itemChairChoosed.employeeName}}
+          </option>
         </select>
       </div>
     </div>
     <div class="pd-b20 d-flex justify-content-center">
       <button type="button" class="btn btn-default" (click)="closedPopup()" style="margin-right: 8px">Hủy</button>
-      <button type="submit" class="btn btn-primary" (click)="ediGroupUser();">Lưu</button>
+      <button type="submit" class="btn btn-primary" (click)="addGroupChairEmployeeInGroupKpi();">Lưu</button>
     </div>
   </div>
 </ng-template>

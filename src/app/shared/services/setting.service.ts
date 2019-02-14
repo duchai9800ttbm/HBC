@@ -15,6 +15,7 @@ import { LevelListItem } from '../models/setting/level-list-item';
 import { Contract } from '../models/setting/contract';
 import { retry } from 'rxjs/operator/retry';
 import { GroupKPIList } from '../models/setting/targets-kpi/group-kpi/group-kpi-list.model';
+import { ChairToYear } from '../models/setting/targets-kpi/to-chair/chair-to-year.model';
 @Injectable()
 export class SettingService {
     public searchTermGroupKPI: any;
@@ -611,8 +612,60 @@ export class SettingService {
     }
     // ====
     // KPI theo chủ trì
+    // mapping model Danh sách chỉ tiêu KPI chủ trì theo năm
+    mappingListChairToYear(result: any): ChairToYear {
+        return {
+            year: result.year,
+            kpiGroupChairs: result.kpiGroupChairs && result.kpiGroupChairs.map(itemKpiGroupChairs => {
+                return {
+                    kpiGroup: itemKpiGroupChairs.kpiGroup && {
+                        id: itemKpiGroupChairs.kpiGroup.id,
+                        name: itemKpiGroupChairs.kpiGroup.name,
+                        desc: itemKpiGroupChairs.kpiGroup.desc,
+                        status: itemKpiGroupChairs.kpiGroup.status && {
+                            key: itemKpiGroupChairs.kpiGroup.status.key,
+                            value: itemKpiGroupChairs.kpiGroup.status.value,
+                            displayText: itemKpiGroupChairs.kpiGroup.status.displayText,
+                        }
+                    },
+                    chairDetail: itemKpiGroupChairs.chairDetail && itemKpiGroupChairs.chairDetail.map(itemChairDetail => {
+                        return {
+                            employee: itemChairDetail.employee && {
+                                id: itemChairDetail.employee.id,
+                                employeeId: itemChairDetail.employee.employeeId,
+                                employeeNo: itemChairDetail.employee.employeeNo,
+                                employeeName: itemChairDetail.employee.employeeName,
+                                employeeAddress: itemChairDetail.employee.employeeAddress,
+                                employeeDob: itemChairDetail.employee.employeeDob,
+                                employeeTel: itemChairDetail.employee.employeeTel,
+                                employeeTel1: itemChairDetail.employee.employeeTel1,
+                                departmentName: itemChairDetail.employee.departmentName,
+                                levelName: itemChairDetail.employee.levelName,
+                                employeeAvatar: itemChairDetail.employee && {
+                                    guid: itemChairDetail.employee.guid,
+                                    thumbSizeUrl: itemChairDetail.employee.thumbSizeUrl,
+                                    largeSizeUrl: itemChairDetail.employee.largeSizeUrl,
+                                },
+                                departmentRoomName: itemChairDetail.employee.departmentRoomName,
+                                branchName: itemChairDetail.employee.branchName,
+                                employeeBirthPlace: itemChairDetail.employee.employeeBirthPlace,
+                                employeeIDNumber: itemChairDetail.employee.employeeIDNumber,
+                                employeeGender: itemChairDetail.employee.employeeGender,
+                                employeeTaxNumber: itemChairDetail.employee.employeeTaxNumber,
+                                employeeBankAccount: itemChairDetail.employee.employeeBankAccount,
+                            },
+                            kpiTarget: itemChairDetail.kpiTarget,
+                        };
+                    }),
+                };
+            }),
+        };
+    }
     // Danh sách chỉ tiêu KPI chủ trì theo năm
-    getListChairToYear() {
-        
+    getListChairToYear(year: number) {
+        const url = `kpi/chairemployee/getall?year=${year}`;
+        return this.apiService.get(url).map(response => {
+            return this.mappingListChairToYear(response.result);
+        });
     }
 }

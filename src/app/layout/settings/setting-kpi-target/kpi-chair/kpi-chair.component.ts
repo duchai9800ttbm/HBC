@@ -21,7 +21,7 @@ export class KpiChairComponent implements OnInit {
   yearkpi: string | number;
   listGroupkpi: GroupKPIList[];
   listChairEmployee: GroupChaired[];
-  GroupNameAddChair: string;
+  GroupNameAddChair: GroupKPIList;
   get groupKpiChairFA(): FormArray {
     return this.groupKpiChairsArray.get('groupKpiChair') as FormArray;
   }
@@ -29,6 +29,7 @@ export class KpiChairComponent implements OnInit {
     return this.groupKpiChairFA.get('chairEmployees') as FormArray;
   }
   currentYear = (new Date()).getFullYear();
+  listChairEmployeeChoosedTemp: any;
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -48,8 +49,15 @@ export class KpiChairComponent implements OnInit {
     } else {
       this.yearkpi = this.currentYear;
     }
+    this.getListChairToYearFuc(+this.yearkpi);
     this.getListGroupkpi();
     this.createForm();
+  }
+
+  getListChairToYearFuc(year: number) {
+    this.settingService.getListChairToYear(year).subscribe(response => {
+      console.log('this.listYear', response);
+    });
   }
 
   getListGroupkpi() {
@@ -100,9 +108,7 @@ export class KpiChairComponent implements OnInit {
       class: 'gray modal-lg'
     });
     this.GroupNameAddChair = this.groupKpiChairFA.controls[indexForm].value
-      && this.groupKpiChairFA.controls[indexForm].value.groupName
-      && this.groupKpiChairFA.controls[indexForm].value.groupName.name;
-    console.log('this.GroupNameAddChair', this.GroupNameAddChair, this.groupKpiChairFA.controls[indexForm].value.groupName.name);
+      && this.groupKpiChairFA.controls[indexForm].value.groupName;
     this.packageService.searchKeyWordListGroupChaired(0, 1000, this.searchTermChairName$).subscribe(response => {
       this.listChairEmployee = response.items;
     });
@@ -119,13 +125,16 @@ export class KpiChairComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: this.paramAction, year: this.yearkpi },
       });
+    this.setFormNotValue();
+  }
 
+  setFormNotValue() {
     this.groupKpiChairsArray.removeControl('groupKpiChair');
     this.groupKpiChairsArray.addControl('groupKpiChair', this.fb.array([]));
 
     const formArrayItem = this.fb.group({
       groupName: {
-        value: 'Tender HCM',
+        value: null,
         disabled: false,
       },
       chairEmployees: {
@@ -135,6 +144,26 @@ export class KpiChairComponent implements OnInit {
     });
     const formArrayControl = this.groupKpiChairFA as FormArray;
     formArrayControl.push(formArrayItem);
+  }
+
+
+  addTargetForYear() {
+    this.paramAction = 'create';
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: { action: 'create', year: this.yearkpi },
+      });
+    this.setFormNotValue();
+  }
+
+  addAllChairEmployee() {
+    this.listChairEmployeeChoosedTemp = this.listChairEmployee;
+  }
+
+  addGroupChairEmployeeInGroupKpi() {
+    console.log('thiss.GroupNameAddChair', this.GroupNameAddChair);
   }
 
 }
