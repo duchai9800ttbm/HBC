@@ -522,6 +522,13 @@ export class SettingService {
         };
         return this.apiService.post(url, requestModel);
     }
+    // Chi tiết nhóm chỉ tiêu KPI
+    detailGroupKPI(kpiGroupId: number) {
+        const url = `kpigroups/${kpiGroupId}`;
+        return this.apiService.get(url).map(response => {
+            return this.mappingListGroupKPI(response.result);
+        });
+    }
     // mapping danh sách nhóm chỉ tiêu KPI
     mappingListGroupKPI(result: any): GroupKPIList {
         return {
@@ -581,7 +588,7 @@ export class SettingService {
     }
     // Sửa nhóm chỉ tiêu KPI
     editGroupKPI(groupConfigFormValue: any, id: number) {
-        const url = `kpigroups/create`;
+        const url = `kpigroups/edit`;
         const requestModel = {
             id: id,
             name: groupConfigFormValue.groupConfigName,

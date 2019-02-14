@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingService } from '../../../../../shared/services/setting.service';
 import { BehaviorSubject } from 'rxjs';
@@ -11,10 +11,11 @@ import { AlertService, ConfirmationService } from '../../../../../shared/service
   templateUrl: './group-configuration-list.component.html',
   styleUrls: ['./group-configuration-list.component.scss']
 })
-export class GroupConfigurationListComponent implements OnInit {
-  searchTerm$ = new BehaviorSubject<string>('');
+export class GroupConfigurationListComponent implements OnInit, OnDestroy {
+  private searchTerm$ = new BehaviorSubject<string>('');
   loading = false;
   pagedResult: PagedResult<any> = new PagedResult<any>();
+  checkboxSeclectAll: boolean;
   constructor(
     private router: Router,
     private settingService: SettingService,
@@ -36,6 +37,10 @@ export class GroupConfigurationListComponent implements OnInit {
       }, err => {
         this.loading = false;
       });
+  }
+
+  ngOnDestroy() {
+    // this.searchTerm$.unsubscribe();
   }
 
   rerender(pagedResult: any) {
@@ -108,6 +113,7 @@ export class GroupConfigurationListComponent implements OnInit {
           this.settingService.deleteMutipleGroupKPI(deleteIds).subscribe(response => {
             this.refresh(0, 10);
             this.alertService.success('Xóa nhóm thành công');
+            this.checkboxSeclectAll = false;
           },
             err => {
               this.alertService.error('Đã xảy ra lỗi, xóa nhóm không thành công');

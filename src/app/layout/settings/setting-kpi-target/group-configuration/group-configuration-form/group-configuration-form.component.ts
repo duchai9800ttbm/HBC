@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import ValidationHelper from '../../../../../shared/helpers/validation.helper';
 import { SettingService } from '../../../../../shared/services/setting.service';
+import { AlertService } from '../../../../../shared/services';
 @Component({
   selector: 'app-group-configuration-form',
   templateUrl: './group-configuration-form.component.html',
@@ -20,21 +21,29 @@ export class GroupConfigurationFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private settingService: SettingService
+    private settingService: SettingService,
+    private router: Router,
+    private alertService: AlertService,
   ) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(result => {
       this.config = +result.id;
     });
-    this.createForm();
+    if (this.config) {
+      this.settingService.detailGroupKPI(this.config).subscribe(response => {
+        this.createForm(response);
+      });
+    } else {
+      this.createForm(null);
+    }
   }
 
-  createForm() {
+  createForm(groupKPIItem) {
     this.groupConfigForm = this.fb.group({
-      id: null,
-      groupConfigName: ['', CustomValidator.required],
-      groupConfigDes: [''],
+      id: groupKPIItem && groupKPIItem.id,
+      groupConfigName: [groupKPIItem && groupKPIItem.name, CustomValidator.required],
+      groupConfigDes: [groupKPIItem && groupKPIItem.desc],
     });
     this.groupConfigForm.valueChanges
       .subscribe(data => this.onFormValueChanged(data));
@@ -52,12 +61,24 @@ export class GroupConfigurationFormComponent implements OnInit {
   }
 
   submitForm() {
-    console.log('Phúc code sai');
+    console.log('submit');
     this.isSubmitted = true;
     if (this.validateForm()) {
-      this.settingService.createGroupKPI(this.groupConfigForm.value).subscribe(response => {
-        console.log('response', response);
-      });
+      if (this.config) {
+        this.settingService.editGroupKPI(this.groupConfigForm.value, this.groupConfigForm.value.id).subscribe(response => {
+          this.alertService.success('Chỉnh sửa nhóm thành công.');
+          this.router.navigate([`/settings/kpi-target/group-config/list`]);
+        }, err => {
+          this.alertService.error('Đã xảy ra lỗi. Chỉnh sửa nhóm không thành công.');
+        });
+      } else {
+        this.settingService.createGroupKPI(this.groupConfigForm.value).subscribe(response => {
+          this.alertService.success('Tạo mới nhóm thành công.');
+          this.router.navigate([`/settings/kpi-target/group-config/list`]);
+        }, err => {
+          this.alertService.error('Đã xảy ra lỗi. Tạo mới nhóm không thành công.');
+        });
+      }
     }
   }
 

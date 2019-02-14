@@ -11,13 +11,12 @@
           <div class="input-group btn-rg">
             <span class="input-group-addon">Tìm kiếm</span>
             <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, mô tả" 
-              (keyup)="searchTerm$.next($event.target.value)">
-              <!-- [value]="searchTerm$.value" -->
+              (keyup)="searchTerm$.next($event.target.value)" [value]="searchTerm$.value">
           </div>
           <button type="submit" class="btn btn-primary btn-rg but-with-90px pull-right ml-2" (click)="createGroupConfig()">
             Thêm mới
           </button>
-          <button type="button" class="btn btn-primary btn-rg pull-right ml-2" (click)="multiDeleteGroupConfig(true)">
+          <button type="button" class="btn btn-primary btn-rg pull-right ml-2" (click)="multiDeleteGroupConfig()">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
           </button>
         </div>
@@ -29,7 +28,7 @@
           <tr>
             <th class="text-center text-uppercase font-weight-bold check-box--width">
               <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input input-checkbox" (change)="onSelectAll($event.target.checked)">
+                <input type="checkbox" class="custom-control-input input-checkbox" (change)="onSelectAll($event.target.checked)" [(ngModel)]="checkboxSeclectAll">
                 <span class="custom-control-indicator"></span>
               </label>
             </th>
@@ -40,22 +39,22 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let item of pagedResult.items">
             <td class="text-center">
               <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
                 <span class="custom-control-indicator"></span>
               </label>
             </td>
-            <td>Tender HCM</td>
-            <td>Mô tả nhóm</td>
-            <td>Đã sử dụng</td>
+            <td>{{item?.name}}</td>
+            <td>{{item?.desc}}</td>
+            <td>{{item?.status?.value}}</td>
             <td>
               <div class="center-parent w-100 h-100">
-                <div class="col-md-6 center-parent cursor-pointer" (click)="editGroupConfig(1)">
+                <div class="col-md-6 center-parent cursor-pointer" (click)="editGroupConfig(item?.id)">
                   <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
                 </div>
-                <div class="col-md-6 center-parent cursor-pointer" (click)="deleteGroupConfig(1)">
+                <div class="col-md-6 center-parent cursor-pointer" (click)="deleteGroupConfig(item?.id)">
                   <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
                 </div>
               </div>
