@@ -24,12 +24,13 @@ export class GroupConfigurationListComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    if (this.settingService.getSearchTermGroupKPI()) {
-      this.searchTerm$ = this.settingService.getSearchTermGroupKPI();
+    if (this.settingService.searchTermGroupKPI) {
+      this.searchTerm$ = this.settingService.searchTermGroupKPI;
     }
     this.settingService
       .searchKeyWordListGroupKPI(this.searchTerm$, 0, 10)
       .subscribe(result => {
+        console.log('searchKeyWordListGroupKPI');
         this.settingService.saveSearchTermGroupKPI(this.searchTerm$);
         this.rerender(result);
         this.loading = false;
