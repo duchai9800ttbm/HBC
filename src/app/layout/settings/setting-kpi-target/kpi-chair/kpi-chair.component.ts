@@ -77,7 +77,7 @@ export class KpiChairComponent implements OnInit {
     console.log('this.groupChairCallAPI', groupChairCallAPI);
     this.groupKpiChairsArray = this.fb.group({
       groupKpiChair: this.fb.array([]),
-      targetTotal: groupChairCallAPI.targetTotal
+      targetTotal: groupChairCallAPI && groupChairCallAPI.targetTotal
     });
     if (groupChairCallAPI) {
       let targetTotal = 0;
@@ -125,21 +125,7 @@ export class KpiChairComponent implements OnInit {
         targetGroup: null
       });
       const formArrayControl = this.groupKpiChairFA as FormArray;
-      // formArrayItem.addControl('stateProvinceID', this.fb.control(null));
-      // formArrayItem.addControl('districtID', this.fb.control(null));
-      // formArrayItem.addControl('communeID', this.fb.control(null));
-      // formArrayItem.addControl('districts', this.fb.control([]));
-      // formArrayItem.addControl('communes', this.fb.control([]));
       formArrayControl.push(formArrayItem);
-
-
-      // const control = <FormArray>this.nonminateForm.controls.packageWork;
-      // control.push(this.fb.group({
-      //   tenGoiCongViec: { value: x.tenGoiCongViec, disabled: this.isModeView },
-      //   ghiChuThem: { value: x.ghiChuThem, disabled: this.isModeView },
-      //   thanhTien: { value: x.thanhTien, disabled: this.isModeView },
-      // }));
-
     }
   }
 
@@ -184,7 +170,9 @@ export class KpiChairComponent implements OnInit {
   }
 
   setFormNotValue() {
-    this.groupKpiChairsArray.removeControl('groupKpiChair');
+    if (this.groupKpiChairsArray.get('groupKpiChair')) {
+      this.groupKpiChairsArray.removeControl('groupKpiChair');
+    }
     this.groupKpiChairsArray.addControl('groupKpiChair', this.fb.array([]));
 
     const formArrayItem = this.fb.group({
@@ -208,6 +196,7 @@ export class KpiChairComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: 'create', year: this.yearkpi },
       });
+    this.yearkpi = null;
     this.setFormNotValue();
   }
 
@@ -262,7 +251,7 @@ export class KpiChairComponent implements OnInit {
           disabled: false,
         },
         targetskpi: {
-          value: item.targetskpi,
+          value: item.targetskpi ? item.targetskpi : 0,
           disabled: false,
         },
       });
@@ -323,7 +312,20 @@ export class KpiChairComponent implements OnInit {
   }
 
   addGroupToForm() {
+    const formArrayItem = this.fb.group({
+      groupName: {
+        value: null,
+        disabled: false,
+      },
+      chairEmployees: this.fb.array([]),
+      targetGroup: null
+    });
+    const formArrayControl = this.groupKpiChairFA as FormArray;
+    formArrayControl.push(formArrayItem);
+  }
 
+  removeGroupToForm(indexForm: number) {
+    this.groupKpiChairFA.removeAt(indexForm);
   }
 
 }

@@ -3,12 +3,13 @@
     <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">kpi theo chủ trì </h5>
   </div>
 
-  <div class="card p-3">
+  <div class="card p-3 mt-3">
     <div class="row">
       <div class="col-md-3">
         <span class="font-weight-bold required">Năm:&nbsp;</span>&nbsp;&nbsp;
         <span class="custom-dropdown">
           <select class="form-control" style="width: 122px;" [(ngModel)]="yearkpi" (change)="changeYearKpiFuc()">
+            <option value="null" *ngIf="yearkpi === null">--Lựa chọn--</option>
             <option value="{{currentYear - 2}}">{{currentYear - 2}}</option>
             <option value="{{currentYear - 1}}">{{currentYear - 1}}</option>
             <option value="{{currentYear}}">{{currentYear}}</option>
@@ -20,7 +21,7 @@
         <div>{{ (groupKpiChairsArray && targetTotalFC !== 0) ? (targetTotalFC | truncateDecimal) : 0}}</div>
       </div>
       <div class="text-right col-md-3" *ngIf="paramAction === 'view'">
-        <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
+        <button class="btn btn-secondary" type="button" *ngIf="!(currentYear - +yearkpi < 0)" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
         </button>
         <button type="submit" class="btn btn-primary ml-1" (click)="addTargetForYear()">Thêm mới chỉ tiêu
         </button>
@@ -40,12 +41,19 @@
         <div *ngFor="let gKpiChairControl of groupKpiChairFA.controls; let i = index" [formGroupName]="i">
           <div class="row pt-2">
             <div class="col-md-3 d-flex">
-              <div class="btn-icon btn-icon-plus mt-2" (click)="addGroupToForm()">
-                <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
-              </div>
-              <div class="btn-icon btn-icon-minus mt-2">
-                <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
-              </div>
+              <ng-container *ngIf="(paramAction === 'edit' || paramAction === 'create')">
+                <div class="btn-icon btn-icon-plus mt-2" (click)="addGroupToForm()">
+                  <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                </div>
+                <div class="btn-icon btn-icon-minus mt-2" (click)="removeGroupToForm(i)" *ngIf="!(groupKpiChairFA.controls.length === 1 && i === 0)">
+                  <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                </div>
+                <div *ngIf="(groupKpiChairFA.controls.length === 1 && i === 0)" class="icon-delete-form--width">
+                </div>
+              </ng-container>
+              <ng-container *ngIf="(paramAction === 'view')">
+                <div class="icon-double-form--width"></div>
+              </ng-container>
               <div class="pl-2 group--width">
                 <span class="custom-dropdown w-100">
                   <select class="w-100 form-control" formControlName="groupName" [compareWith]="compareFn">
@@ -70,20 +78,24 @@
             <div class="col-md-7">
               <table class="zui-table table table-striped table-hover">
                 <thead>
-                  <tr>
-                    <th class="font-weight-bold">Họ tên</th>
-                    <th class="text-right font-weight-bold">Chỉ tiêu KPI</th>
+                  <tr class="w-100">
+                    <th class="font-weight-bold w-50">Họ tên</th>
+                    <th class="text-right font-weight-bold w-50">Chỉ tiêu KPI</th>
                   </tr>
                 </thead>
                 <tbody>
                   <ng-container formArrayName="chairEmployees" *ngIf="groupKpiChairFA.controls[i].get('chairEmployees').controls">
-                    <ng-container *ngFor="let chairEmployeeControl of groupKpiChairFA.controls[i].get('chairEmployees').controls; let j = index" [formGroupName]="j">
+                    <ng-container *ngFor="let chairEmployeeControl of groupKpiChairFA.controls[i].get('chairEmployees').controls; let j = index"
+                      [formGroupName]="j">
                       <tr>
                         <td>{{chairEmployeeControl.get('employee').value?.employeeName}}</td>
-                        <td class="text-right" *ngIf="paramAction === 'view'">{{ (chairEmployeeControl.get('targetskpi').value && chairEmployeeControl.get('targetskpi').value !== 0)
-                           ? (chairEmployeeControl.get('targetskpi').value | truncateDecimal) : 0}}</td>
+                        <td class="text-right" *ngIf="paramAction === 'view'">{{
+                          (chairEmployeeControl.get('targetskpi').value && chairEmployeeControl.get('targetskpi').value
+                          !== 0)
+                          ? (chairEmployeeControl.get('targetskpi').value | truncateDecimal) : 0}}</td>
                         <td class="text-right" *ngIf="paramAction === 'edit' || paramAction === 'create' ">
-                          <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="targetskpi" (input)="calculTargetTotal(i)">
+                          <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="targetskpi"
+                            (input)="calculTargetTotal(i)">
                         </td>
                       </tr>
                     </ng-container>
@@ -126,7 +138,8 @@
             <i class="fa fa-search" aria-hidden="true"></i>
           </span>
         </div>
-        <select multiple class="form-control form-select list-chair-choose--height" id="exampleFormControlSelect2" [(ngModel)]="selectChairEmployeeCanChoosedTemp">
+        <select multiple class="form-control form-select list-chair-choose--height" id="exampleFormControlSelect2"
+          [(ngModel)]="selectChairEmployeeCanChoosedTemp">
           <option [ngValue]="itemChairCanChoose" *ngFor="let itemChairCanChoose of listChairEmployeeCanChoosedTemp">
             {{itemChairCanChoose.employeeName}}
           </option>
@@ -148,7 +161,8 @@
       </div>
       <div class="col-md-5 form-group">
         <div class="title-action field-name-cloum--bg pl-3 py-1" for="exampleFormControlSelect2">Chủ trì đã chọn</div>
-        <select multiple class="form-control form-select list-chair-choosed--height" id="exampleFormControlSelect2" [(ngModel)]="selectChairEmployeeChoosedTemp">
+        <select multiple class="form-control form-select list-chair-choosed--height" id="exampleFormControlSelect2"
+          [(ngModel)]="selectChairEmployeeChoosedTemp">
           <option [ngValue]="itemChairChoosed" *ngFor="let itemChairChoosed of listChairEmployeeChoosedTemp">
             {{itemChairChoosed.employeeName}}
           </option>
