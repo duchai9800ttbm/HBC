@@ -29,6 +29,7 @@ export class KpiChairComponent implements OnInit {
   //   return this.groupKpiChairFA.get('chairEmployees') as FormArray;
   // }
   currentYear = (new Date()).getFullYear();
+  listChairEmployeeCanChoosedTemp = [];
   listChairEmployeeChoosedTemp = [];
   constructor(
     private fb: FormBuilder,
@@ -136,12 +137,16 @@ export class KpiChairComponent implements OnInit {
       && this.groupKpiChairFA.controls[indexForm].value.groupName) ? (this.groupKpiChairFA.controls[indexForm].value
         && this.groupKpiChairFA.controls[indexForm].value.groupName) : new GroupKPIList();
     this.GroupNameAddChair['indexForm'] = indexForm;
+    console.log('this.groupKpiChairFA.value[indexForm]', this.groupKpiChairFA.value[indexForm]);
+    this.listChairEmployeeChoosedTemp = this.groupKpiChairFA.value[indexForm].chairEmployees.map(item => item.employee);
+    console.log('this.listChairEmployeeChoosedTemp', this.listChairEmployeeChoosedTemp);
     this.packageService.searchKeyWordListGroupChaired(0, 1000, this.searchTermChairName$).subscribe(response => {
       this.listChairEmployee = response.items;
     });
   }
 
   closedPopup() {
+    this.listChairEmployeeChoosedTemp = [];
     this.modalRef.hide();
   }
 
@@ -184,6 +189,24 @@ export class KpiChairComponent implements OnInit {
 
   addAllChairEmployee() {
     this.listChairEmployeeChoosedTemp = this.listChairEmployee;
+    this.listChairEmployeeCanChoosedTemp = [];
+  }
+
+  addSelectChairEmployee() {
+
+  }
+
+  optionRemoveTemp(object: any) {
+    console.log('object', object);
+  }
+
+  removeSelectChairEmployee() {
+
+  }
+
+  removeAllChairEmployee() {
+    this.listChairEmployeeCanChoosedTemp = this.listChairEmployee;
+    this.listChairEmployeeChoosedTemp = [];
   }
 
   addGroupChairEmployeeInGroupKpi() {

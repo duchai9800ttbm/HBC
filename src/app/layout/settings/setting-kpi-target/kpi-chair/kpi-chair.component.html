@@ -128,7 +128,7 @@
         </div>
         <select multiple class="form-control form-select list-chair-choose--height" id="exampleFormControlSelect2"
           (ngModelChange)="selectEachFieldEditNotUser($event)">
-          <option [ngValue]="itemChairCanChoose" *ngFor="let itemChairCanChoose of listChairEmployee">
+          <option [ngValue]="itemChairCanChoose" *ngFor="let itemChairCanChoose of listChairEmployeeCanChoosedTemp">
             {{itemChairCanChoose.employeeName}}
           </option>
         </select>
@@ -137,20 +137,20 @@
         <button type="button" class="btn btn-default btn-next mg-b-2" (click)="addAllChairEmployee()">
           <i class="fa fa-angle-double-right" aria-hidden="true"></i>
         </button>
-        <button type="button" class="btn btn-default btn-next mg-b-2 mt-2" (click)="changePrivilegesEditNotUse()">
+        <button type="button" class="btn btn-default btn-next mg-b-2 mt-2" (click)="addSelectChairEmployee()">
           <i class="fa fa-angle-right" aria-hidden="true"></i>
         </button>
-        <button type="button" class="btn btn-default btn-next mg-b-2 mt-2" (click)="changePrivilegesEditUse()">
+        <button type="button" class="btn btn-default btn-next mg-b-2 mt-2" (click)="removeSelectChairEmployee()">
           <i class="fa fa-angle-left" aria-hidden="true"></i>
         </button>
-        <button type="button" class="btn btn-default btn-next mg-b-2 mt-2" (click)="selectAllPrivilegesEditNotUse()">
+        <button type="button" class="btn btn-default btn-next mg-b-2 mt-2" (click)="removeAllChairEmployee()">
           <i class="fa fa-angle-double-left" aria-hidden="true"></i>
         </button>
       </div>
       <div class="col-md-5 form-group">
         <div class="title-action field-name-cloum--bg pl-3 py-1" for="exampleFormControlSelect2">Chủ trì đã chọn</div>
         <select multiple class="form-control form-select list-chair-choosed--height" id="exampleFormControlSelect2"
-          (ngModelChange)="selectEachFieldEditUser($event)">
+          (ngModelChange)="optionRemoveTemp($event)">
           <option [ngValue]="itemChairChoosed" *ngFor="let itemChairChoosed of listChairEmployeeChoosedTemp">
             {{itemChairChoosed.employeeName}}
           </option>
