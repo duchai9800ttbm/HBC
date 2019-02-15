@@ -680,7 +680,7 @@ export class SettingService {
              (itemControlParent.chairEmployees || []).forEach(itemChairEmployees => {
                 const objTemp = {
                     kpiGroupId: itemControlParent.groupName && itemControlParent.groupName.id,
-                    employeeId: itemChairEmployees.employee && itemChairEmployees.employee.idEmployee,
+                    employeeId: itemChairEmployees.employee && itemChairEmployees.employee.employeeId,
                     kpiTarget: itemChairEmployees.targetskpi,
                 };
                 details.push(objTemp);
