@@ -668,4 +668,27 @@ export class SettingService {
             return this.mappingListChairToYear(response.result);
         });
     }
+    // Tạo mới hoặc chính sửa nhóm chỉ tiêu KPI theo chủ trì
+    createOrEditGroupChairEmployee(year: number, valueForm: any) {
+        console.log('valueForm', valueForm, valueForm.groupKpiChair);
+        const url = `kpi/chairemployee/createorupdate`;
+        const details = [];
+        (valueForm.groupKpiChair || []).forEach(itemControlParent => {
+             (itemControlParent.chairEmployees || []).forEach(itemChairEmployees => {
+                const objTemp = {
+                    kpiGroupId: itemControlParent.groupName && itemControlParent.groupName.id,
+                    employeeId: itemChairEmployees.employee && itemChairEmployees.employee.idEmployee,
+                    kpiTarget: itemChairEmployees.targetskpi,
+                };
+                details.push(objTemp);
+            });
+        });
+        const requestModel = {
+            year: year,
+            details: details,
+            targetTotal: 0,
+        };
+        console.log('requestModel', requestModel);
+        return this.apiService.post(url, requestModel);
+    }
 }

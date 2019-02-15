@@ -28,7 +28,7 @@
       <div class="text-right col-md-3" *ngIf="paramAction === 'edit' || paramAction === 'create'">
         <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-chair']" [queryParams]="{action:'view'}">Hủy
         </button>
-        <button type="submit" class="btn btn-primary ml-1">Lưu
+        <button type="submit" class="btn btn-primary ml-1" (click)="saveTargetkpiToChair()">Lưu
         </button>
       </div>
     </div>
@@ -49,7 +49,7 @@
               <div class="pl-2 group--width">
                 <span class="custom-dropdown w-100">
                   <select class="w-100 form-control" formControlName="groupName">
-                    <option value="null">--Lựa chọn--</option>
+                    <option [ngValue]="null">--Lựa chọn--</option>
                     <option *ngFor="let item of listGroupkpi" [ngValue]="item">{{item.name}}</option>
                   </select>
                 </span>
@@ -75,17 +75,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <div formArrayName="chairEmployees" *ngIf="chairEmployeesFA">
-                    <div *ngFor="let chairEmployeeControl of chairEmployeesFA.controls; let j = index" [formGroupName]="j">
+                  <ng-container formArrayName="chairEmployees" *ngIf="groupKpiChairFA.controls[i].get('chairEmployees').controls">
+                    <ng-container *ngFor="let chairEmployeeControl of groupKpiChairFA.controls[i].get('chairEmployees').controls; let j = index" [formGroupName]="j">
                       <tr>
-                        <td>Nguyễn Đăng Độ</td>
-                        <td class="text-right" *ngIf="paramAction === 'view'">{{ 20000000000 | truncateDecimal}}</td>
-                        <td class="text-right" *ngIf="paramAction === 'edit'">
-                          <input type="text" class="w-100 m-0 p-0">
+                        <td>{{chairEmployeeControl.get('employee').value?.employeeName}}</td>
+                        <!-- <td class="text-right" *ngIf="paramAction === 'view'">{{ chairEmployeeControl.get('targetskpi').value | truncateDecimal}}</td> -->
+                        <td class="text-right" *ngIf="paramAction === 'edit' || paramAction === 'create' ">
+                          <input type="text" class="w-100 m-0 p-0 text-right" formControlName="targetskpi">
                         </td>
                       </tr>
-                    </div>
-                  </div>
+                    </ng-container>
+                  </ng-container>
                 </tbody>
               </table>
             </div>
@@ -110,7 +110,7 @@
     </div>
     <div class="text-center">
       <span>Nhóm:</span>&nbsp;
-      <span>{{GroupNameAddChair.name}}</span>
+      <span>{{GroupNameAddChair?.name}}</span>
     </div>
     <div class="div-required">Vui lòng chọn chủ trì thuộc nhóm:&nbsp;</div>
 
