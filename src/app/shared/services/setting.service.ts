@@ -662,10 +662,13 @@ export class SettingService {
         };
     }
     // Danh sách chỉ tiêu KPI chủ trì theo năm
-    getListChairToYear(year: number) {
+    getListChairToYear(year: number): Observable<ChairToYear[]> {
         const url = `kpi/chairemployee/getall?year=${year}`;
         return this.apiService.get(url).map(response => {
-            return this.mappingListChairToYear(response.result);
+            const result = response.result;
+            return result.map(item => {
+                return this.mappingListChairToYear(item);
+            });
         });
     }
     // Tạo mới hoặc chính sửa nhóm chỉ tiêu KPI theo chủ trì

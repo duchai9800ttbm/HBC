@@ -51,12 +51,12 @@ export class KpiChairComponent implements OnInit {
     }
     this.getListChairToYearFuc(+this.yearkpi);
     this.getListGroupkpi();
-    this.createForm();
   }
 
   getListChairToYearFuc(year: number) {
     this.settingService.getListChairToYear(year).subscribe(response => {
       console.log('this.listYear', response);
+      this.createForm(response[0]);
     });
   }
 
@@ -67,10 +67,38 @@ export class KpiChairComponent implements OnInit {
     });
   }
 
-  createForm() {
+  createForm(groupChairCallAPI) {
     this.groupKpiChairsArray = this.fb.group({
       groupKpiChair: this.fb.array([])
     });
+    if (groupChairCallAPI) {
+      (groupChairCallAPI.kpiGroupChairs || []).forEach(itemKpiGroupChair => {
+        const formArrayItem = this.fb.group({
+          groupName: {
+            value: itemKpiGroupChair.kpiGroup,
+            disabled: false,
+          },
+          chairEmployees: this.fb.array(itemKpiGroupChair.chairDetail.map(itemChairDetail => {
+            const itemFormGroup = this.fb.group({
+              employee: {
+                value: {
+                  idEmployee: itemChairDetail.employee.employeeId,
+                  employeeName: itemChairDetail.employee.employeeName,
+                },
+                disabled: false,
+              },
+              targetskpi: {
+                value: itemChairDetail.kpiTarget,
+                disabled: false,
+              },
+            });
+            return itemFormGroup;
+          })),
+        });
+        (this.groupKpiChairFA as FormArray).push(formArrayItem);
+      });
+      console.log('this.form', this.groupKpiChairsArray);
+    }
     // this.groupConfigForm.valueChanges
     //   .subscribe(data => this.onFormValueChanged(data));
     if (this.groupKpiChairFA.controls.length === 0) {
@@ -159,7 +187,6 @@ export class KpiChairComponent implements OnInit {
   }
 
   addGroupChairEmployeeInGroupKpi() {
-    console.log('this.groupKpiChairFA', this.groupKpiChairFA);
     (this.listChairEmployeeChoosedTemp || []).forEach(item => {
       const itemFormGroup = this.fb.group({
         employee: {
@@ -185,5 +212,10 @@ export class KpiChairComponent implements OnInit {
       console.log('respsone', response);
     });
   }
+
+  compareFn(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
 
 }
