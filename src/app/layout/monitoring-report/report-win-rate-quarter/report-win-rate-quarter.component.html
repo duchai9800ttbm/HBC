@@ -1,3 +1,34 @@
-<p>
-  report-win-rate-quarter works!
-</p>
+<div class="d-flex mb-2">
+  <span class="d-flex">
+    <span class="center-parent">Từ:</span>
+    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
+  </span>
+  <span class="ml-5 d-flex">
+    <span class="center-parent">Đến:</span>
+    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
+  </span>
+  <button class="btn btn-primary ml-5">Xem</button>
+</div>
+<h4 class="text-center text-uppercase font-weight-bold">TỈ LỆ TRÚNG THẦU THEO QUÝ TRONG NĂM</h4>
+<table class="row-border cell-border dataTable">
+  <thead>
+    <tr>
+      <th class="text-uppercase text-center font-weight-bold">stt</th>
+      <th class="text-center font-weight-bold">Quý</th>
+      <th class="text-center font-weight-bold">Tỉ lệ trúng thầu</th>
+      <th class="text-center font-weight-bold">Giá trị (VND)</th>
+      <th class="text-center font-weight-bold">Ghi chú</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Chỉ tiêu KPI</td>
+      <td class="text-right">{{ '100' }}%</td>
+      <td class="text-right">{{ '6800000000000' |thousandSeparate }}</td>
+      <td>
+        <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+      </td>
+    </tr>
+  </tbody>
+</table>

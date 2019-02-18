@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-monitoring-report',
@@ -8,12 +9,30 @@ import { Component, OnInit, HostListener } from '@angular/core';
 export class MonitoringReportComponent implements OnInit {
   time = new Date();
   isCollapseMenu = false;
-  idReport = 'BC01';
+  idReport = 'kpi-chair';
   widthReport: number;
-  constructor() { }
+  urlArray = [
+    'kpi-chair', 'win-bid', 'kpi-area', 'construction-items', 'type-construction',
+    'win-rate-contractors', 'win-rate-quarter-of-year', 'floor-area',
+    'number-win-bid', 'potential-projects'
+  ];
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit() {
+    this.checkActiveTab();
   }
+
+  checkActiveTab() {
+    this.urlArray.forEach(item => {
+      if (this.router.url.includes(item)) {
+        this.idReport = item;
+        return;
+      }
+    });
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.widthReport = document.getElementById('wrapper-report').offsetWidth;

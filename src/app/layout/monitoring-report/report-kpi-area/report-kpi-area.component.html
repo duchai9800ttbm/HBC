@@ -1,3 +1,41 @@
-<p>
-  report-kpi-area works!
-</p>
+<div class="d-flex mb-2">
+  <span class="d-flex">
+    <span class="center-parent">Từ:</span>
+    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
+  </span>
+  <span class="ml-5 d-flex">
+    <span class="center-parent">Đến:</span>
+    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
+  </span>
+  <button class="btn btn-primary ml-5">Xem</button>
+</div>
+<h4 class="text-center text-uppercase font-weight-bold">CHỈ TIÊU TRÚNG THẦU THEO KHU VỰC</h4>
+<table class="row-border cell-border dataTable">
+  <thead>
+    <tr>
+      <th class="text-center text-uppercase font-weight-bold">stt</th>
+      <th class="text-center font-weight-bold">Khu vực</th>
+      <th class="text-center font-weight-bold">Chỉ tiêu KPI</th>
+      <th class="text-center font-weight-bold">Giá trị trúng thầu (VND)</th>
+      <th class="text-center font-weight-bold">Tỉ lệ đạt được so với chỉ tiêu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Miền Bắc</td>
+      <td class="text-right">{{ '6826000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '2166140311642' | thousandSeparate }}</td>
+      <td class="text-right">{{ '31.73' }}%</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td></td>
+      <td class="font-weight-bold">Tổng</td>
+      <td class="font-weight-bold text-right">{{ '27000000000000' | thousandSeparate }}</td>
+      <td class="font-weight-bold text-right">{{ '10049822304575' | thousandSeparate }}</td>
+      <td class="font-weight-bold text-right">{{ '37.22' }}%</td>
+    </tr>
+  </tbody>
+</table>

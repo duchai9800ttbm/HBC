@@ -1,3 +1,139 @@
-<p>
-  report-kpi-chair works!
-</p>
+<div class="d-flex mb-2">
+  <span class="d-flex">
+    <span class="center-parent">Từ:</span>
+    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
+  </span>
+  <span class="ml-5 d-flex">
+    <span class="center-parent">Đến:</span>
+    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
+  </span>
+  <button class="btn btn-primary ml-5">Xem</button>
+</div>
+<table class="row-border cell-border dataTable">
+  <thead>
+    <tr class="table-header">
+      <th class="text-center">STT</th>
+      <th class="text-center">Chủ trì</th>
+      <th class="text-center">Tỉ lệ đạt được</th>
+      <th class="text-center">Chỉ tiêu KPI</th>
+      <th class="text-center">Giá trị trúng thầu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th></th>
+      <th class="text-uppercase">TENDER HCM</th>
+      <th class="text-right"></th>
+      <th class="text-right">{{ '14120000000000' | thousandSeparate }}</th>
+      <th class="text-right">{{ '6203849712621' | thousandSeparate }}</th>
+    </tr>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Nguyễn Tuấn Anh</td>
+      <td class="text-right">{{ '62.21' }}%</td>
+      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
+    </tr>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Nguyễn Tuấn Anh</td>
+      <td class="text-right">{{ '62.21' }}%</td>
+      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
+    </tr>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Nguyễn Tuấn Anh</td>
+      <td class="text-right">{{ '62.21' }}%</td>
+      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
+    </tr>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Nguyễn Tuấn Anh</td>
+      <td class="text-right">{{ '62.21' }}%</td>
+      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
+    </tr>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Nguyễn Tuấn Anh</td>
+      <td class="text-right">{{ '62.21' }}%</td>
+      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="table-child">
+      <th></th>
+      <th class="text-uppercase">TENDER HCM</th>
+      <th class="text-right"></th>
+      <th class="text-right">{{ '14120000000000' | thousandSeparate }}</th>
+      <th class="text-right">{{ '6203849712621' | thousandSeparate }}</th>
+    </tr>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Nguyễn Tuấn Anh</td>
+      <td class="text-right">{{ '62.21' }}%</td>
+      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
+    </tr>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Nguyễn Tuấn Anh</td>
+      <td class="text-right">{{ '62.21' }}%</td>
+      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
+    </tr>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Nguyễn Tuấn Anh</td>
+      <td class="text-right">{{ '62.21' }}%</td>
+      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
+    </tr>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Nguyễn Tuấn Anh</td>
+      <td class="text-right">{{ '62.21' }}%</td>
+      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
+    </tr>
+    <tr>
+      <td class="text-center">1</td>
+      <td>Nguyễn Tuấn Anh</td>
+      <td class="text-right">{{ '62.21' }}%</td>
+      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
+      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr>
+      <td></td>
+      <td class="font-weight-bold text-center">Tổng</td>
+      <td class="font-weight-bold text-right">{{ '36.56' }}%</td>
+      <td class="font-weight-bold text-right">{{ '24700000000000' | thousandSeparate }}</td>
+      <td class="font-weight-bold text-right">{{ '9029896947078' | thousandSeparate }}</td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr>
+      <td></td>
+      <td class="font-weight-bold text-center">From</td>
+      <td class="font-weight-bold text-center">Today</td>
+      <td class="font-weight-bold text-right">Chỉ tiêu trúng thầu/1 ngày:</td>
+      <td class="font-weight-bold text-right">{{ '67671232876.71' | thousandSeparate }}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="font-weight-bold text-center">From</td>
+      <td class="font-weight-bold text-center">{{ time | date:'dd/MM/yyyy': '+0000' }}</td>
+      <td class="font-weight-bold text-right">Chỉ tiêu trúng thầu/1 ngày:</td>
+      <td class="font-weight-bold text-right">{{ '6203849712621' | thousandSeparate }}</td>
+    </tr>
+  </tbody>
+
+</table>

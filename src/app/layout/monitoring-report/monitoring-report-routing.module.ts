@@ -27,7 +27,7 @@ const routes: Routes = [
       { path: 'win-rate-quarter-of-year', component: ReportWinRateQuarterComponent },
       { path: 'floor-area', component: ReportFloorAreaComponent },
       { path: 'number-win-bid', component: ReportNumberWinBidComponent },
-      { path: 'potential projects', component: ReportPotentialProjectsComponent },
+      { path: 'potential-projects', component: ReportPotentialProjectsComponent },
     ]
   }
 ];
