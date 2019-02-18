@@ -11,5 +11,6 @@ export class WinBidComponent implements OnInit {
 
   ngOnInit() {
   }
+  
 
 }
