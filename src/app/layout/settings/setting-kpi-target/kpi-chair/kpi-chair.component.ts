@@ -29,6 +29,13 @@ export class KpiChairComponent implements OnInit {
   get targetTotalFC() {
     return this.groupKpiChairsArray.get('targetTotal').value;
   }
+  get isEdit() {
+    if (this.currentYear - +this.yearkpi <= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   currentYear = (new Date()).getFullYear();
   listChairEmployeeCanChoosedTemp = [];
   selectChairEmployeeCanChoosedTemp: any;
@@ -57,6 +64,7 @@ export class KpiChairComponent implements OnInit {
     }
     this.getListChairToYearFuc(+this.yearkpi);
     this.getListGroupkpi();
+
   }
 
   getListChairToYearFuc(year: number) {
@@ -68,53 +76,18 @@ export class KpiChairComponent implements OnInit {
 
   getListGroupkpi() {
     this.settingService.getListGroupKPI('', 0, 1000).subscribe(response => {
-      console.log('this', response.items);
       this.listGroupkpi = response.items;
     });
   }
 
   createForm(groupChairCallAPI) {
-    console.log('this.groupChairCallAPI', groupChairCallAPI);
     this.groupKpiChairsArray = this.fb.group({
       groupKpiChair: this.fb.array([]),
       targetTotal: groupChairCallAPI && groupChairCallAPI.targetTotal
     });
     if (groupChairCallAPI) {
-      let targetTotal = 0;
-      (groupChairCallAPI.kpiGroupChairs || []).forEach(itemKpiGroupChair => {
-        let targetGroup = 0;
-        const formArrayItem = this.fb.group({
-          groupName: {
-            value: itemKpiGroupChair.kpiGroup,
-            disabled: false,
-          },
-          chairEmployees: this.fb.array(itemKpiGroupChair.chairDetail.map(itemChairDetail => {
-            targetGroup = targetGroup + itemChairDetail.kpiTarget;
-            const itemFormGroup = this.fb.group({
-              employee: {
-                value: {
-                  employeeId: itemChairDetail.employee.employeeId,
-                  employeeName: itemChairDetail.employee.employeeName,
-                },
-                disabled: false,
-              },
-              targetskpi: {
-                value: itemChairDetail.kpiTarget,
-                disabled: false,
-              },
-            });
-            return itemFormGroup;
-          })),
-          targetGroup: targetGroup
-        });
-        (this.groupKpiChairFA as FormArray).push(formArrayItem);
-        targetTotal = targetTotal + targetGroup;
-      });
-      this.groupKpiChairsArray.get('targetTotal').patchValue(targetTotal);
-      console.log('this.form', this.groupKpiChairsArray);
+      this.setValueGroupKpiChairFormControl(groupChairCallAPI);
     }
-    // this.groupConfigForm.valueChanges
-    //   .subscribe(data => this.onFormValueChanged(data));
     if (this.groupKpiChairFA.controls.length === 0) {
       const formArrayItem = this.fb.group({
         groupName: {
@@ -127,6 +100,40 @@ export class KpiChairComponent implements OnInit {
       const formArrayControl = this.groupKpiChairFA as FormArray;
       formArrayControl.push(formArrayItem);
     }
+  }
+
+  setValueGroupKpiChairFormControl(groupChairCallAPI) {
+    let targetTotal = 0;
+    (groupChairCallAPI.kpiGroupChairs || []).forEach(itemKpiGroupChair => {
+      let targetGroup = 0;
+      const formArrayItem = this.fb.group({
+        groupName: {
+          value: itemKpiGroupChair.kpiGroup,
+          disabled: false,
+        },
+        chairEmployees: this.fb.array(itemKpiGroupChair.chairDetail.map(itemChairDetail => {
+          targetGroup = targetGroup + itemChairDetail.kpiTarget;
+          const itemFormGroup = this.fb.group({
+            employee: {
+              value: {
+                employeeId: itemChairDetail.employee.employeeId,
+                employeeName: itemChairDetail.employee.employeeName,
+              },
+              disabled: false,
+            },
+            targetskpi: {
+              value: itemChairDetail.kpiTarget,
+              disabled: false,
+            },
+          });
+          return itemFormGroup;
+        })),
+        targetGroup: targetGroup
+      });
+      (this.groupKpiChairFA as FormArray).push(formArrayItem);
+      targetTotal = targetTotal + targetGroup;
+    });
+    this.groupKpiChairsArray.get('targetTotal').patchValue(targetTotal);
   }
 
   addChairToGroupFuc(template: TemplateRef<any>, indexForm: number) {
@@ -166,7 +173,18 @@ export class KpiChairComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: this.paramAction, year: this.yearkpi },
       });
-    this.setFormNotValue();
+    this.settingService.getListChairToYear(+this.yearkpi).subscribe(response => {
+      if (response && (response || []).length !== 0) {
+        console.log('1');
+        this.groupKpiChairsArray.removeControl('groupKpiChair');
+        this.groupKpiChairsArray.addControl('groupKpiChair', this.fb.array([]));
+        this.setValueGroupKpiChairFormControl(response[0]);
+      } else {
+        console.log('2s');
+        this.setFormNotValue();
+      }
+    });
+
   }
 
   setFormNotValue() {
