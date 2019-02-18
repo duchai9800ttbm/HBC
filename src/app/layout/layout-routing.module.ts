@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { NotificationListComponent } from './notification-list/notification-list.component';
 import { ChangeListComponent } from './change-list/change-list.component';
-import { MonitoringReportComponent } from './monitoring-report/monitoring-report.component';
 
 const routes: Routes = [
     {
@@ -18,7 +17,7 @@ const routes: Routes = [
             { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
             { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
             { path: 'change-list', component: ChangeListComponent },
-            { path: 'monitoring-report', component: MonitoringReportComponent }
+            { path: 'monitoring-report', loadChildren: './monitoring-report/monitoring-report.module#MonitoringReportModule' },
         ]
     }
 ];
