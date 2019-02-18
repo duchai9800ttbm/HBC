@@ -36,6 +36,13 @@ export class KpiChairComponent implements OnInit {
       return false;
     }
   }
+  get arrayGroupChoosed() {
+    if ( this.groupKpiChairsArray && this.groupKpiChairFA) {
+      return this.groupKpiChairFA.value.map(itemGroup => itemGroup.groupName && itemGroup.groupName.id);
+    } else {
+      return [];
+    }
+  }
   currentYear = (new Date()).getFullYear();
   listChairEmployeeCanChoosedTemp = [];
   selectChairEmployeeCanChoosedTemp: any;
@@ -64,6 +71,7 @@ export class KpiChairComponent implements OnInit {
     }
     this.getListChairToYearFuc(+this.yearkpi);
     this.getListGroupkpi();
+
 
   }
 
@@ -149,14 +157,22 @@ export class KpiChairComponent implements OnInit {
       itemEmployeeAndTarget['targetskpi'] = item.targetskpi;
       return itemEmployeeAndTarget;
     });
-    console.log('this.this.listChairEmployeeChoosedTemp', this.listChairEmployeeChoosedTemp);
-    this.packageService.searchKeyWordListGroupChaired(0, 1000, this.searchTermChairName$).subscribe(response => {
 
-      const arraySelectChoosedTemp = this.listChairEmployeeChoosedTemp.map(itemSelect => itemSelect.employeeId);
-      this.listChairEmployeeCanChoosedTemp = response.items.filter(item => {
-        return !arraySelectChoosedTemp.includes(item.employeeId);
+    // Các chủ trì đã chọn của các nhóm
+    console.log('this.groupKpiChairsArray.get.value', this.groupKpiChairsArray.get('groupKpiChair').value);
+    const arrayChairUsed = [];
+    this.groupKpiChairsArray.get('groupKpiChair').value.forEach(itemGroupKpiChair => {
+      itemGroupKpiChair.chairEmployees.forEach(itemChairEmployees => {
+        arrayChairUsed.push(itemChairEmployees.employee.employeeId);
       });
-
+    });
+    console.log('arrayChairUsed-arrayChairUsed', arrayChairUsed);
+    this.packageService.searchKeyWordListGroupChaired(0, 1000, this.searchTermChairName$).subscribe(response => {
+      // const arraySelectChoosedTemp = this.listChairEmployeeChoosedTemp.map(itemSelect => itemSelect.employeeId);
+      this.listChairEmployeeCanChoosedTemp = response.items.filter(item => {
+        return !arrayChairUsed.includes(item.employeeId);
+        // !arraySelectChoosedTemp.includes(item.employeeId) &&
+      });
       this.listChairEmployee = response.items;
     });
   }
@@ -175,12 +191,10 @@ export class KpiChairComponent implements OnInit {
       });
     this.settingService.getListChairToYear(+this.yearkpi).subscribe(response => {
       if (response && (response || []).length !== 0) {
-        console.log('1');
         this.groupKpiChairsArray.removeControl('groupKpiChair');
         this.groupKpiChairsArray.addControl('groupKpiChair', this.fb.array([]));
         this.setValueGroupKpiChairFormControl(response[0]);
       } else {
-        console.log('2s');
         this.setFormNotValue();
       }
     });
@@ -219,13 +233,13 @@ export class KpiChairComponent implements OnInit {
   }
 
   addAllChairEmployee() {
-    console.log('addAllChairEmployee');
-    this.listChairEmployeeChoosedTemp = this.listChairEmployee;
+    this.listChairEmployeeCanChoosedTemp.forEach(item => {
+      this.listChairEmployeeChoosedTemp.push(item);
+    });
     this.listChairEmployeeCanChoosedTemp = [];
   }
 
   addSelectChairEmployee() {
-    console.log('addSelectChairEmployee');
     if (this.selectChairEmployeeCanChoosedTemp) {
       this.selectChairEmployeeCanChoosedTemp.forEach(item => {
         this.listChairEmployeeChoosedTemp.push(item);
@@ -238,7 +252,6 @@ export class KpiChairComponent implements OnInit {
   }
 
   removeSelectChairEmployee() {
-    console.log('removeSelectChairEmployee');
     if (this.selectChairEmployeeChoosedTemp) {
       this.selectChairEmployeeChoosedTemp.forEach(item => {
         this.listChairEmployeeCanChoosedTemp.push(item);
@@ -251,8 +264,10 @@ export class KpiChairComponent implements OnInit {
   }
 
   removeAllChairEmployee() {
-    console.log('removeAllChairEmployee');
-    this.listChairEmployeeCanChoosedTemp = this.listChairEmployee;
+    // this.listChairEmployeeCanChoosedTemp = this.listChairEmployee;
+    this.listChairEmployeeChoosedTemp.forEach(item => {
+      this.listChairEmployeeCanChoosedTemp.push(item);
+    });
     this.listChairEmployeeChoosedTemp = [];
   }
 

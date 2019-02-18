@@ -58,7 +58,7 @@
                 <span *ngIf="paramAction === 'edit' || paramAction === 'create'" class="custom-dropdown w-100">
                   <select class="w-100 form-control" formControlName="groupName" [compareWith]="compareFn" >
                     <option [ngValue]="null" *ngIf="!gKpiChairControl.get('groupName').value">--Lựa chọn--</option>
-                    <option *ngFor="let item of listGroupkpi" [ngValue]="item">{{item.name}}</option>
+                    <option *ngFor="let item of listGroupkpi" [ngValue]="item" [hidden]="arrayGroupChoosed.includes(item.id)">{{item.name}}</option>
                   </select>
                 </span>
                 <div *ngIf="paramAction === 'view'" class="mt-2">{{gKpiChairControl.get('groupName')?.value?.name}}</div>
