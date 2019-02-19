@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SettingService } from '../../../../shared/services/setting.service';
+import { AlertService } from '../../../../shared/services';
 
 @Component({
   selector: 'app-win-bid',
@@ -6,11 +10,98 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./win-bid.component.scss']
 })
 export class WinBidComponent implements OnInit {
-
-  constructor() { }
-
+  targetWinBid: FormGroup;
+  paramAction: string;
+  paramYear: number;
+  currentYear = (new Date()).getFullYear();
+  yearkpi: number | string;
+  constructor(
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private settingService: SettingService,
+    private alertService: AlertService
+  ) { }
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.paramAction = params['action'];
+      this.paramYear = params['year'];
+    });
+    if (this.paramYear) {
+      this.yearkpi = this.paramYear;
+    } else {
+      this.yearkpi = this.currentYear;
+    }
+    this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
+      this.createForm(response);
+    });
   }
-  
 
+  getDetailTargetWinBidToYear() {
+    this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
+      console.log('this.this.yearkpi', response);
+    });
+  }
+
+  createForm(dataTargetWinBid) {
+    this.targetWinBid = this.fb.group({
+      id: dataTargetWinBid && dataTargetWinBid.id,
+      total: [dataTargetWinBid && dataTargetWinBid.total],
+      percent: [dataTargetWinBid && dataTargetWinBid.percent, [Validators.max(100), Validators.min(0)]],
+      totalTarget: [dataTargetWinBid && dataTargetWinBid.totalTarget]
+    });
+  }
+
+  changeYearTargetFuc() {
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: { action: this.paramAction, year: this.yearkpi },
+      });
+    if (this.paramAction === 'view') {
+      this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
+        this.targetWinBid.removeControl('id');
+        this.targetWinBid.addControl('id', this.fb.control(response.id));
+        this.targetWinBid.removeControl('total');
+        this.targetWinBid.addControl('total', this.fb.control(response.total));
+        this.targetWinBid.removeControl('percent');
+        this.targetWinBid.addControl('percent', this.fb.control(response.percent));
+        this.targetWinBid.removeControl('totalTarget');
+        this.targetWinBid.addControl('totalTarget', this.fb.control(response.totalTarget));
+      });
+    }
+  }
+
+  addTargetForYear() {
+    this.paramAction = 'create';
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: { action: 'create', year: null },
+      });
+    this.yearkpi = null;
+  }
+
+  calculValueReach() {
+    const valueReach = this.targetWinBid.get('total').value * this.targetWinBid.get('percent').value / 100;
+    console.log('this.valueReach', valueReach);
+    this.targetWinBid.get('totalTarget').patchValue(valueReach);
+  }
+
+  calculPercent() {
+    const percent = this.targetWinBid.get('totalTarget').value * 100 / this.targetWinBid.get('total').value;
+    console.log('this.valueReach', percent);
+    this.targetWinBid.get('percent').patchValue(percent);
+  }
+
+  editTargetWinBid() {
+    console.log('this.formValue', this.targetWinBid.value);
+    this.settingService.editTargetWinBidToYear(this.targetWinBid.value).subscribe(response => {
+      this.alertService.success('Chỉnh sửa chỉ tiêu trúng thầu thành công.');
+    }, err => {
+      this.alertService.error('Chỉnh sửa chỉ tiêu trúng thầu không thành công.');
+    });
+  }
 }

@@ -13,7 +13,7 @@
                 - KPI theo chủ trì
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'win-bid'"
-                id="win-bid" name="list-report" (click)="toggleCollapseMenu('win-bid')" title="- Chỉ tiêu trúng thầu" [routerLink]="['./win-bid']">
+                id="win-bid" name="list-report" (click)="toggleCollapseMenu('win-bid')" title="- Chỉ tiêu trúng thầu" [routerLink]="['./win-bid']" [queryParams]="{action:'view'}">
                 - Chỉ tiêu trúng thầu
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'kpi-area'"

@@ -226,7 +226,7 @@ export class KpiChairComponent implements OnInit {
       [],
       {
         relativeTo: this.activatedRoute,
-        queryParams: { action: 'create', year: this.yearkpi },
+        queryParams: { action: 'create', year: null },
       });
     this.yearkpi = null;
     this.setFormNotValue();

@@ -16,6 +16,7 @@ import { Contract } from '../models/setting/contract';
 import { retry } from 'rxjs/operator/retry';
 import { GroupKPIList } from '../models/setting/targets-kpi/group-kpi/group-kpi-list.model';
 import { ChairToYear } from '../models/setting/targets-kpi/to-chair/chair-to-year.model';
+import { TargetWinBidToYear } from '../models/setting/targets-kpi/target-win-bid/target-win-bid-to-year.model';
 @Injectable()
 export class SettingService {
     public searchTermGroupKPI: any;
@@ -673,11 +674,11 @@ export class SettingService {
     }
     // Tạo mới hoặc chính sửa nhóm chỉ tiêu KPI theo chủ trì
     createOrEditGroupChairEmployee(year: number, valueForm: any) {
-        console.log('valueForm', valueForm, valueForm.groupKpiChair);
+        console.log('this.valueForm.groupKpiChair.targetTotal', valueForm);
         const url = `kpi/chairemployee/createorupdate`;
         const details = [];
         (valueForm.groupKpiChair || []).forEach(itemControlParent => {
-             (itemControlParent.chairEmployees || []).forEach(itemChairEmployees => {
+            (itemControlParent.chairEmployees || []).forEach(itemChairEmployees => {
                 const objTemp = {
                     kpiGroupId: itemControlParent.groupName && itemControlParent.groupName.id,
                     employeeId: itemChairEmployees.employee && itemChairEmployees.employee.employeeId,
@@ -689,9 +690,42 @@ export class SettingService {
         const requestModel = {
             year: year,
             details: details,
-            targetTotal: 0,
+            targetTotal: valueForm.targetTotal,
         };
-        console.log('requestModel', requestModel);
+        return this.apiService.post(url, requestModel);
+    }
+    // ====
+    // KPI win bid
+    // mapping chi tiết chỉ tiêu trúng thầu theo năm
+    mappingDetailTargetWinBidToYear(result: any): TargetWinBidToYear {
+        if (result) {
+            return {
+                id: result.id,
+                year: result.year,
+                percent: result.percent,
+                total: result.total,
+                totalTarget: result.totalTarget,
+            };
+        }
+        if (!result) {
+            return null;
+        }
+    }
+    // Chi tiết chỉ tiêu trúng thầu theo năm
+    getDetailTargetWinBidToYear(year: number) {
+        const url = `kpiwinningofbid/${year}`;
+        return this.apiService.get(url).map(response => {
+            return this.mappingDetailTargetWinBidToYear(response.result);
+        });
+    }
+    // Sửa chỉ tiêu trúng thầu
+    editTargetWinBidToYear(valueForm: any) {
+        const url = `kpiwinningofbid/edit`;
+        const requestModel = {
+            id: valueForm.id,
+            percent: valueForm.percent,
+            totalTarget: valueForm.totalTarget
+        };
         return this.apiService.post(url, requestModel);
     }
 }
