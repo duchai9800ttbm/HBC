@@ -1,14 +1,25 @@
 <div class="back-ground-table">
   <div class="table-body">
     <div class="row menu">
-      <div class="col-md-6">
-          <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase">danh sách người dùng </h5>
+      <div class="col-md-3">
+        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase">danh sách người dùng </h5>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-9">
         <div class="btn-toolbar pull-right" style="flex-wrap: nowrap;">
+          <div class="pr-4 d-flex">
+            <label for="" class="form-label mx-sm-2 mb-0 center-parent">Hệ thống:</label>
+            <span class="custom-dropdown" style="width: 150px;margin-right: 2px;">
+              <select class="form-control" tabindex="4" [(ngModel)]="filterSystemType" (change)="changeFilterSystemType()">
+                <option value="ALL">Tất cả</option>
+                <option value="BID">Dự thầu</option>
+                <option value="CRM">CRM</option>
+              </select>
+            </span>
+          </div>
           <div class="input-group btn-rg">
             <span class="input-group-addon">Tìm kiếm</span>
-            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, email" [value]="searchTerm$.value" (keyup)="searchTerm$.next($event.target.value)">
+            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, email" [value]="searchTerm$.value"
+              (keyup)="searchTerm$.next($event.target.value)">
           </div>
           <button type="button" class="btn btn-primary btn-rg pull-right" [routerLink]="['../add-user']">
             Tạo mới
@@ -30,7 +41,8 @@
           <tr style="width: 100%">
             <th class="text-center min-width-stt">
               <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll"
+                  (change)="onSelectAll($event.target.checked)">
                 <span class="custom-control-indicator"></span>
               </label>
             </th>
@@ -90,7 +102,8 @@
               </label>
             </td>
             <td class="text-truncate">
-              <img class="avatar-img rounded-circle" [src]="item.avatar || 'assets/images/no-avatar.png'">&nbsp; {{item.userName}}
+              <img class="avatar-img rounded-circle" [src]="item.avatar || 'assets/images/no-avatar.png'">&nbsp;
+              {{item.userName}}
             </td>
             <td class="text-truncate">
               {{item.email}}
@@ -149,7 +162,7 @@
         </tbody>
       </table>
       <ngx-loading [show]="loading"></ngx-loading>
-      
+
     </div>
     <app-pagination *ngIf="!loading" [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
 
@@ -159,7 +172,8 @@
 <ng-template #deactive>
   <div class="modal-header no-boder-bottom">
     <div class="col-md-10 offset-md-1 text-center">
-      <p class="modal-title text-title text-model">Bạn có chắc chắn muốn {{isActive ? 'khóa' : 'mở khóa'}} người dùng này? </p>
+      <p class="modal-title text-title text-model">Bạn có chắc chắn muốn {{isActive ? 'khóa' : 'mở khóa'}} người dùng
+        này? </p>
     </div>
     <div class="col-md-1">
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">

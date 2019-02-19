@@ -45,6 +45,7 @@ export class ManageUserComponent implements OnInit {
     { id: 50, name: 'Nhân viên kinh doanh' }
   ];
   changeUser;
+  filterSystemType = 'ALL';
   constructor(
     private formBuilder: FormBuilder,
     private alertService: AlertService,
@@ -279,5 +280,9 @@ export class ManageUserComponent implements OnInit {
           this.confirmationService.openResetpassword('Mật khẩu được đặt lại là:', response);
         });
       });
+  }
+
+  changeFilterSystemType() {
+    console.log('this.systemType', this.filterSystemType);
   }
 }
