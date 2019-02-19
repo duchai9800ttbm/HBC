@@ -17,6 +17,7 @@ import { retry } from 'rxjs/operator/retry';
 import { GroupKPIList } from '../models/setting/targets-kpi/group-kpi/group-kpi-list.model';
 import { ChairToYear } from '../models/setting/targets-kpi/to-chair/chair-to-year.model';
 import { TargetWinBidToYear } from '../models/setting/targets-kpi/target-win-bid/target-win-bid-to-year.model';
+import { KpiLocationToYear } from '../models/setting/targets-kpi/to-location/kpi-location-to-year.model';
 @Injectable()
 export class SettingService {
     public searchTermGroupKPI: any;
@@ -725,6 +726,65 @@ export class SettingService {
             id: valueForm.id,
             percent: valueForm.percent,
             totalTarget: valueForm.totalTarget
+        };
+        return this.apiService.post(url, requestModel);
+    }
+    // ============
+    // Chỉ tiêu KPI theo khu vực
+    // mapping chi tiết chỉ tiêu trúng thầu theo năm
+    mappingDetailKpiLocationToYear(result: any): KpiLocationToYear {
+        if (result) {
+            return {
+                year: result.year,
+                preYearTarget: result.preYearTarget && result.preYearTarget.map(itemPreYearTarget => {
+                    return {
+                        id: itemPreYearTarget.id,
+                        location: itemPreYearTarget.location && {
+                            id: itemPreYearTarget.location.id,
+                            locationName: itemPreYearTarget.location.locationName,
+                            locationNo: itemPreYearTarget.location.locationNo,
+                            locationDesc: itemPreYearTarget.location.locationDesc,
+                        },
+                        amount: itemPreYearTarget.amount,
+                    };
+                }),
+                curYearTarget: result.curYearTarget && result.curYearTarget.map(itemCurYearTarget => {
+                    return {
+                        id: itemCurYearTarget.id,
+                        location: itemCurYearTarget.location && {
+                            id: itemCurYearTarget.location.id,
+                            locationName: itemCurYearTarget.location.locationName,
+                            locationNo: itemCurYearTarget.location.locationNo,
+                            locationDesc: itemCurYearTarget.location.locationDesc,
+                        },
+                        amount: itemCurYearTarget.amount,
+                    };
+                }),
+            };
+        }
+        if (!result) {
+            return null;
+        }
+    }
+    // Chi tiết chỉ tiêu trúng thầu theo năm
+    getDetailKpiLocationToYear(year: number) {
+        const url = `kpilocation/${year}`;
+        return this.apiService.get(url).map(response => {
+            return this.mappingDetailKpiLocationToYear(response.result);
+        });
+    }
+    // tạo mới hoặc chỉnh sửa chỉ tiêu KPI khu vực
+    createOrEditKpiLocation(year: number, valueForm: any) {
+        console.log('this.valueForm', valueForm);
+        const url = `kpilocation/createorupdate`;
+        const requestModel = {
+            year: year,
+            kpiLocationDetails: valueForm.map(itemValueForm => {
+                return {
+                    locationId: itemValueForm.locationId,
+                    amount: +itemValueForm.curYearTarget,
+                };
+            })
         };
         return this.apiService.post(url, requestModel);
     }

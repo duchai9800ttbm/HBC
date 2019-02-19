@@ -17,7 +17,7 @@
                 - Chỉ tiêu trúng thầu
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'kpi-area'"
-                id="kpi-area" name="list-report" (click)="toggleCollapseMenu('kpi-area')" title="- Chỉ tiêu KPI khu vực" [routerLink]="['./kpi-area']">
+                id="kpi-area" name="list-report" (click)="toggleCollapseMenu('kpi-area')" title="- Chỉ tiêu KPI khu vực" [routerLink]="['./kpi-area']" [queryParams]="{action:'view'}">
                 - Chỉ tiêu KPI khu vực
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'construction-items'"
