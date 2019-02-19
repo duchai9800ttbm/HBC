@@ -57,7 +57,9 @@ export class ReportFollowService {
               winningOfBidTotalAmount: itemChairDetail.winningOfBidTotalAmount,
               achievedPercent: itemChairDetail.achievedPercent,
             };
-          })
+          }),
+          kpiTargetAmount: itemKpiGroupChairs.kpiTargetAmount,
+          winningOfBidValueAmount: itemKpiGroupChairs.winningOfBidValueAmount,
         };
       }),
       kpiTargetAmount: result.kpiTargetAmount,
@@ -70,13 +72,11 @@ export class ReportFollowService {
     };
   }
   // Thống kê chỉ tiêu KPI chủ trì theo khoảng thời gian
-  detailReportKpiChair(startDate: number, endDate: number): Observable<ReportKpiChair[]> {
+  detailReportKpiChair(startDate: number, endDate: number): Observable<ReportKpiChair> {
     const url = `kpi/chairemployee/get?startDate=${startDate}&endDate=${endDate}`;
     return this.apiService.get(url).map(response => {
       const result = response.result;
-      return result.map(item => {
-        return this.mappingReportKpiChair(item);
-      });
+      return this.mappingReportKpiChair(result);
     });
   }
 

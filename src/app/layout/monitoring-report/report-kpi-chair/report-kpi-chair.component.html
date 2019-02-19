@@ -1,15 +1,15 @@
 <div class="d-flex mb-2">
   <span class="d-flex">
     <span class="center-parent">Từ:</span>
-    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
+    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3" [(ngModel)]="startDate"></kendo-datepicker>
   </span>
   <span class="ml-5 d-flex">
     <span class="center-parent">Đến:</span>
-    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
+    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3" [(ngModel)]="endDate"></kendo-datepicker>
   </span>
-  <button class="btn btn-primary ml-5">Xem</button>
+  <button class="btn btn-primary ml-5" (click)="viewReport()">Xem</button>
 </div>
-<table class="row-border cell-border dataTable">
+<table class="row-border cell-border dataTable" *ngIf="reportKpiChair">
   <thead>
     <tr class="table-header">
       <th class="text-center">STT</th>
@@ -19,103 +19,40 @@
       <th class="text-center">Giá trị trúng thầu</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <th></th>
-      <th class="text-uppercase">TENDER HCM</th>
-      <th class="text-right"></th>
-      <th class="text-right">{{ '14120000000000' | thousandSeparate }}</th>
-      <th class="text-right">{{ '6203849712621' | thousandSeparate }}</th>
-    </tr>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Nguyễn Tuấn Anh</td>
-      <td class="text-right">{{ '62.21' }}%</td>
-      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
-    </tr>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Nguyễn Tuấn Anh</td>
-      <td class="text-right">{{ '62.21' }}%</td>
-      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
-    </tr>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Nguyễn Tuấn Anh</td>
-      <td class="text-right">{{ '62.21' }}%</td>
-      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
-    </tr>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Nguyễn Tuấn Anh</td>
-      <td class="text-right">{{ '62.21' }}%</td>
-      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
-    </tr>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Nguyễn Tuấn Anh</td>
-      <td class="text-right">{{ '62.21' }}%</td>
-      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
-    </tr>
-  </tbody>
+  <ng-container *ngFor="let itemKpiGroupChairs of reportKpiChair.kpiGroupChairs; let i = index">
+    <tbody>
+      <tr>
+        <th></th>
+        <th class="text-uppercase">{{itemKpiGroupChairs?.kpiGroup?.name}}</th>
+        <th class="text-right"></th>
+        <th class="text-right">{{ itemKpiGroupChairs?.kpiTargetAmount ? (itemKpiGroupChairs?.kpiTargetAmount |
+          thousandSeparate) : '0' }}</th>
+        <th class="text-right">{{ itemKpiGroupChairs?.winningOfBidValueAmount ?
+          (itemKpiGroupChairs?.winningOfBidValueAmount | thousandSeparate) : '0' }}</th>
+      </tr>
+      <ng-container *ngFor="let itemChairDetail of itemKpiGroupChairs.chairDetail; let j = index">
+        <tr>
+          <td class="text-center">1</td>
+          <td>{{itemChairDetail?.employee?.employeeName}}</td>
+          <td class="text-right">{{ itemChairDetail?.achievedPercent ? (itemChairDetail?.achievedPercent |
+            thousandSeparate) : '0.00'}}&nbsp;%</td>
+          <td class="text-right">{{ itemChairDetail?.kpiTargetAmount ? (itemChairDetail?.kpiTargetAmount |
+            thousandSeparate) : '0.00' }}</td>
+          <td class="text-right">{{ itemChairDetail?.winningOfBidTotalAmount ?
+            (itemChairDetail?.winningOfBidTotalAmount | thousandSeparate) : '0.00' }}</td>
+        </tr>
+      </ng-container>
 
-  <tbody>
-    <tr class="table-child">
-      <th></th>
-      <th class="text-uppercase">TENDER HCM</th>
-      <th class="text-right"></th>
-      <th class="text-right">{{ '14120000000000' | thousandSeparate }}</th>
-      <th class="text-right">{{ '6203849712621' | thousandSeparate }}</th>
-    </tr>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Nguyễn Tuấn Anh</td>
-      <td class="text-right">{{ '62.21' }}%</td>
-      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
-    </tr>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Nguyễn Tuấn Anh</td>
-      <td class="text-right">{{ '62.21' }}%</td>
-      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
-    </tr>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Nguyễn Tuấn Anh</td>
-      <td class="text-right">{{ '62.21' }}%</td>
-      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
-    </tr>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Nguyễn Tuấn Anh</td>
-      <td class="text-right">{{ '62.21' }}%</td>
-      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
-    </tr>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Nguyễn Tuấn Anh</td>
-      <td class="text-right">{{ '62.21' }}%</td>
-      <td class="text-right">{{ '5300000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '3297294802375' | thousandSeparate }}</td>
-    </tr>
-  </tbody>
+    </tbody>
+  </ng-container>
 
   <tbody>
     <tr>
       <td></td>
       <td class="font-weight-bold text-center">Tổng</td>
-      <td class="font-weight-bold text-right">{{ '36.56' }}%</td>
-      <td class="font-weight-bold text-right">{{ '24700000000000' | thousandSeparate }}</td>
-      <td class="font-weight-bold text-right">{{ '9029896947078' | thousandSeparate }}</td>
+      <td class="font-weight-bold text-right">{{ reportKpiChair?.achievedPercent }} %</td>
+      <td class="font-weight-bold text-right">{{ reportKpiChair?.kpiTargetAmount | thousandSeparate }}</td>
+      <td class="font-weight-bold text-right">{{ reportKpiChair?.winningOfBidTotalAmount ? (reportKpiChair?.winningOfBidTotalAmount | thousandSeparate) : '0.00' }}</td>
     </tr>
   </tbody>
 
@@ -123,16 +60,30 @@
     <tr>
       <td></td>
       <td class="font-weight-bold text-center">From</td>
-      <td class="font-weight-bold text-center">Today</td>
-      <td class="font-weight-bold text-right">Chỉ tiêu trúng thầu/1 ngày:</td>
-      <td class="font-weight-bold text-right">{{ '67671232876.71' | thousandSeparate }}</td>
+      <td class="font-weight-bold text-center">To</td>
+      <td class="font-weight-bold">Chỉ tiêu trúng thầu/1 ngày:</td>
+      <td class="font-weight-bold text-right">{{ reportKpiChair?.winningBidOfDayTargetAmount | thousandSeparate }}</td>
     </tr>
     <tr>
       <td></td>
-      <td class="font-weight-bold text-center">From</td>
-      <td class="font-weight-bold text-center">{{ time | date:'dd/MM/yyyy': '+0000' }}</td>
-      <td class="font-weight-bold text-right">Chỉ tiêu trúng thầu/1 ngày:</td>
-      <td class="font-weight-bold text-right">{{ '6203849712621' | thousandSeparate }}</td>
+      <td class="font-weight-bold text-center">{{ endDate | date:'dd/MM/yyyy': '+0000' }}</td>
+      <td class="font-weight-bold text-center">{{ startDate | date:'dd/MM/yyyy': '+0000' }}</td>
+      <td class="font-weight-bold">Số ngày tính đến thời điểm báo cáo:</td>
+      <td class="font-weight-bold">Giá trị trúng thầu đến thời điểm báo cáo:</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="font-weight-bold text-center"></td>
+      <td class="font-weight-bold text-center"></td>
+      <td class="text-center">{{reportKpiChair?.dayCount}}</td>
+      <td class="text-right">{{reportKpiChair?.winningOfBidTargetAmount | thousandSeparate}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="font-weight-bold text-center"></td>
+      <td class="font-weight-bold text-center"></td>
+      <td class="font-weight-bold">Số trúng thầu nhanh/chậm so với KPI/ngày</td>
+      <td class="text-right">{{reportKpiChair?.winningBidOfDayCompareTargetAmount | thousandSeparate}}</td>
     </tr>
   </tbody>
 
