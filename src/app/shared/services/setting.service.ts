@@ -18,6 +18,7 @@ import { GroupKPIList } from '../models/setting/targets-kpi/group-kpi/group-kpi-
 import { ChairToYear } from '../models/setting/targets-kpi/to-chair/chair-to-year.model';
 import { TargetWinBidToYear } from '../models/setting/targets-kpi/target-win-bid/target-win-bid-to-year.model';
 import { KpiLocationToYear } from '../models/setting/targets-kpi/to-location/kpi-location-to-year.model';
+import { ConstructionCategory } from '../models/setting/targets-kpi/to-construction-category/construction-category-to-year.model';
 @Injectable()
 export class SettingService {
     public searchTermGroupKPI: any;
@@ -713,7 +714,7 @@ export class SettingService {
         }
     }
     // Chi tiết chỉ tiêu trúng thầu theo năm
-    getDetailTargetWinBidToYear(year: number) {
+    getDetailTargetWinBidToYear(year: number): Observable<TargetWinBidToYear> {
         const url = `kpiwinningofbid/${year}`;
         return this.apiService.get(url).map(response => {
             return this.mappingDetailTargetWinBidToYear(response.result);
@@ -767,7 +768,7 @@ export class SettingService {
         }
     }
     // Chi tiết chỉ tiêu trúng thầu theo năm
-    getDetailKpiLocationToYear(year: number) {
+    getDetailKpiLocationToYear(year: number): Observable<KpiLocationToYear> {
         const url = `kpilocation/${year}`;
         return this.apiService.get(url).map(response => {
             return this.mappingDetailKpiLocationToYear(response.result);
@@ -788,4 +789,34 @@ export class SettingService {
         };
         return this.apiService.post(url, requestModel);
     }
+    // ===============
+    // kpi theo hạng mục thi công
+    // mapping Chi tiết chỉ tiêu KPI hạng mục thi công theo năm
+    mappingDetailConstructionCategory(result: any): ConstructionCategory {
+        return {
+            id: result.id,
+            constructionCategory: result.constructionCategory && {
+                id: result.constructionCategory.id,
+                constructionCategoryName: result.constructionCategory.constructionCategoryName,
+                constructionCategoryNo: result.constructionCategory.constructionCategoryNo,
+                constructionCategoryDesc: result.constructionCategory.constructionCategoryDesc,
+            },
+            percent: result.percent,
+            total: result.total,
+            totalTarget: result.totalTarget,
+        };
+    }
+    // Chi tiết chỉ tiêu KPI hạng mục thi công theo năm
+    getDetailConstructionCategory(year: number): Observable<ConstructionCategory[]> {
+        const url = `kpiconstructioncategory/${year}`;
+        return this.apiService.get(url).map(reponse => {
+            return (reponse.result || []).forEach(result => this.mappingDetailConstructionCategory(result));
+        });
+    }
+    // Tạo mới hoặc chỉnh sửa chỉ tiêu KPI hạng mục thi công
+    createOrEditConstructionCategory() {
+        const url = `kpiconstructioncategory/createorupdate`;
+        // return this.apiService.post(url, )
+    }
+
 }
