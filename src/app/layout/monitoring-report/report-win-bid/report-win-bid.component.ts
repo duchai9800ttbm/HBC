@@ -31,7 +31,6 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
     const startDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(startDate);
     const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(endDate);
     this.reportFollowService.detailReportWinBid(startDateNumber, endDateNumber).subscribe(response => {
-      console.log('this.endDateNumber', response);
       this.reportWinBid = response;
     });
   }

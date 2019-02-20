@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { ReportKpiChair } from '../models/report-follow/report-kpi-chair.model';
 import { StartAndEndDate } from '../models/report-follow/startAndEndDate.model';
 import { ReportWinBid } from '../models/report-follow/report-kpi-win-bid.model';
+import { ReportKpiArea } from '../models/report-follow/report-kpi-area.model';
 
 @Injectable()
 export class ReportFollowService {
@@ -99,6 +100,35 @@ export class ReportFollowService {
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return this.mappingReportWinBid(result);
+    });
+  }
+  // mapping Thống kê chỉ tiêu KPI khu vực theo khoảng thời gian
+  mappingReportKpiArea(result: any): ReportKpiArea {
+    return {
+      kpiLocationDetails: result.kpiLocationDetails && result.kpiLocationDetails.map(itemKpiLocationDetails => {
+        return {
+          location: itemKpiLocationDetails.location && {
+            id: itemKpiLocationDetails.location.id,
+            locationName: itemKpiLocationDetails.location.locationName,
+            locationNo: itemKpiLocationDetails.location.locationNo,
+            locationDesc: itemKpiLocationDetails.location.locationDesc,
+          },
+          kpiTarget: itemKpiLocationDetails.kpiTarget,
+          winningOfBidAmount: itemKpiLocationDetails.winningOfBidAmount,
+          achievedPercent: itemKpiLocationDetails.achievedPercent,
+        };
+      }),
+      kpiTargetTotalAmount: result.kpiTargetTotalAmount,
+      winningOfBidTotalAmount: result.kpiTargetTotalAmount,
+      achievedPercent: result.kpiTargetTotalAmount,
+    };
+  }
+  // Thống kê chỉ tiêu KPI khu vực theo khoảng thời gian
+  detailReportKpiAre(startDate: number, endDate: number): Observable<ReportKpiArea> {
+    const url = `kpilocation/get?startDate=${startDate}&endDate=${endDate}`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return this.mappingReportKpiArea(result);
     });
   }
 

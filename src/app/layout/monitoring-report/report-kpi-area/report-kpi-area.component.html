@@ -1,14 +1,3 @@
-<div class="d-flex mb-2">
-  <span class="d-flex">
-    <span class="center-parent">Từ:</span>
-    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
-  </span>
-  <span class="ml-5 d-flex">
-    <span class="center-parent">Đến:</span>
-    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
-  </span>
-  <button class="btn btn-primary ml-5">Xem</button>
-</div>
 <h4 class="text-center text-uppercase font-weight-bold">CHỈ TIÊU TRÚNG THẦU THEO KHU VỰC</h4>
 <table class="row-border cell-border dataTable">
   <thead>
@@ -20,22 +9,39 @@
       <th class="text-center font-weight-bold">Tỉ lệ đạt được so với chỉ tiêu</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Miền Bắc</td>
-      <td class="text-right">{{ '6826000000000' | thousandSeparate }}</td>
-      <td class="text-right">{{ '2166140311642' | thousandSeparate }}</td>
-      <td class="text-right">{{ '31.73' }}%</td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td></td>
-      <td class="font-weight-bold">Tổng</td>
-      <td class="font-weight-bold text-right">{{ '27000000000000' | thousandSeparate }}</td>
-      <td class="font-weight-bold text-right">{{ '10049822304575' | thousandSeparate }}</td>
-      <td class="font-weight-bold text-right">{{ '37.22' }}%</td>
-    </tr>
-  </tbody>
+  <ng-container *ngIf="reportKpiArea">
+
+    <tbody>
+      <ng-container *ngFor="let itemKpiLocationDetails of reportKpiArea.kpiLocationDetails; let i = index">
+        <tr>
+          <td class="text-center">{{i + 1}}</td>
+          <td>{{itemKpiLocationDetails?.location?.locationName}}</td>
+          <td class="text-right">{{ itemKpiLocationDetails?.kpiTarget ? (itemKpiLocationDetails?.kpiTarget |
+            thousandSeparate) : '0.00' }}</td>
+          <td class="text-right">{{ itemKpiLocationDetails?.winningOfBidAmount ?
+            (itemKpiLocationDetails?.winningOfBidAmount | thousandSeparate) : '0.00' }}</td>
+          <td class="text-right">{{ itemKpiLocationDetails?.achievedPercent ? (itemKpiLocationDetails?.achievedPercent
+            | thousandSeparate) : '0.00' }} %</td>
+        </tr>
+      </ng-container>
+      <tr>
+        <td></td>
+        <td class="font-weight-bold">Tổng</td>
+        <td class="text-right font-weight-bold">{{ itemKpiLocationDetails?.kpiTargetTotalAmount ?
+          (itemKpiLocationDetails?.kpiTargetTotalAmount | thousandSeparate) : '0.00' }}</td>
+        <td class="text-right font-weight-bold">{{ itemKpiLocationDetails?.winningOfBidTotalAmount ?
+          (itemKpiLocationDetails?.winningOfBidTotalAmount | thousandSeparate) : '0.00' }}</td>
+        <td class="text-right font-weight-bold">{{ itemKpiLocationDetails?.achievedPercent ?
+          (itemKpiLocationDetails?.achievedPercent | thousandSeparate) : '0.00' }} %</td>
+      </tr>
+    </tbody>
+  </ng-container>
+  <ng-container *ngIf="!reportKpiArea">
+    <tbody>
+      <tr>
+        <td colspan="5">Không có dữ liệu</td>
+      </tr>
+    </tbody>
+  </ng-container>
+
 </table>
