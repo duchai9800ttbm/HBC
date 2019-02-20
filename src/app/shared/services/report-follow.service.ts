@@ -4,6 +4,7 @@ import { SessionService } from './session.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ReportKpiChair } from '../models/report-follow/report-kpi-chair.model';
 import { StartAndEndDate } from '../models/report-follow/startAndEndDate.model';
+import { ReportWinBid } from '../models/report-follow/report-kpi-win-bid.model';
 
 @Injectable()
 export class ReportFollowService {
@@ -81,6 +82,23 @@ export class ReportFollowService {
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return this.mappingReportKpiChair(result);
+    });
+  }
+  // mapping Thống kê chỉ tiêu trúng thầu trong khoảng thời gian
+  mappingReportWinBid(result: any): ReportWinBid {
+    return {
+      winningOfBidTargetPercent: result.winningOfBidTargetPercent,
+      totalTargetAmount: result.totalTargetAmount,
+      winningOfBidPercent: result.winningOfBidPercent,
+      totalAmount: result.totalAmount,
+    };
+  }
+  // Thống kê chỉ tiêu trúng thầu trong khoảng thời gian
+  detailReportWinBid(startDate: number, endDate: number): Observable<ReportWinBid> {
+    const url = `kpiwinningofbid/get?startDate=${startDate}&endDate=${endDate}`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return this.mappingReportWinBid(result);
     });
   }
 
