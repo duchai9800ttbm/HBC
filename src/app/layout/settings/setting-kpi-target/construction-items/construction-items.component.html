@@ -2,32 +2,42 @@
   <div class="menu">
     <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">chỉ tiêu kpi hạng mục thi công </h5>
   </div>
-  <form [formGroup]="constructionCategoryForm" novalidate class="pt-3">
-    <div class="card p-3">
-      <div class="row">
-        <div class="col-md-3">
-          <span class="font-weight-bold required">Năm:&nbsp;</span>&nbsp;&nbsp;
-          <span class="custom-dropdown">
-            <select class="form-control select-year--width">
-              <option value="2018">2018</option>
-              <option value="2019">2019</option>
-              <option value="2020">2020</option>
-            </select>
-          </span>
-        </div>
-        <div class="col-md-6 d-flex align-items-center">
-          <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
-          <span>{{ 123456 | truncateDecimal}}</span>
-        </div>
-        <div class="text-right col-md-3">
-          <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
+  <div class="card p-3">
+    <div class="row">
+      <div class="col-md-3">
+        <span class="font-weight-bold required">Năm:&nbsp;</span>&nbsp;&nbsp;
+        <span class="custom-dropdown">
+          <select class="form-control select-year--width" [(ngModel)]="yearkpi" (change)="changeYearTargetFuc()">
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+          </select>
+        </span>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
+        <span>{{ 123456 | truncateDecimal}}</span>
+      </div>
+      <div class="text-right col-md-3">
+        <ng-container *ngIf="paramAction === 'view'">
+          <button class="btn btn-secondary" type="button" [routerLink]="['../construction-items']" [queryParams]="{action:'edit'}"
+            [queryParams]="{action:'edit'}">Sửa
           </button>
           <button type="submit" class="btn btn-primary ml-1">Thêm mới chỉ tiêu
           </button>
-        </div>
+        </ng-container>
+        <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
+          <button class="btn btn-secondary" type="button" [routerLink]="['../construction-items']" [queryParams]="{action:'view'}"
+            [queryParams]="{action:'edit'}">Hủy
+          </button>
+          <button type="submit" class="btn btn-primary ml-1">Lưu
+          </button>
+        </ng-container>
       </div>
-      <div class="row pt-2">
-        <div class="col-md-12">
+    </div>
+    <div class="row pt-2">
+      <div class="col-md-12">
+        <form [formGroup]="constructionCategoryForm" novalidate class="pt-3" *ngIf="constructionCategoryForm">
           <table class="zui-table table table-striped table-hover mt-1">
             <thead>
               <tr>
@@ -38,16 +48,36 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Tổng thầu</td>
-                <td class="text-right">{{ 752143745725 | truncateDecimal}}</td>
-                <td class="text-right">100%</td>
-                <td class="text-right">{{ 785672936930 | truncateDecimal}}</td>
-              </tr>
+              <ng-container formArrayName="mainBuild">
+                <ng-container>
+                  <tr *ngFor="let itemMainBuild of mainBuildFA.controls; let i = index" [formGroupName]="i">
+                    <td>{{itemMainBuild?.get('constructionTypeName').value}}</td>
+                    <ng-container *ngIf="paramAction === 'view'">
+                      <td class="text-right">{{ 752143745725 | truncateDecimal}}</td>
+                      <td class="text-right">100%</td>
+                      <td class="text-right">{{ 785672936930 | truncateDecimal}}</td>
+                    </ng-container>
+                    <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
+                      <td class="text-right">
+                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="totalAmount"
+                          (input)="calculTargetTotal()">
+                      </td>
+                      <td class="text-right">
+                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="percent"
+                          (input)="calculTargetTotal()">
+                      </td>
+                      <td class="text-right">
+                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="totalTargetAmount"
+                          (input)="calculTargetTotal()">
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+              </ng-container>
             </tbody>
           </table>
-        </div>
+        </form>
       </div>
     </div>
-  </form>
+  </div>
 </div>

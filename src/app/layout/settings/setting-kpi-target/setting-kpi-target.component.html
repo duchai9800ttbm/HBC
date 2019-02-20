@@ -22,7 +22,7 @@
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'construction-items'"
                 id="construction-items" name="list-report" (click)="toggleCollapseMenu('construction-items')"
-                title="- Chỉ tiêu KPI hạng mục thi công" [routerLink]="['./construction-items']">
+                title="- Chỉ tiêu KPI hạng mục thi công" [routerLink]="['./construction-items']" [queryParams]="{action:'view'}">
                 - Chỉ tiêu KPI hạng mục thi công
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'type-construction'"
