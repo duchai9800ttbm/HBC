@@ -10,14 +10,36 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Chỉ tiêu KPI</td>
-      <td class="text-right">{{ '100' }}%</td>
-      <td class="text-right">{{ '6800000000000' |thousandSeparate }}</td>
-      <td>
-        <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
-      </td>
-    </tr>
+    <ng-container *ngIf="reportWinRateConstractors">
+      <ng-container *ngFor="let itemReportKPIBidderRoleDetails of reportWinRateConstractors.reportKPIBidderRoleDetails; let i = index">
+        <tr>
+          <td class="text-center">{{i + 1}}</td>
+          <td>{{itemReportKPIBidderRoleDetails?.bidderRole?.displayText}}</td>
+          <td class="text-right">{{ itemReportKPIBidderRoleDetails?.winningOfBidPer ?
+            (itemReportKPIBidderRoleDetails?.winningOfBidPer |thousandSeparate) : '0.00' }} %</td>
+          <td class="text-right">{{ itemReportKPIBidderRoleDetails?.amount ? (itemReportKPIBidderRoleDetails?.amount
+            |thousandSeparate) : '0.00' }}</td>
+          <td>
+            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+          </td>
+        </tr>
+      </ng-container>
+      <tr>
+        <td class="text-center"></td>
+        <td class="font-weight-bold">Tổng</td>
+        <td class="text-right font-weight-bold">{{ reportWinRateConstractors?.winningOfBidPer ?
+          (reportWinRateConstractors?.winningOfBidPer |thousandSeparate) : '0.00' }} %</td>
+        <td class="text-right font-weight-bold">{{ reportWinRateConstractors?.totalAmount ? (reportWinRateConstractors?.totalAmount
+          |thousandSeparate) : '0.00' }}</td>
+        <td>
+          <!-- <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea> -->
+        </td>
+      </tr>
+    </ng-container>
+    <ng-container *ngIf="!reportWinRateConstractors">
+      <tr>
+        <td colspan="5" class="text-center">Không có dữ liệu</td>
+      </tr>
+    </ng-container>
   </tbody>
 </table>

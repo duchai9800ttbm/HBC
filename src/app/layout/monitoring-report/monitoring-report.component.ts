@@ -152,7 +152,8 @@ export class MonitoringReportComponent implements OnInit {
     switch (this.idReport) {
       case 'kpi-chair':
       case 'win-bid':
-      case 'kpi-area': {
+      case 'kpi-area':
+      case 'win-rate-contractors': {
         this.startAndEndDate.startDate = this.startDate;
         this.startAndEndDate.endDate = this.endDate;
         this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
@@ -161,13 +162,13 @@ export class MonitoringReportComponent implements OnInit {
       case 'construction-items': {
         this.startAndEndConstructionCategory.startDate = this.startDate;
         this.startAndEndConstructionCategory.endDate = this.endDate;
-          this.reportFollowService.startAndEndConstructionCategory.next(this.startAndEndConstructionCategory);
+        this.reportFollowService.startAndEndConstructionCategory.next(this.startAndEndConstructionCategory);
         break;
       }
       case 'type-construction': {
         this.startAndEndConstructionType.startDate = this.startDate;
         this.startAndEndConstructionType.endDate = this.endDate;
-          this.reportFollowService.startAndEndConstructionType.next(this.startAndEndConstructionType);
+        this.reportFollowService.startAndEndConstructionType.next(this.startAndEndConstructionType);
         break;
       }
     }
