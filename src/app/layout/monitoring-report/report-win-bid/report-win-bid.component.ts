@@ -10,6 +10,7 @@ export class ReportWinBidComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('this.report-win-bid');
   }
 
 }

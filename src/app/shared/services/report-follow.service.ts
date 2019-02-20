@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { SessionService } from './session.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { ReportKpiChair } from '../models/report-follow/report-kpi-chair.model';
+import { StartAndEndDate } from '../models/report-follow/startAndEndDate.model';
 
 @Injectable()
 export class ReportFollowService {
-
+  startAndEndDate = new BehaviorSubject<StartAndEndDate>({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
   constructor(
     private apiService: ApiService,
     private sessionService: SessionService,

@@ -1,5 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { ReportFollowService } from '../../shared/services/report-follow.service';
+import { StartAndEndDate } from '../../shared/models/report-follow/startAndEndDate.model';
 
 @Component({
   selector: 'app-monitoring-report',
@@ -16,11 +18,21 @@ export class MonitoringReportComponent implements OnInit {
     'win-rate-contractors', 'win-rate-quarter-of-year', 'floor-area',
     'number-win-bid', 'potential-projects'
   ];
+  startDate: Date;
+  endDate: Date;
+  startAndEndDate = new StartAndEndDate();
   constructor(
     private router: Router,
+    private reportFollowService: ReportFollowService
   ) { }
 
   ngOnInit() {
+    const date = new Date();
+    this.startDate = new Date(date.getFullYear(), 0, 1);
+    this.endDate = date;
+    this.startAndEndDate.startDate = this.startDate;
+    this.startAndEndDate.endDate = this.endDate;
+    this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
     this.checkActiveTab();
   }
 
@@ -113,4 +125,9 @@ export class MonitoringReportComponent implements OnInit {
     event.target.style.height = event.target.scrollHeight + 'px';
   }
 
+  viewReport() {
+    this.startAndEndDate.startDate = this.startDate;
+    this.startAndEndDate.endDate = this.endDate;
+    this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
+  }
 }

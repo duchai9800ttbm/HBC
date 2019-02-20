@@ -9,23 +9,21 @@ import { ReportKpiChair } from '../../../shared/models/report-follow/report-kpi-
   styleUrls: ['./report-kpi-chair.component.scss']
 })
 export class ReportKpiChairComponent implements OnInit {
-  startDate: Date;
-  endDate: Date;
   reportKpiChair: ReportKpiChair;
   constructor(
     private reportFollowService: ReportFollowService
   ) { }
 
   ngOnInit() {
-    const date = new Date();
-    this.startDate = new Date(date.getFullYear(), 0, 1);
-    this.endDate = date;
-    this.viewReport();
+    console.log('this.report-kpi-chair');
+    this.reportFollowService.startAndEndDate.subscribe(startAndEndDate => {
+      this.viewReport(startAndEndDate.startDate, startAndEndDate.endDate);
+    });
   }
 
-  viewReport() {
-    const startDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate);
-    const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate);
+  viewReport(startDate: Date, endDate: Date) {
+    const startDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(startDate);
+    const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(endDate);
     this.reportFollowService.detailReportKpiChair(startDateNumber, endDateNumber).subscribe(response => {
       console.log('this.endDateNumber', response);
       this.reportKpiChair = response;

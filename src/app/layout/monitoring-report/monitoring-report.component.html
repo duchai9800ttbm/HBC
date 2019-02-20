@@ -46,9 +46,20 @@
                 Danh sách dự án tiềm năng đến thời điểm báo cáo</li>
         </ul>
     </div>
-   
+
     <div class="reports pl-3 w-100" id="reports-table">
         <div class="table-responsive">
+            <div class="d-flex mb-2">
+                <span class="d-flex">
+                    <span class="center-parent">Từ:</span>
+                    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3" [(ngModel)]="startDate"></kendo-datepicker>
+                </span>
+                <span class="ml-5 d-flex">
+                    <span class="center-parent">Đến:</span>
+                    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3" [(ngModel)]="endDate"></kendo-datepicker>
+                </span>
+                <button class="btn btn-primary ml-5" (click)="viewReport()">Xem</button>
+            </div>
             <router-outlet></router-outlet>
         </div>
     </div>
