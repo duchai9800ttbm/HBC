@@ -2,6 +2,10 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReportFollowService } from '../../shared/services/report-follow.service';
 import { StartAndEndDate } from '../../shared/models/report-follow/startAndEndDate.model';
+import { DataService } from '../../shared/services';
+import { Observable } from 'rxjs';
+import { DictionaryItem } from '../../shared/models';
+import { StartAndEndConstructionCategory } from '../../shared/models/report-follow/startAndEndConstructionCategory.model';
 
 @Component({
   selector: 'app-monitoring-report',
@@ -21,19 +25,29 @@ export class MonitoringReportComponent implements OnInit {
   startDate: Date;
   endDate: Date;
   startAndEndDate = new StartAndEndDate();
+  startAndEndConstructionCategory = new StartAndEndConstructionCategory();
+  listMainBuildingCategory: Observable<DictionaryItem[]>;
   constructor(
     private router: Router,
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
     const date = new Date();
     this.startDate = new Date(date.getFullYear(), 0, 1);
     this.endDate = date;
+    // kpi-chair, win-bid, kpi-area
     this.startAndEndDate.startDate = this.startDate;
     this.startAndEndDate.endDate = this.endDate;
     this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
+    // construction-items
+    this.startAndEndConstructionCategory.startDate = this.startDate;
+    this.startAndEndConstructionCategory.endDate = this.endDate;
+    this.startAndEndConstructionCategory.constructionCategory = null;
+    this.reportFollowService.startAndEndConstructionCategory.next(this.startAndEndConstructionCategory);
     this.checkActiveTab();
+    this.listMainBuildingCategory = this.dataService.getListMainConstructionComponents();
   }
 
   checkActiveTab() {
@@ -126,8 +140,21 @@ export class MonitoringReportComponent implements OnInit {
   }
 
   viewReport() {
-    this.startAndEndDate.startDate = this.startDate;
-    this.startAndEndDate.endDate = this.endDate;
-    this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
+    switch (this.idReport) {
+      case 'kpi-chair':
+      case 'win-bid':
+      case 'kpi-area': {
+        this.startAndEndDate.startDate = this.startDate;
+        this.startAndEndDate.endDate = this.endDate;
+        this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
+        break;
+      }
+      case 'construction-items': {
+        this.startAndEndConstructionCategory.startDate = this.startDate;
+        this.startAndEndConstructionCategory.endDate = this.endDate;
+          this.reportFollowService.startAndEndConstructionCategory.next(this.startAndEndConstructionCategory);
+        break;
+      }
+    }
   }
 }

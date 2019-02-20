@@ -6,12 +6,19 @@ import { ReportKpiChair } from '../models/report-follow/report-kpi-chair.model';
 import { StartAndEndDate } from '../models/report-follow/startAndEndDate.model';
 import { ReportWinBid } from '../models/report-follow/report-kpi-win-bid.model';
 import { ReportKpiArea } from '../models/report-follow/report-kpi-area.model';
+import { ReportKpiConstructionCategory } from '../models/report-follow/report-kpi-construction-category.model';
+import { StartAndEndConstructionCategory } from '../models/report-follow/startAndEndConstructionCategory.model';
 
 @Injectable()
 export class ReportFollowService {
   startAndEndDate = new BehaviorSubject<StartAndEndDate>({
     startDate: new Date(),
     endDate: new Date(),
+  });
+  startAndEndConstructionCategory = new BehaviorSubject<StartAndEndConstructionCategory>({
+    startDate: new Date(),
+    endDate: new Date(),
+    constructionCategory: null,
   });
   constructor(
     private apiService: ApiService,
@@ -129,6 +136,23 @@ export class ReportFollowService {
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return this.mappingReportKpiArea(result);
+    });
+  }
+  // mapping Thống kê chỉ tiêu KPI hạng mục thi công theo khoảng thời gian
+  mappingReportKpiConstructionCategory(result: any): ReportKpiConstructionCategory {
+    return {
+      winningOfBidTargetPer: result.winningOfBidTargetPer,
+      targetAmount: result.targetAmount,
+      winningOfBidPer: result.winningOfBidPer,
+      amount: result.amount,
+    };
+  }
+  // Thống kê chỉ tiêu KPI hạng mục thi công theo khoảng thời gian
+  detailReportKpiConstructionCategory(constructionCategoryId: number, startDate: number, endDate: number) {
+    const url = `kpiconstructioncategory/${constructionCategoryId}/get?startDate=${startDate}&endDate=${endDate}`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return this.mappingReportKpiConstructionCategory(result);
     });
   }
 
