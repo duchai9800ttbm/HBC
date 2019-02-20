@@ -10,6 +10,7 @@ import { ReportKpiConstructionCategory } from '../models/report-follow/report-kp
 import { StartAndEndConstructionCategory } from '../models/report-follow/startAndEndConstructionCategory.model';
 import { StartAndEndConstructionType } from '../models/report-follow/startAndEndConstructionType.model';
 import { ReportKpiConstructionType } from '../models/report-follow/report-kpi-construction-type.model';
+import { ReportWinRateConstractors } from '../models/report-follow/report-win-rate-constractors.model';
 
 @Injectable()
 export class ReportFollowService {
@@ -178,6 +179,33 @@ export class ReportFollowService {
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return this.mappingReportKpiConstructionType(result);
+    });
+  }
+  // mapping Thống kê chỉ tiêu KPI trúng thầu theo vai trò nhà thầu theo khoảng thời gian
+  mappingReportWinRateContractors(result: any): ReportWinRateConstractors {
+    return {
+      reportKPIBidderRoleDetails: result.reportKPIBidderRoleDetails
+        && result.reportKPIBidderRoleDetails.map(itemReportKPIBidderRoleDetail => {
+          return {
+            bidderRole: itemReportKPIBidderRoleDetail.bidderRole && {
+              key: itemReportKPIBidderRoleDetail.bidderRole.key,
+              value: itemReportKPIBidderRoleDetail.bidderRole.key,
+              displayText: itemReportKPIBidderRoleDetail.bidderRole.key
+            },
+            winningOfBidPer: itemReportKPIBidderRoleDetail.winningOfBidPer,
+            amount: itemReportKPIBidderRoleDetail.amount,
+          };
+        }),
+      winningOfBidPer: result.winningOfBidPer,
+      totalAmount: result.totalAmount
+    };
+  }
+  // Thống kê chỉ tiêu KPI trúng thầu theo vai trò nhà thầu theo khoảng thời gian
+  detailReportWinRateContractors(startDate: number, endDate: number): Observable<ReportWinRateConstractors> {
+    const url = `kpibidderrole/get?startDate=${startDate}&endDate=${endDate}`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return this.mappingReportWinRateContractors(result);
     });
   }
 }

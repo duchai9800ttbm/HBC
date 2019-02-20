@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReportFollowService } from '../../../shared/services/report-follow.service';
 
 @Component({
   selector: 'app-report-win-rate-contractors',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportWinRateContractorsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private reportFollowService: ReportFollowService
+  ) { }
 
   ngOnInit() {
   }
