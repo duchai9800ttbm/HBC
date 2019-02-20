@@ -8,6 +8,8 @@ import { ReportWinBid } from '../models/report-follow/report-kpi-win-bid.model';
 import { ReportKpiArea } from '../models/report-follow/report-kpi-area.model';
 import { ReportKpiConstructionCategory } from '../models/report-follow/report-kpi-construction-category.model';
 import { StartAndEndConstructionCategory } from '../models/report-follow/startAndEndConstructionCategory.model';
+import { StartAndEndConstructionType } from '../models/report-follow/startAndEndConstructionType.model';
+import { ReportKpiConstructionType } from '../models/report-follow/report-kpi-construction-type.model';
 
 @Injectable()
 export class ReportFollowService {
@@ -19,6 +21,11 @@ export class ReportFollowService {
     startDate: new Date(),
     endDate: new Date(),
     constructionCategory: null,
+  });
+  startAndEndConstructionType = new BehaviorSubject<StartAndEndConstructionType>({
+    startDate: new Date(),
+    endDate: new Date(),
+    constructionType: null,
   });
   constructor(
     private apiService: ApiService,
@@ -148,12 +155,29 @@ export class ReportFollowService {
     };
   }
   // Thống kê chỉ tiêu KPI hạng mục thi công theo khoảng thời gian
-  detailReportKpiConstructionCategory(constructionCategoryId: number, startDate: number, endDate: number) {
+  // tslint:disable-next-line:max-line-length
+  detailReportKpiConstructionCategory(constructionCategoryId: number, startDate: number, endDate: number): Observable<ReportKpiConstructionCategory> {
     const url = `kpiconstructioncategory/${constructionCategoryId}/get?startDate=${startDate}&endDate=${endDate}`;
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return this.mappingReportKpiConstructionCategory(result);
     });
   }
-
+  // mapping Thống kê chỉ tiêu KPI loại công trình theo khoảng thời gian
+  mappingReportKpiConstructionType(result: any): ReportKpiConstructionType {
+    return {
+      winningOfBidTargetPer: result.winningOfBidTargetPer,
+      targetAmount: result.targetAmount,
+      winningOfBidPer: result.winningOfBidPer,
+      amount: result.amount,
+    };
+  }
+  // Thống kê chỉ tiêu KPI loại công trình theo khoảng thời gian
+  detailReportKpiConstructionType(constructionTypeId: number, startDate: number, endDate: number): Observable<ReportKpiConstructionType> {
+    const url = `kpiconstructiontype/${constructionTypeId}/get?startDate=${startDate}&endDate=${endDate}`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return this.mappingReportKpiConstructionType(result);
+    });
+  }
 }

@@ -1,14 +1,3 @@
-<div class="d-flex mb-2">
-  <span class="d-flex">
-    <span class="center-parent">Từ:</span>
-    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
-  </span>
-  <span class="ml-5 d-flex">
-    <span class="center-parent">Đến:</span>
-    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
-  </span>
-  <button class="btn btn-primary ml-5">Xem</button>
-</div>
 <h4 class="text-center text-uppercase font-weight-bold">CHỈ TIÊU KPI {{ 'tên loại công trình' }}</h4>
 <table class="row-border cell-border dataTable">
   <thead>
@@ -21,14 +10,35 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Chỉ tiêu KPI</td>
-      <td class="text-right">{{ '100' }}%</td>
-      <td class="text-right">{{ '6800000000000' |thousandSeparate }}</td>
-      <td>
-        <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
-      </td>
-    </tr>
+    <ng-container *ngIf="reportKpiConstructionType">
+      <tr>
+        <td class="text-center">1</td>
+        <td>Chỉ tiêu KPI</td>
+        <td class="text-right">{{ reportKpiConstructionType?.winningOfBidTargetPer ?
+          (reportKpiConstructionType?.winningOfBidTargetPer | thousandSeparate) : '0.00' }} %</td>
+        <td class="text-right">{{ reportKpiConstructionType?.targetAmount ? (reportKpiConstructionType?.targetAmount |
+          thousandSeparate) : '0.00' }}</td>
+        <td>
+          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-center">2</td>
+        <td>Giá trị trúng thầu</td>
+        <td class="text-right">{{ reportKpiConstructionType?.winningOfBidPer ?
+          (reportKpiConstructionType?.winningOfBidPer | thousandSeparate) : '0.00' }} %</td>
+        <td class="text-right">{{ reportKpiConstructionType?.amount ? (reportKpiConstructionType?.amount |
+          thousandSeparate) : '0.00' }}</td>
+        <td>
+          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-container *ngIf="!reportKpiConstructionType">
+      <tr>
+        <td class="text-center" colspan="5"> Không có dữ liệu</td>
+      </tr>
+    </ng-container>
+
   </tbody>
 </table>

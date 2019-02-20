@@ -6,6 +6,7 @@ import { DataService } from '../../shared/services';
 import { Observable } from 'rxjs';
 import { DictionaryItem } from '../../shared/models';
 import { StartAndEndConstructionCategory } from '../../shared/models/report-follow/startAndEndConstructionCategory.model';
+import { StartAndEndConstructionType } from '../../shared/models/report-follow/startAndEndConstructionType.model';
 
 @Component({
   selector: 'app-monitoring-report',
@@ -26,7 +27,9 @@ export class MonitoringReportComponent implements OnInit {
   endDate: Date;
   startAndEndDate = new StartAndEndDate();
   startAndEndConstructionCategory = new StartAndEndConstructionCategory();
+  startAndEndConstructionType = new StartAndEndConstructionType();
   listMainBuildingCategory: Observable<DictionaryItem[]>;
+  listBuildingProjectType: Observable<DictionaryItem[]>;
   constructor(
     private router: Router,
     private reportFollowService: ReportFollowService,
@@ -46,8 +49,14 @@ export class MonitoringReportComponent implements OnInit {
     this.startAndEndConstructionCategory.endDate = this.endDate;
     this.startAndEndConstructionCategory.constructionCategory = null;
     this.reportFollowService.startAndEndConstructionCategory.next(this.startAndEndConstructionCategory);
+    // construction-type
+    this.startAndEndConstructionType.startDate = this.startDate;
+    this.startAndEndConstructionType.endDate = this.endDate;
+    this.startAndEndConstructionType.constructionType = null;
+    this.reportFollowService.startAndEndConstructionType.next(this.startAndEndConstructionType);
     this.checkActiveTab();
     this.listMainBuildingCategory = this.dataService.getListMainConstructionComponents();
+    this.listBuildingProjectType = this.dataService.getListConstructonTypes();
   }
 
   checkActiveTab() {
@@ -153,6 +162,12 @@ export class MonitoringReportComponent implements OnInit {
         this.startAndEndConstructionCategory.startDate = this.startDate;
         this.startAndEndConstructionCategory.endDate = this.endDate;
           this.reportFollowService.startAndEndConstructionCategory.next(this.startAndEndConstructionCategory);
+        break;
+      }
+      case 'type-construction': {
+        this.startAndEndConstructionType.startDate = this.startDate;
+        this.startAndEndConstructionType.endDate = this.endDate;
+          this.reportFollowService.startAndEndConstructionType.next(this.startAndEndConstructionType);
         break;
       }
     }
