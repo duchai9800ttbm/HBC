@@ -60,9 +60,9 @@ export class ConstructionItemsComponent implements OnInit {
       const formArrayItem = this.fb.group({
         constructionTypeId: itemMainBuild && itemMainBuild.id,
         constructionTypeName: itemMainBuild && itemMainBuild.text,
-        totalAmount: 0,
+        total: 0,
         percent: 0,
-        totalTargetAmount: 0
+        totalTarget: 0
       });
       (this.constructionCategoryForm.get('mainBuild') as FormArray).push(formArrayItem);
     });

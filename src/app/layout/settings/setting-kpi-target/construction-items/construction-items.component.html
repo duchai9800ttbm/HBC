@@ -59,7 +59,7 @@
                     </ng-container>
                     <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
                       <td class="text-right">
-                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="totalAmount"
+                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="total"
                           (input)="calculTargetTotal()">
                       </td>
                       <td class="text-right">
@@ -67,7 +67,7 @@
                           (input)="calculTargetTotal()">
                       </td>
                       <td class="text-right">
-                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="totalTargetAmount"
+                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="totalTarget"
                           (input)="calculTargetTotal()">
                       </td>
                     </ng-container>
