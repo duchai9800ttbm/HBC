@@ -9,6 +9,7 @@
         <span class="font-weight-bold required">Năm:&nbsp;</span>&nbsp;&nbsp;
         <span class="custom-dropdown">
           <select class="form-control select-year--width" [(ngModel)]="yearkpi" (change)="changeYearTargetFuc()">
+              <option value="null" *ngIf="paramAction === 'create'">--Lựa chọn--</option>
             <option value="2018">2018</option>
             <option value="2019">2019</option>
             <option value="2020">2020</option>
@@ -24,7 +25,8 @@
         <ng-container *ngIf="paramAction === 'view'">
           <button class="btn btn-secondary" type="button" [routerLink]="['../type-construction']" [queryParams]="{action:'edit'}">Sửa
           </button>
-          <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../type-construction']" [queryParams]="{action:'create'}">Thêm mới chỉ tiêu
+          <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../type-construction']" [queryParams]="{action:'create'}" (click)="createConstructionType()">Thêm
+            mới chỉ tiêu
           </button>
         </ng-container>
         <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
@@ -52,18 +54,26 @@
                 <ng-container formArrayName="typeBuild">
                   <tr *ngFor="let itemtypeBuild of typeBuilddFA.controls; let i = index" [formGroupName]="i">
                     <td>{{itemtypeBuild?.get('constructionTypeName').value}}</td>
-                    <td class="text-right">{{ itemtypeBuild?.get('totalAmount').value ?
-                      (itemtypeBuild?.get('totalAmount').value
-                      | truncateDecimal) : '0.00'}}</td>
+
                     <ng-container *ngIf="paramAction === 'view'">
+                      <td class="text-right">{{ itemtypeBuild?.get('totalAmount').value ?
+                        (itemtypeBuild?.get('totalAmount').value
+                        | truncateDecimal) : '0.00'}}</td>
                       <td class="text-right">{{ itemtypeBuild?.get('percent').value ?
                         (itemtypeBuild?.get('percent').value
                         | truncateDecimal) : '0.00'}} %</td>
                     </ng-container>
                     <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
                       <td class="text-right">
-                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="percent"
-                          (input)="calculTargetTotal(i)">
+                        <input type="text" appInputThousandSeparate class="w-100 m-0 p-0 text-right" formControlName="totalAmount"
+                          (input)="calculTargetTotalToChangeTotal(i)">
+                      </td>
+                      <td class="text-right">
+                        <div class="parent-percent">
+                          <input type="text" appInputThousandSeparate class="w-100 m-0 p-0 text-right cus-input"
+                            formControlName="percent" (input)="calculTargetTotalToChangePercent(i)">
+                          <span class="span-percent">%</span>
+                        </div>
                       </td>
                     </ng-container>
                     <td class="text-right">{{ itemtypeBuild?.get('totalTargetAmount').value ?

@@ -42,10 +42,10 @@ export class ConstructionItemsComponent implements OnInit {
     }
 
     this.settingService.getDetailConstructionCategory(this.yearkpi).subscribe(responseToYear => {
-      if (responseToYear) {
+      if (responseToYear && (responseToYear || []).length !== 0) {
         this.createForm(responseToYear);
       }
-      if (!responseToYear) {
+      if (!(responseToYear && (responseToYear || []).length !== 0)) {
         this.dataService.getListMainConstructionComponents().subscribe(listMainBuildingCategory => {
           this.listMainBuildingCategory = listMainBuildingCategory;
           this.createForm(listMainBuildingCategory);
@@ -54,7 +54,7 @@ export class ConstructionItemsComponent implements OnInit {
     });
   }
 
-  createForm(listMainBuildingCategory) {
+  createForm(listMainBuildingCategory: any) {
     this.constructionCategoryForm = this.fb.group({
       mainBuild: this.fb.array([]),
       targetTotal: null,
@@ -64,7 +64,7 @@ export class ConstructionItemsComponent implements OnInit {
       console.log('this.itemMainBuild', itemMainBuild.totalTarget);
       totalTarget = totalTarget + (itemMainBuild.totalTarget ? itemMainBuild.totalTarget : 0);
       const formArrayItem = this.fb.group({
-        constructionTypeId: itemMainBuild && itemMainBuild.id,
+        constructionTypeId: itemMainBuild.constructionCategory ? itemMainBuild.constructionCategory.id : itemMainBuild.id,
         constructionTypeName: itemMainBuild.text ||
           (itemMainBuild.constructionCategory && itemMainBuild.constructionCategory.constructionCategoryName),
         total: itemMainBuild.total,
@@ -89,10 +89,10 @@ export class ConstructionItemsComponent implements OnInit {
         this.constructionCategoryForm.addControl('mainBuild', this.fb.array([]));
         this.constructionCategoryForm.removeControl('targetTotal');
         this.constructionCategoryForm.addControl('targetTotal', this.fb.control(null));
-        if (responseToYear) {
+        if (responseToYear && (responseToYear || []).length !== 0) {
           this.createForm(responseToYear);
         }
-        if (!responseToYear) {
+        if (!(responseToYear && (responseToYear || []).length !== 0)) {
           this.settingService.readLocation('', 0, 1000).subscribe(response => {
             this.dataService.getListMainConstructionComponents().subscribe(listMainBuildingCategory => {
               this.listMainBuildingCategory = listMainBuildingCategory;
@@ -135,7 +135,7 @@ export class ConstructionItemsComponent implements OnInit {
       });
   }
 
-  calculTargetTotal(indexForm: number) {
+  calculTargetTotalToChangePercent(indexForm: number) {
     const totalTarget = this.mainBuildFA.controls[indexForm].get('total').value *
       this.mainBuildFA.controls[indexForm].get('percent').value / 100;
     this.mainBuildFA.controls[indexForm].get('totalTarget').patchValue(totalTarget);
@@ -143,7 +143,46 @@ export class ConstructionItemsComponent implements OnInit {
     (this.mainBuildFA.value || []).forEach(itemFormMainBuild => {
       totalTargetAll = totalTargetAll + itemFormMainBuild.totalTarget;
     });
-    this.constructionCategoryForm.get('totalTarget').patchValue(totalTargetAll);
+    this.constructionCategoryForm.get('targetTotal').patchValue(totalTargetAll);
+  }
+
+  calculTargetTotalToChangeTotal(indexForm: number) {
+    const percent = this.mainBuildFA.controls[indexForm].get('totalTarget').value * 100
+      / this.mainBuildFA.controls[indexForm].get('total').value;
+    this.mainBuildFA.controls[indexForm].get('percent').patchValue(percent);
+    let totalTargetAll = 0;
+    (this.mainBuildFA.value || []).forEach(itemFormMainBuild => {
+      totalTargetAll = totalTargetAll + itemFormMainBuild.totalTarget;
+    });
+    this.constructionCategoryForm.get('targetTotal').patchValue(totalTargetAll);
+  }
+
+  createConstructionType() {
+    this.yearkpi = null;
+    if (this.listMainBuildingCategory) {
+      this.createNewForm(this.listMainBuildingCategory);
+    }
+    if (!this.listMainBuildingCategory) {
+      this.dataService.getListMainConstructionComponents().subscribe(listMainBuildingCategory => {
+        this.createNewForm(listMainBuildingCategory);
+      });
+    }
+  }
+
+  createNewForm(listMainBuildingCategory) {
+    this.constructionCategoryForm.removeControl('mainBuild');
+    this.constructionCategoryForm.addControl('mainBuild', this.fb.array([]));
+    (listMainBuildingCategory || []).forEach(itemMainBuild => {
+      const formArrayItem = this.fb.group({
+        constructionTypeId: itemMainBuild.id,
+        constructionTypeName: itemMainBuild.text,
+        totalAmount: 0,
+        percent: 0,
+        totalTargetAmount: 0,
+      });
+      (this.constructionCategoryForm.get('mainBuild') as FormArray).push(formArrayItem);
+    });
+    this.constructionCategoryForm.get('targetTotal').patchValue(0);
   }
 
 }

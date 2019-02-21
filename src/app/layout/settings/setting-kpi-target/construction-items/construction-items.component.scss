@@ -5,3 +5,15 @@
 .select-year--width{
     width: 122px;
 }
+
+.parent-percent{
+    position: relative;
+    .cus-input{
+        padding-right: 25px !important;
+    }
+    .span-percent{
+        position: absolute;
+        right: 12px;
+        top: 2px;
+    }
+}

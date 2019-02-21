@@ -41,10 +41,12 @@ export class TypeConstructionComponent implements OnInit {
       this.yearkpi = this.currentYear;
     }
     this.settingService.getDetailConstructionType(this.yearkpi).subscribe(responseToYear => {
-      if (responseToYear) {
+      if (responseToYear && (responseToYear || []).length !== 0) {
+        console.log('have reposonse');
         this.createForm(responseToYear);
       }
-      if (!responseToYear) {
+      if (!(responseToYear && (responseToYear || []).length !== 0)) {
+        console.log('not reposonse');
         this.dataService.getListConstructonTypes().subscribe(listBuildingProjectType => {
           this.listBuildingProjectType = listBuildingProjectType;
           this.createForm(listBuildingProjectType);
@@ -61,9 +63,9 @@ export class TypeConstructionComponent implements OnInit {
     });
     let totalTarget = 0;
     (listBuildingProjectType || []).forEach(itemTypeBuild => {
-      totalTarget = totalTarget + (itemTypeBuild.totalTarget ? itemTypeBuild.totalTarget : 0);
+      totalTarget = totalTarget + (itemTypeBuild.totalTargetAmount ? itemTypeBuild.totalTargetAmount : 0);
       const formArrayItem = this.fb.group({
-        constructionTypeId: itemTypeBuild && itemTypeBuild.id,
+        constructionTypeId: itemTypeBuild.constructionType ? itemTypeBuild.constructionType.id : itemTypeBuild.id,
         constructionTypeName: itemTypeBuild.text ||
           (itemTypeBuild.constructionType && itemTypeBuild.constructionType.constructionTypeName),
         totalAmount: itemTypeBuild.totalAmount,
@@ -119,10 +121,10 @@ export class TypeConstructionComponent implements OnInit {
         this.constructionTypeForm.addControl('typeBuild', this.fb.array([]));
         this.constructionTypeForm.removeControl('targetTotal');
         this.constructionTypeForm.addControl('targetTotal', this.fb.control(null));
-        if (responseToYear) {
+        if (responseToYear && (responseToYear || []).length !== 0) {
           this.createForm(responseToYear);
         }
-        if (!responseToYear) {
+        if (!(responseToYear && (responseToYear || []).length !== 0)) {
           this.dataService.getListConstructonTypes().subscribe(listBuildingProjectType => {
             this.listBuildingProjectType = listBuildingProjectType;
             this.createForm(listBuildingProjectType);
@@ -132,14 +134,54 @@ export class TypeConstructionComponent implements OnInit {
     }
   }
 
-  calculTargetTotal(indexForm: number) {
-    const totalTarget = this.typeBuilddFA.controls[indexForm].get('totalAmount').value *
+  calculTargetTotalToChangePercent(indexForm: number) {
+    const totalTargetAmount = this.typeBuilddFA.controls[indexForm].get('totalAmount').value *
       this.typeBuilddFA.controls[indexForm].get('percent').value / 100;
-    this.typeBuilddFA.controls[indexForm].get('totalTargetAmount').patchValue(totalTarget);
+    this.typeBuilddFA.controls[indexForm].get('totalTargetAmount').patchValue(totalTargetAmount);
     let totalTargetAll = 0;
-    (this.typeBuilddFA.value || []).forEach(itemFormTypeBuild => {
-      totalTargetAll = totalTargetAll + itemFormTypeBuild.totalTarget;
+    console.log('this.typeBuilddFA', this.typeBuilddFA);
+    (this.typeBuilddFA.value || []).forEach(itemFormMainBuild => {
+      totalTargetAll = totalTargetAll + itemFormMainBuild.totalTargetAmount;
     });
     this.constructionTypeForm.get('targetTotal').patchValue(totalTargetAll);
+  }
+
+  calculTargetTotalToChangeTotal(indexForm: number) {
+    const percent = this.typeBuilddFA.controls[indexForm].get('totalTargetAmount').value * 100
+      / this.typeBuilddFA.controls[indexForm].get('totalAmount').value;
+    this.typeBuilddFA.controls[indexForm].get('percent').patchValue(percent);
+    let totalTargetAll = 0;
+    (this.typeBuilddFA.value || []).forEach(itemFormMainBuild => {
+      totalTargetAll = totalTargetAll + itemFormMainBuild.totalTargetAmount;
+    });
+    this.constructionTypeForm.get('targetTotal').patchValue(totalTargetAll);
+  }
+
+  createConstructionType() {
+    this.yearkpi = null;
+    if (this.listBuildingProjectType) {
+      this.createNewForm(this.listBuildingProjectType);
+    }
+    if (!this.listBuildingProjectType) {
+      this.dataService.getListConstructonTypes().subscribe(listBuildingProjectType => {
+        this.createNewForm(listBuildingProjectType);
+      });
+    }
+  }
+
+  createNewForm(listBuildingProjectType) {
+    this.constructionTypeForm.removeControl('typeBuild');
+    this.constructionTypeForm.addControl('typeBuild', this.fb.array([]));
+    (listBuildingProjectType || []).forEach(itemTypeBuild => {
+      const formArrayItem = this.fb.group({
+        constructionTypeId: itemTypeBuild.id,
+        constructionTypeName: itemTypeBuild.text,
+        totalAmount: 0,
+        percent: 0,
+        totalTargetAmount: 0,
+      });
+      (this.constructionTypeForm.get('typeBuild') as FormArray).push(formArrayItem);
+    });
+    this.constructionTypeForm.get('targetTotal').patchValue(0);
   }
 }
