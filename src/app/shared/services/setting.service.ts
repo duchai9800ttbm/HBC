@@ -19,6 +19,7 @@ import { ChairToYear } from '../models/setting/targets-kpi/to-chair/chair-to-yea
 import { TargetWinBidToYear } from '../models/setting/targets-kpi/target-win-bid/target-win-bid-to-year.model';
 import { KpiLocationToYear } from '../models/setting/targets-kpi/to-location/kpi-location-to-year.model';
 import { ConstructionCategory } from '../models/setting/targets-kpi/to-construction-category/construction-category-to-year.model';
+import { ConstructionTypeToYear } from '../models/setting/targets-kpi/to-construction-type/construction-type-to-year.model';
 @Injectable()
 export class SettingService {
     public searchTermGroupKPI: any;
@@ -832,5 +833,45 @@ export class SettingService {
         };
         return this.apiService.post(url, requestModel);
     }
-
+    // mapping Chi tiết chỉ tiêu KPI loại công trình theo năm
+    mappingDetailConstructionType(result: any): ConstructionTypeToYear {
+        return {
+            id: result.id,
+            constructionType: result.constructionType && {
+                id: result.constructionType.id,
+                constructionTypeName: result.constructionType.constructionTypeName,
+                constructionTypeNameEng: result.constructionType.constructionTypeNameEng,
+                constructionTypeDesc: result.constructionType.constructionTypeDesc,
+            },
+            percent: result.percent,
+            totalAmount: result.totalAmount,
+            totalTargetAmount: result.totalTargetAmount,
+        };
+    }
+    // Chi tiết chỉ tiêu KPI loại công trình theo năm
+    getDetailConstructionType(year: number): Observable<ConstructionTypeToYear[]> {
+        const url = `kpiconstructiontype/${year}`;
+        return this.apiService.get(url).map(reponse => {
+            return (reponse.result || []).map(itemResult => {
+                return this.mappingDetailConstructionType(itemResult);
+            });
+        });
+    }
+    // Tạo mới hoặc chỉnh sửa chỉ tiêu KPI loại công trình
+    createOrEditConstructionType(year: number, valueForm: any) {
+        console.log('this.valueForm', valueForm);
+        const url = `kpiconstructiontype/createorupdate`;
+        const requestModel = {
+            year: year,
+            details: valueForm.map(itemValueForm => {
+                return {
+                    constructionTypeId: +itemValueForm.constructionTypeId,
+                    totalAmount: +itemValueForm.totalAmount,
+                    percent: +itemValueForm.percent,
+                    totalTargetAmount: +itemValueForm.totalTargetAmount,
+                };
+            })
+        };
+        return this.apiService.post(url, requestModel);
+    }
 }

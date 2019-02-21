@@ -93,7 +93,7 @@ export class ConstructionItemsComponent implements OnInit {
           this.createForm(responseToYear);
         }
         if (!responseToYear) {
-          return this.settingService.readLocation('', 0, 1000).subscribe(response => {
+          this.settingService.readLocation('', 0, 1000).subscribe(response => {
             this.dataService.getListMainConstructionComponents().subscribe(listMainBuildingCategory => {
               this.listMainBuildingCategory = listMainBuildingCategory;
               this.createForm(listMainBuildingCategory);

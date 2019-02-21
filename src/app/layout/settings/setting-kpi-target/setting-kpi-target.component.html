@@ -27,7 +27,7 @@
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'type-construction'"
                 id="type-construction" name="list-report" (click)="toggleCollapseMenu('type-construction')"
-                title="- Chỉ tiêu KPI loại công trình" [routerLink]="['./type-construction']">
+                title="- Chỉ tiêu KPI loại công trình" [routerLink]="['./type-construction']" [queryParams]="{action:'view'}">
                 - Chỉ tiêu KPI loại công trình
             </li>
         </ul>

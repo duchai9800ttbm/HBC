@@ -20,15 +20,13 @@
       </div>
       <div class="text-right col-md-3">
         <ng-container *ngIf="paramAction === 'view'">
-          <button class="btn btn-secondary" type="button" [routerLink]="['../construction-items']" [queryParams]="{action:'edit'}"
-            [queryParams]="{action:'edit'}">Sửa
+          <button class="btn btn-secondary" type="button" [routerLink]="['../construction-items']" [queryParams]="{action:'edit'}">Sửa
           </button>
-          <button type="submit" class="btn btn-primary ml-1">Thêm mới chỉ tiêu
+          <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../construction-items']" [queryParams]="{action:'create'}">Thêm mới chỉ tiêu
           </button>
         </ng-container>
         <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
-          <button class="btn btn-secondary" type="button" [routerLink]="['../construction-items']" [queryParams]="{action:'view'}"
-            [queryParams]="{action:'edit'}">Hủy
+          <button class="btn btn-secondary" type="button" [routerLink]="['../construction-items']" [queryParams]="{action:'view'}">Hủy
           </button>
           <button type="submit" class="btn btn-primary ml-1" (click)="createOrEditConstructionCategory()">Lưu
           </button>
