@@ -140,6 +140,6 @@ export class TypeConstructionComponent implements OnInit {
     (this.typeBuilddFA.value || []).forEach(itemFormTypeBuild => {
       totalTargetAll = totalTargetAll + itemFormTypeBuild.totalTarget;
     });
-    this.constructionTypeForm.get('totalTarget').patchValue(totalTargetAll);
+    this.constructionTypeForm.get('targetTotal').patchValue(totalTargetAll);
   }
 }
