@@ -1,14 +1,3 @@
-<div class="d-flex mb-2">
-  <span class="d-flex">
-    <span class="center-parent">Từ:</span>
-    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
-  </span>
-  <span class="ml-5 d-flex">
-    <span class="center-parent">Đến:</span>
-    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
-  </span>
-  <button class="btn btn-primary ml-5">Xem</button>
-</div>
 <h4 class="text-center text-uppercase font-weight-bold">TỈ LỆ TRÚNG THẦU THEO QUÝ TRONG NĂM</h4>
 <table class="row-border cell-border dataTable">
   <thead>
@@ -21,14 +10,36 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Chỉ tiêu KPI</td>
-      <td class="text-right">{{ '100' }}%</td>
-      <td class="text-right">{{ '6800000000000' |thousandSeparate }}</td>
-      <td>
-        <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
-      </td>
-    </tr>
+    <ng-container *ngIf="reportKpiWinRateQuarter">
+      <ng-container *ngFor="let itemReportKPIQuaterOfYearDetails of reportKpiWinRateQuarter.reportKPIQuaterOfYearDetails; let i = index">
+        <tr>
+          <td class="text-center">{{i + 1}}</td>
+          <td>{{itemReportKPIQuaterOfYearDetails?.quaterOfYear?.value}}</td>
+          <td class="text-right">{{itemReportKPIQuaterOfYearDetails?.winningOfBidPer ?
+            (itemReportKPIQuaterOfYearDetails?.winningOfBidPer | thousandSeparate) : '0.00'}}</td>
+          <td class="text-right">{{itemReportKPIQuaterOfYearDetails?.amount ? (itemReportKPIQuaterOfYearDetails?.amount
+            | thousandSeparate) : '0.00'}}</td>
+          <td>
+            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+          </td>
+        </tr>
+      </ng-container>
+      <tr>
+        <td></td>
+        <td class="font-weight-bold">Tổng</td>
+        <td class="text-right">{{reportKpiWinRateQuarter?.winningOfBidPer ? (reportKpiWinRateQuarter?.winningOfBidPer |
+          thousandSeparate) : '0.00'}}</td>
+        <td class="text-right">{{reportKpiWinRateQuarter?.totalAmount ? (reportKpiWinRateQuarter?.totalAmount |
+          thousandSeparate) : '0.00'}}</td>
+        <td>
+          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-container *ngIf="!reportKpiWinRateQuarter">
+      <tr>
+        <td colspan="5">Khoong có dữ liệu</td>
+      </tr>
+    </ng-container>
   </tbody>
 </table>
