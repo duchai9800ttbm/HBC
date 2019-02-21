@@ -21,6 +21,7 @@ export class ConstructionItemsComponent implements OnInit {
   get mainBuildFA(): FormArray {
     return this.constructionCategoryForm.get('mainBuild') as FormArray;
   }
+  isSubmitCreate = false;
   constructor(
     private fb: FormBuilder,
     private settingService: SettingService,
@@ -105,7 +106,9 @@ export class ConstructionItemsComponent implements OnInit {
   }
 
   createOrEditConstructionCategory() {
-    this.settingService.createOrEditConstructionCategory(this.yearkpi, this.constructionCategoryForm.get('mainBuild').value)
+    this.isSubmitCreate = true;
+    if (this.yearkpi) {
+      this.settingService.createOrEditConstructionCategory(this.yearkpi, this.constructionCategoryForm.get('mainBuild').value)
       .subscribe(response => {
         if (this.paramAction === 'create') {
           this.router.navigate(
@@ -125,6 +128,7 @@ export class ConstructionItemsComponent implements OnInit {
             });
           this.alertService.success('Chỉnh sửa chỉ tiêu kpi hạng mục thi công thành công');
         }
+        this.isSubmitCreate = false;
       }, err => {
         if (this.paramAction === 'create') {
           this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu kpi hạng mục thi công không thành công.');
@@ -132,7 +136,9 @@ export class ConstructionItemsComponent implements OnInit {
         if (this.paramAction === 'edit') {
           this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu kpi hạng mục thi công không thành công.');
         }
+        this.isSubmitCreate = false;
       });
+    }
   }
 
   calculTargetTotalToChangePercent(indexForm: number) {
@@ -157,7 +163,7 @@ export class ConstructionItemsComponent implements OnInit {
     this.constructionCategoryForm.get('targetTotal').patchValue(totalTargetAll);
   }
 
-  createConstructionType() {
+  createConstructionCategory() {
     this.yearkpi = null;
     if (this.listMainBuildingCategory) {
       this.createNewForm(this.listMainBuildingCategory);
@@ -176,9 +182,9 @@ export class ConstructionItemsComponent implements OnInit {
       const formArrayItem = this.fb.group({
         constructionTypeId: itemMainBuild.id,
         constructionTypeName: itemMainBuild.text,
-        totalAmount: 0,
+        total: 0,
         percent: 0,
-        totalTargetAmount: 0,
+        totalTarget: 0,
       });
       (this.constructionCategoryForm.get('mainBuild') as FormArray).push(formArrayItem);
     });

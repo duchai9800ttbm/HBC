@@ -21,6 +21,7 @@ export class TypeConstructionComponent implements OnInit {
   get typeBuilddFA(): FormArray {
     return this.constructionTypeForm.get('typeBuild') as FormArray;
   }
+  isSubmitCreate = false;
   constructor(
     private fb: FormBuilder,
     private settingService: SettingService,
@@ -78,34 +79,39 @@ export class TypeConstructionComponent implements OnInit {
   }
 
   createOrEditConstructionType() {
-    this.settingService.createOrEditConstructionType(this.yearkpi, this.constructionTypeForm.get('typeBuild').value)
-      .subscribe(response => {
-        if (this.paramAction === 'create') {
-          this.router.navigate(
-            [],
-            {
-              relativeTo: this.activatedRoute,
-              queryParams: { action: 'view', year: this.yearkpi },
-            });
-          this.alertService.success('Tạo mới chỉ tiêu kpi loại công trình thành công');
-        }
-        if (this.paramAction === 'edit') {
-          this.router.navigate(
-            [],
-            {
-              relativeTo: this.activatedRoute,
-              queryParams: { action: 'view', year: this.yearkpi },
-            });
-          this.alertService.success('Chỉnh sửa chỉ tiêu kpi loại công trình thành công');
-        }
-      }, err => {
-        if (this.paramAction === 'create') {
-          this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu kpi loại công trình không thành công.');
-        }
-        if (this.paramAction === 'edit') {
-          this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu kpi loại công trình không thành công.');
-        }
-      });
+    this.isSubmitCreate = true;
+    if (this.yearkpi) {
+      this.settingService.createOrEditConstructionType(this.yearkpi, this.constructionTypeForm.get('typeBuild').value)
+        .subscribe(response => {
+          if (this.paramAction === 'create') {
+            this.router.navigate(
+              [],
+              {
+                relativeTo: this.activatedRoute,
+                queryParams: { action: 'view', year: this.yearkpi },
+              });
+            this.alertService.success('Tạo mới chỉ tiêu kpi loại công trình thành công');
+          }
+          if (this.paramAction === 'edit') {
+            this.router.navigate(
+              [],
+              {
+                relativeTo: this.activatedRoute,
+                queryParams: { action: 'view', year: this.yearkpi },
+              });
+            this.alertService.success('Chỉnh sửa chỉ tiêu kpi loại công trình thành công');
+          }
+          this.isSubmitCreate = false;
+        }, err => {
+          if (this.paramAction === 'create') {
+            this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu kpi loại công trình không thành công.');
+          }
+          if (this.paramAction === 'edit') {
+            this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu kpi loại công trình không thành công.');
+          }
+          this.isSubmitCreate = false;
+        });
+    }
   }
 
   changeYearTargetFuc() {
