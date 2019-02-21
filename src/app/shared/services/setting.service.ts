@@ -810,13 +810,27 @@ export class SettingService {
     getDetailConstructionCategory(year: number): Observable<ConstructionCategory[]> {
         const url = `kpiconstructioncategory/${year}`;
         return this.apiService.get(url).map(reponse => {
-            return (reponse.result || []).forEach(result => this.mappingDetailConstructionCategory(result));
+            return (reponse.result || []).map(itemResult => {
+                return this.mappingDetailConstructionCategory(itemResult);
+            });
         });
     }
     // Tạo mới hoặc chỉnh sửa chỉ tiêu KPI hạng mục thi công
-    createOrEditConstructionCategory() {
+    createOrEditConstructionCategory(year: number, valueForm: any) {
+        console.log('this.valueForm', valueForm);
         const url = `kpiconstructioncategory/createorupdate`;
-        // return this.apiService.post(url, )
+        const requestModel = {
+            year: year,
+            details: valueForm.map(itemValueForm => {
+                return {
+                    constructionCategoryId: +itemValueForm.constructionTypeId,
+                    total: +itemValueForm.total,
+                    percent: +itemValueForm.percent,
+                    totalTarget: +itemValueForm.totalTarget,
+                };
+            })
+        };
+        return this.apiService.post(url, requestModel);
     }
 
 }

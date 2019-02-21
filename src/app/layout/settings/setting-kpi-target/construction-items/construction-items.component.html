@@ -16,7 +16,7 @@
       </div>
       <div class="col-md-6 d-flex align-items-center">
         <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
-        <span>{{ 123456 | truncateDecimal}}</span>
+        <span>{{ constructionCategoryForm?.get('targetTotal').value ? (constructionCategoryForm?.get('targetTotal')?.value | truncateDecimal) : '0.00'}}</span>
       </div>
       <div class="text-right col-md-3">
         <ng-container *ngIf="paramAction === 'view'">
@@ -30,7 +30,7 @@
           <button class="btn btn-secondary" type="button" [routerLink]="['../construction-items']" [queryParams]="{action:'view'}"
             [queryParams]="{action:'edit'}">Hủy
           </button>
-          <button type="submit" class="btn btn-primary ml-1">Lưu
+          <button type="submit" class="btn btn-primary ml-1" (click)="createOrEditConstructionCategory()">Lưu
           </button>
         </ng-container>
       </div>
@@ -53,23 +53,22 @@
                   <tr *ngFor="let itemMainBuild of mainBuildFA.controls; let i = index" [formGroupName]="i">
                     <td>{{itemMainBuild?.get('constructionTypeName').value}}</td>
                     <ng-container *ngIf="paramAction === 'view'">
-                      <td class="text-right">{{ 752143745725 | truncateDecimal}}</td>
-                      <td class="text-right">100%</td>
-                      <td class="text-right">{{ 785672936930 | truncateDecimal}}</td>
+                      <td class="text-right">{{ itemMainBuild?.get('total').value ? (itemMainBuild?.get('total').value
+                        | truncateDecimal) : '0.00'}}</td>
+                      <td class="text-right">{{ itemMainBuild?.get('percent').value ?
+                        (itemMainBuild?.get('percent').value | truncateDecimal) : '0.00'}} %</td>
+                      <td class="text-right">{{ itemMainBuild?.get('totalTarget').value ?
+                        (itemMainBuild?.get('totalTarget').value | truncateDecimal) : '0.00'}}</td>
                     </ng-container>
                     <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
-                      <td class="text-right">
-                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="total"
-                          (input)="calculTargetTotal()">
-                      </td>
+                      <td class="text-right">{{ itemMainBuild?.get('total').value ? (itemMainBuild?.get('total').value
+                        | truncateDecimal) : '0.00'}}</td>
                       <td class="text-right">
                         <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="percent"
-                          (input)="calculTargetTotal()">
+                          (input)="calculTargetTotal(i)">
                       </td>
-                      <td class="text-right">
-                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="totalTarget"
-                          (input)="calculTargetTotal()">
-                      </td>
+                      <td class="text-right">{{ itemMainBuild?.get('totalTarget').value ?
+                        (itemMainBuild?.get('totalTarget').value | truncateDecimal) : '0.00'}}</td>
                     </ng-container>
                   </tr>
                 </ng-container>
