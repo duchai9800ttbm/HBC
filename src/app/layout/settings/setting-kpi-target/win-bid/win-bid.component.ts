@@ -15,6 +15,7 @@ export class WinBidComponent implements OnInit {
   paramYear: number;
   currentYear = (new Date()).getFullYear();
   yearkpi: number | string;
+  isSubmitCreate = false;
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -74,13 +75,6 @@ export class WinBidComponent implements OnInit {
   }
 
   addTargetForYear() {
-    this.paramAction = 'create';
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.activatedRoute,
-        queryParams: { action: 'create', year: null },
-      });
     this.yearkpi = null;
   }
 
@@ -96,12 +90,36 @@ export class WinBidComponent implements OnInit {
     this.targetWinBid.get('percent').patchValue(percent);
   }
 
-  editTargetWinBid() {
+  createOrEditTargetWinBid() {
     console.log('this.formValue', this.targetWinBid.value);
     this.settingService.editTargetWinBidToYear(this.targetWinBid.value).subscribe(response => {
-      this.alertService.success('Chỉnh sửa chỉ tiêu trúng thầu thành công.');
+      if (this.paramAction === 'create') {
+        this.router.navigate(
+          [],
+          {
+            relativeTo: this.activatedRoute,
+            queryParams: { action: 'view', year: this.yearkpi },
+          });
+        this.alertService.success('Chỉnh sửa chỉ tiêu trúng thầu thành công.');
+      }
+      if (this.paramAction === 'edit') {
+        this.router.navigate(
+          [],
+          {
+            relativeTo: this.activatedRoute,
+            queryParams: { action: 'view', year: this.yearkpi },
+          });
+        this.alertService.success('Chỉnh sửa chỉ tiêu trúng thầu thành công.');
+      }
+      this.isSubmitCreate = false;
     }, err => {
-      this.alertService.error('Chỉnh sửa chỉ tiêu trúng thầu không thành công.');
+      if (this.paramAction === 'create') {
+        this.alertService.error('Chỉnh sửa chỉ tiêu trúng thầu không thành công.');
+      }
+      if (this.paramAction === 'edit') {
+        this.alertService.error('Chỉnh sửa chỉ tiêu trúng thầu không thành công.');
+      }
+      this.isSubmitCreate = false;
     });
   }
 }

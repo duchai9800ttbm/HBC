@@ -45,8 +45,3 @@ input.icon {
     width: 90px;
 }
 
-.required::after{
-    content: "*";
-    color: red;
-    font-style: italic;
-}

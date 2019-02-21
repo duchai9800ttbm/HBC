@@ -19,6 +19,7 @@ export class KpiAreaComponent implements OnInit {
   get locationFA(): FormArray {
     return this.kpiLocation.get('location') as FormArray;
   }
+  isSubmitCreate = false;
   constructor(
     private settingService: SettingService,
     private fb: FormBuilder,
@@ -43,7 +44,7 @@ export class KpiAreaComponent implements OnInit {
         this.createForm(listLocation);
       }
       if (!responseToYear) {
-        return this.settingService.readLocation('', 0, 1000).subscribe(response => {
+        this.settingService.readLocation('', 0, 1000).subscribe(response => {
           this.listLocation = response.items;
           this.createForm(response.items);
         });
@@ -133,33 +134,76 @@ export class KpiAreaComponent implements OnInit {
   }
 
   createOrEditKpiLocation() {
-    this.settingService.createOrEditKpiLocation(this.yearkpi, this.kpiLocation.get('location').value).subscribe(response => {
-      if (this.paramAction === 'create') {
-        this.router.navigate(
-          [],
-          {
-            relativeTo: this.activatedRoute,
-            queryParams: { action: 'view', year: this.yearkpi },
-          });
-        this.alertService.success('Tạo mới chỉ tiêu khu vực thành công');
-      }
-      if (this.paramAction === 'edit') {
-        this.router.navigate(
-          [],
-          {
-            relativeTo: this.activatedRoute,
-            queryParams: { action: 'view', year: this.yearkpi },
-          });
-        this.alertService.success('Chỉnh sửa chỉ tiêu khu vực thành công');
-      }
-    }, err => {
-      if (this.paramAction === 'create') {
-        this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu khu vực không thành công.');
-      }
-      if (this.paramAction === 'edit') {
-        this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu khu vực không thành công.');
-      }
+    this.isSubmitCreate = true;
+    if (this.yearkpi) {
+      this.settingService.createOrEditKpiLocation(this.yearkpi, this.kpiLocation.get('location').value).subscribe(response => {
+        if (this.paramAction === 'create') {
+          this.router.navigate(
+            [],
+            {
+              relativeTo: this.activatedRoute,
+              queryParams: { action: 'view', year: this.yearkpi },
+            });
+          this.alertService.success('Tạo mới chỉ tiêu khu vực thành công');
+        }
+        if (this.paramAction === 'edit') {
+          this.router.navigate(
+            [],
+            {
+              relativeTo: this.activatedRoute,
+              queryParams: { action: 'view', year: this.yearkpi },
+            });
+          this.alertService.success('Chỉnh sửa chỉ tiêu khu vực thành công');
+        }
+        this.isSubmitCreate = false;
+      }, err => {
+        if (this.paramAction === 'create') {
+          this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu khu vực không thành công.');
+        }
+        if (this.paramAction === 'edit') {
+          this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu khu vực không thành công.');
+        }
+        this.isSubmitCreate = false;
+      });
+    }
+  }
+
+  createKpiArea() {
+    this.yearkpi = null;
+    if (this.listLocation) {
+      this.createNewForm(this.listLocation);
+    }
+    if (!this.listLocation) {
+      this.settingService.readLocation('', 0, 1000).subscribe(response => {
+        this.createForm(response.items);
+      });
+    }
+  }
+  createNewForm(listLocation) {
+    this.kpiLocation.removeControl('location');
+    this.kpiLocation.addControl('location', this.fb.array([]));
+    (listLocation || []).forEach(itemLocation => {
+      const formArrayItem = this.fb.group({
+        locationId: {
+          value: itemLocation && itemLocation.id,
+          disabled: false,
+        },
+        locationName: {
+          value: itemLocation && itemLocation.locationName,
+          disabled: false,
+        },
+        preYearTarget: {
+          value: 0,
+          disabled: false,
+        },
+        curYearTarget: {
+          value: 0,
+          disabled: false,
+        },
+      });
+      (this.locationFA as FormArray).push(formArrayItem);
     });
+    this.kpiLocation.get('targetTotal').patchValue(0);
   }
 
 }

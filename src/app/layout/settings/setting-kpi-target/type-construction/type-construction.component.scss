@@ -17,24 +17,3 @@
         top: 2px;
     }
 }
-
-.required::after{
-    content: "*";
-    color: red;
-    font-style: italic;
-}
-
-.manipulation{
-    .year--pad-top{
-        padding-top: 6px;
-    }
-    .year-validate{
-        padding-top: 2px;
-        display: block !important;
-        font-size: 90%;
-        color: #dc3545;
-    }
-    .total-target--pad-top{
-        padding-top: 6px;
-    }
-}

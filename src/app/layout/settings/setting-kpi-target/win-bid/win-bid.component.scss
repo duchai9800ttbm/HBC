@@ -5,9 +5,3 @@
 .select-year--width{
     width: 122px;
 }
-
-.required::after{
-    content: "*";
-    color: red;
-    font-style: italic;
-}
