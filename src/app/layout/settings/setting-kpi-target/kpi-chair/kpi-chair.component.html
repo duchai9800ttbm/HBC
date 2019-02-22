@@ -161,12 +161,18 @@
             <i class="fa fa-search" aria-hidden="true"></i>
           </span>
         </div>
-        <select multiple class="form-control form-select list-chair-choose--height" id="exampleFormControlSelect2"
-          [(ngModel)]="selectChairEmployeeCanChoosedTemp">
-          <option [ngValue]="itemChairCanChoose" *ngFor="let itemChairCanChoose of listChairEmployeeCanChoosedTemp">
-            {{itemChairCanChoose.employeeName}}
-          </option>
-        </select>
+        <div class="position-relative">
+          <select multiple class="form-control form-select list-chair-choose--height" id="exampleFormControlSelect2"
+            [(ngModel)]="selectChairEmployeeCanChoosedTemp">
+            <ng-container *ngIf="!loadingListChairEmployeeCanChoosedTemp">
+              <option [ngValue]="itemChairCanChoose" *ngFor="let itemChairCanChoose of listChairEmployeeCanChoosedTemp">
+                {{itemChairCanChoose.employeeName}}
+              </option>
+            </ng-container>
+          </select>
+          <img *ngIf="loadingListChairEmployeeCanChoosedTemp" class="loading-list-chair" src="assets/images/loading-animation.gif"
+            alt="">
+        </div>
       </div>
       <div class="col-md-2 group-button">
         <button type="button" class="btn btn-default btn-next mg-b-2" (click)="addAllChairEmployee()">

@@ -54,6 +54,7 @@ export class KpiChairComponent implements OnInit {
   listYearNotConfigred: number[] = [];
   isSubmitCreate = false;
   isValidateGroup = false;
+  loadingListChairEmployeeCanChoosedTemp = false;
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -192,6 +193,7 @@ export class KpiChairComponent implements OnInit {
       });
     });
     console.log('arrayChairUsed-arrayChairUsed', arrayChairUsed);
+    this.loadingListChairEmployeeCanChoosedTemp = true;
     this.packageService.searchKeyWordListGroupChaired(0, 1000, this.searchTermChairName$).subscribe(response => {
       // const arraySelectChoosedTemp = this.listChairEmployeeChoosedTemp.map(itemSelect => itemSelect.employeeId);
       this.listChairEmployeeCanChoosedTemp = response.items.filter(item => {
@@ -199,6 +201,7 @@ export class KpiChairComponent implements OnInit {
         // !arraySelectChoosedTemp.includes(item.employeeId) &&
       });
       this.listChairEmployee = response.items;
+      this.loadingListChairEmployeeCanChoosedTemp = false;
     });
   }
 
