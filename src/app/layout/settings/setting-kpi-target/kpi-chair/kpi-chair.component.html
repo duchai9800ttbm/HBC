@@ -3,9 +3,9 @@
     <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">kpi theo chủ trì </h5>
   </div>
 
-  <div class="card p-3 mt-3">
+  <div class="card p-3 mt-3" id="wrapper-report-child">
     <div class="row manipulation">
-      <div class="col-md-3 d-flex">
+      <div class="col-md-3 d-flex year-min-width" id="year">
         <ng-container *ngIf="!(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
           <span class="font-weight-bold required year--pad-top">Năm:&nbsp;</span>&nbsp;&nbsp;
           <div>
@@ -32,11 +32,11 @@
           </div>
         </ng-container>
       </div>
-      <div class="col-md-6 total-target--pad-top">
+      <div class="col-md-5 total-target--pad-top" id="target">
         <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
         <span>{{ (groupKpiChairsArray && targetTotalFC !== 0) ? (targetTotalFC | truncateDecimal) : 0}}</span>
       </div>
-      <div class="text-right col-md-3" *ngIf="paramAction === 'view'">
+      <div class="text-right col-md-4" *ngIf="paramAction === 'view'" id="action">
         <button class="btn btn-secondary" type="button" *ngIf="isEdit" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
         </button>
         <button type="submit" class="btn btn-primary ml-1" (click)="addTargetForYear()">Thêm mới chỉ tiêu

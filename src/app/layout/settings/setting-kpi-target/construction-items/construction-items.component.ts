@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { SettingService } from '../../../../shared/services/setting.service';
 import { FormControl, FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,6 +25,7 @@ export class ConstructionItemsComponent implements OnInit {
   listYearConfigured: number[];
   listYearNotConfigred: number[] = [];
   yearBackTemp: number;
+  widthReport: number;
   constructor(
     private fb: FormBuilder,
     private settingService: SettingService,
@@ -65,6 +66,27 @@ export class ConstructionItemsComponent implements OnInit {
         });
       }
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.widthReport = document.getElementById('wrapper-report-child').offsetWidth;
+    if (this.widthReport <= 730) {
+      document.getElementById('year').classList.remove('col-md-3');
+      document.getElementById('target').classList.remove('col-md-5');
+      document.getElementById('action').classList.remove('col-md-4');
+      document.getElementById('year').classList.add('col-md-4');
+      document.getElementById('target').classList.add('col-md-3', 'pr-0');
+      document.getElementById('action').classList.add('col-md-5');
+    }
+    if (!(this.widthReport <= 730)) {
+      document.getElementById('year').classList.remove('col-md-4');
+      document.getElementById('target').classList.remove('col-md-3', 'pr-0');
+      document.getElementById('action').classList.remove('col-md-5');
+      document.getElementById('year').classList.add('col-md-3');
+      document.getElementById('target').classList.add('col-md-5');
+      document.getElementById('action').classList.add('col-md-4');
+    }
   }
 
   createForm(listMainBuildingCategory: any) {

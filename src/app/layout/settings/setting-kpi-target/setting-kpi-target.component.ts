@@ -23,7 +23,7 @@ export class SettingKpiTargetComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.widthReport = document.getElementById('wrapper-report').offsetWidth;
-    if (this.widthReport <= 910) {
+    if (this.widthReport <= 940) {
       document.getElementById('wrapper-report').classList.add('flex-column');
       document.getElementById('menu-report').classList.add('mb-2');
       document.getElementById('menu-report').classList.add('menu-report--fixed');
@@ -42,7 +42,7 @@ export class SettingKpiTargetComponent implements OnInit {
 
 
     }
-    if (this.widthReport > 910) {
+    if (this.widthReport > 940) {
       document.getElementById('wrapper-report').classList.remove('flex-column');
       document.getElementById('menu-report').classList.remove('mb-2');
       document.getElementById('menu-report').classList.remove('menu-report--fixed');
@@ -74,7 +74,7 @@ export class SettingKpiTargetComponent implements OnInit {
   toggleCollapseMenu(idreport) {
     this.widthReport = document.getElementById('wrapper-report').offsetWidth;
     this.idReport = idreport;
-    if (this.widthReport <= 910) {
+    if (this.widthReport <= 940) {
       this.collapseMenu();
     }
   }

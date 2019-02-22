@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Route, ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
@@ -55,6 +55,7 @@ export class KpiChairComponent implements OnInit {
   isSubmitCreate = false;
   isValidateGroup = false;
   loadingListChairEmployeeCanChoosedTemp = false;
+  widthReport: number;
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -88,7 +89,26 @@ export class KpiChairComponent implements OnInit {
     this.getListGroupkpi();
   }
 
-
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.widthReport = document.getElementById('wrapper-report-child').offsetWidth;
+    if (this.widthReport <= 730) {
+      document.getElementById('year').classList.remove('col-md-3');
+      document.getElementById('target').classList.remove('col-md-5');
+      document.getElementById('action').classList.remove('col-md-4');
+      document.getElementById('year').classList.add('col-md-4');
+      document.getElementById('target').classList.add('col-md-3', 'pr-0');
+      document.getElementById('action').classList.add('col-md-5');
+    }
+    if (!(this.widthReport <= 730)) {
+      document.getElementById('year').classList.remove('col-md-4');
+      document.getElementById('target').classList.remove('col-md-3', 'pr-0');
+      document.getElementById('action').classList.remove('col-md-5');
+      document.getElementById('year').classList.add('col-md-3');
+      document.getElementById('target').classList.add('col-md-5');
+      document.getElementById('action').classList.add('col-md-4');
+    }
+  }
 
   getListChairToYearFuc(year: number) {
     if (this.paramAction === 'view' || this.paramAction === 'edit') {
