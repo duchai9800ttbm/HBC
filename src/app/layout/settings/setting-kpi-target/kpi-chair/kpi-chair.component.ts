@@ -52,6 +52,7 @@ export class KpiChairComponent implements OnInit {
   selectChairEmployeeChoosedTemp: any;
   listYearConfigured: number[];
   listYearNotConfigred: number[] = [];
+  isSubmitCreate = false;
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -307,36 +308,41 @@ export class KpiChairComponent implements OnInit {
   }
 
   saveTargetkpiToChair() {
-    this.settingService.createOrEditGroupChairEmployee(+this.yearkpi, this.groupKpiChairsArray.value).subscribe(response => {
-      switch (this.paramAction) {
-        case 'create': {
-          this.router.navigate(
-            [],
-            {
-              relativeTo: this.activatedRoute,
-              queryParams: { action: 'view', year: this.yearkpi },
-            });
-          this.alertService.success('Tạo mới KPI theo chủ trì thành công');
-          break;
+    this.isSubmitCreate = true;
+    if (this.yearkpi) {
+      this.settingService.createOrEditGroupChairEmployee(+this.yearkpi, this.groupKpiChairsArray.value).subscribe(response => {
+        switch (this.paramAction) {
+          case 'create': {
+            this.router.navigate(
+              [],
+              {
+                relativeTo: this.activatedRoute,
+                queryParams: { action: 'view', year: this.yearkpi },
+              });
+            this.alertService.success('Tạo mới KPI theo chủ trì thành công');
+            break;
+          }
+          case 'edit': {
+            this.router.navigate(
+              [],
+              {
+                relativeTo: this.activatedRoute,
+                queryParams: { action: 'view', year: this.yearkpi },
+              });
+            this.alertService.success('Chỉnh sửa KPI theo chủ trì thành công');
+          }
         }
-        case 'edit': {
-          this.router.navigate(
-            [],
-            {
-              relativeTo: this.activatedRoute,
-              queryParams: { action: 'view', year: this.yearkpi },
-            });
-          this.alertService.success('Chỉnh sửa KPI theo chủ trì thành công');
+        this.isSubmitCreate = false;
+      }, err => {
+        if (this.paramAction === 'create') {
+          this.alertService.error('Đã xảy ra lỗi. Tạo mới KPI theo chủ trì không thành công');
         }
-      }
-    }, err => {
-      if (this.paramAction === 'create') {
-        this.alertService.error('Đã xảy ra lỗi. Tạo mới KPI theo chủ trì không thành công');
-      }
-      if (this.paramAction === 'edit') {
-        this.alertService.error('Đã xảy ra lỗi. Chỉnh sửa KPI theo chủ trì không thành công');
-      }
-    });
+        if (this.paramAction === 'edit') {
+          this.alertService.error('Đã xảy ra lỗi. Chỉnh sửa KPI theo chủ trì không thành công');
+        }
+        this.isSubmitCreate = false;
+      });
+    }
   }
 
   compareFn(c1: any, c2: any): boolean {

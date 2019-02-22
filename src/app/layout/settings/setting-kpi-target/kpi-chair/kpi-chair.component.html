@@ -4,25 +4,31 @@
   </div>
 
   <div class="card p-3 mt-3">
-    <div class="row">
-      <div class="col-md-3">
+    <div class="row manipulation">
+      <div class="col-md-3 d-flex">
         <ng-container *ngIf="!(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
           <span class="font-weight-bold required">Năm:&nbsp;</span>&nbsp;&nbsp;
-          <span class="custom-dropdown">
-            <select class="form-control" style="width: 122px;" [(ngModel)]="yearkpi" (change)="changeYearKpiFuc()">
-              <option value="null" *ngIf="yearkpi === null">--Lựa chọn--</option>
-              <ng-container *ngIf="paramAction === 'view'">
-                <option [value]="itemYearConfigured" *ngFor="let itemYearConfigured of listYearConfigured">{{itemYearConfigured}}</option>
-              </ng-container>
-              <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
-                <option [value]="itemYearNotConfigured" *ngFor="let itemYearNotConfigured of listYearNotConfigred">{{itemYearNotConfigured}}</option>
-              </ng-container>
-            </select>
-          </span>
+          <div>
+            <div class="custom-dropdown">
+              <select class="form-control select-year--width" style="width: 122px;" [(ngModel)]="yearkpi" (change)="changeYearKpiFuc()"
+                [class.is-invalid]="isSubmitCreate && (!yearkpi || yearkpi === 'null')">
+                <option value="null" *ngIf="yearkpi === null">--Lựa chọn--</option>
+                <ng-container *ngIf="paramAction === 'view'">
+                  <option [value]="itemYearConfigured" *ngFor="let itemYearConfigured of listYearConfigured">{{itemYearConfigured}}</option>
+                </ng-container>
+                <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
+                  <option [value]="itemYearNotConfigured" *ngFor="let itemYearNotConfigured of listYearNotConfigred">{{itemYearNotConfigured}}</option>
+                </ng-container>
+              </select>
+            </div>
+            <div class="year-validate" *ngIf="isSubmitCreate && (!yearkpi || yearkpi === 'null')">
+              Trường này là bắt buộc nhập
+            </div>
+          </div>
         </ng-container>
         <ng-container *ngIf="(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
           <div>
-              Bạn chưa thiết lập KPI theo chủ trì cho bất kỳ năm nào, vui lòng chọn thêm mới chỉ tiêu
+            Bạn chưa thiết lập KPI theo chủ trì cho bất kỳ năm nào, vui lòng chọn thêm mới chỉ tiêu
           </div>
         </ng-container>
       </div>

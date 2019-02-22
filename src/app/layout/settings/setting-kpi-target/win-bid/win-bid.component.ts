@@ -107,35 +107,39 @@ export class WinBidComponent implements OnInit {
 
   createOrEditTargetWinBid() {
     console.log('this.formValue', this.targetWinBid.value);
-    this.settingService.editTargetWinBidToYear(this.targetWinBid.value).subscribe(response => {
-      if (this.paramAction === 'create') {
-        this.router.navigate(
-          [],
-          {
-            relativeTo: this.activatedRoute,
-            queryParams: { action: 'view', year: this.yearkpi },
-          });
-        this.alertService.success('Chỉnh sửa chỉ tiêu trúng thầu thành công.');
-      }
-      if (this.paramAction === 'edit') {
-        this.router.navigate(
-          [],
-          {
-            relativeTo: this.activatedRoute,
-            queryParams: { action: 'view', year: this.yearkpi },
-          });
-        this.alertService.success('Chỉnh sửa chỉ tiêu trúng thầu thành công.');
-      }
-      this.isSubmitCreate = false;
-    }, err => {
-      if (this.paramAction === 'create') {
-        this.alertService.error('Chỉnh sửa chỉ tiêu trúng thầu không thành công.');
-      }
-      if (this.paramAction === 'edit') {
-        this.alertService.error('Chỉnh sửa chỉ tiêu trúng thầu không thành công.');
-      }
-      this.isSubmitCreate = false;
-    });
+    this.isSubmitCreate = true;
+    console.log('this.this.yearkpi', this.yearkpi);
+    if (this.yearkpi) {
+      this.settingService.editTargetWinBidToYear(this.targetWinBid.value).subscribe(response => {
+        if (this.paramAction === 'create') {
+          this.router.navigate(
+            [],
+            {
+              relativeTo: this.activatedRoute,
+              queryParams: { action: 'view', year: this.yearkpi },
+            });
+          this.alertService.success('Chỉnh sửa chỉ tiêu trúng thầu thành công.');
+        }
+        if (this.paramAction === 'edit') {
+          this.router.navigate(
+            [],
+            {
+              relativeTo: this.activatedRoute,
+              queryParams: { action: 'view', year: this.yearkpi },
+            });
+          this.alertService.success('Chỉnh sửa chỉ tiêu trúng thầu thành công.');
+        }
+        this.isSubmitCreate = false;
+      }, err => {
+        if (this.paramAction === 'create') {
+          this.alertService.error('Chỉnh sửa chỉ tiêu trúng thầu không thành công.');
+        }
+        if (this.paramAction === 'edit') {
+          this.alertService.error('Chỉnh sửa chỉ tiêu trúng thầu không thành công.');
+        }
+        this.isSubmitCreate = false;
+      });
+    }
   }
 
   cancel() {
