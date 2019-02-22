@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-setting-kpi-target',
@@ -13,6 +13,7 @@ export class SettingKpiTargetComponent implements OnInit {
   urlArray = ['group-config', 'kpi-chair', 'group-config', 'win-bid', 'kpi-area', 'construction-items', 'type-construction'];
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -58,6 +59,17 @@ export class SettingKpiTargetComponent implements OnInit {
           (<HTMLLIElement>listReports[i]).classList.remove('d-none');
         }
       }
+    }
+  }
+
+  routerChildTab(childUrl: string) {
+    // console.log('url-child', this.activatedRoute.snapshot.children[0].routeConfig.path);
+    // console.log('query-param', this.activatedRoute.snapshot.queryParamMap.get('action'));
+    if (this.activatedRoute.snapshot.children[0].routeConfig.path !== `${childUrl}`) {
+      this.router.navigate([`/settings/kpi-target/${childUrl}`],
+        {
+          queryParams: { action: 'view' }
+        });
     }
   }
 
