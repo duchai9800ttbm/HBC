@@ -2,88 +2,90 @@
   <div class="menu">
     <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">chỉ tiêu kpi khu vực </h5>
   </div>
-
-  <div class="card p-3">
-    <div class="row manipulation">
-      <div class="col-md-3 d-flex">
-        <ng-container *ngIf="!(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
-          <div class="font-weight-bold required year--pad-top">Năm:&nbsp;</div>&nbsp;&nbsp;
-          <div>
-            <div class="custom-dropdown">
-              <select class="form-control select-year--width" [(ngModel)]="yearkpi" (change)="changeYearTargetFuc()"
-                [class.is-invalid]="isSubmitCreate && (!yearkpi || yearkpi === 'null')">
-                <option value="null" *ngIf="paramAction === 'create'">--Lựa chọn--</option>
-                <ng-container *ngIf="paramAction === 'view'">
-                  <option [value]="itemYearConfigured" *ngFor="let itemYearConfigured of listYearConfigured">{{itemYearConfigured}}</option>
-                </ng-container>
-                <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
-                  <option [value]="itemYearNotConfigured" *ngFor="let itemYearNotConfigured of listYearNotConfigred">{{itemYearNotConfigured}}</option>
-                </ng-container>
-              </select>
+  <div class="pt-3">
+    <div class="card p-3">
+      <div class="row manipulation">
+        <div class="col-md-3 d-flex">
+          <ng-container *ngIf="!(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
+            <div class="font-weight-bold required year--pad-top">Năm:&nbsp;</div>&nbsp;&nbsp;
+            <div>
+              <div class="custom-dropdown">
+                <select class="form-control select-year--width" [(ngModel)]="yearkpi" (change)="changeYearTargetFuc()"
+                  [class.is-invalid]="isSubmitCreate && (!yearkpi || yearkpi === 'null')">
+                  <option value="null" *ngIf="paramAction === 'create'">--Lựa chọn--</option>
+                  <ng-container *ngIf="paramAction === 'view'">
+                    <option [value]="itemYearConfigured" *ngFor="let itemYearConfigured of listYearConfigured">{{itemYearConfigured}}</option>
+                  </ng-container>
+                  <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
+                    <option [value]="itemYearNotConfigured" *ngFor="let itemYearNotConfigured of listYearNotConfigred">{{itemYearNotConfigured}}</option>
+                  </ng-container>
+                </select>
+              </div>
+              <div class="year-validate" *ngIf="isSubmitCreate && (!yearkpi || yearkpi === 'null')">
+                Trường này là bắt buộc nhập
+              </div>
             </div>
-            <div class="year-validate" *ngIf="isSubmitCreate && (!yearkpi || yearkpi === 'null')">
-              Trường này là bắt buộc nhập
+          </ng-container>
+          <ng-container *ngIf="(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
+            <div>
+              Bạn chưa thiết lập chỉ tiêu KPI khu vực cho bất kỳ năm nào, vui lòng chọn thêm mới chỉ tiêu
             </div>
-          </div>
-        </ng-container>
-        <ng-container *ngIf="(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
-          <div>
-            Bạn chưa thiết lập chỉ tiêu KPI khu vực cho bất kỳ năm nào, vui lòng chọn thêm mới chỉ tiêu
-          </div>
-        </ng-container>
+          </ng-container>
+        </div>
+        <div class="col-md-6 total-target--pad-top">
+          <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
+          <span>{{ kpiLocation?.get('targetTotal').value ? (kpiLocation?.get('targetTotal').value | truncateDecimal) :
+            '0'}}</span>
+        </div>
+        <div class="text-right col-md-3">
+          <ng-container *ngIf="paramAction === 'view'">
+            <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-area']" [queryParams]="{action:'edit'}">Sửa
+            </button>
+            <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../kpi-area']" [queryParams]="{action:'create'}"
+              (click)="createKpiArea()">Thêm mới chỉ tiêu
+            </button>
+          </ng-container>
+          <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
+            <button class="btn btn-secondary" type="button" (click)="cancel()">Hủy
+            </button>
+            <button type="submit" class="btn btn-primary ml-1" (click)="createOrEditKpiLocation()">Lưu
+            </button>
+          </ng-container>
+        </div>
       </div>
-      <div class="col-md-6 total-target--pad-top">
-        <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
-        <span>{{ kpiLocation?.get('targetTotal').value ? (kpiLocation?.get('targetTotal').value | truncateDecimal) :
-          '0'}}</span>
-      </div>
-      <div class="text-right col-md-3">
-        <ng-container *ngIf="paramAction === 'view'">
-          <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-area']" [queryParams]="{action:'edit'}">Sửa
-          </button>
-          <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../kpi-area']" [queryParams]="{action:'create'}"
-            (click)="createKpiArea()">Thêm mới chỉ tiêu
-          </button>
-        </ng-container>
-        <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
-          <button class="btn btn-secondary" type="button" (click)="cancel()">Hủy
-          </button>
-          <button type="submit" class="btn btn-primary ml-1" (click)="createOrEditKpiLocation()">Lưu
-          </button>
-        </ng-container>
-      </div>
-    </div>
-    <div class="row pt-2">
-      <div class="col-md-12">
-        <form [formGroup]="kpiLocation" novalidate class="pt-3" *ngIf="kpiLocation">
-          <table class="zui-table table table-striped table-hover mt-1">
-            <thead>
-              <tr>
-                <th class="font-weight-bold">Khu vực</th>
-                <th class="text-right font-weight-bold">Chỉ tiêu năm trước</th>
-                <th class="text-right font-weight-bold">Chỉ tiêu năm cấu hình</th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-container formArrayName="location">
-                <ng-container *ngFor="let itemLocation of locationFA.controls; let i = index" [formGroupName]="i">
-                  <tr>
-                    <td>{{itemLocation?.get('locationName')?.value}}</td>
-                    <td class="text-right">{{ itemLocation?.get('preYearTarget').value ?
-                      (itemLocation?.get('preYearTarget')?.value | truncateDecimal) : '0'}}</td>
-                    <td *ngIf="paramAction === 'view'" class="text-right">{{ itemLocation?.get('curYearTarget').value ?
-                      (itemLocation?.get('curYearTarget').value
-                      | truncateDecimal) : '-'}}</td>
-                    <td *ngIf="paramAction === 'edit' || paramAction === 'create'" class="text-right">
-                      <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="curYearTarget"
-                        (input)="calculTargetTotal()">
-                    </td>
-                  </tr>
+      <div class="row pt-2">
+        <div class="col-md-12">
+          <form [formGroup]="kpiLocation" novalidate class="pt-3" *ngIf="kpiLocation">
+            <table class="zui-table table table-striped table-hover mt-1">
+              <thead>
+                <tr>
+                  <th class="font-weight-bold">Khu vực</th>
+                  <th class="text-right font-weight-bold">Chỉ tiêu năm trước</th>
+                  <th class="text-right font-weight-bold">Chỉ tiêu năm cấu hình</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container formArrayName="location">
+                  <ng-container *ngFor="let itemLocation of locationFA.controls; let i = index" [formGroupName]="i">
+                    <tr>
+                      <td>{{itemLocation?.get('locationName')?.value}}</td>
+                      <td class="text-right">{{ itemLocation?.get('preYearTarget').value ?
+                        (itemLocation?.get('preYearTarget')?.value | truncateDecimal) : '0'}}</td>
+                      <td *ngIf="paramAction === 'view'" class="text-right">{{ itemLocation?.get('curYearTarget').value
+                        ?
+                        (itemLocation?.get('curYearTarget').value
+                        | truncateDecimal) : '-'}}</td>
+                      <td *ngIf="paramAction === 'edit' || paramAction === 'create'" class="text-right">
+                        <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="curYearTarget"
+                          (input)="calculTargetTotal()">
+                      </td>
+                    </tr>
+                  </ng-container>
                 </ng-container>
-              </ng-container>
-            </tbody>
-          </table>
-        </form>
+              </tbody>
+            </table>
+          </form>
+        </div>
       </div>
     </div>
   </div>
