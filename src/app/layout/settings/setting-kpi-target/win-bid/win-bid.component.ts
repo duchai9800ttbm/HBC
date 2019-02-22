@@ -144,7 +144,7 @@ export class WinBidComponent implements OnInit {
 
   cancel() {
     if (this.paramAction === 'create') {
-      this.yearkpi = this.yearBackTemp;
+      this.yearkpi = this.yearBackTemp ? this.yearBackTemp : this.currentYear;
       this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
         this.targetWinBid.removeControl('id');
         this.targetWinBid.addControl('id', this.fb.control(response.id));

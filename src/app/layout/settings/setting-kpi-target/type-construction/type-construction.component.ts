@@ -207,7 +207,7 @@ export class TypeConstructionComponent implements OnInit {
 
   cancel() {
     if (this.paramAction === 'create') {
-      this.yearkpi = this.yearBackTemp;
+      this.yearkpi = this.yearBackTemp ? this.yearBackTemp : this.currentYear;
       this.settingService.getDetailConstructionType(this.yearkpi).subscribe(responseToYear => {
         this.constructionTypeForm.removeControl('typeBuild');
         this.constructionTypeForm.addControl('typeBuild', this.fb.array([]));

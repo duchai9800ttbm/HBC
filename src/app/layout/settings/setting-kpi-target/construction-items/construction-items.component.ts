@@ -206,7 +206,7 @@ export class ConstructionItemsComponent implements OnInit {
 
   cancel() {
     if (this.paramAction === 'create') {
-      this.yearkpi = this.yearBackTemp;
+      this.yearkpi = this.yearBackTemp ? this.yearBackTemp : this.currentYear;
       this.settingService.getDetailConstructionCategory(this.yearkpi).subscribe(responseToYear => {
         this.constructionCategoryForm.removeControl('mainBuild');
         this.constructionCategoryForm.addControl('mainBuild', this.fb.array([]));

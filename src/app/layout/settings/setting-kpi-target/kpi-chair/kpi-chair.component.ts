@@ -53,6 +53,7 @@ export class KpiChairComponent implements OnInit {
   listYearConfigured: number[];
   listYearNotConfigred: number[] = [];
   isSubmitCreate = false;
+  isValidateGroup = false;
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -89,10 +90,16 @@ export class KpiChairComponent implements OnInit {
 
 
   getListChairToYearFuc(year: number) {
-    this.settingService.getListChairToYear(year).subscribe(response => {
-      console.log('this.listYear', response);
-      this.createForm(response[0]);
-    });
+    if (this.paramAction === 'view' || this.paramAction === 'edit') {
+      this.settingService.getListChairToYear(year).subscribe(response => {
+        console.log('this.listYear', response);
+        this.createForm(response[0]);
+      });
+    }
+    if (this.paramAction === 'create') {
+      this.yearkpi = null;
+      this.createForm(null);
+    }
   }
 
   getListGroupkpi() {
@@ -121,6 +128,11 @@ export class KpiChairComponent implements OnInit {
       const formArrayControl = this.groupKpiChairFA as FormArray;
       formArrayControl.push(formArrayItem);
     }
+    this.groupKpiChairsArray.valueChanges.subscribe(valueChange => {
+      if (this.isSubmitCreate) {
+        this.isValidateGroup = !this.groupKpiChairFA.value.some(item => item.groupName);
+      }
+    });
   }
 
   setValueGroupKpiChairFormControl(groupChairCallAPI) {
@@ -202,16 +214,17 @@ export class KpiChairComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: this.paramAction, year: this.yearkpi },
       });
-    this.settingService.getListChairToYear(+this.yearkpi).subscribe(response => {
-      if (response && (response || []).length !== 0) {
-        this.groupKpiChairsArray.removeControl('groupKpiChair');
-        this.groupKpiChairsArray.addControl('groupKpiChair', this.fb.array([]));
-        this.setValueGroupKpiChairFormControl(response[0]);
-      } else {
-        this.setFormNotValue();
-      }
-    });
-
+    if (this.paramAction === 'view') {
+      this.settingService.getListChairToYear(+this.yearkpi).subscribe(response => {
+        if (response && (response || []).length !== 0) {
+          this.groupKpiChairsArray.removeControl('groupKpiChair');
+          this.groupKpiChairsArray.addControl('groupKpiChair', this.fb.array([]));
+          this.setValueGroupKpiChairFormControl(response[0]);
+        } else {
+          this.setFormNotValue();
+        }
+      });
+    }
   }
 
   setFormNotValue() {
@@ -226,10 +239,11 @@ export class KpiChairComponent implements OnInit {
         disabled: false,
       },
       chairEmployees: this.fb.array([]),
-      targetGroup: null
+      targetGroup: 0
     });
     const formArrayControl = this.groupKpiChairFA as FormArray;
     formArrayControl.push(formArrayItem);
+    this.groupKpiChairsArray.get('targetTotal').patchValue(0);
   }
 
 
@@ -309,7 +323,8 @@ export class KpiChairComponent implements OnInit {
 
   saveTargetkpiToChair() {
     this.isSubmitCreate = true;
-    if (this.yearkpi) {
+    this.isValidateGroup = !this.groupKpiChairFA.value.some(item => item.groupName);
+    if (this.yearkpi && this.groupKpiChairFA && this.groupKpiChairFA.value.some(item => item.groupName)) {
       this.settingService.createOrEditGroupChairEmployee(+this.yearkpi, this.groupKpiChairsArray.value).subscribe(response => {
         switch (this.paramAction) {
           case 'create': {
@@ -333,6 +348,7 @@ export class KpiChairComponent implements OnInit {
           }
         }
         this.isSubmitCreate = false;
+        this.isValidateGroup = false;
       }, err => {
         if (this.paramAction === 'create') {
           this.alertService.error('Đã xảy ra lỗi. Tạo mới KPI theo chủ trì không thành công');
@@ -341,6 +357,7 @@ export class KpiChairComponent implements OnInit {
           this.alertService.error('Đã xảy ra lỗi. Chỉnh sửa KPI theo chủ trì không thành công');
         }
         this.isSubmitCreate = false;
+        this.isValidateGroup = false;
       });
     }
   }
@@ -382,8 +399,8 @@ export class KpiChairComponent implements OnInit {
 
   cancel() {
     if (this.paramAction === 'create') {
-      this.yearkpi = this.yearBackTemp;
-      this.settingService.getListChairToYear(+this.yearBackTemp).subscribe(response => {
+      this.yearkpi = this.yearBackTemp ? this.yearBackTemp : this.currentYear;
+      this.settingService.getListChairToYear(+this.yearkpi).subscribe(response => {
         if (response && (response || []).length !== 0) {
           this.groupKpiChairsArray.removeControl('groupKpiChair');
           this.groupKpiChairsArray.addControl('groupKpiChair', this.fb.array([]));

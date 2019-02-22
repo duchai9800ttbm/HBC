@@ -223,7 +223,7 @@ export class KpiAreaComponent implements OnInit {
 
   cancel() {
     if (this.paramAction === 'create') {
-      this.yearkpi = this.yearBackTemp;
+      this.yearkpi = this.yearBackTemp ? this.yearBackTemp : this.currentYear;
       this.settingService.getDetailKpiLocationToYear(this.yearkpi).subscribe(responseToYear => {
         this.kpiLocation.removeControl('location');
         this.kpiLocation.addControl('location', this.fb.array([]));

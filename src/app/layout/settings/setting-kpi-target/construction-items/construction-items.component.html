@@ -13,10 +13,10 @@
                 <select class="form-control select-year--width" [(ngModel)]="yearkpi" (change)="changeYearTargetFuc()"
                   [class.is-invalid]="isSubmitCreate && (!yearkpi || yearkpi === 'null')">
                   <option value="null" *ngIf="paramAction === 'create'">--Lựa chọn--</option>
-                  <ng-container *ngIf="paramAction === 'view'">
+                  <ng-container *ngIf="paramAction === 'view' || paramAction === 'edit'">
                     <option [value]="itemYearConfigured" *ngFor="let itemYearConfigured of listYearConfigured">{{itemYearConfigured}}</option>
                   </ng-container>
-                  <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
+                  <ng-container *ngIf="paramAction === 'create'">
                     <option [value]="itemYearNotConfigured" *ngFor="let itemYearNotConfigured of listYearNotConfigred">{{itemYearNotConfigured}}</option>
                   </ng-container>
                 </select>
