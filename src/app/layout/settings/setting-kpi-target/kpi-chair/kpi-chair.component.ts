@@ -8,6 +8,7 @@ import { GroupKPIList } from '../../../../shared/models/setting/targets-kpi/grou
 import { PackageService } from '../../../../shared/services/package.service';
 import { GroupChaired } from '../../../../shared/models/package/group-chaired.model';
 import { AlertService } from '../../../../shared/services';
+import { ChairToYear } from '../../../../shared/models/setting/targets-kpi/to-chair/chair-to-year.model';
 @Component({
   selector: 'app-kpi-chair',
   templateUrl: './kpi-chair.component.html',
@@ -20,6 +21,7 @@ export class KpiChairComponent implements OnInit {
   modalRef: BsModalRef;
   searchTermChairName$ = new BehaviorSubject<string>('');
   yearkpi: string | number;
+  yearBackTemp: string | number;
   listGroupkpi: GroupKPIList[];
   listChairEmployee: GroupChaired[];
   GroupNameAddChair = new GroupKPIList();
@@ -37,7 +39,7 @@ export class KpiChairComponent implements OnInit {
     }
   }
   get arrayGroupChoosed() {
-    if ( this.groupKpiChairsArray && this.groupKpiChairFA) {
+    if (this.groupKpiChairsArray && this.groupKpiChairFA) {
       return this.groupKpiChairFA.value.map(itemGroup => itemGroup.groupName && itemGroup.groupName.id);
     } else {
       return [];
@@ -48,6 +50,8 @@ export class KpiChairComponent implements OnInit {
   selectChairEmployeeCanChoosedTemp: any;
   listChairEmployeeChoosedTemp = [];
   selectChairEmployeeChoosedTemp: any;
+  listYearConfigured: number[];
+  listYearNotConfigred: number[] = [];
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -59,7 +63,6 @@ export class KpiChairComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.activatedRoute.queryParams.subscribe(params => {
       this.paramAction = params['action'];
       this.paramYear = params['year'];
@@ -69,11 +72,20 @@ export class KpiChairComponent implements OnInit {
     } else {
       this.yearkpi = this.currentYear;
     }
+    this.settingService.listYearConfigToChair().subscribe(reponseListYear => {
+      this.listYearConfigured = reponseListYear;
+      // list not configred
+      for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
+        if (!this.listYearConfigured.includes(i)) {
+          this.listYearNotConfigred.push(i);
+        }
+      }
+    });
     this.getListChairToYearFuc(+this.yearkpi);
     this.getListGroupkpi();
-
-
   }
+
+
 
   getListChairToYearFuc(year: number) {
     this.settingService.getListChairToYear(year).subscribe(response => {
@@ -228,6 +240,7 @@ export class KpiChairComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: 'create', year: null },
       });
+    this.yearBackTemp = this.yearkpi;
     this.yearkpi = null;
     this.setFormNotValue();
   }
@@ -359,6 +372,27 @@ export class KpiChairComponent implements OnInit {
 
   removeGroupToForm(indexForm: number) {
     this.groupKpiChairFA.removeAt(indexForm);
+  }
+
+  cancel() {
+    if (this.paramAction === 'create') {
+      this.yearkpi = this.yearBackTemp;
+      this.settingService.getListChairToYear(+this.yearBackTemp).subscribe(response => {
+        if (response && (response || []).length !== 0) {
+          this.groupKpiChairsArray.removeControl('groupKpiChair');
+          this.groupKpiChairsArray.addControl('groupKpiChair', this.fb.array([]));
+          this.setValueGroupKpiChairFormControl(response[0]);
+        } else {
+          this.setFormNotValue();
+        }
+      });
+    }
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: { action: 'view', year: null },
+      });
   }
 
 }

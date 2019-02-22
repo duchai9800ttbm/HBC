@@ -22,6 +22,9 @@ export class TypeConstructionComponent implements OnInit {
     return this.constructionTypeForm.get('typeBuild') as FormArray;
   }
   isSubmitCreate = false;
+  listYearConfigured: number[];
+  listYearNotConfigred: number[] = [];
+  yearBackTemp: number;
   constructor(
     private fb: FormBuilder,
     private settingService: SettingService,
@@ -41,6 +44,16 @@ export class TypeConstructionComponent implements OnInit {
     } else {
       this.yearkpi = this.currentYear;
     }
+    this.settingService.listYearConfigToKpiConstructionType().subscribe(reponseListYear => {
+      console.log('this.reponseListYear', reponseListYear);
+      this.listYearConfigured = reponseListYear;
+      // list not configred
+      for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
+        if (!this.listYearConfigured.includes(i)) {
+          this.listYearNotConfigred.push(i);
+        }
+      }
+    });
     this.settingService.getDetailConstructionType(this.yearkpi).subscribe(responseToYear => {
       if (responseToYear && (responseToYear || []).length !== 0) {
         console.log('have reposonse');
@@ -164,6 +177,7 @@ export class TypeConstructionComponent implements OnInit {
   }
 
   createConstructionType() {
+    this.yearBackTemp = this.yearkpi;
     this.yearkpi = null;
     if (this.listBuildingProjectType) {
       this.createNewForm(this.listBuildingProjectType);
@@ -189,5 +203,32 @@ export class TypeConstructionComponent implements OnInit {
       (this.constructionTypeForm.get('typeBuild') as FormArray).push(formArrayItem);
     });
     this.constructionTypeForm.get('targetTotal').patchValue(0);
+  }
+
+  cancel() {
+    if (this.paramAction === 'create') {
+      this.yearkpi = this.yearBackTemp;
+      this.settingService.getDetailConstructionType(this.yearkpi).subscribe(responseToYear => {
+        this.constructionTypeForm.removeControl('typeBuild');
+        this.constructionTypeForm.addControl('typeBuild', this.fb.array([]));
+        this.constructionTypeForm.removeControl('targetTotal');
+        this.constructionTypeForm.addControl('targetTotal', this.fb.control(null));
+        if (responseToYear && (responseToYear || []).length !== 0) {
+          this.createForm(responseToYear);
+        }
+        if (!(responseToYear && (responseToYear || []).length !== 0)) {
+          this.dataService.getListConstructonTypes().subscribe(listBuildingProjectType => {
+            this.listBuildingProjectType = listBuildingProjectType;
+            this.createForm(listBuildingProjectType);
+          });
+        }
+      });
+    }
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: { action: 'view', year: null },
+      });
   }
 }

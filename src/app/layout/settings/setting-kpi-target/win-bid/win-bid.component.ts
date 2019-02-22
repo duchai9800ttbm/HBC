@@ -16,6 +16,9 @@ export class WinBidComponent implements OnInit {
   currentYear = (new Date()).getFullYear();
   yearkpi: number | string;
   isSubmitCreate = false;
+  listYearConfigured: number[];
+  listYearNotConfigred: number[] = [];
+  yearBackTemp: string | number;
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -33,7 +36,18 @@ export class WinBidComponent implements OnInit {
     } else {
       this.yearkpi = this.currentYear;
     }
+    this.settingService.listYearConfigToWinBid().subscribe(reponseListYear => {
+      console.log('this.reponseListYear', reponseListYear);
+      this.listYearConfigured = reponseListYear;
+      // list not configred
+      for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
+        if (!this.listYearConfigured.includes(i)) {
+          this.listYearNotConfigred.push(i);
+        }
+      }
+    });
     this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
+      console.log('settingService,', response);
       this.createForm(response);
     });
   }
@@ -75,6 +89,7 @@ export class WinBidComponent implements OnInit {
   }
 
   addTargetForYear() {
+    this.yearBackTemp = this.yearkpi;
     this.yearkpi = null;
   }
 
@@ -121,5 +136,27 @@ export class WinBidComponent implements OnInit {
       }
       this.isSubmitCreate = false;
     });
+  }
+
+  cancel() {
+    if (this.paramAction === 'create') {
+      this.yearkpi = this.yearBackTemp;
+      this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
+        this.targetWinBid.removeControl('id');
+        this.targetWinBid.addControl('id', this.fb.control(response.id));
+        this.targetWinBid.removeControl('total');
+        this.targetWinBid.addControl('total', this.fb.control(response.total));
+        this.targetWinBid.removeControl('percent');
+        this.targetWinBid.addControl('percent', this.fb.control(response.percent));
+        this.targetWinBid.removeControl('totalTarget');
+        this.targetWinBid.addControl('totalTarget', this.fb.control(response.totalTarget));
+      });
+    }
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: { action: 'view', year: null },
+      });
   }
 }

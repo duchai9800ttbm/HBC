@@ -697,6 +697,13 @@ export class SettingService {
         };
         return this.apiService.post(url, requestModel);
     }
+    // Danh sách năm đã cấu hình KPI khu vực
+    listYearConfigToChair() {
+        const url = `kpi/chairemployee/configuredyears`;
+        return this.apiService.get(url).map(reponse => {
+            return (reponse.result || []);
+        });
+    }
     // ====
     // KPI win bid
     // mapping chi tiết chỉ tiêu trúng thầu theo năm
@@ -730,6 +737,13 @@ export class SettingService {
             totalTarget: valueForm.totalTarget
         };
         return this.apiService.post(url, requestModel);
+    }
+    // Danh sách năm đã cấu hình chỉ tiêu trúng thầu
+    listYearConfigToWinBid() {
+        const url = `kpiwinningofbid/configuredyears`;
+        return this.apiService.get(url).map(reponse => {
+            return (reponse.result || []);
+        });
     }
     // ============
     // Chỉ tiêu KPI theo khu vực
@@ -790,6 +804,13 @@ export class SettingService {
         };
         return this.apiService.post(url, requestModel);
     }
+    // Danh sách năm đã cấu hình KPI khu vực
+    listYearConfigToKpiArea() {
+        const url = `kpilocation/configuredyears`;
+        return this.apiService.get(url).map(reponse => {
+            return (reponse.result || []);
+        });
+    }
     // ===============
     // kpi theo hạng mục thi công
     // mapping Chi tiết chỉ tiêu KPI hạng mục thi công theo năm
@@ -833,6 +854,15 @@ export class SettingService {
         };
         return this.apiService.post(url, requestModel);
     }
+    // Danh sách năm đã cấu hình KPI hạng mục thi công
+    listYearConfigToKpiConstructionCategory() {
+        const url = `kpiconstructioncategory/configuredyears`;
+        return this.apiService.get(url).map(reponse => {
+            return (reponse.result || []);
+        });
+    }
+    // ===============
+    // kpi theo hạng mục thi công
     // mapping Chi tiết chỉ tiêu KPI loại công trình theo năm
     mappingDetailConstructionType(result: any): ConstructionTypeToYear {
         return {
@@ -873,5 +903,12 @@ export class SettingService {
             })
         };
         return this.apiService.post(url, requestModel);
+    }
+    // Danh sách năm đã cấu hình KPI loại công trình
+    listYearConfigToKpiConstructionType() {
+        const url = `kpiconstructioncategory/configuredyears`;
+        return this.apiService.get(url).map(reponse => {
+            return (reponse.result || []);
+        });
     }
 }

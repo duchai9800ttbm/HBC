@@ -20,6 +20,9 @@ export class KpiAreaComponent implements OnInit {
     return this.kpiLocation.get('location') as FormArray;
   }
   isSubmitCreate = false;
+  listYearConfigured: number[];
+  listYearNotConfigred: number[] = [];
+  yearBackTemp: number;
   constructor(
     private settingService: SettingService,
     private fb: FormBuilder,
@@ -38,6 +41,16 @@ export class KpiAreaComponent implements OnInit {
     } else {
       this.yearkpi = this.currentYear;
     }
+    this.settingService.listYearConfigToWinBid().subscribe(reponseListYear => {
+      console.log('this.reponseListYear', reponseListYear);
+      this.listYearConfigured = reponseListYear;
+      // list not configred
+      for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
+        if (!this.listYearConfigured.includes(i)) {
+          this.listYearNotConfigred.push(i);
+        }
+      }
+    });
     this.settingService.getDetailKpiLocationToYear(this.yearkpi).subscribe(responseToYear => {
       if (responseToYear) {
         const listLocation = this.handlData(responseToYear);
@@ -169,6 +182,7 @@ export class KpiAreaComponent implements OnInit {
   }
 
   createKpiArea() {
+    this.yearBackTemp = this.yearkpi;
     this.yearkpi = null;
     if (this.listLocation) {
       this.createNewForm(this.listLocation);
@@ -206,4 +220,32 @@ export class KpiAreaComponent implements OnInit {
     this.kpiLocation.get('targetTotal').patchValue(0);
   }
 
+
+  cancel() {
+    if (this.paramAction === 'create') {
+      this.yearkpi = this.yearBackTemp;
+      this.settingService.getDetailKpiLocationToYear(this.yearkpi).subscribe(responseToYear => {
+        this.kpiLocation.removeControl('location');
+        this.kpiLocation.addControl('location', this.fb.array([]));
+        this.kpiLocation.removeControl('targetTotal');
+        this.kpiLocation.addControl('targetTotal', this.fb.control(null));
+        if (responseToYear) {
+          const listLocation = this.handlData(responseToYear);
+          this.createForm(listLocation);
+        }
+        if (!responseToYear) {
+          return this.settingService.readLocation('', 0, 1000).subscribe(response => {
+            this.listLocation = response.items;
+            this.createForm(response.items);
+          });
+        }
+      });
+    }
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: { action: 'view', year: null },
+      });
+  }
 }
