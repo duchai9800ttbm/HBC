@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="table-responsive position-relative">
-      <table class="row-border cell-border dataTable pt-2">
+      <table class="row-border cell-border dataTable pt-2 fix-table-layout">
         <thead>
           <tr>
             <th class="text-center text-uppercase font-weight-bold check-box--width">
@@ -46,9 +46,9 @@
                 <span class="custom-control-indicator"></span>
               </label>
             </td>
-            <td>{{item?.name}}</td>
-            <td>{{item?.desc}}</td>
-            <td>{{item?.status?.value}}</td>
+            <td class="text-truncate">{{item?.name}}</td>
+            <td class="text-truncate">{{item?.desc}}</td>
+            <td class="text-truncate">{{item?.status?.value}}</td>
             <td>
               <div class="center-parent w-100 h-100">
                 <div class="col-md-6 center-parent cursor-pointer" (click)="editGroupConfig(item?.id)">
