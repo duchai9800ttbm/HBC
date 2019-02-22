@@ -1,14 +1,3 @@
-<div class="d-flex mb-2">
-    <span class="d-flex">
-        <span class="center-parent">Từ:</span>
-        <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
-    </span>
-    <span class="ml-5 d-flex">
-        <span class="center-parent">Đến:</span>
-        <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
-    </span>
-    <button class="btn btn-primary ml-5">Xem</button>
-</div>
 <h4 class="text-center text-uppercase font-weight-bold">THỐNG KÊ DIỆN TÍCH SÀN XÂY DỰNG ĐÃ THAM GIA VÀ
     TRÚNG THẦU</h4>
 <table class="row-border cell-border dataTable">
@@ -22,14 +11,57 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td class="text-center">1</td>
-            <td>Chỉ tiêu KPI</td>
-            <td class="text-right">{{ '100' }}%</td>
-            <td class="text-right">{{ '6800000000000' |thousandSeparate }}</td>
-            <td>
-                <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
-            </td>
-        </tr>
+        <ng-container *ngIf="reportFloorArea">
+            <tr>
+                <td class="text-center">1</td>
+                <td>Diện tích sàn xây dựng đã đấu thầu</td>
+                <td class="text-right">{{ reportFloorArea?.tenderBuildingFloorArea ?
+                    (reportFloorArea?.tenderBuildingFloorArea | thousandSeparate) : '0.00' }}</td>
+                <td class="text-right">{{ reportFloorArea?.tenderBuildingFloorAmount ?
+                    (reportFloorArea?.tenderBuildingFloorAmount | thousandSeparate) : '0.00' }}</td>
+                <td>
+                    <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">2</td>
+                <td>Diện tích sàn xây dựng đang chờ kết quả</td>
+                <td class="text-right">{{ reportFloorArea?.waitForResultBuildingFloorArea ?
+                    (reportFloorArea?.waitForResultBuildingFloorArea | thousandSeparate) : '0.00' }}</td>
+                <td class="text-right">{{ reportFloorArea?.waitForResultBuildingFloorAmount ?
+                    (reportFloorArea?.waitForResultBuildingFloorAmount | thousandSeparate) : '0.00' }}</td>
+                <td>
+                    <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">3</td>
+                <td>Diện tích sàn xây dựng trúng thầu</td>
+                <td class="text-right">{{ reportFloorArea?.winningOfBidBuildingFloorArea ?
+                    (reportFloorArea?.winningOfBidBuildingFloorArea | thousandSeparate) : '0.00' }}</td>
+                <td class="text-right">{{ reportFloorArea?.winningOfBidBuildingFloorAmount ?
+                    (reportFloorArea?.winningOfBidBuildingFloorAmount | thousandSeparate) : '0.00' }}</td>
+                <td>
+                    <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center"></td>
+                <td class="font-weight-bold">Tỷ lệ trúng thầu/ đấu thầu</td>
+                <td class="text-right">{{ reportFloorArea?.winningOfBidCompareTenderPer ?
+                    (reportFloorArea?.winningOfBidCompareTenderPer | thousandSeparate) : '0.00' }}</td>
+                <td class="text-right">{{ reportFloorArea?.winningOfBidCompareTotalBidPer ?
+                    (reportFloorArea?.winningOfBidCompareTotalBidPer | thousandSeparate) : '0.00' }}</td>
+                <td>
+                    <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+                </td>
+            </tr>
+        </ng-container>
+        <ng-container *ngIf="!reportFloorArea">
+            <tr>
+                <td colspan="5" class="text-center"></td>
+            </tr>
+        </ng-container>
+
     </tbody>
 </table>

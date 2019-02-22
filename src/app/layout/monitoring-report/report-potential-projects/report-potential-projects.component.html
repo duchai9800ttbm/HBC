@@ -1,14 +1,3 @@
-<div class="d-flex mb-2">
-  <span class="d-flex">
-    <span class="center-parent">Từ:</span>
-    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
-  </span>
-  <span class="ml-5 d-flex">
-    <span class="center-parent">Đến:</span>
-    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3"></kendo-datepicker>
-  </span>
-  <button class="btn btn-primary ml-5">Xem</button>
-</div>
 <h4 class="text-center text-uppercase font-weight-bold">DANH SÁCH DỰ ÁN TIỀM NĂNG ĐẾN THỜI ĐIỂM BÁO CÁO</h4>
 <table class="row-border cell-border dataTable">
   <thead>
@@ -21,14 +10,24 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td class="text-center">1</td>
-      <td>Chỉ tiêu KPI</td>
-      <td class="text-right">{{ '100' }}%</td>
-      <td class="text-right">{{ '6800000000000' |thousandSeparate }}</td>
-      <td>
-        <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
-      </td>
-    </tr>
+    <ng-container *ngIf="reportPotentialProjects && (reportPotentialProjects || []).length !== 0">
+      <ng-container *ngFor="let itemReportPotentialProjects of reportPotentialProjects; let i = index">
+        <tr>
+          <td class="text-center">{{i + 1}}</td>
+          <td>{{itemReportPotentialProjects?.projectName}}</td>
+          <td >{{itemReportPotentialProjects?.opportunityName}}</td>
+          <td>{{itemReportPotentialProjects?.chairEmployee?.employeeName}}</td>
+          <td class="text-right">
+              {{itemReportPotentialProjects?.totalCostOfSubmission ? (itemReportPotentialProjects?.totalCostOfSubmission | thousandSeparate) : '0.00'}}
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!(reportPotentialProjects && (reportPotentialProjects || []).length !== 0)">
+      <tr>
+        <td colspan="5" class="text-center">Không có dữ liệu</td>
+      </tr>
+    </ng-container>
+
   </tbody>
 </table>

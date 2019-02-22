@@ -298,7 +298,9 @@ export class ReportFollowService {
     const url = `report/potentialbidopportunity?startDate=${startDate}&endDate=${endDate}`;
     return this.apiService.get(url).map(response => {
       const result = response.result;
-      return this.mappingPotentialProjects(result);
+      return (result || []).map(item => {
+        return this.mappingPotentialProjects(item);
+      });
     });
   }
   // mapping Thống kê số lượng trúng thầu
@@ -316,7 +318,7 @@ export class ReportFollowService {
   }
   // Thống kê số lượng trúng thầu
   listNumberWinningOfBid(startDate: number, endDate: number): Observable<ReportNumberWinBid> {
-    const url = `report/potentialbidopportunity?startDate=${startDate}&endDate=${endDate}`;
+    const url = `report/winningofbid?startDate=${startDate}&endDate=${endDate}`;
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return this.mappingNumberWinningOfBid(result);

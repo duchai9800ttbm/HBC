@@ -153,7 +153,12 @@ export class MonitoringReportComponent implements OnInit {
       case 'kpi-chair':
       case 'win-bid':
       case 'kpi-area':
-      case 'win-rate-contractors': {
+      case 'win-rate-contractors':
+      case 'win-rate-quarter-of-year':
+      case 'floor-area':
+      case 'number-win-bid':
+      case 'potential-projects':
+       {
         this.startAndEndDate.startDate = this.startDate;
         this.startAndEndDate.endDate = this.endDate;
         this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
