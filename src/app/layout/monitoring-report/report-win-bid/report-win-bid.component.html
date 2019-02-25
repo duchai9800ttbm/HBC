@@ -2,33 +2,37 @@
 <table class="row-border cell-border dataTable fix-table-layout">
   <thead>
     <tr>
-      <th class="text-center text-uppercase font-weight-bold number-index--width">stt</th>
-      <th class="text-center font-weight-bold">Chỉ tiêu trúng thầu</th>
-      <th class="text-center font-weight-bold">Tỉ lệ thúng thầu</th>
-      <th class="text-center font-weight-bold">Giá trị (VND)</th>
-      <th class="text-center font-weight-bold">Ghi chú</th>
+      <th class="text-center text-uppercase font-weight-bold number-index--width" title="STT">stt</th>
+      <th class="text-center font-weight-bold" title="Chỉ tiêu trúng thầu">Chỉ tiêu trúng thầu</th>
+      <th class="text-center font-weight-bold" title="Tỉ lệ thúng thầu">Tỉ lệ thúng thầu</th>
+      <th class="text-center font-weight-bold" title="Giá trị (VND)">Giá trị (VND)</th>
+      <th class="text-center font-weight-bold" title="Ghi chú">Ghi chú</th>
     </tr>
   </thead>
   <tbody>
     <ng-container *ngIf="reportWinBid">
       <tr>
-        <td class="text-center">1</td>
-        <td>Chỉ tiêu KPI</td>
-        <td class="text-right">{{reportWinBid?.winningOfBidTargetPercent ? (reportWinBid?.winningOfBidTargetPercent |
+        <td class="text-center" title="1">1</td>
+        <td title="Chỉ tiêu KPI">Chỉ tiêu KPI</td>
+        <td class="text-right" [title]="reportWinBid.winningOfBidTargetPercent ? (reportWinBid.winningOfBidTargetPercent | thousandSeparate) + ' %' : '0.00 %'">{{reportWinBid?.winningOfBidTargetPercent
+          ? (reportWinBid?.winningOfBidTargetPercent |
           thousandSeparate) : '0.00'}} %</td>
-        <td class="text-right">{{reportWinBid?.totalTargetAmount ? (reportWinBid?.totalTargetAmount |
-          thousandSeparate) : '0.00'}}</td>
+        <td class="text-right" [title]="reportWinBid.totalTargetAmount ? (reportWinBid.totalTargetAmount | thousandSeparate) : '-'">{{reportWinBid?.totalTargetAmount
+          ? (reportWinBid?.totalTargetAmount |
+          thousandSeparate) : '-'}}</td>
         <td>
           <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
         </td>
       </tr>
       <tr>
-        <td class="text-center">2</td>
-        <td>Giá trị trúng thầu</td>
-        <td class="text-right">{{reportWinBid?.winningOfBidPercent ? (reportWinBid?.winningOfBidPercent |
+        <td class="text-center" title="2">2</td>
+        <td title="Giá trị trúng thầu">Giá trị trúng thầu</td>
+        <td class="text-right" [title]="reportWinBid.winningOfBidPercent ? (reportWinBid.winningOfBidPercent | thousandSeparate) + ' %' : '0.00 %'">{{reportWinBid?.winningOfBidPercent
+          ? (reportWinBid?.winningOfBidPercent |
           thousandSeparate) : '0.00'}} %</td>
-        <td class="text-right">{{reportWinBid?.totalAmount ? (reportWinBid?.totalAmount |
-          thousandSeparate) : '0.00'}}</td>
+        <td class="text-right" [title]="reportWinBid.totalAmount ? (reportWinBid.totalAmount | thousandSeparate) : '-'">{{reportWinBid?.totalAmount
+          ? (reportWinBid?.totalAmount |
+          thousandSeparate) : '-'}}</td>
         <td>
           <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
         </td>

@@ -2,23 +2,27 @@
 <table class="row-border cell-border dataTable fix-table-layout">
   <thead>
     <tr>
-      <th class="text-uppercase text-center font-weight-bold number-index--width">stt</th>
-      <th class="text-center font-weight-bold">Quý</th>
-      <th class="text-center font-weight-bold">Tỉ lệ trúng thầu</th>
-      <th class="text-center font-weight-bold">Giá trị (VND)</th>
-      <th class="text-center font-weight-bold">Ghi chú</th>
+      <th class="text-uppercase text-center font-weight-bold number-index--width" title="STT">stt</th>
+      <th class="text-center font-weight-bold" title="Quý">Quý</th>
+      <th class="text-center font-weight-bold" title="Tỉ lệ trúng thầu">Tỉ lệ trúng thầu</th>
+      <th class="text-center font-weight-bold" title="Giá trị (VND)">Giá trị (VND)</th>
+      <th class="text-center font-weight-bold" title="Ghi chú">Ghi chú</th>
     </tr>
   </thead>
   <tbody>
     <ng-container *ngIf="reportKpiWinRateQuarter">
       <ng-container *ngFor="let itemReportKPIQuaterOfYearDetails of reportKpiWinRateQuarter.reportKPIQuaterOfYearDetails; let i = index">
         <tr>
-          <td class="text-center">{{i + 1}}</td>
-          <td>{{itemReportKPIQuaterOfYearDetails?.quaterOfYear?.value}}</td>
-          <td class="text-right">{{itemReportKPIQuaterOfYearDetails?.winningOfBidPer ?
-            (itemReportKPIQuaterOfYearDetails?.winningOfBidPer | thousandSeparate) : '0.00'}}</td>
-          <td class="text-right">{{itemReportKPIQuaterOfYearDetails?.amount ? (itemReportKPIQuaterOfYearDetails?.amount
-            | thousandSeparate) : '0.00'}}</td>
+          <td class="text-center" [title]="i + 1">{{i + 1}}</td>
+          <td [title]="itemReportKPIQuaterOfYearDetails?.quaterOfYear?.value ? itemReportKPIQuaterOfYearDetails?.quaterOfYear?.value : ''">{{itemReportKPIQuaterOfYearDetails?.quaterOfYear?.value}}</td>
+          <td class="text-right" [title]="itemReportKPIQuaterOfYearDetails?.winningOfBidPer ?
+          (itemReportKPIQuaterOfYearDetails?.winningOfBidPer | thousandSeparate) + ' %' : '0.00 %'">{{itemReportKPIQuaterOfYearDetails?.winningOfBidPer
+            ?
+            (itemReportKPIQuaterOfYearDetails?.winningOfBidPer | thousandSeparate) : '0.00'}} %</td>
+          <td class="text-right" [title]="itemReportKPIQuaterOfYearDetails?.amount ? (itemReportKPIQuaterOfYearDetails?.amount
+          | thousandSeparate) : '-'">{{itemReportKPIQuaterOfYearDetails?.amount
+            ? (itemReportKPIQuaterOfYearDetails?.amount
+            | thousandSeparate) : '-'}}</td>
           <td>
             <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
           </td>
@@ -26,11 +30,15 @@
       </ng-container>
       <tr>
         <td></td>
-        <td class="font-weight-bold">Tổng</td>
-        <td class="text-right">{{reportKpiWinRateQuarter?.winningOfBidPer ? (reportKpiWinRateQuarter?.winningOfBidPer |
-          thousandSeparate) : '0.00'}}</td>
-        <td class="text-right">{{reportKpiWinRateQuarter?.totalAmount ? (reportKpiWinRateQuarter?.totalAmount |
-          thousandSeparate) : '0.00'}}</td>
+        <td class="font-weight-bold" title="Tổng">Tổng</td>
+        <td class="text-right" [title]="reportKpiWinRateQuarter?.winningOfBidPer ? (reportKpiWinRateQuarter?.winningOfBidPer |
+        thousandSeparate) + ' %' : '0.00 %'">{{reportKpiWinRateQuarter?.winningOfBidPer
+          ? (reportKpiWinRateQuarter?.winningOfBidPer |
+          thousandSeparate) : '0.00'}} %</td>
+        <td class="text-right" [title]="reportKpiWinRateQuarter?.totalAmount ? (reportKpiWinRateQuarter?.totalAmount |
+        thousandSeparate) : '-'">{{reportKpiWinRateQuarter?.totalAmount
+          ? (reportKpiWinRateQuarter?.totalAmount |
+          thousandSeparate) : '-'}}</td>
         <td>
           <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
         </td>

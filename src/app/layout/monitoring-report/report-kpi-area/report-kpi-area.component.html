@@ -2,11 +2,11 @@
 <table class="row-border cell-border dataTable fix-table-layout">
   <thead>
     <tr>
-      <th class="text-center text-uppercase font-weight-bold number-index--width">stt</th>
-      <th class="text-center font-weight-bold">Khu vực</th>
-      <th class="text-center font-weight-bold">Chỉ tiêu KPI</th>
-      <th class="text-center font-weight-bold">Giá trị trúng thầu (VND)</th>
-      <th class="text-center font-weight-bold">Tỉ lệ đạt được so với chỉ tiêu</th>
+      <th class="text-center text-uppercase font-weight-bold number-index--width" title="STT">stt</th>
+      <th class="text-center font-weight-bold" title="Khu vực">Khu vực</th>
+      <th class="text-center font-weight-bold" title="Chỉ tiêu KPI">Chỉ tiêu KPI</th>
+      <th class="text-center font-weight-bold" title="Giá trị trúng thầu (VND)">Giá trị trúng thầu (VND)</th>
+      <th class="text-center font-weight-bold" title="Tỉ lệ đạt được so với chỉ tiêu">Tỉ lệ đạt được so với chỉ tiêu</th>
     </tr>
   </thead>
   <ng-container *ngIf="reportKpiArea">
@@ -14,25 +14,31 @@
     <tbody>
       <ng-container *ngFor="let itemKpiLocationDetails of reportKpiArea.kpiLocationDetails; let i = index">
         <tr>
-          <td class="text-center">{{i + 1}}</td>
-          <td>{{itemKpiLocationDetails?.location?.locationName}}</td>
-          <td class="text-right">{{ itemKpiLocationDetails?.kpiTarget ? (itemKpiLocationDetails?.kpiTarget |
-            thousandSeparate) : '0.00' }}</td>
-          <td class="text-right">{{ itemKpiLocationDetails?.winningOfBidAmount ?
-            (itemKpiLocationDetails?.winningOfBidAmount | thousandSeparate) : '0.00' }}</td>
-          <td class="text-right">{{ itemKpiLocationDetails?.achievedPercent ? (itemKpiLocationDetails?.achievedPercent
+          <td class="text-center" [title]="i + 1">{{i + 1}}</td>
+          <td [title]="itemKpiLocationDetails && itemKpiLocationDetails.location && itemKpiLocationDetails.location.locationName ? itemKpiLocationDetails.location.locationName : ''">{{itemKpiLocationDetails?.location?.locationName}}</td>
+          <td class="text-right" [title]="itemKpiLocationDetails.kpiTarget ? (itemKpiLocationDetails.kpiTarget | thousandSeparate) : '-'">{{
+            itemKpiLocationDetails?.kpiTarget ? (itemKpiLocationDetails?.kpiTarget |
+            thousandSeparate) : '-' }}</td>
+          <td class="text-right" [title]="itemKpiLocationDetails.winningOfBidAmount ? (itemKpiLocationDetails.winningOfBidAmount | thousandSeparate) : '-'">{{
+            itemKpiLocationDetails?.winningOfBidAmount ?
+            (itemKpiLocationDetails?.winningOfBidAmount | thousandSeparate) : '-' }}</td>
+          <td class="text-right" [title]="itemKpiLocationDetails.achievedPercent ? (itemKpiLocationDetails.achievedPercent | thousandSeparate) + ' %' : '0.00 %'">{{
+            itemKpiLocationDetails?.achievedPercent ? (itemKpiLocationDetails?.achievedPercent
             | thousandSeparate) : '0.00' }} %</td>
         </tr>
       </ng-container>
       <tr>
         <td></td>
         <td class="font-weight-bold">Tổng</td>
-        <td class="text-right font-weight-bold">{{ itemKpiLocationDetails?.kpiTargetTotalAmount ?
-          (itemKpiLocationDetails?.kpiTargetTotalAmount | thousandSeparate) : '0.00' }}</td>
-        <td class="text-right font-weight-bold">{{ itemKpiLocationDetails?.winningOfBidTotalAmount ?
-          (itemKpiLocationDetails?.winningOfBidTotalAmount | thousandSeparate) : '0.00' }}</td>
-        <td class="text-right font-weight-bold">{{ itemKpiLocationDetails?.achievedPercent ?
-          (itemKpiLocationDetails?.achievedPercent | thousandSeparate) : '0.00' }} %</td>
+        <td class="text-right font-weight-bold" [title]="reportKpiArea.kpiTargetTotalAmount ? (reportKpiArea.kpiTargetTotalAmount | thousandSeparate) : '-'">
+          {{ reportKpiArea?.kpiTargetTotalAmount ?
+          (reportKpiArea?.kpiTargetTotalAmount | thousandSeparate) : '-' }}</td>
+        <td class="text-right font-weight-bold" [title]="reportKpiArea.winningOfBidTotalAmount ? (reportKpiArea.winningOfBidTotalAmount | thousandSeparate) : '-'">
+          {{ reportKpiArea?.winningOfBidTotalAmount ?
+          (reportKpiArea?.winningOfBidTotalAmount | thousandSeparate) : '-' }}</td>
+        <td class="text-right font-weight-bold" [title]="reportKpiArea.achievedPercent ? (reportKpiArea.achievedPercent | thousandSeparate) + ' %' : '0.00 %'">
+          {{ reportKpiArea?.achievedPercent ?
+          (reportKpiArea?.achievedPercent | thousandSeparate) : '0.00' }} %</td>
       </tr>
     </tbody>
   </ng-container>

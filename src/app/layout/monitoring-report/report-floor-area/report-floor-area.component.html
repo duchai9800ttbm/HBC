@@ -3,55 +3,72 @@
 <table class="row-border cell-border dataTable fix-table-layout">
     <thead>
         <tr>
-            <th class="text-uppercase text-center font-weight-bold number-index--width">stt</th>
-            <th class="text-center font-weight-bold">Diễn giải</th>
-            <th class="text-center font-weight-bold">Diện tích xây dựng (CFA), m<sup>2</sup></th>
-            <th class="text-center font-weight-bold">Giá trị (VND)</th>
-            <th class="text-center font-weight-bold">Ghi chú</th>
+            <th class="text-uppercase text-center font-weight-bold number-index--width" title="STT">stt</th>
+            <th class="text-center font-weight-bold" title="Diễn giải">Diễn giải</th>
+            <th class="text-center font-weight-bold" title="Diện tích xây dựng (CFA), m<sup>2</sup>">Diện tích xây dựng
+                (CFA), m<sup>2</sup></th>
+            <th class="text-center font-weight-bold" title="Giá trị (VND)">Giá trị (VND)</th>
+            <th class="text-center font-weight-bold" title="Ghi chú">Ghi chú</th>
         </tr>
     </thead>
     <tbody>
         <ng-container *ngIf="reportFloorArea">
             <tr>
-                <td class="text-center">1</td>
-                <td>Diện tích sàn xây dựng đã đấu thầu</td>
-                <td class="text-right">{{ reportFloorArea?.tenderBuildingFloorArea ?
-                    (reportFloorArea?.tenderBuildingFloorArea | thousandSeparate) : '0.00' }}</td>
-                <td class="text-right">{{ reportFloorArea?.tenderBuildingFloorAmount ?
-                    (reportFloorArea?.tenderBuildingFloorAmount | thousandSeparate) : '0.00' }}</td>
+                <td class="text-center" title="1">1</td>
+                <td title="Diện tích sàn xây dựng đã đấu thầu">Diện tích sàn xây dựng đã đấu thầu</td>
+                <td class="text-right" [title]="reportFloorArea?.tenderBuildingFloorArea ?
+                (reportFloorArea?.tenderBuildingFloorArea | thousandSeparate) : '-'">{{
+                    reportFloorArea?.tenderBuildingFloorArea ?
+                    (reportFloorArea?.tenderBuildingFloorArea | thousandSeparate) : '-' }}</td>
+                <td class="text-right" [title]="reportFloorArea?.tenderBuildingFloorAmount ?
+                (reportFloorArea?.tenderBuildingFloorAmount | thousandSeparate) : '-'">{{
+                    reportFloorArea?.tenderBuildingFloorAmount ?
+                    (reportFloorArea?.tenderBuildingFloorAmount | thousandSeparate) : '-' }}</td>
                 <td>
                     <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
                 </td>
             </tr>
             <tr>
-                <td class="text-center">2</td>
-                <td>Diện tích sàn xây dựng đang chờ kết quả</td>
-                <td class="text-right">{{ reportFloorArea?.waitForResultBuildingFloorArea ?
-                    (reportFloorArea?.waitForResultBuildingFloorArea | thousandSeparate) : '0.00' }}</td>
-                <td class="text-right">{{ reportFloorArea?.waitForResultBuildingFloorAmount ?
-                    (reportFloorArea?.waitForResultBuildingFloorAmount | thousandSeparate) : '0.00' }}</td>
+                <td class="text-center" title="2">2</td>
+                <td title="Diện tích sàn xây dựng đang chờ kết quả">Diện tích sàn xây dựng đang chờ kết quả</td>
+                <td class="text-right" [title]="reportFloorArea?.waitForResultBuildingFloorArea ?
+                (reportFloorArea?.waitForResultBuildingFloorArea | thousandSeparate) : '-'">{{
+                    reportFloorArea?.waitForResultBuildingFloorArea ?
+                    (reportFloorArea?.waitForResultBuildingFloorArea | thousandSeparate) : '-' }}</td>
+                <td class="text-right" [title]="reportFloorArea?.waitForResultBuildingFloorAmount ?
+                (reportFloorArea?.waitForResultBuildingFloorAmount | thousandSeparate) : '-'">{{
+                    reportFloorArea?.waitForResultBuildingFloorAmount ?
+                    (reportFloorArea?.waitForResultBuildingFloorAmount | thousandSeparate) : '-' }}</td>
                 <td>
                     <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
                 </td>
             </tr>
             <tr>
-                <td class="text-center">3</td>
-                <td>Diện tích sàn xây dựng trúng thầu</td>
-                <td class="text-right">{{ reportFloorArea?.winningOfBidBuildingFloorArea ?
-                    (reportFloorArea?.winningOfBidBuildingFloorArea | thousandSeparate) : '0.00' }}</td>
-                <td class="text-right">{{ reportFloorArea?.winningOfBidBuildingFloorAmount ?
-                    (reportFloorArea?.winningOfBidBuildingFloorAmount | thousandSeparate) : '0.00' }}</td>
+                <td class="text-center" title="3">3</td>
+                <td title="Diện tích sàn xây dựng trúng thầu">Diện tích sàn xây dựng trúng thầu</td>
+                <td class="text-right" [title]="reportFloorArea?.winningOfBidBuildingFloorArea ?
+                (reportFloorArea?.winningOfBidBuildingFloorArea | thousandSeparate) : '-'">{{
+                    reportFloorArea?.winningOfBidBuildingFloorArea ?
+                    (reportFloorArea?.winningOfBidBuildingFloorArea | thousandSeparate) : '-' }}</td>
+                <td class="text-right" [title]="reportFloorArea?.winningOfBidBuildingFloorAmount ?
+                (reportFloorArea?.winningOfBidBuildingFloorAmount | thousandSeparate) : '-'">{{
+                    reportFloorArea?.winningOfBidBuildingFloorAmount ?
+                    (reportFloorArea?.winningOfBidBuildingFloorAmount | thousandSeparate) : '-' }}</td>
                 <td>
                     <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
                 </td>
             </tr>
             <tr>
                 <td class="text-center"></td>
-                <td class="font-weight-bold">Tỷ lệ trúng thầu/ đấu thầu</td>
-                <td class="text-right">{{ reportFloorArea?.winningOfBidCompareTenderPer ?
-                    (reportFloorArea?.winningOfBidCompareTenderPer | thousandSeparate) : '0.00' }}</td>
-                <td class="text-right">{{ reportFloorArea?.winningOfBidCompareTotalBidPer ?
-                    (reportFloorArea?.winningOfBidCompareTotalBidPer | thousandSeparate) : '0.00' }}</td>
+                <td class="font-weight-bold" title="Tỷ lệ trúng thầu/ đấu thầu">Tỷ lệ trúng thầu/ đấu thầu</td>
+                <td class="text-right" [title]="reportFloorArea?.winningOfBidCompareTenderPer ?
+                (reportFloorArea?.winningOfBidCompareTenderPer | thousandSeparate) : '-'">{{
+                    reportFloorArea?.winningOfBidCompareTenderPer ?
+                    (reportFloorArea?.winningOfBidCompareTenderPer | thousandSeparate) : '-' }}</td>
+                <td class="text-right" [title]="reportFloorArea?.winningOfBidCompareTotalBidPer ?
+                (reportFloorArea?.winningOfBidCompareTotalBidPer | thousandSeparate) : '-'">{{
+                    reportFloorArea?.winningOfBidCompareTotalBidPer ?
+                    (reportFloorArea?.winningOfBidCompareTotalBidPer | thousandSeparate) : '-' }}</td>
                 <td>
                     <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
                 </td>

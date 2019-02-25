@@ -1,11 +1,11 @@
 <table class="row-border cell-border dataTable fix-table-layout">
   <thead>
     <tr class="table-header">
-      <th class="text-center number-index--width">STT</th>
-      <th class="text-center">Chủ trì</th>
-      <th class="text-center">Tỉ lệ đạt được</th>
-      <th class="text-center">Chỉ tiêu KPI</th>
-      <th class="text-center">Giá trị trúng thầu</th>
+      <th class="text-center number-index--width" title="STT">STT</th>
+      <th class="text-center" title="Chủ trì">Chủ trì</th>
+      <th class="text-center" title="Tỉ lệ đạt được">Tỉ lệ đạt được</th>
+      <th class="text-center" title="Chỉ tiêu KPI">Chỉ tiêu KPI</th>
+      <th class="text-center" title="Giá trị trúng thầu">Giá trị trúng thầu</th>
     </tr>
   </thead>
   <ng-container *ngIf="reportKpiChair">
@@ -13,23 +13,28 @@
       <tbody>
         <tr>
           <th></th>
-          <th class="text-uppercase">{{itemKpiGroupChairs?.kpiGroup?.name}}</th>
+          <th class="text-uppercase" [title]="itemKpiGroupChairs.kpiGroup && itemKpiGroupChairs.kpiGroup.name ? itemKpiGroupChairs.kpiGroup.name : ''">{{itemKpiGroupChairs?.kpiGroup?.name}}</th>
           <th class="text-right"></th>
-          <th class="text-right">{{ itemKpiGroupChairs?.kpiTargetAmount ? (itemKpiGroupChairs?.kpiTargetAmount |
-            thousandSeparate) : '0' }}</th>
-          <th class="text-right">{{ itemKpiGroupChairs?.winningOfBidValueAmount ?
-            (itemKpiGroupChairs?.winningOfBidValueAmount | thousandSeparate) : '0' }}</th>
+          <th class="text-right" [title]="itemKpiGroupChairs.kpiTargetAmount ? (itemKpiGroupChairs.kpiTargetAmount | thousandSeparate) : '-'">{{
+            itemKpiGroupChairs?.kpiTargetAmount ? (itemKpiGroupChairs?.kpiTargetAmount |
+            thousandSeparate) : '-' }}</th>
+          <th class="text-right" [title]="itemKpiGroupChairs.winningOfBidValueAmount ? (itemKpiGroupChairs.winningOfBidValueAmount | thousandSeparate) : '-'">{{
+            itemKpiGroupChairs?.winningOfBidValueAmount ?
+            (itemKpiGroupChairs?.winningOfBidValueAmount | thousandSeparate) : '-' }}</th>
         </tr>
         <ng-container *ngFor="let itemChairDetail of itemKpiGroupChairs.chairDetail; let j = index">
           <tr>
-            <td class="text-center">1</td>
-            <td>{{itemChairDetail?.employee?.employeeName}}</td>
-            <td class="text-right">{{ itemChairDetail?.achievedPercent ? (itemChairDetail?.achievedPercent |
+            <td class="text-center" [title]="j + 1">{{j + 1}}</td>
+            <td [title]="itemChairDetail.employee && itemChairDetail.employee.employeeName ? itemChairDetail.employee.employeeName : ''">{{itemChairDetail?.employee?.employeeName}}</td>
+            <td class="text-right" [title]="itemChairDetail.achievedPercent ? (itemChairDetail.achievedPercent | thousandSeparate) + ' %' : '0.00 %'">{{
+              itemChairDetail?.achievedPercent ? (itemChairDetail?.achievedPercent |
               thousandSeparate) : '0.00'}}&nbsp;%</td>
-            <td class="text-right">{{ itemChairDetail?.kpiTargetAmount ? (itemChairDetail?.kpiTargetAmount |
-              thousandSeparate) : '0.00' }}</td>
-            <td class="text-right">{{ itemChairDetail?.winningOfBidTotalAmount ?
-              (itemChairDetail?.winningOfBidTotalAmount | thousandSeparate) : '0.00' }}</td>
+            <td class="text-right" [title]="itemChairDetail.kpiTargetAmount ? (itemChairDetail.kpiTargetAmount | thousandSeparate) : '-'">{{
+              itemChairDetail?.kpiTargetAmount ? (itemChairDetail?.kpiTargetAmount |
+              thousandSeparate) : '-' }}</td>
+            <td class="text-right" [title]="itemChairDetail.winningOfBidTotalAmount ? (itemChairDetail.winningOfBidTotalAmount | thousandSeparate) : '-'">{{
+              itemChairDetail?.winningOfBidTotalAmount ?
+              (itemChairDetail?.winningOfBidTotalAmount | thousandSeparate) : '-' }}</td>
           </tr>
         </ng-container>
 
@@ -40,10 +45,15 @@
       <tr>
         <td></td>
         <td class="font-weight-bold text-center">Tổng</td>
-        <td class="font-weight-bold text-right">{{ reportKpiChair?.achievedPercent }} %</td>
-        <td class="font-weight-bold text-right">{{ reportKpiChair?.kpiTargetAmount | thousandSeparate }}</td>
-        <td class="font-weight-bold text-right">{{ reportKpiChair?.winningOfBidTotalAmount ?
-          (reportKpiChair?.winningOfBidTotalAmount | thousandSeparate) : '0.00' }}</td>
+        <td class="font-weight-bold text-right" [title]="reportKpiChair.achievedPercent ? (reportKpiChair.achievedPercent | thousandSeparate) + ' %' : '0.00 %'">
+          {{ reportKpiChair?.achievedPercent ? (reportKpiChair?.achievedPercent | thousandSeparate) : '0.00' }} %
+        </td>
+        <td class="font-weight-bold text-right" [title]="reportKpiChair.kpiTargetAmount ? (reportKpiChair.kpiTargetAmount | thousandSeparate)  : '-'">
+          {{ reportKpiChair?.kpiTargetAmount ? (reportKpiChair?.kpiTargetAmount | thousandSeparate) : '-' }}
+        </td>
+        <td class="font-weight-bold text-right" [title]="reportKpiChair.winningOfBidTotalAmount ? (reportKpiChair.winningOfBidTotalAmount | thousandSeparate) : '-'">
+          {{ reportKpiChair?.winningOfBidTotalAmount ?
+          (reportKpiChair?.winningOfBidTotalAmount | thousandSeparate) : '-' }}</td>
       </tr>
     </tbody>
 
@@ -52,29 +62,42 @@
         <td></td>
         <td class="font-weight-bold text-center">From</td>
         <td class="font-weight-bold text-center">To</td>
-        <td class="font-weight-bold">Chỉ tiêu trúng thầu/1 ngày:</td>
-        <td class="font-weight-bold text-right">{{ reportKpiChair?.winningBidOfDayTargetAmount | thousandSeparate }}</td>
+        <td class="font-weight-bold" title="Chỉ tiêu trúng thầu/1 ngày:">Chỉ tiêu trúng thầu/1 ngày:</td>
+        <td class="font-weight-bold text-right" [title]="reportKpiChair.winningBidOfDayTargetAmount ? (reportKpiChair.winningBidOfDayTargetAmount | thousandSeparate) : '0.00'">
+          {{ reportKpiChair?.winningBidOfDayTargetAmount ? (reportKpiChair?.winningBidOfDayTargetAmount |
+          thousandSeparate) : '0.00' }}
+        </td>
       </tr>
       <tr>
         <td></td>
-        <td class="font-weight-bold text-center">{{ endDate | date:'dd/MM/yyyy': '+0000' }}</td>
-        <td class="font-weight-bold text-center">{{ startDate | date:'dd/MM/yyyy': '+0000' }}</td>
-        <td class="font-weight-bold">Số ngày tính đến thời điểm báo cáo:</td>
-        <td class="font-weight-bold">Giá trị trúng thầu đến thời điểm báo cáo:</td>
+        <td class="font-weight-bold text-center" [title]="startAndEndDate.startDate ? (startAndEndDate.startDate | date:'dd/MM/yyyy') : ''">
+          {{ startAndEndDate?.startDate | date:'dd/MM/yyyy' }}
+        </td>
+        <td class="font-weight-bold text-center" [title]="startAndEndDate.endDate ? (startAndEndDate.endDate | date:'dd/MM/yyyy') : ''">
+          {{ startAndEndDate?.endDate | date:'dd/MM/yyyy' }}
+        </td>
+        <td class="font-weight-bold" title="Số ngày tính đến thời điểm báo cáo:">Số ngày tính đến thời điểm báo cáo:</td>
+        <td class="font-weight-bold" title="Giá trị trúng thầu đến thời điểm báo cáo:">Giá trị trúng thầu đến thời điểm
+          báo cáo:</td>
       </tr>
       <tr>
         <td></td>
         <td class="font-weight-bold text-center"></td>
         <td class="font-weight-bold text-center"></td>
-        <td class="text-center">{{reportKpiChair?.dayCount}}</td>
-        <td class="text-right">{{reportKpiChair?.winningOfBidTargetAmount | thousandSeparate}}</td>
+        <td class="text-center" [title]="reportKpiChair.dayCount ? reportKpiChair.dayCount : ''">{{reportKpiChair?.dayCount}}</td>
+        <td class="text-right" [title]="reportKpiChair.winningOfBidTargetAmount ? (reportKpiChair.winningOfBidTargetAmount | thousandSeparate) : ''">{{reportKpiChair?.winningOfBidTargetAmount
+          | thousandSeparate}}</td>
       </tr>
       <tr>
         <td></td>
         <td class="font-weight-bold text-center"></td>
         <td class="font-weight-bold text-center"></td>
-        <td class="font-weight-bold">Số trúng thầu nhanh/chậm so với KPI/ngày</td>
-        <td class="text-right">{{reportKpiChair?.winningBidOfDayCompareTargetAmount | thousandSeparate}}</td>
+        <td class="font-weight-bold" title="Số trúng thầu nhanh/chậm so với KPI/ngày" title="Số trúng thầu nhanh/chậm so với KPI/ngày">Số
+          trúng thầu nhanh/chậm so với
+          KPI/ngày</td>
+        <td class="text-right" [title]="reportKpiChair.winningBidOfDayCompareTargetAmount ? (reportKpiChair.winningBidOfDayCompareTargetAmount | thousandSeparate) : ''">
+          {{reportKpiChair?.winningBidOfDayCompareTargetAmount | thousandSeparate}}
+        </td>
       </tr>
     </tbody>
   </ng-container>

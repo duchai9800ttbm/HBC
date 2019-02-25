@@ -2,23 +2,24 @@
 <table class="row-border cell-border dataTable fix-table-layout">
   <thead>
     <tr>
-      <th class="text-uppercase text-center font-weight-bold number-index--width">stt</th>
-      <th class="text-center font-weight-bold">Tên dự án</th>
-      <th class="text-center font-weight-bold">Tên gói thầu</th>
-      <th class="text-center font-weight-bold">Chủ trì</th>
-      <th class="text-center font-weight-bold">Giá trị dự thầu</th>
+      <th class="text-uppercase text-center font-weight-bold number-index--width" title="STT">stt</th>
+      <th class="text-center font-weight-bold" title="Tên dự án">Tên dự án</th>
+      <th class="text-center font-weight-bold" title="Tên gói thầu">Tên gói thầu</th>
+      <th class="text-center font-weight-bold" title="Chủ trì">Chủ trì</th>
+      <th class="text-center font-weight-bold" title="Giá trị dự thầu">Giá trị dự thầu</th>
     </tr>
   </thead>
   <tbody>
     <ng-container *ngIf="reportPotentialProjects && (reportPotentialProjects || []).length !== 0">
       <ng-container *ngFor="let itemReportPotentialProjects of reportPotentialProjects; let i = index">
         <tr>
-          <td class="text-center">{{i + 1}}</td>
-          <td>{{itemReportPotentialProjects?.projectName}}</td>
-          <td >{{itemReportPotentialProjects?.opportunityName}}</td>
-          <td>{{itemReportPotentialProjects?.chairEmployee?.employeeName}}</td>
-          <td class="text-right">
-              {{itemReportPotentialProjects?.totalCostOfSubmission ? (itemReportPotentialProjects?.totalCostOfSubmission | thousandSeparate) : '0.00'}}
+          <td class="text-center" [title]="i + 1">{{i + 1}}</td>
+          <td [title]="itemReportPotentialProjects?.projectName ? itemReportPotentialProjects?.projectName : ''">{{itemReportPotentialProjects?.projectName}}</td>
+          <td [title]="itemReportPotentialProjects?.opportunityName ? itemReportPotentialProjects?.opportunityName : ''">{{itemReportPotentialProjects?.opportunityName}}</td>
+          <td [title]="itemReportPotentialProjects?.chairEmployee?.employeeName ? itemReportPotentialProjects?.chairEmployee?.employeeName : ''">{{itemReportPotentialProjects?.chairEmployee?.employeeName}}</td>
+          <td class="text-right" [title]="itemReportPotentialProjects?.totalCostOfSubmission ? (itemReportPotentialProjects?.totalCostOfSubmission | thousandSeparate) : '-'">
+            {{itemReportPotentialProjects?.totalCostOfSubmission ? (itemReportPotentialProjects?.totalCostOfSubmission
+            | thousandSeparate) : '-'}}
           </td>
         </tr>
       </ng-container>

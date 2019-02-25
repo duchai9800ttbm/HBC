@@ -2,23 +2,25 @@
 <table class="row-border cell-border dataTable fix-table-layout">
   <thead>
     <tr>
-      <th class="text-uppercase text-center font-weight-bold number-index--width">stt</th>
-      <th class="text-center font-weight-bold">Vai trò của nhà thầu</th>
-      <th class="text-center font-weight-bold">Tỉ lệ trúng thầu</th>
-      <th class="text-center font-weight-bold">Giá trị (VND)</th>
-      <th class="text-center font-weight-bold">Ghi chú</th>
+      <th class="text-uppercase text-center font-weight-bold number-index--width" title="STT">stt</th>
+      <th class="text-center font-weight-bold" title="Vai trò của nhà thầu">Vai trò của nhà thầu</th>
+      <th class="text-center font-weight-bold" title="Tỉ lệ trúng thầu">Tỉ lệ trúng thầu</th>
+      <th class="text-center font-weight-bold" title="Giá trị (VND)">Giá trị (VND)</th>
+      <th class="text-center font-weight-bold" title="Ghi chú">Ghi chú</th>
     </tr>
   </thead>
   <tbody>
     <ng-container *ngIf="reportWinRateConstractors">
       <ng-container *ngFor="let itemReportKPIBidderRoleDetails of reportWinRateConstractors.reportKPIBidderRoleDetails; let i = index">
         <tr>
-          <td class="text-center">{{i + 1}}</td>
-          <td>{{itemReportKPIBidderRoleDetails?.bidderRole?.displayText}}</td>
-          <td class="text-right">{{ itemReportKPIBidderRoleDetails?.winningOfBidPer ?
+          <td class="text-center" [title]="i + 1">{{i + 1}}</td>
+          <td [title]="itemReportKPIBidderRoleDetails?.bidderRole?.value ? itemReportKPIBidderRoleDetails?.bidderRole?.value : ''">{{itemReportKPIBidderRoleDetails?.bidderRole?.value}}</td>
+          <td class="text-right" [title]="itemReportKPIBidderRoleDetails?.winningOfBidPer ? (itemReportKPIBidderRoleDetails?.winningOfBidPer | thousandSeparate) + ' %' : '0.00 %'">{{
+            itemReportKPIBidderRoleDetails?.winningOfBidPer ?
             (itemReportKPIBidderRoleDetails?.winningOfBidPer |thousandSeparate) : '0.00' }} %</td>
-          <td class="text-right">{{ itemReportKPIBidderRoleDetails?.amount ? (itemReportKPIBidderRoleDetails?.amount
-            |thousandSeparate) : '0.00' }}</td>
+          <td class="text-right" [title]="itemReportKPIBidderRoleDetails?.amount ? itemReportKPIBidderRoleDetails?.amount : '-'">{{
+            itemReportKPIBidderRoleDetails?.amount ? (itemReportKPIBidderRoleDetails?.amount
+            |thousandSeparate) : '-' }}</td>
           <td>
             <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
           </td>
@@ -27,10 +29,14 @@
       <tr>
         <td class="text-center"></td>
         <td class="font-weight-bold">Tổng</td>
-        <td class="text-right font-weight-bold">{{ reportWinRateConstractors?.winningOfBidPer ?
+        <td class="text-right font-weight-bold" [title]="reportWinRateConstractors?.winningOfBidPer ?
+        (reportWinRateConstractors?.winningOfBidPer | thousandSeparate) + ' %' : '0.00 %'">{{
+          reportWinRateConstractors?.winningOfBidPer ?
           (reportWinRateConstractors?.winningOfBidPer |thousandSeparate) : '0.00' }} %</td>
-        <td class="text-right font-weight-bold">{{ reportWinRateConstractors?.totalAmount ? (reportWinRateConstractors?.totalAmount
-          |thousandSeparate) : '0.00' }}</td>
+        <td class="text-right font-weight-bold" [title]="reportWinRateConstractors?.totalAmount ? (reportWinRateConstractors?.totalAmount
+        | thousandSeparate) : '-'">{{
+          reportWinRateConstractors?.totalAmount ? (reportWinRateConstractors?.totalAmount
+          |thousandSeparate) : '-' }}</td>
         <td>
           <!-- <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea> -->
         </td>

@@ -52,11 +52,11 @@
             <div class="d-flex mb-4">
                 <span class="d-flex">
                     <span class="center-parent">Từ:</span>
-                    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3" [(ngModel)]="startDate"></kendo-datepicker>
+                    <kendo-datepicker [format]="'dd/MM/yyyy'" [max]="endDate" tabindex="5" class="form-control ml-3" [(ngModel)]="startDate"></kendo-datepicker>
                 </span>
                 <span class="ml-5 d-flex">
                     <span class="center-parent">Đến:</span>
-                    <kendo-datepicker [format]="'dd/MM/yyyy'" tabindex="5" class="form-control ml-3" [(ngModel)]="endDate"></kendo-datepicker>
+                    <kendo-datepicker [format]="'dd/MM/yyyy'" [min]="startDate" tabindex="5" class="form-control ml-3" [(ngModel)]="endDate"></kendo-datepicker>
                 </span>
                 <span *ngIf="idReport === 'construction-items'" class="ml-5 custom-dropdown d-flex">
                     <span for="" class="center-parent" style="width: 100px;">Hạng mục:</span>

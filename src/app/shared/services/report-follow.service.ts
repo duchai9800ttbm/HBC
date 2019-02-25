@@ -193,8 +193,8 @@ export class ReportFollowService {
           return {
             bidderRole: itemReportKPIBidderRoleDetail.bidderRole && {
               key: itemReportKPIBidderRoleDetail.bidderRole.key,
-              value: itemReportKPIBidderRoleDetail.bidderRole.key,
-              displayText: itemReportKPIBidderRoleDetail.bidderRole.key
+              value: itemReportKPIBidderRoleDetail.bidderRole.value,
+              displayText: itemReportKPIBidderRoleDetail.bidderRole.displayText
             },
             winningOfBidPer: itemReportKPIBidderRoleDetail.winningOfBidPer,
             amount: itemReportKPIBidderRoleDetail.amount,
