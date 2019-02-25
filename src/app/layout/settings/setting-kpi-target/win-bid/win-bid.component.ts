@@ -76,13 +76,21 @@ export class WinBidComponent implements OnInit {
       });
     if (this.paramAction === 'view') {
       this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
-        this.targetWinBid.removeControl('id');
+        if (this.targetWinBid.get('id')) {
+          this.targetWinBid.removeControl('id');
+        }
         this.targetWinBid.addControl('id', this.fb.control(response.id));
-        this.targetWinBid.removeControl('total');
+        if (this.targetWinBid.get('total')) {
+          this.targetWinBid.removeControl('total');
+        }
         this.targetWinBid.addControl('total', this.fb.control(response.total));
-        this.targetWinBid.removeControl('percent');
+        if (this.targetWinBid.get('percent')) {
+          this.targetWinBid.removeControl('percent');
+        }
         this.targetWinBid.addControl('percent', this.fb.control(response.percent));
-        this.targetWinBid.removeControl('totalTarget');
+        if (this.targetWinBid.get('totalTarget')) {
+          this.targetWinBid.removeControl('totalTarget');
+        }
         this.targetWinBid.addControl('totalTarget', this.fb.control(response.totalTarget));
       });
     }
@@ -91,6 +99,14 @@ export class WinBidComponent implements OnInit {
   addTargetForYear() {
     this.yearBackTemp = this.yearkpi;
     this.yearkpi = null;
+    this.removeForm();
+  }
+
+  removeForm() {
+    this.targetWinBid.removeControl('id');
+    this.targetWinBid.removeControl('total');
+    this.targetWinBid.removeControl('percent');
+    this.targetWinBid.removeControl('totalTarget');
   }
 
   calculValueReach() {

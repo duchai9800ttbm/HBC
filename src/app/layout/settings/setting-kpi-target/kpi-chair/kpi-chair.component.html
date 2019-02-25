@@ -34,7 +34,7 @@
       </div>
       <div class="col-md-5 total-target--pad-top" id="target">
         <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
-        <span>{{ (groupKpiChairsArray && targetTotalFC !== 0) ? (targetTotalFC | truncateDecimal) : 0}}</span>
+        <span>{{ (groupKpiChairsArray && targetTotalFC && targetTotalFC !== 0) ? (targetTotalFC | truncateDecimal) : '0.00'}}</span>
       </div>
       <div class="text-right col-md-4" *ngIf="paramAction === 'view'" id="action">
         <button class="btn btn-secondary" type="button" *ngIf="isEdit" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
@@ -42,7 +42,7 @@
         <button type="submit" class="btn btn-primary ml-1" (click)="addTargetForYear()">Thêm mới chỉ tiêu
         </button>
       </div>
-      <div class="text-right col-md-3" *ngIf="paramAction === 'edit' || paramAction === 'create'">
+      <div class="text-right col-md-4" *ngIf="paramAction === 'edit' || paramAction === 'create'">
         <button class="btn btn-secondary" type="button" (click)="cancel()">Hủy
         </button>
         <button type="submit" class="btn btn-primary ml-1" (click)="saveTargetkpiToChair()">Lưu
@@ -94,7 +94,7 @@
                 </div>
                 <div>
                   {{ gKpiChairControl.get('targetGroup').value ? (gKpiChairControl.get('targetGroup').value |
-                  truncateDecimal) : '0'}}
+                  truncateDecimal) : '0.00'}}
                 </div>
               </div>
             </div>
@@ -117,7 +117,7 @@
                           !== 0)
                           ? (chairEmployeeControl.get('targetskpi').value | truncateDecimal) : 0}}</td>
                         <td class="text-right" *ngIf="paramAction === 'edit' || paramAction === 'create' ">
-                          <input type="text" appInputNumber class="w-100 m-0 p-0 text-right" formControlName="targetskpi"
+                          <input type="text" appInputThousandSeparate class="w-100 m-0 p-0 text-right" formControlName="targetskpi"
                             (input)="calculTargetTotal(i)">
                         </td>
                       </tr>

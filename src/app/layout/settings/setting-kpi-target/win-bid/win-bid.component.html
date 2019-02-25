@@ -64,7 +64,7 @@
               <tbody>
                 <ng-container *ngIf="paramAction === 'view'">
                   <tr>
-                    <td>{{ targetWinBid?.get('total').value ? (targetWinBid.get('total').value | truncateDecimal) :
+                    <td>{{ targetWinBid?.get('total')?.value ? (targetWinBid.get('total').value | truncateDecimal) :
                       '0'}}</td>
                     <td class="text-right">{{ targetWinBid?.get('percent').value ? (targetWinBid.get('percent').value |
                       truncateDecimal) :
@@ -75,8 +75,8 @@
                   </tr>
                 </ng-container>
                 <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
-                  <tr>
-                    <td>{{ targetWinBid?.get('total').value ? (targetWinBid.get('total').value | truncateDecimal) :
+                  <tr *ngIf="targetWinBid && targetWinBid.get('total') && targetWinBid.get('percent') && targetWinBid.get('totalTarget')">
+                    <td>{{ targetWinBid?.get('total')?.value ? (targetWinBid.get('total').value | truncateDecimal) :
                       '0'}}</td>
                     <td class="text-right">
                       <input type="text" appInputThousandSeparate [min]="0" [max]="100" class="w-100 m-0 p-0 text-right"
@@ -84,7 +84,7 @@
                     </td>
                     <td class="text-right">
                       <div>
-                        {{ targetWinBid?.get('totalTarget').value ? (targetWinBid.get('totalTarget').value |
+                        {{ targetWinBid?.get('totalTarget')?.value ? (targetWinBid.get('totalTarget').value |
                         truncateDecimal) : '0'}}
                       </div>
                     </td>

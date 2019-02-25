@@ -9,7 +9,7 @@
       <div class="row form-group">
         <div class="col-md-2 text-right required justify-content-end align-items">Tên nhóm</div>
         <div class="col-md-7">
-          <input class="form-control" [class.is-invalid]="formErrors.groupConfigName" tabindex="1" formControlName="groupConfigName">
+          <input class="form-control" appAutoFocus [class.is-invalid]="formErrors.groupConfigName" tabindex="1" formControlName="groupConfigName">
           <div class="invalid-feedback" *ngIf="formErrors.groupConfigName">
             {{formErrors.groupConfigName}}
           </div>
@@ -23,9 +23,9 @@
       </div>
     </div>
     <div class="text-right">
-      <button class="btn btn-secondary" type="button" [routerLink]="['/settings/construction-category']">Hủy
+      <button tabindex="4" class="btn btn-secondary" type="button" [routerLink]="['/settings/kpi-target/group-config/list']">Hủy
       </button>
-      <button type="submit" class="btn btn-primary ml-1" (click)="submitForm()">Lưu
+      <button tabindex="3" type="submit" class="btn btn-primary ml-1" (click)="submitForm()">Lưu
       </button>
     </div>
   </div>
