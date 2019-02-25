@@ -5,37 +5,42 @@
         </h5>
         <ul class="p-0 mb-0">
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'group-config'"
-                id="group-config" name="list-report" (click)="toggleCollapseMenu('group-config')" title="- Cấu hình nhóm" [routerLink]="['./group-config']">
+                id="group-config" name="list-report" (click)="toggleCollapseMenu('group-config')" title="- Cấu hình nhóm"
+                [routerLink]="['./group-config']">
                 - Cấu hình nhóm
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'kpi-chair'"
-                id="kpi-chair" name="list-report" (click)="toggleCollapseMenu('kpi-chair')" title="- KPI theo chủ trì" 
+                id="kpi-chair" name="list-report" (click)="toggleCollapseMenu('kpi-chair')" title="- KPI theo chủ trì"
                 (click)="routerChildTab('kpi-chair')">
                 - KPI theo chủ trì
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'win-bid'"
-                id="win-bid" name="list-report" (click)="toggleCollapseMenu('win-bid')" title="- Chỉ tiêu trúng thầu" (click)="routerChildTab('win-bid')">
+                id="win-bid" name="list-report" (click)="toggleCollapseMenu('win-bid')" title="- Chỉ tiêu trúng thầu"
+                (click)="routerChildTab('win-bid')">
                 - Chỉ tiêu trúng thầu
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'kpi-area'"
-                id="kpi-area" name="list-report" (click)="toggleCollapseMenu('kpi-area')" title="- Chỉ tiêu KPI khu vực" (click)="routerChildTab('kpi-area')">
+                id="kpi-area" name="list-report" (click)="toggleCollapseMenu('kpi-area')" title="- Chỉ tiêu KPI khu vực"
+                (click)="routerChildTab('kpi-area')">
                 - Chỉ tiêu KPI khu vực
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'construction-items'"
-                id="construction-items" name="list-report" (click)="toggleCollapseMenu('construction-items')"
-                title="- Chỉ tiêu KPI hạng mục thi công" (click)="routerChildTab('construction-items')">
+                id="construction-items" name="list-report" (click)="toggleCollapseMenu('construction-items')" title="- Chỉ tiêu KPI hạng mục thi công"
+                (click)="routerChildTab('construction-items')">
                 - Chỉ tiêu KPI hạng mục thi công
             </li>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'type-construction'"
-                id="type-construction" name="list-report" (click)="toggleCollapseMenu('type-construction')"
-                title="- Chỉ tiêu KPI loại công trình" (click)="routerChildTab('type-construction')">
+                id="type-construction" name="list-report" (click)="toggleCollapseMenu('type-construction')" title="- Chỉ tiêu KPI loại công trình"
+                (click)="routerChildTab('type-construction')">
                 - Chỉ tiêu KPI loại công trình
             </li>
         </ul>
     </div>
 
     <div class="reports w-100" id="reports-table">
-        <router-outlet></router-outlet>
+        <div class="px-3" id="content-child">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 
 

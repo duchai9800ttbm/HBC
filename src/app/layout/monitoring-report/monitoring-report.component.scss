@@ -34,7 +34,8 @@
 }
 
 .menu-report--fixed {
-    position: fixed;
+    position: absolute;
+    z-index: 1;
 }
 
 .reports {
@@ -62,5 +63,22 @@
 }
 
 .reports--margintop {
-    margin-top: 6.1rem;
+    margin-top: 7.1rem;
 }
+
+
+:host ::ng-deep {
+    table{
+        tr{
+            th{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+        .number-index--width{
+            width: 30px;
+        }
+    }
+}
+

@@ -29,6 +29,7 @@ export class SettingKpiTargetComponent implements OnInit {
       document.getElementById('menu-report').classList.add('menu-report--fixed');
       document.getElementById('reports-table').classList.remove('pl-3');
       document.getElementById('reports-table').classList.add('reports--margintop');
+      document.getElementById('content-child').classList.remove('px-3');
       this.isCollapseMenu = true;
       const listReports = document.getElementsByName('list-report');
       for (let i = 0; i < listReports.length; i++) {
@@ -46,8 +47,9 @@ export class SettingKpiTargetComponent implements OnInit {
       document.getElementById('wrapper-report').classList.remove('flex-column');
       document.getElementById('menu-report').classList.remove('mb-2');
       document.getElementById('menu-report').classList.remove('menu-report--fixed');
-      document.getElementById('reports-table').classList.add('pl-3');
+      document.getElementById('reports-table').classList.add('pl-3'); 
       document.getElementById('reports-table').classList.remove('reports--margintop');
+      document.getElementById('content-child').classList.add('px-3');
       this.isCollapseMenu = false;
       const listReports = document.getElementsByName('list-report');
       for (let i = 0; i < listReports.length; i++) {
