@@ -237,17 +237,19 @@ export class KpiChairComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: this.paramAction, year: this.yearkpi },
       });
-    this.settingService.getListChairToYear(+this.yearkpi).subscribe(response => {
-      if (response && (response || []).length !== 0) {
-        if (this.groupKpiChairsArray.get('groupKpiChair')) {
-          this.groupKpiChairsArray.removeControl('groupKpiChair');
+    if (this.paramAction === 'view' || this.paramAction === 'edit') {
+      this.settingService.getListChairToYear(+this.yearkpi).subscribe(response => {
+        if (response && (response || []).length !== 0) {
+          if (this.groupKpiChairsArray.get('groupKpiChair')) {
+            this.groupKpiChairsArray.removeControl('groupKpiChair');
+          }
+          this.groupKpiChairsArray.addControl('groupKpiChair', this.fb.array([]));
+          this.setValueGroupKpiChairFormControl(response[0]);
+        } else {
+          this.setFormNotValue();
         }
-        this.groupKpiChairsArray.addControl('groupKpiChair', this.fb.array([]));
-        this.setValueGroupKpiChairFormControl(response[0]);
-      } else {
-        this.setFormNotValue();
-      }
-    });
+      });
+    }
   }
 
   setFormNotValue() {

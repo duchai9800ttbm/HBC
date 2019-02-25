@@ -148,26 +148,28 @@ export class KpiAreaComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: this.paramAction, year: this.yearkpi },
       });
-    this.settingService.getDetailKpiLocationToYear(this.yearkpi).subscribe(responseToYear => {
-      if (this.kpiLocation.get('location')) {
-        this.kpiLocation.removeControl('location');
-      }
-      this.kpiLocation.addControl('location', this.fb.array([]));
-      if (this.kpiLocation.get('targetTotal')) {
-        this.kpiLocation.removeControl('targetTotal');
-      }
-      this.kpiLocation.addControl('targetTotal', this.fb.control(null));
-      if (responseToYear) {
-        const listLocation = this.handlData(responseToYear);
-        this.createForm(listLocation);
-      }
-      if (!responseToYear) {
-        return this.settingService.readLocation('', 0, 1000).subscribe(response => {
-          this.listLocation = response.items;
-          this.createForm(response.items);
-        });
-      }
-    });
+    if (this.paramAction === 'view' || this.paramAction === 'edit') {
+      this.settingService.getDetailKpiLocationToYear(this.yearkpi).subscribe(responseToYear => {
+        if (this.kpiLocation.get('location')) {
+          this.kpiLocation.removeControl('location');
+        }
+        this.kpiLocation.addControl('location', this.fb.array([]));
+        if (this.kpiLocation.get('targetTotal')) {
+          this.kpiLocation.removeControl('targetTotal');
+        }
+        this.kpiLocation.addControl('targetTotal', this.fb.control(null));
+        if (responseToYear) {
+          const listLocation = this.handlData(responseToYear);
+          this.createForm(listLocation);
+        }
+        if (!responseToYear) {
+          return this.settingService.readLocation('', 0, 1000).subscribe(response => {
+            this.listLocation = response.items;
+            this.createForm(response.items);
+          });
+        }
+      });
+    }
   }
 
   createOrEditKpiLocation() {

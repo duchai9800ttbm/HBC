@@ -156,25 +156,27 @@ export class TypeConstructionComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: this.paramAction, year: this.yearkpi },
       });
-    this.settingService.getDetailConstructionType(this.yearkpi).subscribe(responseToYear => {
-      if (this.constructionTypeForm.get('typeBuild')) {
-        this.constructionTypeForm.removeControl('typeBuild');
-      }
-      this.constructionTypeForm.addControl('typeBuild', this.fb.array([]));
-      if (this.constructionTypeForm.get('targetTotal')) {
-        this.constructionTypeForm.removeControl('targetTotal');
-      }
-      this.constructionTypeForm.addControl('targetTotal', this.fb.control(null));
-      if (responseToYear && (responseToYear || []).length !== 0) {
-        this.createForm(responseToYear);
-      }
-      if (!(responseToYear && (responseToYear || []).length !== 0)) {
-        this.dataService.getListConstructonTypes().subscribe(listBuildingProjectType => {
-          this.listBuildingProjectType = listBuildingProjectType;
-          this.createForm(listBuildingProjectType);
-        });
-      }
-    });
+    if (this.paramAction === 'view' || this.paramAction === 'edit') {
+      this.settingService.getDetailConstructionType(this.yearkpi).subscribe(responseToYear => {
+        if (this.constructionTypeForm.get('typeBuild')) {
+          this.constructionTypeForm.removeControl('typeBuild');
+        }
+        this.constructionTypeForm.addControl('typeBuild', this.fb.array([]));
+        if (this.constructionTypeForm.get('targetTotal')) {
+          this.constructionTypeForm.removeControl('targetTotal');
+        }
+        this.constructionTypeForm.addControl('targetTotal', this.fb.control(null));
+        if (responseToYear && (responseToYear || []).length !== 0) {
+          this.createForm(responseToYear);
+        }
+        if (!(responseToYear && (responseToYear || []).length !== 0)) {
+          this.dataService.getListConstructonTypes().subscribe(listBuildingProjectType => {
+            this.listBuildingProjectType = listBuildingProjectType;
+            this.createForm(listBuildingProjectType);
+          });
+        }
+      });
+    }
   }
 
   calculTargetTotalToChangePercent(indexForm: number) {

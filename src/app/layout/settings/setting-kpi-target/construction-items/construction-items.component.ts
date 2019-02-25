@@ -118,27 +118,29 @@ export class ConstructionItemsComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: this.paramAction, year: this.yearkpi },
       });
-    this.settingService.getDetailConstructionCategory(this.yearkpi).subscribe(responseToYear => {
-      if (this.constructionCategoryForm.get('mainBuild')) {
-        this.constructionCategoryForm.removeControl('mainBuild');
-      }
-      this.constructionCategoryForm.addControl('mainBuild', this.fb.array([]));
-      if (this.constructionCategoryForm.get('targetTotal')) {
-        this.constructionCategoryForm.removeControl('targetTotal');
-      }
-      this.constructionCategoryForm.addControl('targetTotal', this.fb.control(null));
-      if (responseToYear && (responseToYear || []).length !== 0) {
-        this.createForm(responseToYear);
-      }
-      if (!(responseToYear && (responseToYear || []).length !== 0)) {
-        this.settingService.readLocation('', 0, 1000).subscribe(response => {
-          this.dataService.getListMainConstructionComponents().subscribe(listMainBuildingCategory => {
-            this.listMainBuildingCategory = listMainBuildingCategory;
-            this.createForm(listMainBuildingCategory);
+    if (this.paramAction === 'view' || this.paramAction === 'edit') {
+      this.settingService.getDetailConstructionCategory(this.yearkpi).subscribe(responseToYear => {
+        if (this.constructionCategoryForm.get('mainBuild')) {
+          this.constructionCategoryForm.removeControl('mainBuild');
+        }
+        this.constructionCategoryForm.addControl('mainBuild', this.fb.array([]));
+        if (this.constructionCategoryForm.get('targetTotal')) {
+          this.constructionCategoryForm.removeControl('targetTotal');
+        }
+        this.constructionCategoryForm.addControl('targetTotal', this.fb.control(null));
+        if (responseToYear && (responseToYear || []).length !== 0) {
+          this.createForm(responseToYear);
+        }
+        if (!(responseToYear && (responseToYear || []).length !== 0)) {
+          this.settingService.readLocation('', 0, 1000).subscribe(response => {
+            this.dataService.getListMainConstructionComponents().subscribe(listMainBuildingCategory => {
+              this.listMainBuildingCategory = listMainBuildingCategory;
+              this.createForm(listMainBuildingCategory);
+            });
           });
-        });
-      }
-    });
+        }
+      });
+    }
   }
 
   createOrEditConstructionCategory() {

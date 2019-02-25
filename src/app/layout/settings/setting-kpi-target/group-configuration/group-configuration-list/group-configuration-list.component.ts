@@ -126,4 +126,8 @@ export class GroupConfigurationListComponent implements OnInit, OnDestroy {
   onSelectAll(value: boolean) {
     this.pagedResult.items.forEach(x => (x.checkboxSelected = value));
   }
+
+  changeActive() {
+    
+  }
 }

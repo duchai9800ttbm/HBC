@@ -71,7 +71,7 @@ export class WinBidComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: this.paramAction, year: this.yearkpi },
       });
-    // if (this.paramAction === 'view') {
+    if (this.paramAction === 'view' || this.paramAction === 'edit' || this.paramAction === 'create') {
       this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
         if (this.targetWinBid.get('id')) {
           this.targetWinBid.removeControl('id');
@@ -90,7 +90,7 @@ export class WinBidComponent implements OnInit {
         }
         this.targetWinBid.addControl('totalTarget', this.fb.control(response.totalTarget));
       });
-    // }
+    }
   }
 
   addTargetForYear() {
