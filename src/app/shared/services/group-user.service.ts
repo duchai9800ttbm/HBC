@@ -11,9 +11,13 @@ import { GroupUserRequest } from '../models/api-request/user/group-user/group-us
 import { GroupUserPrivilegesRequest } from '../models/api-request/user/group-user/group-user-privileges-request.model';
 import { GroupUserList } from '../models/user/group-user-list-item';
 import { ListAllGroupUser } from '../models/user/list-all-groupuser';
+import {
+  URLSearchParams,
+} from '@angular/http';
 @Injectable()
 export class GroupUserService implements OnInit {
   private searchTerm: any;
+  private filterSystemType: string;
   // User
   private static toListUserItem(result: any): ListUserItem {
     return {
@@ -182,16 +186,26 @@ export class GroupUserService implements OnInit {
       .map(res => res.result);
   }
 
+  // create params Danh sách người dùng tìm kiếm theo tên
+  createParamsListUser(systemType: string): URLSearchParams {
+    const urlFilterParams = new URLSearchParams();
+    if (systemType !== 'ALL') {
+      urlFilterParams.append('systemType', systemType);
+    }
+    return urlFilterParams;
+  }
   // Search
   searchKeyWord(
     terms: Observable<string>,
+    systemType: string,
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<ListUserItem>> {
     const searchUrl = `user/${page}/${pageSize}?searchTerm=`;
-    return this.instantSearchService.search(
+    return this.instantSearchService.searchWithFilter(
       searchUrl,
-      terms
+      terms,
+      this.createParamsListUser(systemType),
     )
       .map(result => {
         return {
@@ -207,12 +221,18 @@ export class GroupUserService implements OnInit {
   // Danh sách người dùng tìm kiếm theo tên không Observable terms
   getListSearchGroupUser(
     terms: string,
+    systemType: string,
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<ListUserItem>> {
     const searchUrl = `user/${page}/${pageSize}?searchTerm=${terms}`;
-    return this.apiService.get(searchUrl)
-      .map(result => {
+    const urlParams = new URLSearchParams();
+    if (systemType !== 'ALL') {
+      urlParams.append('systemType', systemType);
+    }
+    return this.apiService.get(searchUrl, urlParams)
+      .map(response => {
+        const result = response.result;
         return {
           currentPage: result.pageIndex,
           pageSize: result.pageSize,
@@ -342,7 +362,7 @@ export class GroupUserService implements OnInit {
   // Xóa nhiều nhóm người dùng
   deleteListGroupUser(listIdGroupUser: any): Observable<any> {
     const url = `usergroup/delete`;
-    const model = { ids: listIdGroupUser};
+    const model = { ids: listIdGroupUser };
     return this.apiService.post(url, model);
   }
   // Cập nhật danh sách chức năng của nhóm người dùng
@@ -395,6 +415,16 @@ export class GroupUserService implements OnInit {
   // Get value search from serivce
   getSearchTerm() {
     return this.searchTerm;
+  }
+
+  // Lưu filter system type
+  saveFilterSystemType(filterSystemType: string) {
+    this.filterSystemType = filterSystemType;
+  }
+
+  // Get value filterSystemType
+  getFilterSystemType() {
+    return this.filterSystemType;
   }
 
   destroySearchTerm() {

@@ -59,18 +59,37 @@ export class ManageUserComponent implements OnInit {
 
   ngOnInit() {
     // this.refresh(0, 10);
-    if ( this.groupUserService.getSearchTerm() ) {
+    if (this.groupUserService.getSearchTerm()) {
       this.searchTerm$ = this.groupUserService.getSearchTerm();
     }
-    this.loading  = true;
-    this.groupUserService
-      .searchKeyWord(this.searchTerm$, 0, 10)
-      .subscribe(result => {
+    this.loading = true;
+    // this.groupUserService
+    //   .searchKeyWord(this.searchTerm$, this.filterSystemType, 0, 10)
+    //   .subscribe(result => {
+    //     this.groupUserService.saveSearchTerm(this.searchTerm$);
+    //     this.rerender(result);
+    //     this.loading = false;
+    //   }, err => {
+    //     this.loading = false;
+    //   });
+
+    if (this.groupUserService.getFilterSystemType()) {
+      this.filterSystemType = this.groupUserService.getFilterSystemType();
+    }
+
+    this.searchTerm$.debounceTime(600)
+      .distinctUntilChanged()
+      .subscribe(term => {
         this.groupUserService.saveSearchTerm(this.searchTerm$);
-        this.rerender(result);
-        this.loading  = false;
-      }, err => {
-        this.loading  = false;
+        this.groupUserService.getListSearchGroupUser(this.searchTerm$.value, this.filterSystemType,
+          0, 10)
+          .subscribe(result => {
+            this.rerender(result);
+            this.loading = false;
+          }, err => {
+            this.loading = false;
+            this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại!');
+          });
       });
   }
 
@@ -82,35 +101,34 @@ export class ManageUserComponent implements OnInit {
 
   loadPage() {
     // this.refresh(0, 10);
-    this.loading  = true;
+    this.loading = true;
     this.groupUserService.getdataGroupUser(0, 10).subscribe(data => {
       this.pagedResult = data;
-      this.loading  = false;
+      this.loading = false;
       this.alertService.success('Dữ liệu được cập nhật mới nhất!');
     },
       err => {
-        this.loading  = false;
+        this.loading = false;
         this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật');
       });
   }
 
   pagedResultChange(pagedResult: any) {
-    // this.refresh(pagedResult.currentPage, pagedResult.pageSize);
     this.groupUserService
-      .searchKeyWord(this.searchTerm$, pagedResult.currentPage, pagedResult.pageSize)
+      .getListSearchGroupUser(this.searchTerm$.value, this.filterSystemType, pagedResult.currentPage, pagedResult.pageSize)
       .subscribe(result => {
         this.rerender(result);
-        this.loading  = false;
+        this.loading = false;
       }, err => {
-        this.loading  = false;
+        this.loading = false;
       });
   }
 
   refresh(page: string | number, pageSize: string | number) {
-    this.loading  = true;
+    this.loading = true;
     this.groupUserService.getdataGroupUser(page, pageSize).subscribe(data => {
       this.pagedResult = data;
-      this.loading  = false;
+      this.loading = false;
     });
   }
 
@@ -186,21 +204,14 @@ export class ManageUserComponent implements OnInit {
 
   changeActive(idUser: number, isActive: boolean) {
     this.groupUserService.activeOrDeactiveUser(idUser, isActive).subscribe(response => {
-      // this.loading  = true;
-      // this.groupUserService.getdataGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(data => {
-      //   this.pagedResult = data;
-      //   // this.loading  = false;
-      //   this.alertService.success('Thay đổi tình trạng người dùng thành công!');
-      // });
-
       this.groupUserService
-      .searchKeyWord(this.searchTerm$, this.pagedResult.currentPage, this.pagedResult.pageSize)
-      .subscribe(result => {
-        this.rerender(result);
-        this.alertService.success('Thay đổi tình trạng người dùng thành công!');
-      }, err => {
-        this.alertService.error('Đã xảy ra lỗi. Reload trang không thành công!');
-      });
+        .getListSearchGroupUser(this.searchTerm$.value, this.filterSystemType, this.pagedResult.currentPage, this.pagedResult.pageSize)
+        .subscribe(result => {
+          this.rerender(result);
+          this.alertService.success('Thay đổi tình trạng người dùng thành công!');
+        }, err => {
+          this.alertService.error('Đã xảy ra lỗi. Reload trang không thành công!');
+        });
     },
       err => {
         const error = err.json();
@@ -211,17 +222,17 @@ export class ManageUserComponent implements OnInit {
   }
 
   changeGroupUser() {
-    this.loading  = true;
+    this.loading = true;
     this.groupUserService.changeGroupUser(this.changeUser.id, this.changeUser.userGroup.key).subscribe(response => {
       this.groupUserService.getdataGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(data => {
         this.pagedResult = data;
-        this.loading  = false;
+        this.loading = false;
         this.modalRef.hide();
         this.alertService.success('Thay đổi nhóm cho người dùng thành công!');
       });
     },
       err => {
-        this.loading  = false;
+        this.loading = false;
         this.modalRef.hide();
         const error = err.json();
         if (error.errorCode === 'BusinessException') {
@@ -276,7 +287,7 @@ export class ManageUserComponent implements OnInit {
     this.confirmationService.confirm(
       `Bạn có chắc chắn muốn đặt lại mật khẩu cho người dùng "${name}" không?`,
       () => {
-        this.groupUserService.resetPassword(id).subscribe( response => {
+        this.groupUserService.resetPassword(id).subscribe(response => {
           this.confirmationService.openResetpassword('Mật khẩu được đặt lại là:', response);
         });
       });
@@ -284,5 +295,17 @@ export class ManageUserComponent implements OnInit {
 
   changeFilterSystemType() {
     console.log('this.systemType', this.filterSystemType);
+    this.loading = true;
+    this.groupUserService.getListSearchGroupUser(this.searchTerm$.value, this.filterSystemType,
+      this.pagedResult.currentPage ? this.pagedResult.currentPage : 0,
+      this.pagedResult.pageSize ? this.pagedResult.pageSize : 10).subscribe(response => {
+        this.groupUserService.saveFilterSystemType(this.filterSystemType);
+        console.log('response-response', response);
+        this.rerender(response);
+        this.loading = false;
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại.');
+        this.loading = false;
+      });
   }
 }
