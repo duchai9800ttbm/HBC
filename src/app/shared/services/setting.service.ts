@@ -739,10 +739,15 @@ export class SettingService {
         return this.apiService.post(url, requestModel);
     }
     // Danh sách năm đã cấu hình chỉ tiêu trúng thầu
-    listYearConfigToWinBid() {
+    listYearConfigToWinBid(): Observable<any> {
         const url = `kpiwinningofbid/configuredyears`;
         return this.apiService.get(url).map(reponse => {
-            return (reponse.result || []);
+            return (reponse.result || []).map(item => {
+                return {
+                    year: item.year,
+                    isConfigured: item.isConfigured,
+                };
+            });
         });
     }
     // ============

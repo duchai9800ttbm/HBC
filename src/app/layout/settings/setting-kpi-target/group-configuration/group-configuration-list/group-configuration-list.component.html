@@ -32,10 +32,10 @@
                 <span class="custom-control-indicator"></span>
               </label>
             </th>
-            <th class="font-weight-bold">Tên nhóm</th>
-            <th class="font-weight-bold">Mô tả</th>
-            <th class="font-weight-bold">Trạng thái</th>
-            <th class="text-center font-weight-bold manipulation">Thao tác</th>
+            <th class="font-weight-bold" title="Tên nhóm">Tên nhóm</th>
+            <th class="font-weight-bold" title="Mô tả">Mô tả</th>
+            <th class="font-weight-bold" title="Trạng thái">Trạng thái</th>
+            <th class="text-center font-weight-bold manipulation" title="Thao tác">Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -46,9 +46,9 @@
                 <span class="custom-control-indicator"></span>
               </label>
             </td>
-            <td class="text-truncate">{{item?.name}}</td>
-            <td class="text-truncate">{{item?.desc}}</td>
-            <td class="text-truncate">{{item?.status?.value}}</td>
+            <td class="text-truncate" [title]="item?.name ? item?.name : ''">{{item?.name}}</td>
+            <td class="text-truncate" [title]="item?.desc ? item?.desc : ''">{{item?.desc}}</td>
+            <td class="text-truncate" [title]="item?.status?.value ? item?.status?.value : ''">{{item?.status?.value}}</td>
             <td>
               <div class="center-parent w-100 h-100">
                 <div class="col-md-6 center-parent cursor-pointer" (click)="editGroupConfig(item?.id)">

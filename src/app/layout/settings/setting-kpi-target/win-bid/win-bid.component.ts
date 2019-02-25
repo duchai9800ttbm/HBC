@@ -36,18 +36,15 @@ export class WinBidComponent implements OnInit {
     } else {
       this.yearkpi = this.currentYear;
     }
+    if (this.paramAction === 'create') {
+      this.yearkpi = null;
+    }
     this.settingService.listYearConfigToWinBid().subscribe(reponseListYear => {
-      console.log('this.reponseListYear', reponseListYear);
-      this.listYearConfigured = reponseListYear;
+      this.listYearConfigured = (reponseListYear || []).filter(item => item.isConfigured === true).map(i => i.year);
       // list not configred
-      for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
-        if (!this.listYearConfigured.includes(i)) {
-          this.listYearNotConfigred.push(i);
-        }
-      }
+      this.listYearNotConfigred = (reponseListYear || []).filter(item => item.isConfigured === false).map(i => i.year);
     });
     this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
-      console.log('settingService,', response);
       this.createForm(response);
     });
   }
@@ -74,7 +71,7 @@ export class WinBidComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: this.paramAction, year: this.yearkpi },
       });
-    if (this.paramAction === 'view') {
+    // if (this.paramAction === 'view') {
       this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
         if (this.targetWinBid.get('id')) {
           this.targetWinBid.removeControl('id');
@@ -93,7 +90,7 @@ export class WinBidComponent implements OnInit {
         }
         this.targetWinBid.addControl('totalTarget', this.fb.control(response.totalTarget));
       });
-    }
+    // }
   }
 
   addTargetForYear() {

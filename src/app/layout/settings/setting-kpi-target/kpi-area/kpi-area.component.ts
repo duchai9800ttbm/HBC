@@ -42,7 +42,7 @@ export class KpiAreaComponent implements OnInit {
     } else {
       this.yearkpi = this.currentYear;
     }
-    this.settingService.listYearConfigToWinBid().subscribe(reponseListYear => {
+    this.settingService.listYearConfigToKpiArea().subscribe(reponseListYear => {
       console.log('this.reponseListYear', reponseListYear);
       this.listYearConfigured = reponseListYear;
       // list not configred
@@ -148,24 +148,26 @@ export class KpiAreaComponent implements OnInit {
         relativeTo: this.activatedRoute,
         queryParams: { action: this.paramAction, year: this.yearkpi },
       });
-    if (this.paramAction === 'view') {
-      this.settingService.getDetailKpiLocationToYear(this.yearkpi).subscribe(responseToYear => {
+    this.settingService.getDetailKpiLocationToYear(this.yearkpi).subscribe(responseToYear => {
+      if (this.kpiLocation.get('location')) {
         this.kpiLocation.removeControl('location');
-        this.kpiLocation.addControl('location', this.fb.array([]));
+      }
+      this.kpiLocation.addControl('location', this.fb.array([]));
+      if (this.kpiLocation.get('targetTotal')) {
         this.kpiLocation.removeControl('targetTotal');
-        this.kpiLocation.addControl('targetTotal', this.fb.control(null));
-        if (responseToYear) {
-          const listLocation = this.handlData(responseToYear);
-          this.createForm(listLocation);
-        }
-        if (!responseToYear) {
-          return this.settingService.readLocation('', 0, 1000).subscribe(response => {
-            this.listLocation = response.items;
-            this.createForm(response.items);
-          });
-        }
-      });
-    }
+      }
+      this.kpiLocation.addControl('targetTotal', this.fb.control(null));
+      if (responseToYear) {
+        const listLocation = this.handlData(responseToYear);
+        this.createForm(listLocation);
+      }
+      if (!responseToYear) {
+        return this.settingService.readLocation('', 0, 1000).subscribe(response => {
+          this.listLocation = response.items;
+          this.createForm(response.items);
+        });
+      }
+    });
   }
 
   createOrEditKpiLocation() {
