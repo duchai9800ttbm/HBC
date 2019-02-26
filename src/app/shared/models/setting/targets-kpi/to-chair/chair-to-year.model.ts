@@ -9,8 +9,9 @@ export class ChairToYear {
                 status: {
                     key: string;
                     value: string;
-                    displayText: string
+                    displayText: string;
                 }
+                isActive: boolean;
             };
             chairDetail: {
                 employee: {

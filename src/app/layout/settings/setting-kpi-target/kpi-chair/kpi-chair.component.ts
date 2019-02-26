@@ -9,6 +9,7 @@ import { PackageService } from '../../../../shared/services/package.service';
 import { GroupChaired } from '../../../../shared/models/package/group-chaired.model';
 import { AlertService } from '../../../../shared/services';
 import { ChairToYear } from '../../../../shared/models/setting/targets-kpi/to-chair/chair-to-year.model';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 @Component({
   selector: 'app-kpi-chair',
   templateUrl: './kpi-chair.component.html',
@@ -86,7 +87,7 @@ export class KpiChairComponent implements OnInit {
       }
     });
     this.getListChairToYearFuc(+this.yearkpi);
-    this.getListGroupkpi();
+    // this.getListGroupkpi();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -112,23 +113,34 @@ export class KpiChairComponent implements OnInit {
 
   getListChairToYearFuc(year: number) {
     if (this.paramAction === 'view' || this.paramAction === 'edit') {
-      this.settingService.getListChairToYear(year).subscribe(response => {
-        console.log('this.listYear', response);
-        this.createForm(response[0]);
+      forkJoin(
+        this.settingService.getListChairToYear(year),
+        this.settingService.getListGroupKPI('', 0, 1000)
+      ).subscribe(([res1, res2]) => {
+        this.createForm(res1[0]);
+        this.listGroupkpi = res2.items && res2.items.filter(item => item.isActive);
+        this.groupKpiChairsArray.value.groupKpiChair.forEach(item => {
+          if (item.groupName && item.groupName.isActive === false) {
+            this.listGroupkpi.push(item.groupName);
+          }
+        });
       });
     }
     if (this.paramAction === 'create') {
+      this.settingService.getListGroupKPI('', 0, 1000).subscribe(response => {
+        this.listGroupkpi = response.items && response.items.filter(item => item.isActive);
+      });
       this.yearkpi = null;
       this.createForm(null);
     }
   }
 
-  getListGroupkpi() {
-    this.settingService.getListGroupKPI('', 0, 1000).subscribe(response => {
-      this.listGroupkpi = response.items && response.items.filter(item => item.isActive);
-      console.log('groupKpiChairsArray', this.groupKpiChairsArray);
-    });
-  }
+  // getListGroupkpi() {
+  //   this.settingService.getListGroupKPI('', 0, 1000).subscribe(response => {
+  //     this.listGroupkpi = response.items && response.items.filter(item => item.isActive);
+  //     console.log('groupKpiChairsArray', this.groupKpiChairsArray);
+  //   });
+  // }
 
   createForm(groupChairCallAPI) {
     this.groupKpiChairsArray = this.fb.group({

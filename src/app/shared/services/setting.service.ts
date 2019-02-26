@@ -636,7 +636,8 @@ export class SettingService {
                             key: itemKpiGroupChairs.kpiGroup.status.key,
                             value: itemKpiGroupChairs.kpiGroup.status.value,
                             displayText: itemKpiGroupChairs.kpiGroup.status.displayText,
-                        }
+                        },
+                        isActive: itemKpiGroupChairs.kpiGroup.isActive,
                     },
                     chairDetail: itemKpiGroupChairs.chairDetail && itemKpiGroupChairs.chairDetail.map(itemChairDetail => {
                         return {
