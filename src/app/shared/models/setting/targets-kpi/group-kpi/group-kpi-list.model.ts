@@ -7,4 +7,5 @@ export class GroupKPIList {
         value: string;
         displayText: string
     };
+    isActive: boolean;
 }

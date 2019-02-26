@@ -58,14 +58,13 @@
                 <div class="col-md-4 center-parent cursor-pointer">
                   <div style="zoom: 0.5; padding-top: 8px;">
                     <label class="switch" style="margin: 0px">
-                      <input type="checkbox" checked>
-                      <span class="slider round" (click)="changeActive()"></span>
-                      <!-- [checked]="item.isActive" -->
+                      <input type="checkbox" [checked]="item.isActive">
+                      <span class="slider round" (click)="changeStatusActive(item.isActive, item?.id)"></span>
                     </label>
                   </div>
                 </div>
                 <div class="col-md-4 center-parent cursor-pointer" (click)="deleteGroupConfig(item?.id)">
-                  <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
+                  <i *ngIf="item?.status?.key === 'DaSuDung'" [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
                 </div>
               </div>
             </td>

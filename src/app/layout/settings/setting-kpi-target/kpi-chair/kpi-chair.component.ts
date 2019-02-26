@@ -125,7 +125,8 @@ export class KpiChairComponent implements OnInit {
 
   getListGroupkpi() {
     this.settingService.getListGroupKPI('', 0, 1000).subscribe(response => {
-      this.listGroupkpi = response.items;
+      this.listGroupkpi = response.items && response.items.filter(item => item.isActive);
+      console.log('groupKpiChairsArray', this.groupKpiChairsArray);
     });
   }
 

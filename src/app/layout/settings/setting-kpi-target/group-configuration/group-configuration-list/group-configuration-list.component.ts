@@ -45,6 +45,7 @@ export class GroupConfigurationListComponent implements OnInit, OnDestroy {
 
   rerender(pagedResult: any) {
     this.pagedResult = pagedResult;
+    console.log('this.pagedResult', this.pagedResult);
   }
 
   createGroupConfig() {
@@ -127,7 +128,17 @@ export class GroupConfigurationListComponent implements OnInit, OnDestroy {
     this.pagedResult.items.forEach(x => (x.checkboxSelected = value));
   }
 
-  changeActive() {
-    
+  changeStatusActive(isStatusActive: boolean, kpiGroupId: number) {
+    this.settingService.changeStatusActiveGroupKPI(isStatusActive, kpiGroupId).subscribe(response => {
+      this.pagedResult.items.forEach(item => {
+        if (item.id === kpiGroupId) {
+          item.isActive = !isStatusActive;
+        }
+      });
+      this.alertService.success('Thay đổi tình trạng nhóm thành công.');
+    }, err => {
+      this.alertService.error('Thay đổi tình trạng nhóm không thành công.');
+    });
   }
+
 }

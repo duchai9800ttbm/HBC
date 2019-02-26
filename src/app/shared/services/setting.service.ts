@@ -545,6 +545,7 @@ export class SettingService {
                 value: result.status.value,
                 displayText: result.status.displayText,
             },
+            isActive: result.isActive
         };
     }
     // Danh sách nhóm chỉ tiêu KPI có search
@@ -590,6 +591,11 @@ export class SettingService {
                     }),
                 };
             });
+    }
+    // active or deactive một nhóm KPI
+    changeStatusActiveGroupKPI(isStatusActive: boolean, kpiGroupId: number) {
+        const url = isStatusActive ? `kpigroups/${kpiGroupId}/deactive` : `kpigroups/${kpiGroupId}/active`;
+        return this.apiService.post(url);
     }
     // Sửa nhóm chỉ tiêu KPI
     editGroupKPI(groupConfigFormValue: any, id: number) {
