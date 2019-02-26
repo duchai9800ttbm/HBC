@@ -75,10 +75,73 @@ export class LoginFormComponent implements OnInit {
                             this.userModel = this.sessionService.userInfo;
                             this.listPrivileges = this.userModel.privileges;
                             if (this.listPrivileges) {
-                                this.isManageBidOpportunitys = this.administeredPackageList.some( r => this.listPrivileges.includes(r));
+                                this.isManageBidOpportunitys = this.administeredPackageList.some(r => this.listPrivileges.includes(r));
                                 this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
                                 this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
                                 this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
+                                if (this.route.snapshot.queryParamMap.get('returnUrl')) {
+                                    switch (this.route.snapshot.queryParamMap.get('returnUrl').split('/')[1]) {
+                                        case 'package': {
+                                            if (this.isManageBidOpportunitys) {
+                                                this.router.navigate([`${this.route.snapshot.queryParamMap.get('returnUrl')}`]);
+                                                this.spinner.hide();
+                                            } else if (this.isManageUserGroups) {
+                                                this.router.navigate(['/management-user']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageUsers) {
+                                                this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageSettings) {
+                                                this.router.navigate(['/settings']);
+                                                this.spinner.hide();
+                                            } else {
+                                                this.router.navigate(['/package']);
+                                                this.spinner.hide();
+                                            }
+                                            break;
+                                        }
+                                        case 'management-user': {
+                                            if (this.isManageUserGroups || this.isManageUsers) {
+                                                this.router.navigate([`${this.route.snapshot.queryParamMap.get('returnUrl')}`]);
+                                                this.spinner.hide();
+                                            } else if (this.isManageBidOpportunitys) {
+                                                this.router.navigate(['/package']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageSettings) {
+                                                this.router.navigate(['/settings']);
+                                                this.spinner.hide();
+                                            } else {
+                                                this.router.navigate(['/package']);
+                                                this.spinner.hide();
+                                            }
+                                            break;
+                                        }
+                                        case 'settings': {
+                                            if (this.isManageSettings) {
+                                                this.router.navigate([`${this.route.snapshot.queryParamMap.get('returnUrl')}`]);
+                                                this.spinner.hide();
+                                            } else if (this.isManageBidOpportunitys) {
+                                                this.router.navigate(['/package']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageUserGroups) {
+                                                this.router.navigate(['/management-user']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageUsers) {
+                                                this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
+                                                this.spinner.hide();
+                                            } else {
+                                                this.router.navigate(['/package']);
+                                                this.spinner.hide();
+                                            }
+                                            break;
+                                        }
+                                        default: {
+                                            this.router.navigate(['/package']);
+                                            this.spinner.hide();
+                                        }
+                                    }
+                                    return;
+                                }
                                 if (this.isManageBidOpportunitys) {
                                     this.router.navigate(['/package']);
                                     this.spinner.hide();
