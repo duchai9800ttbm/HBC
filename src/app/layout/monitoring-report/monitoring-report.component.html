@@ -58,26 +58,27 @@
                         <span class="date-validate" *ngIf="isValidateDate">Ngày bắt đầu phải nhỏ hơn ngày kết thúc</span>
                     </span>
                 </span>
-                <span class="ml-5 d-flex">
+                <span class="ml-4 d-flex">
                     <span class="action-view center-parent">Đến:</span>
                     <kendo-datepicker [format]="'dd/MM/yyyy'" [min]="startDate" tabindex="5" class="form-control ml-3"
                         [(ngModel)]="endDate"></kendo-datepicker>
                 </span>
-                <span *ngIf="idReport === 'construction-items'" class="ml-5 custom-dropdown d-flex">
+                <span *ngIf="idReport === 'construction-items'" class="ml-4 custom-dropdown d-flex">
                     <span for="" class="action-view center-parent" style="width: 100px;">Hạng mục:</span>
                     <select class="form-control ml-3" [(ngModel)]="startAndEndConstructionCategory.constructionCategory">
                         <option [ngValue]="null">---Chọn---</option>
                         <option *ngFor="let item of listMainBuildingCategory | async" [value]="item.id">{{item.text }}</option>
                     </select>
                 </span>
-                <span *ngIf="idReport === 'type-construction'" class="ml-5 custom-dropdown d-flex">
+                <span *ngIf="idReport === 'type-construction'" class="ml-4 custom-dropdown d-flex">
                     <span for="" class="action-view" style="width: 100px;">Loại:</span>
                     <select class="form-control ml-3" [(ngModel)]="startAndEndConstructionType.constructionType">
                         <option [ngValue]="null">---Chọn---</option>
                         <option *ngFor="let item of listBuildingProjectType | async" [value]="item.id">{{item.text }}</option>
                     </select>
                 </span>
-                <button class="btn btn-primary ml-5 action-view" (click)="viewReport()">Xem</button>
+                <button class="btn btn-primary ml-4 action-view" (click)="viewReport()">Xem</button>
+                <button class="btn btn-primary ml-4 action-view" (click)="exportExcel()">Xuất file</button>
             </div>
             <router-outlet></router-outlet>
         </div>
