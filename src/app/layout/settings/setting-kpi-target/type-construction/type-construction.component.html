@@ -1,13 +1,31 @@
 <div>
-  <div class="menu">
-    <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">chỉ tiêu kpi loại công trình </h5>
+  <div class="menu row">
+    <div class="col-md-6 d-flex align-items-center">
+      <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">chỉ tiêu kpi loại công trình </h5>
+    </div>
+    <div class="text-right col-md-6" id="action">
+      <ng-container *ngIf="paramAction === 'view'">
+        <button class="btn btn-secondary" type="button" [routerLink]="['../type-construction']" [queryParams]="{action:'edit'}">Sửa
+        </button>
+        <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../type-construction']" [queryParams]="{action:'create'}"
+          (click)="createConstructionType()">Thêm
+          mới chỉ tiêu
+        </button>
+      </ng-container>
+      <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
+        <button class="btn btn-secondary" type="button" (click)="cancel()">Hủy
+        </button>
+        <button type="submit" class="btn btn-primary ml-1" (click)="createOrEditConstructionType()">Lưu
+        </button>
+      </ng-container>
+    </div>
   </div>
   <div class="pt-3" id="wrapper-report-child">
     <div class="card p-3">
       <div class="row manipulation">
         <div class="col-md-3 d-flex year-min-width" id="year">
           <ng-container *ngIf="!(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
-            <div class="font-weight-bold required year--pad-top">Năm:&nbsp;</div>&nbsp;&nbsp;
+            <div class="font-weight-bold year--pad-top" [class.required]="paramAction === 'edit' || paramAction === 'create'">Năm:&nbsp;</div>&nbsp;&nbsp;
             <div>
               <div class="custom-dropdown">
                 <select class="form-control select-year--width" [(ngModel)]="yearkpi" (change)="changeYearTargetFuc()"
@@ -33,27 +51,12 @@
           </ng-container>
 
         </div>
-        <div class="col-md-5 total-target--pad-top" id="target">
+        <div class="col-md-9 total-target--pad-top" id="target">
           <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
           <span>{{ constructionTypeForm?.get('targetTotal').value ? (constructionTypeForm?.get('targetTotal')?.value |
             truncateDecimal) : '0.00'}}</span>
         </div>
-        <div class="text-right col-md-4" id="action">
-          <ng-container *ngIf="paramAction === 'view'">
-            <button class="btn btn-secondary" type="button" [routerLink]="['../type-construction']" [queryParams]="{action:'edit'}">Sửa
-            </button>
-            <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../type-construction']" [queryParams]="{action:'create'}"
-              (click)="createConstructionType()">Thêm
-              mới chỉ tiêu
-            </button>
-          </ng-container>
-          <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
-            <button class="btn btn-secondary" type="button" (click)="cancel()">Hủy
-            </button>
-            <button type="submit" class="btn btn-primary ml-1" (click)="createOrEditConstructionType()">Lưu
-            </button>
-          </ng-container>
-        </div>
+
       </div>
       <div class="row pt-2">
         <div class="col-md-12">

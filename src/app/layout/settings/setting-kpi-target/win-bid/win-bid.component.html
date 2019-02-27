@@ -1,13 +1,31 @@
 <div>
-  <div class="menu">
-    <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">chỉ tiêu trúng thầu </h5>
+  <div class="menu row">
+    <div class="col-md-6 d-flex align-items-center">
+      <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">chỉ tiêu trúng thầu </h5>
+    </div>
+    <div class="text-right col-md-6">
+      <ng-container *ngIf="paramAction === 'view'">
+        <button class="btn btn-secondary" type="button" [routerLink]="['../win-bid']" [queryParams]="{action:'edit'}">Sửa
+        </button>
+        <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../win-bid']" [queryParams]="{action:'create'}"
+          (click)="addTargetForYear()">Thêm
+          mới chỉ tiêu
+        </button>
+      </ng-container>
+      <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
+        <button class="btn btn-secondary" type="button" (click)="cancel()">Hủy
+        </button>
+        <button type="submit" class="btn btn-primary ml-1" (click)="createOrEditTargetWinBid()">Lưu
+        </button>
+      </ng-container>
+    </div>
   </div>
   <div class="pt-3">
     <div class="card p-3">
       <div class="row manipulation">
-        <div class="col-md-3 d-flex">
+        <div class="col-md-12 d-flex">
           <ng-container *ngIf="!(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
-            <div class="font-weight-bold required year--pad-top">Năm:&nbsp;</div>&nbsp;&nbsp;
+            <div class="font-weight-bold year--pad-top" [class.required]="paramAction === 'edit' || paramAction === 'create'">Năm:&nbsp;</div>&nbsp;&nbsp;
             <div>
               <div class="custom-dropdown">
                 <select class="form-control select-year--width" [(ngModel)]="yearkpi" (change)="changeYearTargetFuc()"
@@ -27,28 +45,12 @@
             </div>
           </ng-container>
           <ng-container *ngIf="(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
-              <div>
-                  Bạn chưa thiết lập chỉ tiêu trúng thầu cho bất kỳ năm nào, vui lòng chọn thêm mới chỉ tiêu
-              </div>
-            </ng-container>
-        </div>
-        <div class="text-right col-md-9">
-          <ng-container *ngIf="paramAction === 'view'">
-            <button class="btn btn-secondary" type="button" [routerLink]="['../win-bid']" [queryParams]="{action:'edit'}">Sửa
-            </button>
-            <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../win-bid']" [queryParams]="{action:'create'}"
-              (click)="addTargetForYear()">Thêm
-              mới chỉ tiêu
-            </button>
-          </ng-container>
-          <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
-            <button class="btn btn-secondary" type="button" (click)="cancel()">Hủy
-            </button>
-            <button type="submit" class="btn btn-primary ml-1"
-              (click)="createOrEditTargetWinBid()">Lưu
-            </button>
+            <div>
+              Bạn chưa thiết lập chỉ tiêu trúng thầu cho bất kỳ năm nào, vui lòng chọn thêm mới chỉ tiêu
+            </div>
           </ng-container>
         </div>
+
       </div>
       <form [formGroup]="targetWinBid" novalidate *ngIf="targetWinBid">
         <div class="row pt-2">

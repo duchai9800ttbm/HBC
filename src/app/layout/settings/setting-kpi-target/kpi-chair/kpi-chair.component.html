@@ -1,13 +1,29 @@
 <div>
-  <div class="menu">
-    <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">kpi theo chủ trì </h5>
+  <div class="menu row">
+    <div class="col-md-6 d-flex align-items-center">
+      <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase font-weight-bold">kpi theo chủ trì </h5>
+    </div>
+    <div class="text-right col-md-6">
+      <div *ngIf="paramAction === 'view'" id="action">
+        <button class="btn btn-secondary" type="button" *ngIf="isEdit" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
+        </button>
+        <button type="submit" class="btn btn-primary ml-1" (click)="addTargetForYear()">Thêm mới chỉ tiêu
+        </button>
+      </div>
+      <div *ngIf="paramAction === 'edit' || paramAction === 'create'">
+        <button class="btn btn-secondary" type="button" (click)="cancel()">Hủy
+        </button>
+        <button type="submit" class="btn btn-primary ml-1" (click)="saveTargetkpiToChair()">Lưu
+        </button>
+      </div>
+    </div>
   </div>
 
   <div class="card p-3 mt-3" id="wrapper-report-child">
     <div class="row manipulation">
       <div class="col-md-3 d-flex year-min-width" id="year">
         <ng-container *ngIf="!(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
-          <span class="font-weight-bold required year--pad-top">Năm:&nbsp;</span>&nbsp;&nbsp;
+          <span class="font-weight-bold year--pad-top" [class.required]="paramAction === 'edit' || paramAction === 'create'">Năm:&nbsp;</span>&nbsp;&nbsp;
           <div>
             <div class="custom-dropdown">
               <select class="form-control select-year--width" style="width: 122px;" [(ngModel)]="yearkpi" (change)="changeYearKpiFuc()"
@@ -32,25 +48,14 @@
           </div>
         </ng-container>
       </div>
-      <div class="col-md-5 total-target--pad-top" id="target">
+      <div class="col-md-9 total-target--pad-top" id="target">
         <span class="font-weight-bold">Tổng chỉ tiêu:&nbsp;</span>
-        <span>{{ (groupKpiChairsArray && targetTotalFC && targetTotalFC !== 0) ? (targetTotalFC | truncateDecimal) : '0.00'}}</span>
-      </div>
-      <div class="text-right col-md-4" *ngIf="paramAction === 'view'" id="action">
-        <button class="btn btn-secondary" type="button" *ngIf="isEdit" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
-        </button>
-        <button type="submit" class="btn btn-primary ml-1" (click)="addTargetForYear()">Thêm mới chỉ tiêu
-        </button>
-      </div>
-      <div class="text-right col-md-4" *ngIf="paramAction === 'edit' || paramAction === 'create'">
-        <button class="btn btn-secondary" type="button" (click)="cancel()">Hủy
-        </button>
-        <button type="submit" class="btn btn-primary ml-1" (click)="saveTargetkpiToChair()">Lưu
-        </button>
+        <span>{{ (groupKpiChairsArray && targetTotalFC && targetTotalFC !== 0) ? (targetTotalFC | truncateDecimal) :
+          '0.00'}}</span>
       </div>
     </div>
     <div class="pt-3">
-      <span class="font-weight-bold required">
+      <span class="font-weight-bold" [class.required]="paramAction === 'edit' || paramAction === 'create'">
         Nhóm:
       </span>
       <span class="group-validate" *ngIf="isSubmitCreate && isValidateGroup">

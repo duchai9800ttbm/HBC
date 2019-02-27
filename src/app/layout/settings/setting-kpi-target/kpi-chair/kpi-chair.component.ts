@@ -95,19 +95,19 @@ export class KpiChairComponent implements OnInit {
     this.widthReport = document.getElementById('wrapper-report-child').offsetWidth;
     if (this.widthReport <= 730) {
       document.getElementById('year').classList.remove('col-md-3');
-      document.getElementById('target').classList.remove('col-md-5');
-      document.getElementById('action').classList.remove('col-md-4');
+      document.getElementById('target').classList.remove('col-md-9');
+      // document.getElementById('action').classList.remove('col-md-4');
       document.getElementById('year').classList.add('col-md-4');
-      document.getElementById('target').classList.add('col-md-3', 'pr-0');
-      document.getElementById('action').classList.add('col-md-5');
+      document.getElementById('target').classList.add('col-md-8', 'pr-0');
+      // document.getElementById('action').classList.add('col-md-5');
     }
     if (!(this.widthReport <= 730)) {
       document.getElementById('year').classList.remove('col-md-4');
-      document.getElementById('target').classList.remove('col-md-3', 'pr-0');
-      document.getElementById('action').classList.remove('col-md-5');
+      document.getElementById('target').classList.remove('col-md-8', 'pr-0');
+      // document.getElementById('action').classList.remove('col-md-5');
       document.getElementById('year').classList.add('col-md-3');
-      document.getElementById('target').classList.add('col-md-5');
-      document.getElementById('action').classList.add('col-md-4');
+      document.getElementById('target').classList.add('col-md-9');
+      // document.getElementById('action').classList.add('col-md-4');
     }
   }
 
