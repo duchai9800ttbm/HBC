@@ -51,28 +51,33 @@
         <div class="table-responsive">
             <div class="d-flex mb-4 view-report--pad">
                 <span class="d-flex">
-                    <span class="center-parent">Từ:</span>
-                    <kendo-datepicker [format]="'dd/MM/yyyy'" [max]="endDate" tabindex="5" class="form-control ml-3" [(ngModel)]="startDate"></kendo-datepicker>
+                    <span class="field-name-view-report">Từ:</span>
+                    <span class="ml-3">
+                        <kendo-datepicker [format]="'dd/MM/yyyy'" [max]="endDate" tabindex="5" class="form-control"
+                            [(ngModel)]="startDate"></kendo-datepicker>
+                        <span class="date-validate" *ngIf="isValidateDate">Ngày bắt đầu phải nhỏ hơn ngày kết thúc</span>
+                    </span>
                 </span>
                 <span class="ml-5 d-flex">
-                    <span class="center-parent">Đến:</span>
-                    <kendo-datepicker [format]="'dd/MM/yyyy'" [min]="startDate" tabindex="5" class="form-control ml-3" [(ngModel)]="endDate"></kendo-datepicker>
+                    <span class="field-name-view-report">Đến:</span>
+                    <kendo-datepicker [format]="'dd/MM/yyyy'" [min]="startDate" tabindex="5" class="form-control ml-3"
+                        [(ngModel)]="endDate"></kendo-datepicker>
                 </span>
                 <span *ngIf="idReport === 'construction-items'" class="ml-5 custom-dropdown d-flex">
-                    <span for="" class="center-parent" style="width: 100px;">Hạng mục:</span>
+                    <span for="" class="field-name-view-report" style="width: 100px;">Hạng mục:</span>
                     <select class="form-control ml-3" [(ngModel)]="startAndEndConstructionCategory.constructionCategory">
                         <option [ngValue]="null">---Chọn---</option>
                         <option *ngFor="let item of listMainBuildingCategory | async" [value]="item.id">{{item.text }}</option>
                     </select>
                 </span>
                 <span *ngIf="idReport === 'type-construction'" class="ml-5 custom-dropdown d-flex">
-                    <span for="" class="center-parent" style="width: 100px;">Loại:</span>
+                    <span for="" class="field-name-view-report" style="width: 100px;">Loại:</span>
                     <select class="form-control ml-3" [(ngModel)]="startAndEndConstructionType.constructionType">
                         <option [ngValue]="null">---Chọn---</option>
                         <option *ngFor="let item of listBuildingProjectType | async" [value]="item.id">{{item.text }}</option>
                     </select>
                 </span>
-                <button class="btn btn-primary ml-5" (click)="viewReport()">Xem</button>
+                <button class="btn btn-primary ml-5 action-view" (click)="viewReport()">Xem</button>
             </div>
             <router-outlet></router-outlet>
         </div>

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { DictionaryItem } from '../../shared/models';
 import { StartAndEndConstructionCategory } from '../../shared/models/report-follow/startAndEndConstructionCategory.model';
 import { StartAndEndConstructionType } from '../../shared/models/report-follow/startAndEndConstructionType.model';
+import DateTimeConvertHelper from '../../shared/helpers/datetime-convert-helper';
 
 @Component({
   selector: 'app-monitoring-report',
@@ -30,6 +31,15 @@ export class MonitoringReportComponent implements OnInit {
   startAndEndConstructionType = new StartAndEndConstructionType();
   listMainBuildingCategory: Observable<DictionaryItem[]>;
   listBuildingProjectType: Observable<DictionaryItem[]>;
+  isViewReport = false;
+  get isValidateDate(): boolean {
+    if (((DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
+      - DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) > 0) && this.isViewReport) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   constructor(
     private router: Router,
     private reportFollowService: ReportFollowService,
@@ -149,32 +159,36 @@ export class MonitoringReportComponent implements OnInit {
   }
 
   viewReport() {
-    switch (this.idReport) {
-      case 'kpi-chair':
-      case 'win-bid':
-      case 'kpi-area':
-      case 'win-rate-contractors':
-      case 'win-rate-quarter-of-year':
-      case 'floor-area':
-      case 'number-win-bid':
-      case 'potential-projects':
-       {
-        this.startAndEndDate.startDate = this.startDate;
-        this.startAndEndDate.endDate = this.endDate;
-        this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
-        break;
-      }
-      case 'construction-items': {
-        this.startAndEndConstructionCategory.startDate = this.startDate;
-        this.startAndEndConstructionCategory.endDate = this.endDate;
-        this.reportFollowService.startAndEndConstructionCategory.next(this.startAndEndConstructionCategory);
-        break;
-      }
-      case 'type-construction': {
-        this.startAndEndConstructionType.startDate = this.startDate;
-        this.startAndEndConstructionType.endDate = this.endDate;
-        this.reportFollowService.startAndEndConstructionType.next(this.startAndEndConstructionType);
-        break;
+    this.isViewReport = true;
+    if (!((DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
+      - DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) > 0)) {
+      switch (this.idReport) {
+        case 'kpi-chair':
+        case 'win-bid':
+        case 'kpi-area':
+        case 'win-rate-contractors':
+        case 'win-rate-quarter-of-year':
+        case 'floor-area':
+        case 'number-win-bid':
+        case 'potential-projects':
+          {
+            this.startAndEndDate.startDate = this.startDate;
+            this.startAndEndDate.endDate = this.endDate;
+            this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
+            break;
+          }
+        case 'construction-items': {
+          this.startAndEndConstructionCategory.startDate = this.startDate;
+          this.startAndEndConstructionCategory.endDate = this.endDate;
+          this.reportFollowService.startAndEndConstructionCategory.next(this.startAndEndConstructionCategory);
+          break;
+        }
+        case 'type-construction': {
+          this.startAndEndConstructionType.startDate = this.startDate;
+          this.startAndEndConstructionType.endDate = this.endDate;
+          this.reportFollowService.startAndEndConstructionType.next(this.startAndEndConstructionType);
+          break;
+        }
       }
     }
   }
