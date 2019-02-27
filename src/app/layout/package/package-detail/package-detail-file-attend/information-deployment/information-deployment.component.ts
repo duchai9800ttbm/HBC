@@ -337,10 +337,12 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
     );
     setTimeout(_ => {
       const temp: HTMLElement = document.getElementsByClassName('ck-editor__editable_inline')[0] as HTMLElement;
-      temp.style.height = '10rem';
-      temp.style.border = '1px solid #ccc';
-      temp.style.margin = '1rem 0 0 0';
-      temp.style.boxShadow = 'none';
+      if (temp && temp.style) {
+        temp.style.height = '10rem';
+        temp.style.border = '1px solid #ccc';
+        temp.style.margin = '1rem 0 0 0';
+        temp.style.boxShadow = 'none';
+      }
     });
   }
   openModalUpload(template: TemplateRef<any>) {
