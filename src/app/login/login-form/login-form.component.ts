@@ -164,8 +164,10 @@ export class LoginFormComponent implements OnInit {
                     err => {
                         if (err._body && JSON.parse(err._body).errorCode === 'UserLoginIsNotActive') {
                             this.apiErrorCode = 'Tài khoản này đã bị khoá hoạt động, vui lòng liên hệ admin để được hỗ trợ!';
-                        } else {
+                        } else if (err._body && JSON.parse(err._body).errorCode === 'UserLoginInvalidUserNameOrPassword') {
                             this.apiErrorCode = 'Nhập sai tên người dùng hoặc mật khẩu!';
+                        } else {
+                            this.apiErrorCode = 'Đã xảy ra lỗi. Vui lòng thử lại sau!';
                         }
                     }
                 );

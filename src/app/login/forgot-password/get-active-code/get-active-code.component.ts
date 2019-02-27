@@ -30,7 +30,7 @@ export class GetActiveCodeComponent implements OnInit {
     this.createForm();
     const browserName = this.getBrowser();
     if (browserName === 'Firefox') {
-        document.getElementById('formLogin').classList.add('col-xl-12');
+      document.getElementById('formLogin').classList.add('col-xl-12');
     }
 
   }
@@ -64,7 +64,11 @@ export class GetActiveCodeComponent implements OnInit {
             this.router.navigate(['/login/forgot-password/enter-active-code'], { queryParams: { email: form.email } });
           },
           err => {
-            this.apiErrorCode = 'Địa chỉ email không tồn tại trong hệ thống !';
+            if (err._body && JSON.parse(err._body).errorCode === 'NotFound') {
+              this.apiErrorCode = 'Địa chỉ email không tồn tại trong hệ thống !';
+            } else {
+              this.apiErrorCode = 'Đã xảy ra lỗi. Vui lòng thử lại sau!';
+            }
           });
     }
   }
@@ -76,20 +80,20 @@ export class GetActiveCodeComponent implements OnInit {
   //     this.router.navigate(['/login/forgot-password/enter-active-code'], { queryParams: { email: form.email } });
   //   }
   // }
-  
+
   getBrowser(): string {
     if ((navigator.userAgent.indexOf('Opera') || navigator.userAgent.indexOf('OPR')) !== -1) {
-        return 'Opera';
+      return 'Opera';
     } else if (navigator.userAgent.indexOf('Chrome') !== -1) {
-        return 'Chrome';
+      return 'Chrome';
     } else if (navigator.userAgent.indexOf('Safari') !== -1) {
-        return 'Safari';
+      return 'Safari';
     } else if (navigator.userAgent.indexOf('Firefox') !== -1) {
-        return 'Firefox';
+      return 'Firefox';
     } else if ((navigator.userAgent.indexOf('MSIE') !== -1) || (!!(<any>document).documentMode === true)) {
-        return 'IE';
+      return 'IE';
     } else {
-        return 'unknown';
+      return 'unknown';
     }
-}
+  }
 }
