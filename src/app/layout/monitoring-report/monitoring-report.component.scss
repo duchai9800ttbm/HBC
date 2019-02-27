@@ -86,10 +86,6 @@
     margin-top: 2px;
 }
 
-.field-name-view-report{
-    padding-top: 7px
-}
-
 .date-validate {
     padding-top: 3px;
     display: block !important;
@@ -105,3 +101,10 @@
     max-height: 35px;
 }
 
+.custom-dropdown::before {
+    max-height: 35px;
+}
+
+.custom-dropdown::after{
+    top: 18px;
+}
