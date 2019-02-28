@@ -73,7 +73,7 @@ export class UserService {
     }
 
     attemptAuth(type, username, password): Observable<any> {
-        const route = type === 'login' ? 'login' : '';
+        const route = type === 'login' ? 'loginweb' : '';
         return this.apiService
             .postAuth(route, {
                 userName: username,
