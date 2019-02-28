@@ -3,6 +3,7 @@ import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-help
 import { ReportFollowService } from '../../../shared/services/report-follow.service';
 import { ReportNumberWinBid } from '../../../shared/models/report-follow/report-number-win-bid.model';
 import { Subscription } from 'rxjs';
+import { AlertService } from '../../../shared/services';
 
 @Component({
   selector: 'app-report-number-win-bid',
@@ -14,7 +15,8 @@ export class ReportNumberWinBidComponent implements OnInit, OnDestroy {
   reportNumberWinBid: ReportNumberWinBid;
   subscription: Subscription;
   constructor(
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,8 @@ export class ReportNumberWinBidComponent implements OnInit, OnDestroy {
     this.reportFollowService.listNumberWinningOfBid(startDateNumber, endDateNumber).subscribe(response => {
       this.reportNumberWinBid = response;
       console.log('reponse-reponse', response);
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
 }

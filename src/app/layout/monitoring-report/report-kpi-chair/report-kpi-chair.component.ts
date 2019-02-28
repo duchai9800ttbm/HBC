@@ -4,6 +4,7 @@ import { ReportFollowService } from '../../../shared/services/report-follow.serv
 import { ReportKpiChair } from '../../../shared/models/report-follow/report-kpi-chair.model';
 import { Subscription } from 'rxjs';
 import { StartAndEndDate } from '../../../shared/models/report-follow/startAndEndDate.model';
+import { AlertService } from '../../../shared/services';
 
 @Component({
   selector: 'app-report-kpi-chair',
@@ -15,7 +16,8 @@ export class ReportKpiChairComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   startAndEndDate: StartAndEndDate;
   constructor(
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private alertService: AlertService,
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,8 @@ export class ReportKpiChairComponent implements OnInit, OnDestroy {
     const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(endDate);
     this.reportFollowService.detailReportKpiChair(startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiChair = response;
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
 

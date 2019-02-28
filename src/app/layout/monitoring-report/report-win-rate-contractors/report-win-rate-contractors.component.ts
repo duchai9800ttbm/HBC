@@ -3,6 +3,7 @@ import { ReportFollowService } from '../../../shared/services/report-follow.serv
 import { Subscription } from 'rxjs';
 import { ReportWinRateConstractors } from '../../../shared/models/report-follow/report-win-rate-constractors.model';
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
+import { AlertService } from '../../../shared/services';
 
 @Component({
   selector: 'app-report-win-rate-contractors',
@@ -13,7 +14,8 @@ export class ReportWinRateContractorsComponent implements OnInit, OnDestroy {
   reportWinRateConstractors: ReportWinRateConstractors;
   subscription: Subscription;
   constructor(
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -33,6 +35,8 @@ export class ReportWinRateContractorsComponent implements OnInit, OnDestroy {
     this.reportFollowService.detailReportWinRateContractors(startDateNumber, endDateNumber).subscribe(response => {
       this.reportWinRateConstractors = response;
       console.log('reponse-reponse', response);
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
 }

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ReportKpiConstructionType } from '../../../shared/models/report-follow/report-kpi-construction-type.model';
 import { ReportFollowService } from '../../../shared/services/report-follow.service';
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
+import { AlertService } from '../../../shared/services';
 
 @Component({
   selector: 'app-report-type-construction',
@@ -13,7 +14,8 @@ export class ReportTypeConstructionComponent implements OnInit, OnDestroy {
   reportKpiConstructionType: ReportKpiConstructionType;
   subscription: Subscription;
   constructor(
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -38,6 +40,8 @@ export class ReportTypeConstructionComponent implements OnInit, OnDestroy {
     this.reportFollowService.detailReportKpiConstructionType(constructionTypeId, startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiConstructionType = response;
       console.log('reponse-reponse', response);
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
 

@@ -3,6 +3,7 @@ import { ReportFollowService } from '../../../shared/services/report-follow.serv
 import { ReportKpiWinRateQuarter } from '../../../shared/models/report-follow/report-kpi-win-rate-quarter.model';
 import { Subscription } from 'rxjs';
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
+import { AlertService } from '../../../shared/services';
 
 @Component({
   selector: 'app-report-win-rate-quarter',
@@ -13,7 +14,8 @@ export class ReportWinRateQuarterComponent implements OnInit, OnDestroy {
   reportKpiWinRateQuarter: ReportKpiWinRateQuarter;
   subscription: Subscription;
   constructor(
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -33,6 +35,8 @@ export class ReportWinRateQuarterComponent implements OnInit, OnDestroy {
     this.reportFollowService.detailReportWinRateQuarter(startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiWinRateQuarter = response;
       console.log('reponse-reponse', response);
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
 

@@ -3,6 +3,7 @@ import { ReportFollowService } from '../../../shared/services/report-follow.serv
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
 import { ReportPotentialProjects } from '../../../shared/models/report-follow/report-potential-projects.model';
 import { Subscription } from 'rxjs';
+import { AlertService } from '../../../shared/services';
 
 @Component({
   selector: 'app-report-potential-projects',
@@ -14,7 +15,8 @@ export class ReportPotentialProjectsComponent implements OnInit, OnDestroy {
   reportPotentialProjects: ReportPotentialProjects;
   subscription: Subscription;
   constructor(
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,8 @@ export class ReportPotentialProjectsComponent implements OnInit, OnDestroy {
     this.reportFollowService.listPotentialProjects(startDateNumber, endDateNumber).subscribe(response => {
       this.reportPotentialProjects = response;
       console.log('reponse-reponse', response);
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
 

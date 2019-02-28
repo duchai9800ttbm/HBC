@@ -3,6 +3,7 @@ import { ReportFollowService } from '../../../shared/services/report-follow.serv
 import { ReportFloorArea } from '../../../shared/models/report-follow/report-floor-area.model';
 import { Subscription } from 'rxjs';
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
+import { AlertService } from '../../../shared/services';
 
 @Component({
   selector: 'app-report-floor-area',
@@ -13,7 +14,8 @@ export class ReportFloorAreaComponent implements OnInit, OnDestroy {
   reportFloorArea: ReportFloorArea;
   subscription: Subscription;
   constructor(
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -33,6 +35,8 @@ export class ReportFloorAreaComponent implements OnInit, OnDestroy {
     this.reportFollowService.detailReportFloorArea(startDateNumber, endDateNumber).subscribe(response => {
       this.reportFloorArea = response;
       console.log('reponse-reponse', response);
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
 

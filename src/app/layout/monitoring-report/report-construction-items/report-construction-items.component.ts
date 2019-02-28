@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ReportFollowService } from '../../../shared/services/report-follow.service';
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
 import { ReportKpiConstructionCategory } from '../../../shared/models/report-follow/report-kpi-construction-category.model';
+import { AlertService } from '../../../shared/services';
 
 @Component({
   selector: 'app-report-construction-items',
@@ -13,7 +14,8 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
   reportKpiConstructionCategory: ReportKpiConstructionCategory;
   subscription: Subscription;
   constructor(
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -38,6 +40,8 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
     this.reportFollowService.detailReportKpiConstructionCategory(constructionCategory, startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiConstructionCategory = response;
       console.log('reponse-reponse', response);
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
 

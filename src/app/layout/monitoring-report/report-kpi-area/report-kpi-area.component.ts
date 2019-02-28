@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ReportFollowService } from '../../../shared/services/report-follow.service';
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
 import { ReportKpiArea } from '../../../shared/models/report-follow/report-kpi-area.model';
+import { AlertService } from '../../../shared/services';
 
 @Component({
   selector: 'app-report-kpi-area',
@@ -13,7 +14,8 @@ export class ReportKpiAreaComponent implements OnInit, OnDestroy {
   reportKpiArea: ReportKpiArea;
   subscription: Subscription;
   constructor(
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -32,6 +34,8 @@ export class ReportKpiAreaComponent implements OnInit, OnDestroy {
     this.reportFollowService.detailReportKpiAre(startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiArea = response;
       console.log('reponse-reponse', response);
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
 

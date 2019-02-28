@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ReportFollowService } from '../../../shared/services/report-follow.service';
 import { ReportWinBid } from '../../../shared/models/report-follow/report-kpi-win-bid.model';
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
+import { AlertService } from '../../../shared/services';
 
 @Component({
   selector: 'app-report-win-bid',
@@ -13,7 +14,8 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
   reportWinBid: ReportWinBid;
   subscription: Subscription;
   constructor(
-    private reportFollowService: ReportFollowService
+    private reportFollowService: ReportFollowService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -32,6 +34,8 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
     const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(endDate);
     this.reportFollowService.detailReportWinBid(startDateNumber, endDateNumber).subscribe(response => {
       this.reportWinBid = response;
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
 
