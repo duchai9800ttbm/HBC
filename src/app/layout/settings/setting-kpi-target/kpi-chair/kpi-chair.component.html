@@ -123,7 +123,7 @@
                           ? (chairEmployeeControl.get('targetskpi').value | truncateDecimal) : 0}}</td>
                         <td class="text-right" *ngIf="paramAction === 'edit' || paramAction === 'create' ">
                           <input type="text" appInputThousandSeparate class="w-100 m-0 p-0 text-right" formControlName="targetskpi"
-                            (input)="calculTargetTotal(i)" placeholder="Nhập số chỉ tiêu">
+                            (input)="calculTargetTotal(i)" placeholder="Nhập chỉ tiêu">
                         </td>
                       </tr>
                     </ng-container>

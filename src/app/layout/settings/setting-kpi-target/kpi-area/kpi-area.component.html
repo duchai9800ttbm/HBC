@@ -79,7 +79,7 @@
                         | truncateDecimal) : '-'}}</td>
                       <td *ngIf="paramAction === 'edit' || paramAction === 'create'" class="text-right">
                         <input type="text" appInputThousandSeparate class="w-100 m-0 p-0 text-right" formControlName="curYearTarget"
-                          (input)="calculTargetTotal()">
+                          (input)="calculTargetTotal()" placeholder="Nhập chỉ tiêu">
                       </td>
                     </tr>
                   </ng-container>

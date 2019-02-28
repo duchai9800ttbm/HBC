@@ -87,12 +87,12 @@
                       <ng-container *ngIf="paramAction === 'edit' || paramAction === 'create'">
                         <td class="text-right">
                           <input type="text" appInputThousandSeparate class="w-100 m-0 p-0 text-right" formControlName="totalAmount"
-                            (input)="calculTargetTotalToChangeTotal(i)">
+                            (input)="calculTargetTotalToChangeTotal(i)" placeholder="Nhập tổng giá trị">
                         </td>
                         <td class="text-right">
                           <div class="parent-percent">
                             <input type="text" appInputThousandSeparate class="w-100 m-0 p-0 text-right cus-input"
-                              formControlName="percent" (input)="calculTargetTotalToChangePercent(i)">
+                              formControlName="percent" (input)="calculTargetTotalToChangePercent(i)" placeholder="Nhập tỷ lệ">
                             <span class="span-percent">%</span>
                           </div>
                         </td>
