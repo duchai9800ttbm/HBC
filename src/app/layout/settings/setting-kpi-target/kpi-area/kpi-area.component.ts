@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationListItem } from '../../../../shared/models/setting/location-list-item';
 import { AlertService } from '../../../../shared/services';
+import { empty } from 'rxjs/Observer';
 @Component({
   selector: 'app-kpi-area',
   templateUrl: './kpi-area.component.html',
@@ -88,14 +89,17 @@ export class KpiAreaComponent implements OnInit {
   }
 
   handlData(responseToYear): any {
-    const listLocation = (responseToYear.curYearTarget || []).map(itemCurYearTarget => {
-      itemCurYearTarget.location['curYearTarget'] = itemCurYearTarget.amount;
+    let listLocation = (responseToYear.curYearTarget || []).map(itemCurYearTarget => {
+      if (itemCurYearTarget.location) {
+        itemCurYearTarget.location['curYearTarget'] = itemCurYearTarget.amount;
+      }
       return itemCurYearTarget.location;
     });
+    listLocation = listLocation.filter(item => item);
     listLocation.forEach(itemCurYearTarget => {
       const itemFind = responseToYear.preYearTarget.find(itemPreYearTarget =>
-        itemPreYearTarget.location.id === itemCurYearTarget.id);
-      if (itemFind) {
+        (itemPreYearTarget.location && itemPreYearTarget.location.id) === (itemCurYearTarget && itemCurYearTarget.id));
+      if (itemFind && itemCurYearTarget) {
         itemCurYearTarget['preYearTarget'] = itemFind.amount;
       }
     });
