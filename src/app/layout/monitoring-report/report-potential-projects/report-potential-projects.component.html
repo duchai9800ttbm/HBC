@@ -1,5 +1,5 @@
 <h4 class="text-center text-uppercase font-weight-bold">DANH SÁCH DỰ ÁN TIỀM NĂNG ĐẾN THỜI ĐIỂM BÁO CÁO</h4>
-<table class="row-border cell-border dataTable fix-table-layout">
+<table class="row-border cell-border dataTable fix-table-layout position-relative">
   <thead>
     <tr>
       <th class="text-uppercase text-center font-weight-bold number-index--width" title="STT">stt</th>
@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngIf="reportPotentialProjects && (reportPotentialProjects || []).length !== 0">
+    <ng-container *ngIf="reportPotentialProjects && (reportPotentialProjects || []).length !== 0 && !loading">
       <ng-container *ngFor="let itemReportPotentialProjects of reportPotentialProjects; let i = index">
         <tr>
           <td class="text-center" [title]="i + 1">{{i + 1}}</td>
@@ -24,11 +24,12 @@
         </tr>
       </ng-container>
     </ng-container>
-    <ng-container *ngIf="!(reportPotentialProjects && (reportPotentialProjects || []).length !== 0)">
+    <ng-container *ngIf="!(reportPotentialProjects && (reportPotentialProjects || []).length !== 0) && !loading">
       <tr>
         <td colspan="5" class="text-center">Không có dữ liệu</td>
       </tr>
     </ng-container>
 
   </tbody>
+  <ngx-loading [show]="loading"></ngx-loading>
 </table>

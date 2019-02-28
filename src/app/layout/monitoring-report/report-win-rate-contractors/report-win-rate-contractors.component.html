@@ -1,5 +1,5 @@
 <h4 class="text-center text-uppercase font-weight-bold">TỈ LỆ TRÚNG THẦU THEO VAI TRÒ NHÀ THẦU</h4>
-<table class="row-border cell-border dataTable fix-table-layout">
+<table class="row-border cell-border dataTable fix-table-layout position-relative">
   <thead>
     <tr>
       <th class="text-uppercase text-center font-weight-bold number-index--width" title="STT">stt</th>
@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngIf="reportWinRateConstractors">
+    <ng-container *ngIf="reportWinRateConstractors && !loading">
       <ng-container *ngFor="let itemReportKPIBidderRoleDetails of reportWinRateConstractors.reportKPIBidderRoleDetails; let i = index">
         <tr>
           <td class="text-center" [title]="i + 1">{{i + 1}}</td>
@@ -42,10 +42,11 @@
         </td>
       </tr>
     </ng-container>
-    <ng-container *ngIf="!reportWinRateConstractors">
+    <ng-container *ngIf="!reportWinRateConstractors && !loading">
       <tr>
         <td colspan="5" class="text-center">Không có dữ liệu</td>
       </tr>
     </ng-container>
   </tbody>
+  <ngx-loading [show]="loading"></ngx-loading>
 </table>

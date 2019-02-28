@@ -13,6 +13,7 @@ import { AlertService } from '../../../shared/services';
 export class ReportKpiAreaComponent implements OnInit, OnDestroy {
   reportKpiArea: ReportKpiArea;
   subscription: Subscription;
+  loading = false;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -29,12 +30,15 @@ export class ReportKpiAreaComponent implements OnInit, OnDestroy {
   }
 
   viewReport(startDate: Date, endDate: Date) {
+    this.loading = true;
     const startDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(startDate);
     const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(endDate);
     this.reportFollowService.detailReportKpiAre(startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiArea = response;
+      this.loading = false;
       console.log('reponse-reponse', response);
     }, err => {
+      this.loading = false;
       this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }

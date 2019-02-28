@@ -14,6 +14,7 @@ export class ReportNumberWinBidComponent implements OnInit, OnDestroy {
 
   reportNumberWinBid: ReportNumberWinBid;
   subscription: Subscription;
+  loading = false;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -30,13 +31,16 @@ export class ReportNumberWinBidComponent implements OnInit, OnDestroy {
   }
 
   viewReport(startDate: Date, endDate: Date) {
+    this.loading = true;
     const startDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(startDate);
     const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(endDate);
     // tslint:disable-next-line:max-line-length
     this.reportFollowService.listNumberWinningOfBid(startDateNumber, endDateNumber).subscribe(response => {
       this.reportNumberWinBid = response;
       console.log('reponse-reponse', response);
+      this.loading = false;
     }, err => {
+      this.loading = false;
       this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }

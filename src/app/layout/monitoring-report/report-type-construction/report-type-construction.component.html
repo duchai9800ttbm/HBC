@@ -1,5 +1,5 @@
 <h4 class="text-center text-uppercase font-weight-bold">CHỈ TIÊU KPI {{ 'tên loại công trình' }}</h4>
-<table class="row-border cell-border dataTable fix-table-layout">
+<table class="row-border cell-border dataTable fix-table-layout position-relative">
   <thead>
     <tr>
       <th class="text-uppercase text-center font-weight-bold number-index--width" title="STT">stt</th>
@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngIf="reportKpiConstructionType">
+    <ng-container *ngIf="reportKpiConstructionType && !loading">
       <tr>
         <td class="text-center" title="1">1</td>
         <td title="Chỉ tiêu KPI">Chỉ tiêu KPI</td>
@@ -34,11 +34,13 @@
         </td>
       </tr>
     </ng-container>
-    <ng-container *ngIf="!reportKpiConstructionType">
+    <ng-container *ngIf="!reportKpiConstructionType && !loading">
       <tr>
         <td class="text-center" colspan="5"> Không có dữ liệu</td>
       </tr>
     </ng-container>
 
   </tbody>
+
+  <ngx-loading [show]="loading"></ngx-loading>
 </table>

@@ -13,6 +13,7 @@ import { AlertService } from '../../../shared/services';
 export class ReportWinBidComponent implements OnInit, OnDestroy {
   reportWinBid: ReportWinBid;
   subscription: Subscription;
+  loading = false;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -30,11 +31,14 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
   }
 
   viewReport(startDate: Date, endDate: Date) {
+    this.loading = true;
     const startDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(startDate);
     const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(endDate);
     this.reportFollowService.detailReportWinBid(startDateNumber, endDateNumber).subscribe(response => {
       this.reportWinBid = response;
+      this.loading = false;
     }, err => {
+      this.loading = false;
       this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }

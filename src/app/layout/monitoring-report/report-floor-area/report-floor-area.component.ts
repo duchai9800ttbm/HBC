@@ -13,6 +13,7 @@ import { AlertService } from '../../../shared/services';
 export class ReportFloorAreaComponent implements OnInit, OnDestroy {
   reportFloorArea: ReportFloorArea;
   subscription: Subscription;
+  loading = false;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -29,13 +30,16 @@ export class ReportFloorAreaComponent implements OnInit, OnDestroy {
   }
 
   viewReport(startDate: Date, endDate: Date) {
+    this.loading = true;
     const startDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(startDate);
     const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(endDate);
     // tslint:disable-next-line:max-line-length
     this.reportFollowService.detailReportFloorArea(startDateNumber, endDateNumber).subscribe(response => {
       this.reportFloorArea = response;
       console.log('reponse-reponse', response);
+      this.loading = false;
     }, err => {
+      this.loading = false;
       this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }

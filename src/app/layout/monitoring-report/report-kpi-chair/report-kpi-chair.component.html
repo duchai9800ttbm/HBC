@@ -1,4 +1,4 @@
-<table class="row-border cell-border dataTable fix-table-layout">
+<table class="row-border cell-border dataTable fix-table-layout position-relative">
   <thead>
     <tr class="table-header">
       <th class="text-center number-index--width" title="STT">STT</th>
@@ -8,7 +8,7 @@
       <th class="text-center" title="Giá trị trúng thầu">Giá trị trúng thầu</th>
     </tr>
   </thead>
-  <ng-container *ngIf="reportKpiChair">
+  <ng-container *ngIf="reportKpiChair && !loading">
     <ng-container *ngFor="let itemKpiGroupChairs of reportKpiChair.kpiGroupChairs; let i = index">
       <tbody>
         <tr>
@@ -102,11 +102,12 @@
     </tbody>
   </ng-container>
 
-  <ng-container *ngIf="!reportKpiChair">
+  <ng-container *ngIf="!reportKpiChair && !loading">
     <tr>
       <td colspan="5" class="text-center">Không có dữ liệu</td>
     </tr>
   </ng-container>
 
+  <ngx-loading [show]="loading"></ngx-loading>
 
 </table>

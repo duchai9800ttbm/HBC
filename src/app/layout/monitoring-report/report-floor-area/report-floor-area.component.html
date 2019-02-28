@@ -1,6 +1,6 @@
 <h4 class="text-center text-uppercase font-weight-bold">THỐNG KÊ DIỆN TÍCH SÀN XÂY DỰNG ĐÃ THAM GIA VÀ
     TRÚNG THẦU</h4>
-<table class="row-border cell-border dataTable fix-table-layout">
+<table class="row-border cell-border dataTable fix-table-layout position-relative">
     <thead>
         <tr>
             <th class="text-uppercase text-center font-weight-bold number-index--width" title="STT">stt</th>
@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        <ng-container *ngIf="reportFloorArea">
+        <ng-container *ngIf="reportFloorArea && !loading">
             <tr>
                 <td class="text-center" title="1">1</td>
                 <td title="Diện tích sàn xây dựng đã đấu thầu">Diện tích sàn xây dựng đã đấu thầu</td>
@@ -74,11 +74,12 @@
                 </td>
             </tr>
         </ng-container>
-        <ng-container *ngIf="!reportFloorArea">
+        <ng-container *ngIf="!reportFloorArea && !loading">
             <tr>
                 <td colspan="5" class="text-center"></td>
             </tr>
         </ng-container>
 
     </tbody>
+    <ngx-loading [show]="loading"></ngx-loading>
 </table>

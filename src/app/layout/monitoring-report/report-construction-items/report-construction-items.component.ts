@@ -13,6 +13,7 @@ import { AlertService } from '../../../shared/services';
 export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
   reportKpiConstructionCategory: ReportKpiConstructionCategory;
   subscription: Subscription;
+  loading = false;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -34,13 +35,16 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
   }
 
   viewReport(constructionCategory: number, startDate: Date, endDate: Date) {
+    this.loading = true;
     const startDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(startDate);
     const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(endDate);
     // tslint:disable-next-line:max-line-length
     this.reportFollowService.detailReportKpiConstructionCategory(constructionCategory, startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiConstructionCategory = response;
+      this.loading = false;
       console.log('reponse-reponse', response);
     }, err => {
+      this.loading = false;
       this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }

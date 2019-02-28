@@ -1,5 +1,5 @@
 <h4 class="text-center text-uppercase font-weight-bold">CHỈ TIÊU TRÚNG THẦU THEO KHU VỰC</h4>
-<table class="row-border cell-border dataTable fix-table-layout">
+<table class="row-border cell-border dataTable fix-table-layout position-relative">
   <thead>
     <tr>
       <th class="text-center text-uppercase font-weight-bold number-index--width" title="STT">stt</th>
@@ -9,7 +9,7 @@
       <th class="text-center font-weight-bold" title="Tỉ lệ đạt được so với chỉ tiêu">Tỉ lệ đạt được so với chỉ tiêu</th>
     </tr>
   </thead>
-  <ng-container *ngIf="reportKpiArea">
+  <ng-container *ngIf="reportKpiArea && !loading">
 
     <tbody>
       <ng-container *ngFor="let itemKpiLocationDetails of reportKpiArea.kpiLocationDetails; let i = index">
@@ -42,12 +42,14 @@
       </tr>
     </tbody>
   </ng-container>
-  <ng-container *ngIf="!reportKpiArea">
+  <ng-container *ngIf="!reportKpiArea && !loading">
     <tbody>
       <tr>
         <td colspan="5" class="text-center">Không có dữ liệu</td>
       </tr>
     </tbody>
   </ng-container>
+
+  <ngx-loading [show]="loading"></ngx-loading>
 
 </table>
