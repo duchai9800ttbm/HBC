@@ -71,8 +71,10 @@ export class SettingKpiTargetComponent implements OnInit {
       console.log('inContain');
     }
     if (!this.contains(event.target)) {
-      this.isCollapseMenu = false;
-      this.collapseMenu();
+      if (this.widthReport <= 940) {
+        this.isCollapseMenu = false;
+        this.collapseMenu();
+      }
     }
   }
 
