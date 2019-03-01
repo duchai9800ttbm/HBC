@@ -62,7 +62,7 @@
         <td></td>
         <td class="font-weight-bold text-center">From</td>
         <td class="font-weight-bold text-center">To</td>
-        <td class="font-weight-bold" title="Chỉ tiêu trúng thầu/1 ngày:">Chỉ tiêu trúng thầu/1 ngày:</td>
+        <td class="font-weight-bold white-space--normal" title="Chỉ tiêu trúng thầu/1 ngày:">Chỉ tiêu trúng thầu/1 ngày:</td>
         <td class="font-weight-bold text-right" [title]="reportKpiChair.winningBidOfDayTargetAmount ? (reportKpiChair.winningBidOfDayTargetAmount | thousandSeparate) : '0.00'">
           {{ reportKpiChair?.winningBidOfDayTargetAmount ? (reportKpiChair?.winningBidOfDayTargetAmount |
           thousandSeparate) : '0.00' }}
@@ -76,8 +76,8 @@
         <td class="font-weight-bold text-center" [title]="startAndEndDate.endDate ? (startAndEndDate.endDate | date:'dd/MM/yyyy') : ''">
           {{ startAndEndDate?.endDate | date:'dd/MM/yyyy' }}
         </td>
-        <td class="font-weight-bold" title="Số ngày tính đến thời điểm báo cáo:">Số ngày tính đến thời điểm báo cáo:</td>
-        <td class="font-weight-bold" title="Giá trị trúng thầu đến thời điểm báo cáo:">Giá trị trúng thầu đến thời điểm
+        <td class="font-weight-bold white-space--normal" title="Số ngày tính đến thời điểm báo cáo:">Số ngày tính đến thời điểm báo cáo:</td>
+        <td class="font-weight-bold white-space--normal" title="Giá trị trúng thầu đến thời điểm báo cáo:">Giá trị trúng thầu đến thời điểm
           báo cáo:</td>
       </tr>
       <tr>
@@ -92,7 +92,7 @@
         <td></td>
         <td class="font-weight-bold text-center"></td>
         <td class="font-weight-bold text-center"></td>
-        <td class="font-weight-bold" title="Số trúng thầu nhanh/chậm so với KPI/ngày" title="Số trúng thầu nhanh/chậm so với KPI/ngày">Số
+        <td class="font-weight-bold white-space--normal" title="Số trúng thầu nhanh/chậm so với KPI/ngày" title="Số trúng thầu nhanh/chậm so với KPI/ngày">Số
           trúng thầu nhanh/chậm so với
           KPI/ngày</td>
         <td class="text-right" [title]="(reportKpiChair?.winningBidOfDayCompareTargetAmount && reportKpiChair?.winningBidOfDayCompareTargetAmount < 0) ?  '(' + (reportKpiChair?.winningBidOfDayCompareTargetAmountAbs | thousandSeparate) + ')' : reportKpiChair?.winningBidOfDayCompareTargetAmount | thousandSeparate">
