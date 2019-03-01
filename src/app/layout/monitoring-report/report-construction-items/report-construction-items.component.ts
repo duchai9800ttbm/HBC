@@ -51,4 +51,6 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
     });
   }
 
+  autoExpand() {
+  }
 }

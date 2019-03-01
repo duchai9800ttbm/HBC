@@ -44,4 +44,7 @@ export class ReportFloorAreaComponent implements OnInit, OnDestroy {
     });
   }
 
+  autoExpand() {
+  }
+
 }

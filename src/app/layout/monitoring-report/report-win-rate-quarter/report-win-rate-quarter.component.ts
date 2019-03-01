@@ -44,4 +44,6 @@ export class ReportWinRateQuarterComponent implements OnInit, OnDestroy {
     });
   }
 
+  autoExpand() {
+  }
 }

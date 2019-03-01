@@ -43,5 +43,7 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
     });
   }
 
+  autoExpand() {
+  }
 
 }

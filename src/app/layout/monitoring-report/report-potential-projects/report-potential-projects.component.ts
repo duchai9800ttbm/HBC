@@ -44,5 +44,8 @@ export class ReportPotentialProjectsComponent implements OnInit, OnDestroy {
       this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
+  
+  autoExpand() {
+  }
 
 }

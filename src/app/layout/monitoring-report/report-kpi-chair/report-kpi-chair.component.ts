@@ -48,4 +48,6 @@ export class ReportKpiChairComponent implements OnInit, OnDestroy {
     });
   }
 
+  autoExpand() {
+  }
 }

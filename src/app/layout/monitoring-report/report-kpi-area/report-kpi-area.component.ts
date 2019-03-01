@@ -43,4 +43,6 @@ export class ReportKpiAreaComponent implements OnInit, OnDestroy {
     });
   }
 
+  autoExpand() {
+  }
 }
