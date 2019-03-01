@@ -1,46 +1,56 @@
-<h4 class="text-center text-uppercase font-weight-bold">CHỈ TIÊU KPI {{ 'tên loại công trình' }}</h4>
-<table class="row-border cell-border dataTable fix-table-layout position-relative">
-  <thead>
-    <tr>
-      <th class="text-uppercase text-center font-weight-bold number-index--width" title="STT">stt</th>
-      <th class="text-center font-weight-bold" title="Chỉ tiêu">Chỉ tiêu</th>
-      <th class="text-center font-weight-bold" title="Tỉ lệ trúng thầu">Tỉ lệ trúng thầu</th>
-      <th class="text-center font-weight-bold" title="Giá trị (VND)">Giá trị (VND)</th>
-      <th class="text-center font-weight-bold" title="Ghi chú">Ghi chú</th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngIf="reportKpiConstructionType && !loading">
+<ng-container *ngIf="constructionTypeName">
+  <h4 class="text-center text-uppercase font-weight-bold">CHỈ TIÊU KPI {{ constructionTypeName }}</h4>
+  <table class="row-border cell-border dataTable fix-table-layout position-relative">
+    <thead>
       <tr>
-        <td class="text-center" title="1">1</td>
-        <td title="Chỉ tiêu KPI">Chỉ tiêu KPI</td>
-        <td class="text-right" [title]="reportKpiConstructionType?.winningOfBidTargetPer ? (reportKpiConstructionType?.winningOfBidTargetPer | thousandSeparate) + ' %' : '0.00 %'">{{ reportKpiConstructionType?.winningOfBidTargetPer ?
-          (reportKpiConstructionType?.winningOfBidTargetPer | thousandSeparate) : '0.00' }} %</td>
-        <td class="text-right" [title]="reportKpiConstructionType?.targetAmount ? (reportKpiConstructionType?.targetAmount | thousandSeparate) : '-'">{{ reportKpiConstructionType?.targetAmount ? (reportKpiConstructionType?.targetAmount |
-          thousandSeparate) : '-' }}</td>
-        <td>
-          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
-        </td>
+        <th class="text-uppercase text-center font-weight-bold number-index--width" title="STT">stt</th>
+        <th class="text-center font-weight-bold" title="Chỉ tiêu">Chỉ tiêu</th>
+        <th class="text-center font-weight-bold" title="Tỉ lệ trúng thầu">Tỉ lệ trúng thầu</th>
+        <th class="text-center font-weight-bold" title="Giá trị (VND)">Giá trị (VND)</th>
+        <th class="text-center font-weight-bold" title="Ghi chú">Ghi chú</th>
       </tr>
-      <tr>
-        <td class="text-center" title="2">2</td>
-        <td title="Giá trị trúng thầu">Giá trị trúng thầu</td>
-        <td class="text-right" [title]="reportKpiConstructionType?.winningOfBidPer ? (reportKpiConstructionType?.winningOfBidPer | thousandSeparate) + ' %' : '0.00 %'">{{ reportKpiConstructionType?.winningOfBidPer ?
-          (reportKpiConstructionType?.winningOfBidPer | thousandSeparate) : '0.00' }} %</td>
-        <td class="text-right" [title]="reportKpiConstructionType?.amount ? (reportKpiConstructionType?.amount | thousandSeparate) : '-'">{{ reportKpiConstructionType?.amount ? (reportKpiConstructionType?.amount |
-          thousandSeparate) : '-' }}</td>
-        <td>
-          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
-        </td>
-      </tr>
-    </ng-container>
-    <ng-container *ngIf="!reportKpiConstructionType && !loading">
-      <tr>
-        <td class="text-center" colspan="5"> Không có dữ liệu</td>
-      </tr>
-    </ng-container>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="reportKpiConstructionType && !loading">
+        <tr>
+          <td class="text-center" title="1">1</td>
+          <td title="Chỉ tiêu KPI">Chỉ tiêu KPI</td>
+          <td class="text-right" [title]="reportKpiConstructionType?.winningOfBidTargetPer ? (reportKpiConstructionType?.winningOfBidTargetPer | thousandSeparate) + ' %' : '0.00 %'">{{
+            reportKpiConstructionType?.winningOfBidTargetPer ?
+            (reportKpiConstructionType?.winningOfBidTargetPer | thousandSeparate) : '0.00' }} %</td>
+          <td class="text-right" [title]="reportKpiConstructionType?.targetAmount ? (reportKpiConstructionType?.targetAmount | thousandSeparate) : '-'">{{
+            reportKpiConstructionType?.targetAmount ? (reportKpiConstructionType?.targetAmount |
+            thousandSeparate) : '-' }}</td>
+          <td>
+            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-center" title="2">2</td>
+          <td title="Giá trị trúng thầu">Giá trị trúng thầu</td>
+          <td class="text-right" [title]="reportKpiConstructionType?.winningOfBidPer ? (reportKpiConstructionType?.winningOfBidPer | thousandSeparate) + ' %' : '0.00 %'">{{
+            reportKpiConstructionType?.winningOfBidPer ?
+            (reportKpiConstructionType?.winningOfBidPer | thousandSeparate) : '0.00' }} %</td>
+          <td class="text-right" [title]="reportKpiConstructionType?.amount ? (reportKpiConstructionType?.amount | thousandSeparate) : '-'">{{
+            reportKpiConstructionType?.amount ? (reportKpiConstructionType?.amount |
+            thousandSeparate) : '-' }}</td>
+          <td>
+            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="!reportKpiConstructionType && !loading">
+        <tr>
+          <td class="text-center" colspan="5"> Không có dữ liệu</td>
+        </tr>
+      </ng-container>
 
-  </tbody>
+    </tbody>
 
-  <ngx-loading [show]="loading"></ngx-loading>
-</table>
+    <ngx-loading [show]="loading"></ngx-loading>
+  </table>
+</ng-container>
+
+<div class="text-center" *ngIf="!constructionTypeName">
+  Bạn chưa chọn loại công trình.
+</div>

@@ -49,7 +49,7 @@
 
     <div class="reports pl-3 w-100" id="reports-table">
         <div class="table-responsive">
-            <div class="d-flex mb-4 view-report--pad">
+            <div class="d-flex mb-4 view-report--pad filter-bar p-3">
                 <span class="d-flex">
                     <span class="action-view center-parent">Từ:</span>
                     <span class="ml-3">
@@ -67,14 +67,14 @@
                     <span for="" class="action-view center-parent" style="width: 100px;">Hạng mục:</span>
                     <select class="form-control ml-3" [(ngModel)]="startAndEndDate.constructionCategory">
                         <option [ngValue]="null">---Chọn---</option>
-                        <option *ngFor="let item of listMainBuildingCategory | async" [value]="item.id">{{item.text }}</option>
+                        <option *ngFor="let item of listMainBuildingCategory" [value]="item.id">{{item.text }}</option>
                     </select>
                 </span>
                 <span *ngIf="idReport === 'type-construction'" class="ml-4 custom-dropdown d-flex">
-                    <span for="" class="action-view" style="width: 100px;">Loại:</span>
+                    <span for="" class="action-view center-parent" style="width: 100px;">Loại:</span>
                     <select class="form-control ml-3" [(ngModel)]="startAndEndDate.constructionType">
                         <option [ngValue]="null">---Chọn---</option>
-                        <option *ngFor="let item of listBuildingProjectType | async" [value]="item.id">{{item.text }}</option>
+                        <option *ngFor="let item of listBuildingProjectType" [value]="item.id">{{item.text }}</option>
                     </select>
                 </span>
                 <button class="btn btn-primary ml-4 action-view" (click)="viewReport()">Xem</button>

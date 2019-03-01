@@ -38,6 +38,9 @@ export class ReportKpiChairComponent implements OnInit, OnDestroy {
     const endDateNumber = DateTimeConvertHelper.fromDtObjectToTimestamp(endDate);
     this.reportFollowService.detailReportKpiChair(startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiChair = response;
+      if (this.reportKpiChair && this.reportKpiChair.winningBidOfDayCompareTargetAmount) {
+        this.reportKpiChair['winningBidOfDayCompareTargetAmountAbs'] = Math.abs(this.reportKpiChair.winningBidOfDayCompareTargetAmount);
+      }
       this.loading = false;
     }, err => {
       this.loading = false;

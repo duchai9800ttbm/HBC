@@ -22,7 +22,9 @@ export class ReportFollowService {
     startDate: new Date(),
     endDate: new Date(),
     constructionCategory: null,
+    constructionCategoryName: null,
     constructionType: null,
+    constructionTypeName: null,
   });
   constructor(
     private apiService: ApiService,

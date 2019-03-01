@@ -13,6 +13,7 @@ import { AlertService } from '../../../shared/services';
 export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
   reportKpiConstructionCategory: ReportKpiConstructionCategory;
   subscription: Subscription;
+  constructionCategoryName: string = null;
   loading = false;
   constructor(
     private reportFollowService: ReportFollowService,
@@ -22,6 +23,7 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.reportFollowService.startAndEndDate.subscribe(startAndEndDate => {
       if (startAndEndDate.constructionCategory) {
+        this.constructionCategoryName = startAndEndDate.constructionCategoryName;
         this.viewReport(startAndEndDate.constructionCategory,
           startAndEndDate.startDate, startAndEndDate.endDate);
       } else {

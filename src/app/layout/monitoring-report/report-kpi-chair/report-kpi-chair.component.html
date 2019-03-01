@@ -95,17 +95,14 @@
         <td class="font-weight-bold" title="Số trúng thầu nhanh/chậm so với KPI/ngày" title="Số trúng thầu nhanh/chậm so với KPI/ngày">Số
           trúng thầu nhanh/chậm so với
           KPI/ngày</td>
-        <td class="text-right" [title]="reportKpiChair.winningBidOfDayCompareTargetAmount ? (reportKpiChair.winningBidOfDayCompareTargetAmount | thousandSeparate) : ''">
-          {{reportKpiChair?.winningBidOfDayCompareTargetAmount | thousandSeparate}}
-        </td>
+        <td class="text-right" [title]="(reportKpiChair?.winningBidOfDayCompareTargetAmount && reportKpiChair?.winningBidOfDayCompareTargetAmount < 0) ?  '(' + (reportKpiChair?.winningBidOfDayCompareTargetAmountAbs | thousandSeparate) + ')' : reportKpiChair?.winningBidOfDayCompareTargetAmount | thousandSeparate">
+          {{(reportKpiChair?.winningBidOfDayCompareTargetAmount && reportKpiChair?.winningBidOfDayCompareTargetAmount <
+            0) ? '(' + (reportKpiChair?.winningBidOfDayCompareTargetAmountAbs | thousandSeparate) + ')' :
+            reportKpiChair?.winningBidOfDayCompareTargetAmount | thousandSeparate}} </td> </tr> </tbody> </ng-container>
+            <ng-container *ngIf="!reportKpiChair && !loading">
+      <tr>
+        <td colspan="5" class="text-center">Không có dữ liệu</td>
       </tr>
-    </tbody>
-  </ng-container>
-
-  <ng-container *ngIf="!reportKpiChair && !loading">
-    <tr>
-      <td colspan="5" class="text-center">Không có dữ liệu</td>
-    </tr>
   </ng-container>
 
   <ngx-loading [show]="loading"></ngx-loading>

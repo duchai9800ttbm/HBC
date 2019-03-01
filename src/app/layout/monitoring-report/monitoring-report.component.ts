@@ -29,8 +29,8 @@ export class MonitoringReportComponent implements OnInit {
   startAndEndDate = new StartAndEndDate();
   // startAndEndConstructionCategory = new StartAndEndConstructionCategory();
   // startAndEndConstructionType = new StartAndEndConstructionType();
-  listMainBuildingCategory: Observable<DictionaryItem[]>;
-  listBuildingProjectType: Observable<DictionaryItem[]>;
+  listMainBuildingCategory: DictionaryItem[];
+  listBuildingProjectType: DictionaryItem[];
   isViewReport = false;
   get isValidateDate(): boolean {
     if (((DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
@@ -58,8 +58,8 @@ export class MonitoringReportComponent implements OnInit {
     this.startAndEndDate.constructionType = null;
     this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
     this.checkActiveTab();
-    this.listMainBuildingCategory = this.dataService.getListMainConstructionComponents();
-    this.listBuildingProjectType = this.dataService.getListConstructonTypes();
+    this.dataService.getListMainConstructionComponents().subscribe(response => this.listMainBuildingCategory = response);
+    this.dataService.getListConstructonTypes().subscribe(response => this.listBuildingProjectType = response);
   }
 
   checkActiveTab() {
@@ -173,12 +173,18 @@ export class MonitoringReportComponent implements OnInit {
         case 'construction-items': {
           this.startAndEndDate.startDate = this.startDate;
           this.startAndEndDate.endDate = this.endDate;
+          // tslint:disable-next-line:max-line-length
+          const constructionCategoryName = this.listMainBuildingCategory.find(item => item.id === this.startAndEndDate.constructionCategory);
+          // tslint:disable-next-line:max-line-length
+          this.startAndEndDate.constructionCategoryName = constructionCategoryName && constructionCategoryName.text ? constructionCategoryName.text : '';
           this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
           break;
         }
         case 'type-construction': {
           this.startAndEndDate.startDate = this.startDate;
           this.startAndEndDate.endDate = this.endDate;
+          const constructionTypeName = this.listBuildingProjectType.find(item => item.id === this.startAndEndDate.constructionType);
+          this.startAndEndDate.constructionTypeName = constructionTypeName && constructionTypeName.text ? constructionTypeName.text : '';
           this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
           break;
         }
