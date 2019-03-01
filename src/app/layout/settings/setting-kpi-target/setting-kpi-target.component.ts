@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./setting-kpi-target.component.scss']
 })
 export class SettingKpiTargetComponent implements OnInit {
+  @ViewChild('tabOptionKpiType') tabOptionKpiType: ElementRef;
   isCollapseMenu = false;
   idReport = 'group-config';
   widthReport: number;
@@ -47,7 +48,7 @@ export class SettingKpiTargetComponent implements OnInit {
       document.getElementById('wrapper-report').classList.remove('flex-column');
       document.getElementById('menu-report').classList.remove('mb-2');
       document.getElementById('menu-report').classList.remove('menu-report--fixed');
-      document.getElementById('reports-table').classList.add('pl-3'); 
+      document.getElementById('reports-table').classList.add('pl-3');
       document.getElementById('reports-table').classList.remove('reports--margintop');
       document.getElementById('content-child').classList.add('px-3');
       this.isCollapseMenu = false;
@@ -62,6 +63,22 @@ export class SettingKpiTargetComponent implements OnInit {
       }
 
     }
+  }
+
+  @HostListener('document:click', ['$event'])
+  public documentClick(event: any): void {
+    if (this.contains(event.target)) {
+      console.log('inContain');
+    }
+    if (!this.contains(event.target)) {
+      this.isCollapseMenu = false;
+      this.collapseMenu();
+    }
+  }
+
+  contains(target: any): boolean {
+    return this.tabOptionKpiType.nativeElement.contains(target) ||
+      (this.tabOptionKpiType ? this.tabOptionKpiType.nativeElement.contains(target) : false);
   }
 
   checkActiveTab() {

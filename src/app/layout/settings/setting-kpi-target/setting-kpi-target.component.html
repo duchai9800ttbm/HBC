@@ -3,7 +3,7 @@
         <h5 class="menu-report__year text-uppercase p-2 mb-0 font-weight-bold text-center">
             Danh mục chỉ tiêu KPI
         </h5>
-        <ul class="p-0 mb-0">
+        <ul class="p-0 mb-0" #tabOptionKpiType>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'group-config'"
                 id="group-config" name="list-report" (click)="toggleCollapseMenu('group-config')" title="- Cấu hình nhóm"
                 [routerLink]="['./group-config']">
