@@ -103,26 +103,36 @@
             </td>
             <td class="text-truncate">
               <img class="avatar-img rounded-circle" [src]="item.avatar || 'assets/images/no-avatar.png'">&nbsp;
-              {{item.userName}}
+              <span [title]="item?.userName ? item?.userName : ''">{{item?.userName}}</span>
             </td>
             <td class="text-truncate">
-              {{item.email}}
+              <span [title]="item?.email ? item?.email : ''">
+                {{item?.email}}
+              </span>
             </td>
             <td class="text-truncate">
-              {{item.department?.value}}
+              <span [title]="item?.department?.value ? item?.department?.value : ''">
+                {{item?.department?.value}}
+              </span>
             </td>
             <td class="text-truncate">
-              {{item.level?.value}}
+              <span [title]="item?.level?.value ? item.level?.value : ''">
+                {{item?.level?.value}}
+              </span>
             </td>
             <td class="text-truncate">
-              {{item.lastName}}
+              <span [title]="item?.lastName ? item?.lastName : ''">
+                {{item?.lastName}}
+              </span>
             </td>
             <td class="text-truncate">
-              {{item.firstName}}
+              <span [title]="item?.firstName ? item?.firstName : ''">
+                {{item?.firstName}}
+              </span>
             </td>
             <td class="text-truncate">
               <div class="d-flex justify-content-between">
-                <div class="text-truncate">
+                <div class="text-truncate" [title]="(item.userGroup && item.userGroup.value)? item.userGroup.value : '/'">
                   {{(item.userGroup && item.userGroup.value)? item.userGroup.value : '/'}}
                 </div>
                 <div class="text-center" style="padding-left: 2px;">
@@ -132,12 +142,14 @@
             </td>
             <td class="text-truncate text-center">
               <div style="padding-right: 8px;padding-left: 8px;">
-                <div *ngIf="item.isActive" class="color-active-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                <div *ngIf="item.isActive" class="color-active-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;"
+                  title="Hoạt động">
                   Active
                 </div>
               </div>
               <div style="padding-right: 8px;padding-left: 8px;">
-                <div *ngIf="!item.isActive" class="color-deactive-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                <div *ngIf="!item.isActive" class="color-deactive-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;"
+                  title="Không hoạt động">
                   Deactive
                 </div>
               </div>

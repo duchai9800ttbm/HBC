@@ -31,7 +31,8 @@
           <tr style="width: 100%">
             <th class="text-center min-width-stt">
               <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input input-checkbox" (change)="onSelectAll($event.target.checked)" [(ngModel)]="checkboxSeclectAll">
+                <input type="checkbox" class="custom-control-input input-checkbox" (change)="onSelectAll($event.target.checked)"
+                  [(ngModel)]="checkboxSeclectAll">
                 <span class="custom-control-indicator"></span>
               </label>
             </th>
@@ -68,16 +69,16 @@
                 <span class="custom-control-indicator"></span>
               </label>
             </td>
-            <td class="text-truncate">
-              {{item.name}}
+            <td class="text-truncate" [title]="item?.name ? item?.name : ''">
+              {{item?.name}}
             </td>
-            <td class="text-truncate">
-              {{item.desc}}
+            <td class="text-truncate" [title]="item?.desc ? item?.desc : ''">
+              {{item?.desc}}
             </td>
-            <td class="text-truncate">
+            <td class="text-truncate" [title]="item.createdTime === 0 ? '' : (item.createdTime)*1000 | date:'dd/MM/yyyy': '+0000'">
               {{ item.createdTime === 0 ? '' : (item.createdTime)*1000 | date:'dd/MM/yyyy': '+0000'}}
             </td>
-            <td class="text-truncate">
+            <td class="text-truncate" [title]="item.userCount > 0 ? 'Có ' + item.userCount + ' người dùng' : 'Chưa có người dùng'">
               {{item.userCount > 0 ? 'Có ' + item.userCount + ' người dùng' : 'Chưa có người dùng'}}
             </td>
             <td class="text-truncate">
@@ -95,10 +96,10 @@
           </tr>
           <ngx-loading [show]="loading"></ngx-loading>
         </tbody>
-       
+
       </table>
       <ngx-loading [show]="loading"></ngx-loading>
-     
+
     </div>
     <app-pagination *ngIf="!loading" [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
 
@@ -109,7 +110,8 @@
 <ng-template>
   <div class="modal-header no-boder-bottom">
     <div class="col-md-10 offset-md-1 text-center">
-      <p class="modal-title text-title text-model">Bạn có thực sự muốn xóa nhóm người dùng "{{GroupDelete.name}}" ra khỏi hệ thống? </p>
+      <p class="modal-title text-title text-model">Bạn có thực sự muốn xóa nhóm người dùng "{{GroupDelete.name}}" ra
+        khỏi hệ thống? </p>
     </div>
     <div class="col-md-1">
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -149,7 +151,8 @@
       Tên
     </div>
     <div class="col-md-10">
-      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.name" [ngClass]="{ 'is-invalid': submitted && !groupEditOrCreate.name }"></textarea>
+      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.name"
+        [ngClass]="{ 'is-invalid': submitted && !groupEditOrCreate.name }"></textarea>
       <div class="cus-validate" *ngIf="submitted && !groupEditOrCreate.name">Trường này là bắt buộc nhập</div>
     </div>
   </div>
@@ -164,8 +167,8 @@
   <div class="modal-header no-boder-bottom">
     <div class="col-md-5 form-group">
       <div class="title-action" for="exampleFormControlSelect2">Danh sách chức năng</div>
-      <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;" [(ngModel)]="changeTemp"
-        (ngModelChange)="selectEachFieldEditNotUser($event)">
+      <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;"
+        [(ngModel)]="changeTemp" (ngModelChange)="selectEachFieldEditNotUser($event)">
         <option [ngValue]="notPrivilege" *ngFor="let notPrivilege of groupEditOrCreate.notPrivileges">
           {{notPrivilege.text | translate}}
         </option>
@@ -187,7 +190,8 @@
     </div>
     <div class="col-md-5 form-group">
       <div class="title-action" for="exampleFormControlSelect2">Chức năng được sử dụng</div>
-      <select multiple class="form-control form-select" id="exampleFormControlSelect2" [(ngModel)]="changeTemp" (ngModelChange)="selectEachFieldEditUser($event)">
+      <select multiple class="form-control form-select" id="exampleFormControlSelect2" [(ngModel)]="changeTemp"
+        (ngModelChange)="selectEachFieldEditUser($event)">
         <option [ngValue]="privilege" *ngFor="let privilege of groupEditOrCreate.privileges">
           {{privilege.text | translate}}
         </option>
