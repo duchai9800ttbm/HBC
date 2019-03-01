@@ -37,14 +37,13 @@ export class ReportPotentialProjectsComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.reportFollowService.listPotentialProjects(startDateNumber, endDateNumber).subscribe(response => {
       this.reportPotentialProjects = response;
-      console.log('reponse-reponse', response);
       this.loading = false;
     }, err => {
       this.loading = false;
       this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
     });
   }
-  
+
   autoExpand() {
   }
 

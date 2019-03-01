@@ -294,13 +294,11 @@ export class ManageUserComponent implements OnInit {
   }
 
   changeFilterSystemType() {
-    console.log('this.systemType', this.filterSystemType);
     this.loading = true;
     this.groupUserService.getListSearchGroupUser(this.searchTerm$.value, this.filterSystemType,
       this.pagedResult.currentPage ? this.pagedResult.currentPage : 0,
       this.pagedResult.pageSize ? this.pagedResult.pageSize : 10).subscribe(response => {
         this.groupUserService.saveFilterSystemType(this.filterSystemType);
-        console.log('response-response', response);
         this.rerender(response);
         this.loading = false;
       }, err => {

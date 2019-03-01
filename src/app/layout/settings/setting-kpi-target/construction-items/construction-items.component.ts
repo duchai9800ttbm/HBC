@@ -46,7 +46,6 @@ export class ConstructionItemsComponent implements OnInit {
       this.yearkpi = this.currentYear;
     }
     this.settingService.listYearConfigToKpiConstructionCategory().subscribe(reponseListYear => {
-      console.log('this.reponseListYear', reponseListYear);
       this.listYearConfigured = reponseListYear;
       // list not configred
       for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
@@ -96,7 +95,6 @@ export class ConstructionItemsComponent implements OnInit {
     });
     let totalTarget = 0;
     (listMainBuildingCategory || []).forEach(itemMainBuild => {
-      console.log('this.itemMainBuild', itemMainBuild.totalTarget);
       totalTarget = totalTarget + (itemMainBuild.totalTarget ? itemMainBuild.totalTarget : 0);
       const formArrayItem = this.fb.group({
         constructionTypeId: itemMainBuild.constructionCategory ? itemMainBuild.constructionCategory.id : itemMainBuild.id,

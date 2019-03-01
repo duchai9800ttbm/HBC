@@ -684,7 +684,6 @@ export class SettingService {
     }
     // Tạo mới hoặc chính sửa nhóm chỉ tiêu KPI theo chủ trì
     createOrEditGroupChairEmployee(year: number, valueForm: any) {
-        console.log('this.valueForm.groupKpiChair.targetTotal', valueForm);
         const url = `kpi/chairemployee/createorupdate`;
         const details = [];
         (valueForm.groupKpiChair || []).forEach(itemControlParent => {
@@ -803,7 +802,6 @@ export class SettingService {
     }
     // tạo mới hoặc chỉnh sửa chỉ tiêu KPI khu vực
     createOrEditKpiLocation(year: number, valueForm: any) {
-        console.log('this.valueForm', valueForm);
         const url = `kpilocation/createorupdate`;
         const requestModel = {
             year: year,
@@ -851,7 +849,6 @@ export class SettingService {
     }
     // Tạo mới hoặc chỉnh sửa chỉ tiêu KPI hạng mục thi công
     createOrEditConstructionCategory(year: number, valueForm: any) {
-        console.log('this.valueForm', valueForm);
         const url = `kpiconstructioncategory/createorupdate`;
         const requestModel = {
             year: year,
@@ -901,7 +898,6 @@ export class SettingService {
     }
     // Tạo mới hoặc chỉnh sửa chỉ tiêu KPI loại công trình
     createOrEditConstructionType(year: number, valueForm: any) {
-        console.log('this.valueForm', valueForm);
         const url = `kpiconstructiontype/createorupdate`;
         const requestModel = {
             year: year,

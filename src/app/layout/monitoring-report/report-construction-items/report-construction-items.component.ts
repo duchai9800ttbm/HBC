@@ -44,7 +44,6 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
     this.reportFollowService.detailReportKpiConstructionCategory(constructionCategory, startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiConstructionCategory = response;
       this.loading = false;
-      console.log('reponse-reponse', response);
     }, err => {
       this.loading = false;
       this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');

@@ -61,7 +61,6 @@ export class GroupConfigurationFormComponent implements OnInit {
   }
 
   submitForm() {
-    console.log('submit');
     this.isSubmitted = true;
     if (this.validateForm()) {
       if (this.config) {

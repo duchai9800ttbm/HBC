@@ -36,7 +36,6 @@ export class ReportWinRateQuarterComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.reportFollowService.detailReportWinRateQuarter(startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiWinRateQuarter = response;
-      console.log('reponse-reponse', response);
       this.loading = false;
     }, err => {
       this.loading = false;

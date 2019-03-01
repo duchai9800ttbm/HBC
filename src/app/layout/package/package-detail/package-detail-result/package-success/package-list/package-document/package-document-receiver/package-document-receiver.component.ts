@@ -247,7 +247,6 @@ export class PackageDocumentReceiverComponent implements OnInit, OnDestroy {
     this.getListFilter();
     this.detailResultPackageService.checkUserComfirm(this.currentPackageId).subscribe( response => {
       this.comfirmRecive = response;
-      console.log('this.DaPhanHoiDenPhongHopDong', response);
     });
   }
 

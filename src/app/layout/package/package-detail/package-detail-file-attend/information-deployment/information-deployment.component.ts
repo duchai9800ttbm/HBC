@@ -312,10 +312,8 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   }
 
   onPaste(e) {
-    console.log(e);
   }
   onDrop(e) {
-    console.log(e);
   }
 
   getPackageInfo() {

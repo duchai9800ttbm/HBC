@@ -107,8 +107,6 @@ export class SettingKpiTargetComponent implements OnInit {
   }
 
   routerChildTab(childUrl: string) {
-    // console.log('url-child', this.activatedRoute.snapshot.children[0].routeConfig.path);
-    // console.log('query-param', this.activatedRoute.snapshot.queryParamMap.get('action'));
     if (this.activatedRoute.snapshot.children[0].routeConfig.path !== `${childUrl}`) {
       this.router.navigate([`/settings/kpi-target/${childUrl}`],
         {

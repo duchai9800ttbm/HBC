@@ -44,7 +44,6 @@ export class KpiAreaComponent implements OnInit {
       this.yearkpi = this.currentYear;
     }
     this.settingService.listYearConfigToKpiArea().subscribe(reponseListYear => {
-      console.log('this.reponseListYear', reponseListYear);
       this.listYearConfigured = reponseListYear;
       // list not configred
       for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {

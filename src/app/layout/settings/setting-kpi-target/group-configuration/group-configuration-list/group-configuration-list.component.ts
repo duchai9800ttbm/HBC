@@ -45,7 +45,6 @@ export class GroupConfigurationListComponent implements OnInit, OnDestroy {
 
   rerender(pagedResult: any) {
     this.pagedResult = pagedResult;
-    console.log('this.pagedResult', this.pagedResult);
   }
 
   createGroupConfig() {

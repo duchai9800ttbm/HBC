@@ -46,7 +46,6 @@ export class TypeConstructionComponent implements OnInit {
       this.yearkpi = this.currentYear;
     }
     this.settingService.listYearConfigToKpiConstructionType().subscribe(reponseListYear => {
-      console.log('this.reponseListYear', reponseListYear);
       this.listYearConfigured = reponseListYear;
       // list not configred
       for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
@@ -57,11 +56,9 @@ export class TypeConstructionComponent implements OnInit {
     });
     this.settingService.getDetailConstructionType(this.yearkpi).subscribe(responseToYear => {
       if (responseToYear && (responseToYear || []).length !== 0) {
-        console.log('have reposonse');
         this.createForm(responseToYear);
       }
       if (!(responseToYear && (responseToYear || []).length !== 0)) {
-        console.log('not reposonse');
         this.dataService.getListConstructonTypes().subscribe(listBuildingProjectType => {
           this.listBuildingProjectType = listBuildingProjectType;
           this.createForm(listBuildingProjectType);
@@ -92,7 +89,6 @@ export class TypeConstructionComponent implements OnInit {
   }
 
   createForm(listBuildingProjectType) {
-    console.log('listBuildingProjectType', listBuildingProjectType);
     this.constructionTypeForm = this.fb.group({
       typeBuild: this.fb.array([]),
       targetTotal: null,
@@ -184,7 +180,6 @@ export class TypeConstructionComponent implements OnInit {
       this.typeBuilddFA.controls[indexForm].get('percent').value / 100;
     this.typeBuilddFA.controls[indexForm].get('totalTargetAmount').patchValue(totalTargetAmount);
     let totalTargetAll = 0;
-    console.log('this.typeBuilddFA', this.typeBuilddFA);
     (this.typeBuilddFA.value || []).forEach(itemFormMainBuild => {
       totalTargetAll = totalTargetAll + itemFormMainBuild.totalTargetAmount;
     });

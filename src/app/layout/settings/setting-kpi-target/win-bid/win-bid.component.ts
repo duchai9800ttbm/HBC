@@ -51,7 +51,6 @@ export class WinBidComponent implements OnInit {
 
   getDetailTargetWinBidToYear() {
     this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
-      console.log('this.this.yearkpi', response);
     });
   }
 
@@ -108,20 +107,16 @@ export class WinBidComponent implements OnInit {
 
   calculValueReach() {
     const valueReach = this.targetWinBid.get('total').value * this.targetWinBid.get('percent').value / 100;
-    console.log('this.valueReach', valueReach);
     this.targetWinBid.get('totalTarget').patchValue(valueReach);
   }
 
   calculPercent() {
     const percent = this.targetWinBid.get('totalTarget').value * 100 / this.targetWinBid.get('total').value;
-    console.log('this.valueReach', percent);
     this.targetWinBid.get('percent').patchValue(percent);
   }
 
   createOrEditTargetWinBid() {
-    console.log('this.formValue', this.targetWinBid.value);
     this.isSubmitCreate = true;
-    console.log('this.this.yearkpi', this.yearkpi);
     if (this.yearkpi) {
       this.settingService.editTargetWinBidToYear(this.targetWinBid.value).subscribe(response => {
         if (this.paramAction === 'create') {

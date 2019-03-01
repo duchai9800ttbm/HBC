@@ -20,7 +20,6 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log('this.report-win-bid');
     this.subscription = this.reportFollowService.startAndEndDate.subscribe(startAndEndDate => {
       this.viewReport(startAndEndDate.startDate, startAndEndDate.endDate);
     });

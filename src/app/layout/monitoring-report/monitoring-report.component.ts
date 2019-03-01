@@ -115,7 +115,6 @@ export class MonitoringReportComponent implements OnInit {
 
   toggleCollapseMenu(idreport) {
     this.widthReport = document.getElementById('wrapper-report').offsetWidth;
-    console.log(this.widthReport);
     this.idReport = idreport;
     if (this.widthReport <= 910) {
       this.collapseMenu();

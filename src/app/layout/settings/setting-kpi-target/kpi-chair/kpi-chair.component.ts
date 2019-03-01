@@ -135,13 +135,6 @@ export class KpiChairComponent implements OnInit {
     }
   }
 
-  // getListGroupkpi() {
-  //   this.settingService.getListGroupKPI('', 0, 1000).subscribe(response => {
-  //     this.listGroupkpi = response.items && response.items.filter(item => item.isActive);
-  //     console.log('groupKpiChairsArray', this.groupKpiChairsArray);
-  //   });
-  // }
-
   createForm(groupChairCallAPI) {
     this.groupKpiChairsArray = this.fb.group({
       groupKpiChair: this.fb.array([]),
@@ -218,14 +211,12 @@ export class KpiChairComponent implements OnInit {
     });
 
     // Các chủ trì đã chọn của các nhóm
-    console.log('this.groupKpiChairsArray.get.value', this.groupKpiChairsArray.get('groupKpiChair').value);
     const arrayChairUsed = [];
     this.groupKpiChairsArray.get('groupKpiChair').value.forEach(itemGroupKpiChair => {
       itemGroupKpiChair.chairEmployees.forEach(itemChairEmployees => {
         arrayChairUsed.push(itemChairEmployees.employee.employeeId);
       });
     });
-    console.log('arrayChairUsed-arrayChairUsed', arrayChairUsed);
     this.loadingListChairEmployeeCanChoosedTemp = true;
     this.packageService.searchKeyWordListGroupChaired(0, 1000, this.searchTermChairName$).subscribe(response => {
       // const arraySelectChoosedTemp = this.listChairEmployeeChoosedTemp.map(itemSelect => itemSelect.employeeId);
@@ -405,7 +396,6 @@ export class KpiChairComponent implements OnInit {
   }
 
   calculTargetTotal(indexFormGroupKpiChair: number) {
-    console.log(this.groupKpiChairFA.controls[indexFormGroupKpiChair].get('chairEmployees').value);
     let targetGroup = 0;
     (this.groupKpiChairFA.controls[indexFormGroupKpiChair].get('chairEmployees').value || []).forEach(item => {
       targetGroup = targetGroup + +item.targetskpi;

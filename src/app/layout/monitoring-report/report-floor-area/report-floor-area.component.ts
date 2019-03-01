@@ -36,7 +36,6 @@ export class ReportFloorAreaComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.reportFollowService.detailReportFloorArea(startDateNumber, endDateNumber).subscribe(response => {
       this.reportFloorArea = response;
-      console.log('reponse-reponse', response);
       this.loading = false;
     }, err => {
       this.loading = false;

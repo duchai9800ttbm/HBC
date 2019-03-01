@@ -36,7 +36,6 @@ export class ReportKpiAreaComponent implements OnInit, OnDestroy {
     this.reportFollowService.detailReportKpiAre(startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiArea = response;
       this.loading = false;
-      console.log('reponse-reponse', response);
     }, err => {
       this.loading = false;
       this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');

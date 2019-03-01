@@ -37,7 +37,6 @@ export class ReportNumberWinBidComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.reportFollowService.listNumberWinningOfBid(startDateNumber, endDateNumber).subscribe(response => {
       this.reportNumberWinBid = response;
-      console.log('reponse-reponse', response);
       this.loading = false;
     }, err => {
       this.loading = false;
