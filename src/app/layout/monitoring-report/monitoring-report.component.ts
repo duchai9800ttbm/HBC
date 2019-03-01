@@ -192,4 +192,13 @@ export class MonitoringReportComponent implements OnInit {
       }
     }
   }
+
+  exportExcel() {
+    this.reportFollowService.exportReportToExcel(
+      DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.startDate),
+      DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.endDate),
+      this.startAndEndConstructionCategory.constructionCategory,
+      this.startAndEndConstructionType.constructionType,
+    ).subscribe(response => { });
+  }
 }

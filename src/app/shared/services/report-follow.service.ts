@@ -15,7 +15,7 @@ import { ReportKpiWinRateQuarter } from '../models/report-follow/report-kpi-win-
 import { ReportFloorArea } from '../models/report-follow/report-floor-area.model';
 import { ReportPotentialProjects } from '../models/report-follow/report-potential-projects.model';
 import { ReportNumberWinBid } from '../models/report-follow/report-number-win-bid.model';
-
+import * as FileSaver from 'file-saver';
 @Injectable()
 export class ReportFollowService {
   startAndEndDate = new BehaviorSubject<StartAndEndDate>({
@@ -322,6 +322,24 @@ export class ReportFollowService {
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return this.mappingNumberWinningOfBid(result);
+    });
+  }
+  ////// =============
+  // Xuất báo cáo ra excel
+  exportReportToExcel(
+    startDate: number,
+    endDate: number,
+    constructionCategoryId: number,
+    constructionTypeId: number,
+  ) {
+    // tslint:disable-next-line:max-line-length
+    const filterUrl = `report/export?startDate=${startDate}&endDate=${endDate}&constructionCategoryId=${constructionCategoryId ? constructionCategoryId : ''}&constructionTypeId=${constructionTypeId ? constructionTypeId : ''}`;
+    return this.apiService.getFileHBC(filterUrl).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
     });
   }
 }
