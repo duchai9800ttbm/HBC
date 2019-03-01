@@ -21,15 +21,7 @@ export class ReportFollowService {
   startAndEndDate = new BehaviorSubject<StartAndEndDate>({
     startDate: new Date(),
     endDate: new Date(),
-  });
-  startAndEndConstructionCategory = new BehaviorSubject<StartAndEndConstructionCategory>({
-    startDate: new Date(),
-    endDate: new Date(),
     constructionCategory: null,
-  });
-  startAndEndConstructionType = new BehaviorSubject<StartAndEndConstructionType>({
-    startDate: new Date(),
-    endDate: new Date(),
     constructionType: null,
   });
   constructor(

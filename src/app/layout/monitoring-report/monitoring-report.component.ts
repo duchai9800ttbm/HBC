@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReportFollowService } from '../../shared/services/report-follow.service';
 import { StartAndEndDate } from '../../shared/models/report-follow/startAndEndDate.model';
-import { DataService } from '../../shared/services';
+import { DataService, AlertService } from '../../shared/services';
 import { Observable } from 'rxjs';
 import { DictionaryItem } from '../../shared/models';
 import { StartAndEndConstructionCategory } from '../../shared/models/report-follow/startAndEndConstructionCategory.model';
@@ -27,8 +27,8 @@ export class MonitoringReportComponent implements OnInit {
   startDate: Date;
   endDate: Date;
   startAndEndDate = new StartAndEndDate();
-  startAndEndConstructionCategory = new StartAndEndConstructionCategory();
-  startAndEndConstructionType = new StartAndEndConstructionType();
+  // startAndEndConstructionCategory = new StartAndEndConstructionCategory();
+  // startAndEndConstructionType = new StartAndEndConstructionType();
   listMainBuildingCategory: Observable<DictionaryItem[]>;
   listBuildingProjectType: Observable<DictionaryItem[]>;
   isViewReport = false;
@@ -43,7 +43,8 @@ export class MonitoringReportComponent implements OnInit {
   constructor(
     private router: Router,
     private reportFollowService: ReportFollowService,
-    private dataService: DataService
+    private dataService: DataService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -53,17 +54,9 @@ export class MonitoringReportComponent implements OnInit {
     // kpi-chair, win-bid, kpi-area
     this.startAndEndDate.startDate = this.startDate;
     this.startAndEndDate.endDate = this.endDate;
+    this.startAndEndDate.constructionCategory = null;
+    this.startAndEndDate.constructionType = null;
     this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
-    // construction-items
-    this.startAndEndConstructionCategory.startDate = this.startDate;
-    this.startAndEndConstructionCategory.endDate = this.endDate;
-    this.startAndEndConstructionCategory.constructionCategory = null;
-    this.reportFollowService.startAndEndConstructionCategory.next(this.startAndEndConstructionCategory);
-    // construction-type
-    this.startAndEndConstructionType.startDate = this.startDate;
-    this.startAndEndConstructionType.endDate = this.endDate;
-    this.startAndEndConstructionType.constructionType = null;
-    this.reportFollowService.startAndEndConstructionType.next(this.startAndEndConstructionType);
     this.checkActiveTab();
     this.listMainBuildingCategory = this.dataService.getListMainConstructionComponents();
     this.listBuildingProjectType = this.dataService.getListConstructonTypes();
@@ -178,15 +171,15 @@ export class MonitoringReportComponent implements OnInit {
             break;
           }
         case 'construction-items': {
-          this.startAndEndConstructionCategory.startDate = this.startDate;
-          this.startAndEndConstructionCategory.endDate = this.endDate;
-          this.reportFollowService.startAndEndConstructionCategory.next(this.startAndEndConstructionCategory);
+          this.startAndEndDate.startDate = this.startDate;
+          this.startAndEndDate.endDate = this.endDate;
+          this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
           break;
         }
         case 'type-construction': {
-          this.startAndEndConstructionType.startDate = this.startDate;
-          this.startAndEndConstructionType.endDate = this.endDate;
-          this.reportFollowService.startAndEndConstructionType.next(this.startAndEndConstructionType);
+          this.startAndEndDate.startDate = this.startDate;
+          this.startAndEndDate.endDate = this.endDate;
+          this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
           break;
         }
       }
@@ -197,8 +190,11 @@ export class MonitoringReportComponent implements OnInit {
     this.reportFollowService.exportReportToExcel(
       DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.startDate),
       DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.endDate),
-      this.startAndEndConstructionCategory.constructionCategory,
-      this.startAndEndConstructionType.constructionType,
-    ).subscribe(response => { });
+      this.startAndEndDate.constructionCategory,
+      this.startAndEndDate.constructionType,
+    ).subscribe(response => {
+    }, err => {
+      this.alertService.error('Đã có lỗi xảy ra. Vui lòng thử lại');
+    });
   }
 }

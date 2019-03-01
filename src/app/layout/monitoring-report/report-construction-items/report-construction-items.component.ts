@@ -20,10 +20,10 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscription = this.reportFollowService.startAndEndConstructionCategory.subscribe(startAndEndConstructionCategory => {
-      if (startAndEndConstructionCategory.constructionCategory) {
-        this.viewReport(startAndEndConstructionCategory.constructionCategory,
-            startAndEndConstructionCategory.startDate, startAndEndConstructionCategory.endDate);
+    this.subscription = this.reportFollowService.startAndEndDate.subscribe(startAndEndDate => {
+      if (startAndEndDate.constructionCategory) {
+        this.viewReport(startAndEndDate.constructionCategory,
+          startAndEndDate.startDate, startAndEndDate.endDate);
       } else {
         this.reportKpiConstructionCategory = null;
       }

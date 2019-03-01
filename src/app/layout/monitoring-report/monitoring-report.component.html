@@ -65,14 +65,14 @@
                 </span>
                 <span *ngIf="idReport === 'construction-items'" class="ml-4 custom-dropdown d-flex">
                     <span for="" class="action-view center-parent" style="width: 100px;">Hạng mục:</span>
-                    <select class="form-control ml-3" [(ngModel)]="startAndEndConstructionCategory.constructionCategory">
+                    <select class="form-control ml-3" [(ngModel)]="startAndEndDate.constructionCategory">
                         <option [ngValue]="null">---Chọn---</option>
                         <option *ngFor="let item of listMainBuildingCategory | async" [value]="item.id">{{item.text }}</option>
                     </select>
                 </span>
                 <span *ngIf="idReport === 'type-construction'" class="ml-4 custom-dropdown d-flex">
                     <span for="" class="action-view" style="width: 100px;">Loại:</span>
-                    <select class="form-control ml-3" [(ngModel)]="startAndEndConstructionType.constructionType">
+                    <select class="form-control ml-3" [(ngModel)]="startAndEndDate.constructionType">
                         <option [ngValue]="null">---Chọn---</option>
                         <option *ngFor="let item of listBuildingProjectType | async" [value]="item.id">{{item.text }}</option>
                     </select>
