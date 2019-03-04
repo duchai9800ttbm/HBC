@@ -126,7 +126,14 @@ export class WinBidComponent implements OnInit {
               relativeTo: this.activatedRoute,
               queryParams: { action: 'view', year: this.yearkpi },
             });
-          this.alertService.success('Chỉnh sửa chỉ tiêu trúng thầu thành công.');
+          this.alertService.success('Tạo mới chỉ tiêu trúng thầu thành công.');
+          this.listYearConfigured.push(+this.yearkpi);
+          this.listYearNotConfigred = [];
+          for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
+            if (!this.listYearConfigured.includes(i)) {
+              this.listYearNotConfigred.push(i);
+            }
+          }
         }
         if (this.paramAction === 'edit') {
           this.router.navigate(
@@ -140,7 +147,7 @@ export class WinBidComponent implements OnInit {
         this.isSubmitCreate = false;
       }, err => {
         if (this.paramAction === 'create') {
-          this.alertService.error('Chỉnh sửa chỉ tiêu trúng thầu không thành công.');
+          this.alertService.error('Tạo mới chỉ tiêu trúng thầu không thành công.');
         }
         if (this.paramAction === 'edit') {
           this.alertService.error('Chỉnh sửa chỉ tiêu trúng thầu không thành công.');

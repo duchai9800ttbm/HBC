@@ -187,6 +187,13 @@ export class KpiAreaComponent implements OnInit {
               queryParams: { action: 'view', year: this.yearkpi },
             });
           this.alertService.success('Tạo mới chỉ tiêu khu vực thành công');
+          this.listYearConfigured.push(+this.yearkpi);
+          this.listYearNotConfigred = [];
+          for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
+            if (!this.listYearConfigured.includes(i)) {
+              this.listYearNotConfigred.push(i);
+            }
+          }
         }
         if (this.paramAction === 'edit') {
           this.router.navigate(
@@ -203,7 +210,7 @@ export class KpiAreaComponent implements OnInit {
           this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu khu vực không thành công.');
         }
         if (this.paramAction === 'edit') {
-          this.alertService.error('Đã xảy lỗi. Tạo mới chỉ tiêu khu vực không thành công.');
+          this.alertService.error('Đã xảy lỗi. Chỉnh sửa chỉ tiêu khu vực không thành công.');
         }
         this.isSubmitCreate = false;
       });

@@ -351,6 +351,7 @@ export class KpiChairComponent implements OnInit {
   }
 
   saveTargetkpiToChair() {
+    console.log('this.listYearConfigured', this.listYearConfigured, this.yearkpi);
     this.isSubmitCreate = true;
     this.isValidateGroup = !this.groupKpiChairFA.value.some(item => item.groupName);
     if (this.yearkpi && this.groupKpiChairFA && this.groupKpiChairFA.value.some(item => item.groupName)) {
@@ -364,6 +365,13 @@ export class KpiChairComponent implements OnInit {
                 queryParams: { action: 'view', year: this.yearkpi },
               });
             this.alertService.success('Tạo mới KPI theo chủ trì thành công');
+            this.listYearConfigured.push(+this.yearkpi);
+            this.listYearNotConfigred = [];
+            for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
+              if (!this.listYearConfigured.includes(i)) {
+                this.listYearNotConfigred.push(i);
+              }
+            }
             break;
           }
           case 'edit': {
