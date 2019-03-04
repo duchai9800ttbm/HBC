@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular
 import { Router } from '@angular/router';
 import { ReportFollowService } from '../../shared/services/report-follow.service';
 import { StartAndEndDate } from '../../shared/models/report-follow/startAndEndDate.model';
-import { DataService, AlertService } from '../../shared/services';
+import { DataService, AlertService, ConfirmationService } from '../../shared/services';
 import { Observable } from 'rxjs';
 import { DictionaryItem } from '../../shared/models';
 import { StartAndEndConstructionCategory } from '../../shared/models/report-follow/startAndEndConstructionCategory.model';
@@ -34,11 +34,11 @@ export class MonitoringReportComponent implements OnInit {
   listBuildingProjectType: DictionaryItem[];
   isViewReport = false;
   get alertWarning(): string {
-    if (!DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate) || !DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate) ) {
+    if (!DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate) || !DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) {
       return 'Bạn cần chọn thời gian xem báo cáo';
     } else if (((DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
       - DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) > 0) && this.isViewReport) {
-        return 'Thời gian Từ ngày cần nhỏ hơn thời gian Đến ngày';
+      return 'Thời gian Từ ngày cần nhỏ hơn thời gian Đến ngày';
     } else {
       return null;
     }
@@ -47,7 +47,8 @@ export class MonitoringReportComponent implements OnInit {
     private router: Router,
     private reportFollowService: ReportFollowService,
     private dataService: DataService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit() {
@@ -221,15 +222,45 @@ export class MonitoringReportComponent implements OnInit {
       && DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)
       && !((DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
         - DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) > 0)) {
-      this.reportFollowService.exportReportToExcel(
-        DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.startDate),
-        DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.endDate),
-        this.startAndEndDate.constructionCategory,
-        this.startAndEndDate.constructionType,
-      ).subscribe(response => {
-      }, err => {
-        this.alertService.error('Đã có lỗi xảy ra. Vui lòng thử lại');
-      });
+      if (!this.startAndEndDate.constructionCategory || !this.startAndEndDate.constructionType) {
+        let messegeReportName = '';
+        if (!this.startAndEndDate.constructionCategory && !this.startAndEndDate.constructionType) {
+          // tslint:disable-next-line:max-line-length
+          messegeReportName = '<strong>Báo cáo chỉ tiêu KPI theo hạng mục thi công</strong> & <strong>Báo cáo chỉ tiêu KPI theo loại công trình</strong>';
+        } else if (!this.startAndEndDate.constructionCategory) {
+          messegeReportName = '<strong>Báo cáo chỉ tiêu KPI theo hạng mục thi công</strong>';
+        } else if (!this.startAndEndDate.constructionType) {
+          messegeReportName = '<strong>Báo cáo chỉ tiêu KPI theo loại công trình</strong>';
+        }
+        this.confirmationService.confirmHTML(
+          // tslint:disable-next-line:max-line-length
+          `<div>${messegeReportName}, bạn chưa chọn chỉ tiêu nào để xem. Bạn có muốn tiếp tục?</div>
+                  <div>Nếu <strong>ĐỒNG Ý</strong>: File xuất ra sẽ không chứa loại báo cáo này.</div>
+                  <div>Nếu <strong>HỦY</strong>: Vui lòng chọn chỉ tiêu xem báo cáo.</div>`,
+          () => {
+            this.reportFollowService.exportReportToExcel(
+              DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.startDate),
+              DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.endDate),
+              this.startAndEndDate.constructionCategory,
+              this.startAndEndDate.constructionType,
+            ).subscribe(response => {
+            }, err => {
+              this.alertService.error('Đã có lỗi xảy ra. Vui lòng thử lại');
+            });
+          });
+      }
+      if (!(!this.startAndEndDate.constructionCategory || !this.startAndEndDate.constructionType)) {
+        this.reportFollowService.exportReportToExcel(
+          DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.startDate),
+          DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.endDate),
+          this.startAndEndDate.constructionCategory,
+          this.startAndEndDate.constructionType,
+        ).subscribe(response => {
+        }, err => {
+          this.alertService.error('Đã có lỗi xảy ra. Vui lòng thử lại');
+        });
+      }
+
     }
 
   }

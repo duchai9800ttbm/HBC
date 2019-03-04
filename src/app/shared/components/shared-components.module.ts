@@ -28,6 +28,7 @@ import { MissActionComponent } from './miss-action/miss-action.component';
 import { FormInComponent } from './form-in/form-in.component';
 import { InfiniteScroll } from './infinite-scroll/infinite-scroll';
 import { PopupComfirmFormInDkdtComponent } from './popup-comfirm-form-in-dkdt/popup-comfirm-form-in-dkdt.component';
+import { ConfirmationHtmlPopupComponent } from './confirmation-html-popup/confirmation-html-popup.component';
 @NgModule({
     imports: [
         PDFExportModule,
@@ -62,6 +63,7 @@ import { PopupComfirmFormInDkdtComponent } from './popup-comfirm-form-in-dkdt/po
         FormInComponent,
         PopupComfirmFormInDkdtComponent,
         InfiniteScroll,
+        ConfirmationHtmlPopupComponent,
     ],
     exports: [
         // AlertComponent,
@@ -81,7 +83,8 @@ import { PopupComfirmFormInDkdtComponent } from './popup-comfirm-form-in-dkdt/po
         MissActionComponent,
         FormInComponent,
         InfiniteScroll,
-        PopupComfirmFormInDkdtComponent
+        PopupComfirmFormInDkdtComponent,
+        ConfirmationHtmlPopupComponent
     ],
     entryComponents: [
         ConfirmationPopupComponent,
@@ -94,6 +97,7 @@ import { PopupComfirmFormInDkdtComponent } from './popup-comfirm-form-in-dkdt/po
         PrintEmailComponent,
         MissActionComponent,
         FormInComponent,
+        ConfirmationHtmlPopupComponent
     ]
 })
 export class SharedComponentsModule { }

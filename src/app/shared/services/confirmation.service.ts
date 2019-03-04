@@ -7,6 +7,7 @@ import { ConfirmationPopupComponent } from "../components/confirmation-popup/con
 import { ConfirmationPopupCallAwayComponent } from "../components/confirmation-popup-call-away/confirmation-popup-call-away.component";
 import { ResetPasswordComponent } from "../components/reset-password/reset-password.component";
 import { MissActionComponent } from "../components/miss-action/miss-action.component";
+import { ConfirmationHtmlPopupComponent } from "../components/confirmation-html-popup/confirmation-html-popup.component";
 @Injectable()
 export class ConfirmationService {
     constructor(private modalService: NgbModal) {}
@@ -14,6 +15,17 @@ export class ConfirmationService {
     confirm(message: string, siFn: () => void) {
         // this.setConfirmation(message, siFn, noFn);
         this.openConfirmationPopup({
+            type: "confirm",
+            text: message,
+            siFn: function() {
+                siFn();
+            }
+        });
+    }
+
+    confirmHTML(message: any, siFn: () => void) {
+        // this.setConfirmation(message, siFn, noFn);
+        this.openConfirmationHTMLPopup({
             type: "confirm",
             text: message,
             siFn: function() {
@@ -47,6 +59,11 @@ export class ConfirmationService {
 
     openConfirmationPopup(message) {
         const modalRef = this.modalService.open(ConfirmationPopupComponent);
+        modalRef.componentInstance.message = message;
+    }
+
+    openConfirmationHTMLPopup(message) {
+        const modalRef = this.modalService.open(ConfirmationHtmlPopupComponent);
         modalRef.componentInstance.message = message;
     }
 
