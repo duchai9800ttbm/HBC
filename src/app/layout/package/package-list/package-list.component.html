@@ -287,12 +287,12 @@
                                     </div>
                                 </div>
                             </th>
-                            <th [class.d-none]="!tongGiaTri" (click)="orderByField('Amount')" [title]="'Tổng giá trị'">
+                            <th [class.d-none]="!tongGiaTriTamTinh" (click)="orderByField('Amount')" [title]="'Tổng giá trị tạm tính'">
                                 <div class="d-flex justify-content-center">
                                     <div style="margin-right: 10px" class="text-center">
                                         <div class="d-flex justify-content-center">
                                             <div class="center-parent">
-                                                <div textEllipsis>Tổng giá trị</div>
+                                                <div textEllipsis>Tổng giá trị tạm tính</div>
                                             </div>
                                         </div>
                                     </div>
@@ -307,6 +307,27 @@
                                     </div>
                                 </div>
                             </th>
+                            <th [class.d-none]="!tongGiaTri" (click)="orderByField('TotalCostOfSubmission')" [title]="'Tổng giá trị nộp thầu'">
+                                <div class="d-flex justify-content-center">
+                                    <div style="margin-right: 10px" class="text-center">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="center-parent">
+                                                <div textEllipsis>Tổng giá trị nộp thầu</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="center-parent">
+                                        <div>
+                                            <!-- <i class="fa fa-caret-down" style="color: white;"></i> -->
+                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'TotalCostOfSubmissionAsc' && filterModel.sorting != 'TotalCostOfSubmissionDesc')" class="fa fa-sort"
+                                                style="color: white;"></i>
+                                            <i *ngIf="filterModel.sorting == 'TotalCostOfSubmissionAsc'" class="fa fa-caret-down" style="color: white;"></i>
+                                            <i *ngIf="filterModel.sorting == 'TotalCostOfSubmissionDesc'" class="fa fa-caret-up" style="color: white;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                            
                             <th [class.d-none]="!quyMo" (click)="orderByField('Magnitude')" [title]="'Quy mô'">
                                 <div class="d-flex justify-content-start">
                                     <div style="margin-right: 10px" textEllipsis>Quy mô</div>
@@ -685,7 +706,8 @@
                             </td>
                             <td [class.d-none]="!loaiCongTrinh" class="text-truncate" [title]="(item.projectType?.value)?item.projectType?.value:''">{{ item.projectType?.value }}</td>
 
-                            <td [class.d-none]="!tongGiaTri" class="text-truncate text-right" [title]="(item.amount)?item.amount:''">{{ item.amount | vnCurrency }}</td>
+                            <td [class.d-none]="!tongGiaTriTamTinh" class="text-truncate text-right" [title]="(item.amount)?item.amount:''">{{ item.amount | vnCurrency }}</td>
+                            <td [class.d-none]="!tongGiaTri" class="text-truncate text-right" [title]="(item.amount)?item.amount:''">{{ item.totalCostOfSubmission | vnCurrency }}</td>
                             <td [class.d-none]="!quyMo" class="color" [title]="(item.magnitude)?item.magnitude:''">{{item.magnitude }}
                             </td>
                             <td [class.d-none]="!giaiDoan" class="" style="text-align: center;">

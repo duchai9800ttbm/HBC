@@ -85,6 +85,7 @@ export class PackageService {
         return {
             bidOpportunityId: result.bidOpportunityId,
             classify: result.classify ? result.classify.value : '',
+            totalCostOfSubmission: result.totalCostOfSubmission,
             amount: result.amount,
             opportunityName: result.opportunityName,
             projectName: result.projectName,

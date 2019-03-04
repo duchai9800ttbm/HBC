@@ -3,6 +3,7 @@ import { SafeUrl } from "../../../../../node_modules/@angular/platform-browser";
 export class PackageListItem {
     bidOpportunityId: number;
     classify: string;
+    totalCostOfSubmission: number;
     amount: number;
     opportunityName: string;
     projectName: string;

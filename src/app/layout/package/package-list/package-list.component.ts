@@ -116,6 +116,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     chuTri = false;
     loaiCongTrinh = false;
     hangMucCongTrinh = false;
+    tongGiaTriTamTinh = false;
     tongGiaTri = false;
     danhGiaDuAn = false;
     dienTichSan = false;
@@ -282,7 +283,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.chuTri = this.listFieldNomarlized.includes('FK_ChairEmployeeID');
             this.loaiCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionTypeID');
             this.hangMucCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionCategoryID');
-            this.tongGiaTri = this.listFieldNomarlized.includes('ARBidOpportunitys');
+            this.tongGiaTriTamTinh = this.listFieldNomarlized.includes('ARBidOpportunitys');
+            this.tongGiaTri = this.listFieldNomarlized.includes('ARBidOpportunityTotalCostOfSubmission');
 
             this.danhGiaDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEvaluation');
             this.dientichsan = this.listFieldNomarlized.includes('ARBidOpportunityFloorArea');
