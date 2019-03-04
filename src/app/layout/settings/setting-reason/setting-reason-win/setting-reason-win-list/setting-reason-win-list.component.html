@@ -48,18 +48,18 @@
                             <span class="custom-control-indicator"></span>
                         </label>
                     </td>
-                    <td class="text-truncate">
-                        {{item.reasonName}}
+                    <td class="text-truncate" [title]="item?.reasonName ? item?.reasonName : ''">
+                        {{item?.reasonName}}
                     </td>
-                    <td class="text-truncate">
-                        {{item.reasonDesc}}
+                    <td class="text-truncate" [title]="item?.reasonDesc ? item?.reasonDesc : ''">
+                        {{item?.reasonDesc}}
                     </td>
                     <td class="d-flex justify-content-around">
-                        <a [routerLink]="['/settings/reason/win/edit',item.id]" class=" text-success">
-                            <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
+                        <a [routerLink]="['/settings/reason/win/edit',item.id]" class=" text-success" title="Sửa">
+                            <i class="fa fa-pencil  cursor-pointer" aria-hidden="true" > </i>
                         </a>
-                        <a class=" text-dark ml-3">
-                            <i (click)="deleteReasonWin(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
+                        <a class=" text-dark ml-3" title="Xóa">
+                            <i (click)="deleteReasonWin(item)" class="fa fa-trash-o pointer" aria-hidden="true" ></i>
                         </a>
                     </td>
                 </tr>

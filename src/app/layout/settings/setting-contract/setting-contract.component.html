@@ -53,20 +53,20 @@
                             <span class="custom-control-indicator"></span>
                         </label>
                     </td>
-                    <td class="text-truncate">
-                        {{item.contractNameVi}}
+                    <td class="text-truncate" [title]="item?.contractNameVi ? item?.contractNameVi : ''">
+                        {{item?.contractNameVi}}
                     </td>
-                    <td class="text-truncate">
-                        {{item.contractNameEng}}
+                    <td class="text-truncate" [title]="item?.contractNameEng ? item?.contractNameEng : ''">
+                        {{item?.contractNameEng}}
                     </td>
-                    <td class="text-truncate">
-                        {{item.contractDesc}}
+                    <td class="text-truncate" [title]="item?.contractDesc ? item?.contractDesc : ''">
+                        {{item?.contractDesc}}
                     </td>
                     <td class="d-flex justify-content-around">
-                        <a [routerLink]="['/settings/contract/edit',item.id]" class=" text-success">
+                        <a [routerLink]="['/settings/contract/edit',item.id]" class=" text-success" title="Sửa">
                             <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                         </a>
-                        <a class=" text-dark ml-3">
+                        <a class=" text-dark ml-3" title="Xóa">
                             <i (click)="deleteTypeOfContract(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
                         </a>
                     </td>

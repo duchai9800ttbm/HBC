@@ -47,17 +47,17 @@
                             <span class="custom-control-indicator"></span>
                         </label>
                     </td>
-                    <td class="text-truncate">
-                        {{item.constructionCategoryName}}
+                    <td class="text-truncate" [title]="item?.constructionCategoryName ? item?.constructionCategoryName : ''">
+                        {{item?.constructionCategoryName}}
                     </td>
-                    <td class="text-truncate">
-                        {{item.constructionCategoryDesc}}
+                    <td class="text-truncate" [title]="item?.constructionCategoryDesc ? item?.constructionCategoryDesc : ''">
+                        {{item?.constructionCategoryDesc}}
                     </td>
                     <td class="d-flex justify-content-around">
-                        <a [routerLink]="['/settings/construction-category/edit',item.id]" class="text-success">
+                        <a [routerLink]="['/settings/construction-category/edit',item.id]" class="text-success" title="Sửa">
                             <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                         </a>
-                        <a class=" text-dark ml-3">
+                        <a class=" text-dark ml-3" title="Xóa">
                             <i (click)="deleteConstructionCategory(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
                         </a>
                     </td>

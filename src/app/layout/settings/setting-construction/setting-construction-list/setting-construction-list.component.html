@@ -52,20 +52,20 @@
                         <span class="custom-control-indicator"></span>
                     </label>
                 </td>
-                <td class="text-truncate">
-                    {{item.constructionTypeName}}
+                <td class="text-truncate" [title]="item?.constructionTypeName ? item?.constructionTypeName : ''">
+                    {{item?.constructionTypeName}}
                 </td>
-                <td class="text-truncate">
-                    {{item.constructionTypeNameEng}}
+                <td class="text-truncate" [title]="item?.constructionTypeNameEng ? item?.constructionTypeNameEng : ''">
+                    {{item?.constructionTypeNameEng}}
                 </td>
-                <td class="text-truncate">
-                    {{item.constructionTypeDesc}}
+                <td class="text-truncate" [title]="item?.constructionTypeDesc ? item?.constructionTypeDesc : ''">
+                    {{item?.constructionTypeDesc}}
                 </td>
                 <td class="d-flex justify-content-around">
-                    <a [routerLink]="['/settings/construction/edit',item.id]" class=" text-success">
+                    <a [routerLink]="['/settings/construction/edit',item.id]" class=" text-success" title="Sửa">
                         <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                     </a>
-                    <a class=" text-dark ml-3">
+                    <a class=" text-dark ml-3" title="Xóa">
                         <i (click)="deleteLocation(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
                     </a>
                 </td>

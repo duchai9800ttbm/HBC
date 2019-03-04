@@ -47,17 +47,17 @@
                             <span class="custom-control-indicator"></span>
                         </label>
                     </td>
-                    <td class="text-truncate">
-                        {{item.levelName}}
+                    <td class="text-truncate" [title]="item?.levelName ? item?.levelName : ''">
+                        {{item?.levelName}}
                     </td>
-                    <td class="text-truncate">
-                        {{item.levelDesc}}
+                    <td class="text-truncate" [title]="item?.levelDesc ? item?.levelDesc : ''">
+                        {{item?.levelDesc}}
                     </td>
                     <td class="d-flex justify-content-around">
-                        <a [routerLink]="['/settings/position/edit',item.id]" class=" text-success">
+                        <a [routerLink]="['/settings/position/edit',item.id]" class=" text-success" title="Sửa">
                             <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                         </a>
-                        <a class=" text-dark ml-3">
+                        <a class=" text-dark ml-3" title="Xóa">
                             <i (click)="deleteLevel(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
                         </a>
                     </td>
