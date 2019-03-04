@@ -3,7 +3,7 @@
         <h5 class="menu-report__year text-uppercase p-2 mb-0 font-weight-bold" style="padding-bottom: 16px !important;">
             Báo cáo theo dõi
         </h5>
-        <ul class="p-0 mb-0">
+        <ul class="p-0 mb-0" #tabOptionKpiType>
             <li class="cursor-pointer text-truncate py-3 px-2 menu-report__item" [class.active-item]="idReport === 'kpi-chair'"
                 id="kpi-chair" name="list-report" (click)="toggleCollapseMenu('kpi-chair')" title="Chỉ tiêu KPI theo chủ trì"
                 [routerLink]="['./kpi-chair']">

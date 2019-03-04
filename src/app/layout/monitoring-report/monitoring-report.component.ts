@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReportFollowService } from '../../shared/services/report-follow.service';
 import { StartAndEndDate } from '../../shared/models/report-follow/startAndEndDate.model';
@@ -15,6 +15,7 @@ import DateTimeConvertHelper from '../../shared/helpers/datetime-convert-helper'
   styleUrls: ['./monitoring-report.component.scss']
 })
 export class MonitoringReportComponent implements OnInit {
+  @ViewChild('tabOptionKpiType') tabOptionKpiType: ElementRef;
   time = new Date();
   isCollapseMenu = false;
   idReport = 'kpi-chair';
@@ -113,6 +114,23 @@ export class MonitoringReportComponent implements OnInit {
       }
 
     }
+  }
+
+  @HostListener('document:click', ['$event'])
+  public documentClick(event: any): void {
+    if (this.contains(event.target)) {
+    }
+    if (!this.contains(event.target)) {
+      if (this.widthReport <= 910) {
+        this.isCollapseMenu = false;
+        this.collapseMenu();
+      }
+    }
+  }
+
+  contains(target: any): boolean {
+    return this.tabOptionKpiType.nativeElement.contains(target) ||
+      (this.tabOptionKpiType ? this.tabOptionKpiType.nativeElement.contains(target) : false);
   }
 
   toggleCollapseMenu(idreport) {
