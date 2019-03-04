@@ -34,7 +34,7 @@ export class SettingsComponent implements OnInit {
         this.userModel = this.sessionService.userInfo;
         this.listPrivileges = this.userModel.privileges;
         if (this.listPrivileges) {
-          this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+          this.isManageSettings = this.listPrivileges.some(x => (x === 'ManageInformationSettings' || x === 'ManageKPISettings'));
         }
         if (!this.isManageSettings) {
             this.router.navigate(['/no-permission']);

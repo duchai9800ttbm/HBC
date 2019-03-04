@@ -78,7 +78,8 @@ export class LoginFormComponent implements OnInit {
                             if (this.listPrivileges) {
                                 this.isManageBidOpportunitys = this.administeredPackageList.some(r => this.listPrivileges.includes(r));
                                 this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
-                                this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+                                // tslint:disable-next-line:max-line-length
+                                this.isManageSettings = this.listPrivileges.some(x => (x === 'ManageInformationSettings' || x === 'ManageKPISettings'));
                                 this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
                                 this.isManageReport = this.listPrivileges.some(x => x === 'ManageTrackingReports');
                                 if (this.route.snapshot.queryParamMap.get('returnUrl')) {

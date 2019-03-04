@@ -26,7 +26,7 @@ export class HeaderMenuComponent implements OnInit {
       // this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
       this.isManageBidOpportunitys = this.administeredPackageList.some( r => this.listPrivileges.includes(r));
       this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
-      this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+      this.isManageSettings = this.listPrivileges.some(x => (x === 'ManageInformationSettings' || x === 'ManageKPISettings'));
       this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
       this.isManageReport = this.listPrivileges.some(x => x === 'ManageTrackingReports');
     }
