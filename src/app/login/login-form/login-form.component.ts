@@ -22,6 +22,7 @@ export class LoginFormComponent implements OnInit {
     isManageUsers;
     isManageUserGroups;
     isManageSettings;
+    isManageReport;
     isSubmitted: boolean;
     authForm: FormGroup;
     invalidMessages: string[];
@@ -79,6 +80,7 @@ export class LoginFormComponent implements OnInit {
                                 this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
                                 this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
                                 this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
+                                this.isManageReport = this.listPrivileges.some(x => x === 'ManageTrackingReports');
                                 if (this.route.snapshot.queryParamMap.get('returnUrl')) {
                                     switch (this.route.snapshot.queryParamMap.get('returnUrl').split('/')[1]) {
                                         case 'package': {
@@ -93,6 +95,9 @@ export class LoginFormComponent implements OnInit {
                                                 this.spinner.hide();
                                             } else if (this.isManageSettings) {
                                                 this.router.navigate(['/settings']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageReport) {
+                                                this.router.navigate(['/monitoring-report']);
                                                 this.spinner.hide();
                                             } else {
                                                 this.router.navigate(['/package']);
@@ -109,6 +114,9 @@ export class LoginFormComponent implements OnInit {
                                                 this.spinner.hide();
                                             } else if (this.isManageSettings) {
                                                 this.router.navigate(['/settings']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageReport) {
+                                                this.router.navigate(['/monitoring-report']);
                                                 this.spinner.hide();
                                             } else {
                                                 this.router.navigate(['/package']);
@@ -128,6 +136,30 @@ export class LoginFormComponent implements OnInit {
                                                 this.spinner.hide();
                                             } else if (this.isManageUsers) {
                                                 this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageReport) {
+                                                this.router.navigate(['/monitoring-report']);
+                                                this.spinner.hide();
+                                            } else {
+                                                this.router.navigate(['/package']);
+                                                this.spinner.hide();
+                                            }
+                                            break;
+                                        } case 'monitoring-report': {
+                                            if (this.isManageReport) {
+                                                this.router.navigate([`${this.route.snapshot.queryParamMap.get('returnUrl')}`]);
+                                                this.spinner.hide();
+                                            } else if (this.isManageBidOpportunitys) {
+                                                this.router.navigate(['/package']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageUserGroups) {
+                                                this.router.navigate(['/management-user']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageUsers) {
+                                                this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
+                                                this.spinner.hide();
+                                            } else if (this.isManageSettings) {
+                                                this.router.navigate(['/settings']);
                                                 this.spinner.hide();
                                             } else {
                                                 this.router.navigate(['/package']);
@@ -153,6 +185,9 @@ export class LoginFormComponent implements OnInit {
                                     this.spinner.hide();
                                 } else if (this.isManageSettings) {
                                     this.router.navigate(['/settings']);
+                                    this.spinner.hide();
+                                } else if (this.isManageReport) {
+                                    this.router.navigate(['/monitoring-report']);
                                     this.spinner.hide();
                                 } else {
                                     this.router.navigate(['/package']);

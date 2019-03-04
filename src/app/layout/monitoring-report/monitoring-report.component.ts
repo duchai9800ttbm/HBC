@@ -2,12 +2,13 @@ import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular
 import { Router } from '@angular/router';
 import { ReportFollowService } from '../../shared/services/report-follow.service';
 import { StartAndEndDate } from '../../shared/models/report-follow/startAndEndDate.model';
-import { DataService, AlertService, ConfirmationService } from '../../shared/services';
+import { DataService, AlertService, ConfirmationService, SessionService } from '../../shared/services';
 import { Observable } from 'rxjs';
 import { DictionaryItem } from '../../shared/models';
 import { StartAndEndConstructionCategory } from '../../shared/models/report-follow/startAndEndConstructionCategory.model';
 import { StartAndEndConstructionType } from '../../shared/models/report-follow/startAndEndConstructionType.model';
 import DateTimeConvertHelper from '../../shared/helpers/datetime-convert-helper';
+import { UserModel } from '../../shared/models/user/user.model';
 
 @Component({
   selector: 'app-monitoring-report',
@@ -33,6 +34,9 @@ export class MonitoringReportComponent implements OnInit {
   listMainBuildingCategory: DictionaryItem[];
   listBuildingProjectType: DictionaryItem[];
   isViewReport = false;
+  userModel: UserModel;
+  listPrivileges = [];
+  isManageReport;
   get alertWarning(): string {
     if (!DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate) || !DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) {
       return 'Bạn cần chọn thời gian xem báo cáo';
@@ -48,10 +52,20 @@ export class MonitoringReportComponent implements OnInit {
     private reportFollowService: ReportFollowService,
     private dataService: DataService,
     private alertService: AlertService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private sessionService: SessionService
   ) { }
 
   ngOnInit() {
+    this.userModel = this.sessionService.userInfo;
+    this.listPrivileges = this.userModel.privileges;
+    if (this.listPrivileges) {
+      this.isManageReport = this.listPrivileges.some(x => x === 'ManageTrackingReports');
+    }
+    if (!this.isManageReport) {
+      this.router.navigate(['/no-permission']);
+    }
+
     const date = new Date();
     this.startDate = new Date(date.getFullYear(), 0, 1);
     this.endDate = date;

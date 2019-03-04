@@ -16,6 +16,7 @@ export class HeaderMenuComponent implements OnInit {
   isManageBidOpportunitys;
   isManageUsers;
   isManageUserGroups;
+  isManageReport;
   isManageSettings;
   administeredPackageList = AdministeredPackageList;
   ngOnInit() {
@@ -27,6 +28,7 @@ export class HeaderMenuComponent implements OnInit {
       this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
       this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
       this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
+      this.isManageReport = this.listPrivileges.some(x => x === 'ManageTrackingReports');
     }
   }
 
