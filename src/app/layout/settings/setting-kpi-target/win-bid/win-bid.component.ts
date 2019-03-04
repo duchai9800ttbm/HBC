@@ -158,7 +158,7 @@ export class WinBidComponent implements OnInit {
   }
 
   cancel() {
-    if (this.paramAction === 'create') {
+    if (this.paramAction === 'create' || this.paramAction === 'edit') {
       this.yearkpi = this.yearBackTemp ? this.yearBackTemp : this.currentYear;
       this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
         this.targetWinBid.removeControl('id');

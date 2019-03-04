@@ -57,6 +57,7 @@ export class KpiChairComponent implements OnInit {
   isValidateGroup = false;
   loadingListChairEmployeeCanChoosedTemp = false;
   widthReport: number;
+  isSubmit = false;
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -351,10 +352,19 @@ export class KpiChairComponent implements OnInit {
   }
 
   saveTargetkpiToChair() {
-    console.log('this.listYearConfigured', this.listYearConfigured, this.yearkpi);
+    this.isSubmit = true;
     this.isSubmitCreate = true;
+    const isAllChairTarget = this.groupKpiChairFA.value.every(item => {
+      return item.chairEmployees.every(itemChair => {
+        if (!itemChair.targetskpi || !(itemChair.targetskpi > 0)) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+    });
     this.isValidateGroup = !this.groupKpiChairFA.value.some(item => item.groupName);
-    if (this.yearkpi && this.groupKpiChairFA && this.groupKpiChairFA.value.some(item => item.groupName)) {
+    if (this.yearkpi && this.groupKpiChairFA && this.groupKpiChairFA.value.some(item => item.groupName) && isAllChairTarget) {
       this.settingService.createOrEditGroupChairEmployee(+this.yearkpi, this.groupKpiChairsArray.value).subscribe(response => {
         switch (this.paramAction) {
           case 'create': {
@@ -386,6 +396,7 @@ export class KpiChairComponent implements OnInit {
         }
         this.isSubmitCreate = false;
         this.isValidateGroup = false;
+        this.isSubmit = false;
       }, err => {
         if (this.paramAction === 'create') {
           this.alertService.error('Đã xảy ra lỗi. Tạo mới KPI theo chủ trì không thành công');
@@ -393,8 +404,8 @@ export class KpiChairComponent implements OnInit {
         if (this.paramAction === 'edit') {
           this.alertService.error('Đã xảy ra lỗi. Chỉnh sửa KPI theo chủ trì không thành công');
         }
-        this.isSubmitCreate = false;
-        this.isValidateGroup = false;
+        // this.isSubmitCreate = false;
+        // this.isValidateGroup = false;
       });
     }
   }
@@ -434,7 +445,7 @@ export class KpiChairComponent implements OnInit {
   }
 
   cancel() {
-    if (this.paramAction === 'create') {
+    if (this.paramAction === 'create' || this.paramAction === 'edit') {
       this.yearkpi = this.yearBackTemp ? this.yearBackTemp : this.currentYear;
       this.settingService.getListChairToYear(+this.yearkpi).subscribe(response => {
         if (response && (response || []).length !== 0) {
