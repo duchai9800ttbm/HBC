@@ -19,6 +19,7 @@ import { InputThousandSeparateDirective } from './input-thousand-separate.direct
 import { ThousandSeparate } from '../pipes/thoudand-separate.module';
 import { NumberAreaPipeNoplaceholder } from '../pipes/number-area-noplaceholer.pipe';
 import { InputAreaNoplaceholderDirective } from './input-area-noplaceholder.directive';
+import { TextareaHeightDirective } from './textarea-height.directive';
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import { InputAreaNoplaceholderDirective } from './input-area-noplaceholder.dire
         RowHoverDirective,
         InputDateDirective,
         InputThousandSeparateDirective,
-        InputAreaNoplaceholderDirective
+        InputAreaNoplaceholderDirective,
+        TextareaHeightDirective
     ],
     exports: [
         InputNumberDirective,
@@ -56,7 +58,8 @@ import { InputAreaNoplaceholderDirective } from './input-area-noplaceholder.dire
         RowHoverDirective,
         InputDateDirective,
         InputThousandSeparateDirective,
-        InputAreaNoplaceholderDirective
+        InputAreaNoplaceholderDirective,
+        TextareaHeightDirective
     ],
     providers: [
         VnCurrencyPipe,

@@ -22,7 +22,7 @@
             reportKpiConstructionType?.targetAmount ? (reportKpiConstructionType?.targetAmount |
             thousandSeparate) : '-' }}</td>
           <td>
-            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
           </td>
         </tr>
         <tr>
@@ -35,7 +35,7 @@
             reportKpiConstructionType?.amount ? (reportKpiConstructionType?.amount |
             thousandSeparate) : '-' }}</td>
           <td>
-            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
           </td>
         </tr>
       </ng-container>

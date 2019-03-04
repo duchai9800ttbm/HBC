@@ -23,7 +23,7 @@
           reportNumberWinBid?.tenderAmount ?
           (reportNumberWinBid?.tenderAmount | thousandSeparate) : '-' }}</td>
         <td>
-          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
         </td>
       </tr>
       <tr>
@@ -38,7 +38,7 @@
           reportNumberWinBid?.waitForResultAmount ?
           (reportNumberWinBid?.waitForResultAmount | thousandSeparate) : '-' }}</td>
         <td>
-          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
         </td>
       </tr>
       <tr>
@@ -53,7 +53,7 @@
           reportNumberWinBid?.winningOfBidAmount ?
           (reportNumberWinBid?.winningOfBidAmount | thousandSeparate) : '-' }}</td>
         <td>
-          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
         </td>
       </tr>
       <tr>
@@ -68,7 +68,7 @@
           reportNumberWinBid?.winningOfBidCompareTotalBidPer ?
           (reportNumberWinBid?.winningOfBidCompareTotalBidPer | thousandSeparate) : '-' }}</td>
         <td>
-          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
         </td>
       </tr>
     </ng-container>

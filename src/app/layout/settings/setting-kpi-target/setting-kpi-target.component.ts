@@ -68,7 +68,6 @@ export class SettingKpiTargetComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   public documentClick(event: any): void {
     if (this.contains(event.target)) {
-      console.log('inContain');
     }
     if (!this.contains(event.target)) {
       if (this.widthReport <= 940) {

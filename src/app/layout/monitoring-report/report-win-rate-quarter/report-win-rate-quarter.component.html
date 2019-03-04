@@ -24,7 +24,7 @@
             ? (itemReportKPIQuaterOfYearDetails?.amount
             | thousandSeparate) : '-'}}</td>
           <td>
-            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
           </td>
         </tr>
       </ng-container>
@@ -40,7 +40,7 @@
           ? (reportKpiWinRateQuarter?.totalAmount |
           thousandSeparate) : '-'}}</td>
         <td>
-          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100"></textarea>
+          <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
         </td>
       </tr>
     </ng-container>
