@@ -32,12 +32,14 @@ export class MonitoringReportComponent implements OnInit {
   listMainBuildingCategory: DictionaryItem[];
   listBuildingProjectType: DictionaryItem[];
   isViewReport = false;
-  get isValidateDate(): boolean {
-    if (((DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
+  get alertWarning(): string {
+    if (!DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate) || !DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate) ) {
+      return 'Bạn cần chọn thời gian xem báo cáo';
+    } else if (((DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
       - DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) > 0) && this.isViewReport) {
-      return true;
+        return 'Thời gian Từ ngày cần nhỏ hơn thời gian Đến ngày';
     } else {
-      return false;
+      return null;
     }
   }
   constructor(
@@ -151,9 +153,13 @@ export class MonitoringReportComponent implements OnInit {
   }
 
   viewReport() {
+    console.log('DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate',
+      DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate));
     this.isViewReport = true;
-    if (!((DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
-      - DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) > 0)) {
+    if (DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
+      && DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)
+      && !((DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
+        - DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) > 0)) {
       switch (this.idReport) {
         case 'kpi-chair':
         case 'win-bid':
@@ -192,14 +198,21 @@ export class MonitoringReportComponent implements OnInit {
   }
 
   exportExcel() {
-    this.reportFollowService.exportReportToExcel(
-      DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.startDate),
-      DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.endDate),
-      this.startAndEndDate.constructionCategory,
-      this.startAndEndDate.constructionType,
-    ).subscribe(response => {
-    }, err => {
-      this.alertService.error('Đã có lỗi xảy ra. Vui lòng thử lại');
-    });
+    this.isViewReport = true;
+    if (DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
+      && DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)
+      && !((DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
+        - DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) > 0)) {
+      this.reportFollowService.exportReportToExcel(
+        DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.startDate),
+        DateTimeConvertHelper.fromDtObjectToTimestamp(this.startAndEndDate.endDate),
+        this.startAndEndDate.constructionCategory,
+        this.startAndEndDate.constructionType,
+      ).subscribe(response => {
+      }, err => {
+        this.alertService.error('Đã có lỗi xảy ra. Vui lòng thử lại');
+      });
+    }
+
   }
 }

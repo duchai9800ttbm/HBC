@@ -55,7 +55,7 @@
                     <span class="ml-3">
                         <kendo-datepicker [format]="'dd/MM/yyyy'" [max]="endDate" tabindex="5" class="form-control"
                             [(ngModel)]="startDate"></kendo-datepicker>
-                        <span class="date-validate" *ngIf="isValidateDate">Ngày bắt đầu phải nhỏ hơn ngày kết thúc</span>
+                        <span class="date-validate" *ngIf="alertWarning">{{alertWarning}}</span>
                     </span>
                 </span>
                 <span class="ml-4 d-flex">
