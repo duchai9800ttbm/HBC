@@ -80,12 +80,14 @@ export class KpiChairComponent implements OnInit {
     }
     this.settingService.listYearConfigToChair().subscribe(reponseListYear => {
       this.listYearConfigured = reponseListYear;
+      this.listYearConfigured.sort();
       // list not configred
       for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
         if (!this.listYearConfigured.includes(i)) {
           this.listYearNotConfigred.push(i);
         }
       }
+      this.listYearNotConfigred.sort();
     });
     this.getListChairToYearFuc(+this.yearkpi);
     // this.getListGroupkpi();
@@ -382,12 +384,14 @@ export class KpiChairComponent implements OnInit {
               });
             this.alertService.success('Tạo mới KPI theo chủ trì thành công');
             this.listYearConfigured.push(+this.yearkpi);
+            this.listYearConfigured.sort();
             this.listYearNotConfigred = [];
             for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
               if (!this.listYearConfigured.includes(i)) {
                 this.listYearNotConfigred.push(i);
               }
             }
+            this.listYearNotConfigred.sort();
             break;
           }
           case 'edit': {

@@ -41,8 +41,10 @@ export class WinBidComponent implements OnInit {
     }
     this.settingService.listYearConfigToWinBid().subscribe(reponseListYear => {
       this.listYearConfigured = (reponseListYear || []).filter(item => item.isConfigured === true).map(i => i.year);
+      this.listYearConfigured.sort();
       // list not configred
       this.listYearNotConfigred = (reponseListYear || []).filter(item => item.isConfigured === false).map(i => i.year);
+      this.listYearNotConfigred.sort();
     });
     this.settingService.getDetailTargetWinBidToYear(+this.yearkpi).subscribe(response => {
       this.createForm(response);
@@ -128,12 +130,14 @@ export class WinBidComponent implements OnInit {
             });
           this.alertService.success('Tạo mới chỉ tiêu trúng thầu thành công.');
           this.listYearConfigured.push(+this.yearkpi);
+          this.listYearConfigured.sort();
           this.listYearNotConfigred = [];
           for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
             if (!this.listYearConfigured.includes(i)) {
               this.listYearNotConfigred.push(i);
             }
           }
+          this.listYearNotConfigred.sort();
         }
         if (this.paramAction === 'edit') {
           this.router.navigate(

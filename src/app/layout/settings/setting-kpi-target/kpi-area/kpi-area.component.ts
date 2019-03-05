@@ -45,12 +45,14 @@ export class KpiAreaComponent implements OnInit {
     }
     this.settingService.listYearConfigToKpiArea().subscribe(reponseListYear => {
       this.listYearConfigured = reponseListYear;
+      this.listYearConfigured.sort();
       // list not configred
       for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
         if (!this.listYearConfigured.includes(i)) {
           this.listYearNotConfigred.push(i);
         }
       }
+      this.listYearNotConfigred.sort();
     });
     this.settingService.getDetailKpiLocationToYear(this.yearkpi).subscribe(responseToYear => {
       if (responseToYear) {
@@ -205,12 +207,14 @@ export class KpiAreaComponent implements OnInit {
             });
           this.alertService.success('Tạo mới chỉ tiêu khu vực thành công');
           this.listYearConfigured.push(+this.yearkpi);
+          this.listYearConfigured.sort();
           this.listYearNotConfigred = [];
           for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
             if (!this.listYearConfigured.includes(i)) {
               this.listYearNotConfigred.push(i);
             }
           }
+          this.listYearNotConfigred.sort();
         }
         if (this.paramAction === 'edit') {
           this.router.navigate(

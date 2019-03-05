@@ -47,12 +47,14 @@ export class ConstructionItemsComponent implements OnInit {
     }
     this.settingService.listYearConfigToKpiConstructionCategory().subscribe(reponseListYear => {
       this.listYearConfigured = reponseListYear;
+      this.listYearConfigured.sort();
       // list not configred
       for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
         if (!this.listYearConfigured.includes(i)) {
           this.listYearNotConfigred.push(i);
         }
       }
+      this.listYearNotConfigred.sort();
     });
     this.settingService.getDetailConstructionCategory(this.yearkpi).subscribe(responseToYear => {
       if (responseToYear && (responseToYear || []).length !== 0) {
@@ -155,12 +157,14 @@ export class ConstructionItemsComponent implements OnInit {
               });
             this.alertService.success('Tạo mới chỉ tiêu kpi hạng mục thi công thành công');
             this.listYearConfigured.push(+this.yearkpi);
+            this.listYearConfigured.sort();
             this.listYearNotConfigred = [];
             for (let i = this.currentYear; this.listYearNotConfigred.length < 5; i++) {
               if (!this.listYearConfigured.includes(i)) {
                 this.listYearNotConfigred.push(i);
               }
             }
+            this.listYearNotConfigred.sort();
           }
           if (this.paramAction === 'edit') {
             this.router.navigate(
