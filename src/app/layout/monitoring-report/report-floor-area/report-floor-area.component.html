@@ -25,7 +25,11 @@
                     reportFloorArea?.tenderBuildingFloorAmount ?
                     (reportFloorArea?.tenderBuildingFloorAmount | thousandSeparate) : '-' }}</td>
                 <td>
-                    <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
+                    <div class="position-relative">
+                        <textarea rows="1" [(ngModel)]="reportFloorArea.tenderNote" (change)="saveNote($event)" class="w-100"
+                            appTextareaHeight></textarea>
+                        <i class="fa fa-pencil note-edit"></i>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -40,7 +44,11 @@
                     reportFloorArea?.waitForResultBuildingFloorAmount ?
                     (reportFloorArea?.waitForResultBuildingFloorAmount | thousandSeparate) : '-' }}</td>
                 <td>
-                    <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
+                    <div class="position-relative">
+                        <textarea rows="1" [(ngModel)]="reportFloorArea.waitForResultNote" (change)="saveNote($event)"
+                            class="w-100" appTextareaHeight></textarea>
+                        <i class="fa fa-pencil note-edit"></i>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -55,7 +63,11 @@
                     reportFloorArea?.winningOfBidBuildingFloorAmount ?
                     (reportFloorArea?.winningOfBidBuildingFloorAmount | thousandSeparate) : '-' }}</td>
                 <td>
-                    <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
+                    <div class="position-relative">
+                        <textarea rows="1" [(ngModel)]="reportFloorArea.winningOfBidNote" (change)="saveNote($event)"
+                            class="w-100" appTextareaHeight></textarea>
+                        <i class="fa fa-pencil note-edit"></i>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -70,7 +82,11 @@
                     reportFloorArea?.winningOfBidCompareTotalBidPer ?
                     (reportFloorArea?.winningOfBidCompareTotalBidPer | thousandSeparate) : '-' }}</td>
                 <td>
-                    <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
+                    <div class="position-relative">
+                        <textarea rows="1" [(ngModel)]="reportFloorArea.perNote" (change)="saveNote($event)" class="w-100"
+                            appTextareaHeight></textarea>
+                        <i class="fa fa-pencil note-edit"></i>
+                    </div>
                 </td>
             </tr>
         </ng-container>

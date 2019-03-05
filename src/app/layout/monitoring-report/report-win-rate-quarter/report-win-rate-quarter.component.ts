@@ -51,7 +51,6 @@ export class ReportWinRateQuarterComponent implements OnInit, OnDestroy {
   }
 
   saveNote() {
-    console.log('savenote');
     if (this.year) {
       this.reportFollowService.updateNoteReportQuaterOfYear(
         this.year, this.reportKpiWinRateQuarter.reportKPIQuaterOfYearDetails

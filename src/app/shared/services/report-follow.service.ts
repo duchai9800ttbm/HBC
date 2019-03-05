@@ -243,12 +243,16 @@ export class ReportFollowService {
     return {
       tenderBuildingFloorArea: result.tenderBuildingFloorArea,
       tenderBuildingFloorAmount: result.tenderBuildingFloorAmount,
+      tenderNote: result.tenderNote,
       waitForResultBuildingFloorArea: result.waitForResultBuildingFloorArea,
       waitForResultBuildingFloorAmount: result.waitForResultBuildingFloorAmount,
+      waitForResultNote: result.waitForResultNote,
       winningOfBidBuildingFloorArea: result.winningOfBidBuildingFloorArea,
       winningOfBidBuildingFloorAmount: result.winningOfBidBuildingFloorAmount,
+      winningOfBidNote: result.winningOfBidNote,
       winningOfBidCompareTenderPer: result.winningOfBidCompareTenderPer,
       winningOfBidCompareTotalBidPer: result.winningOfBidCompareTotalBidPer,
+      perNote: result.perNote
     };
   }
   // Thống kê diện tích sàn xây dựng đã tham gia và trúng thầu theo khoảng thời gian
@@ -376,6 +380,19 @@ export class ReportFollowService {
     const requestModel = {
       year: year,
       details: details,
+    };
+    return this.apiService.post(url, requestModel);
+  }
+
+  // Cập nhật ghi chú thống kê diện thích sàn đã xây dựng và trùng thầu theo năm
+  updateNoteReportFloorArea(year: number, reportFloorArea: ReportFloorArea) {
+    const url = `report/buildingfloorarea/note/update`;
+    const requestModel = {
+      year: year,
+      tenderNote: reportFloorArea.tenderNote,
+      waitingNote: reportFloorArea.waitForResultNote,
+      winningOfBidNote: reportFloorArea.winningOfBidNote,
+      perNote: reportFloorArea.perNote,
     };
     return this.apiService.post(url, requestModel);
   }
