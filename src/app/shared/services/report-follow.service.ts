@@ -105,6 +105,8 @@ export class ReportFollowService {
       totalTargetAmount: result.totalTargetAmount,
       winningOfBidPercent: result.winningOfBidPercent,
       totalAmount: result.totalAmount,
+      targetNote: result.targetNote,
+      note: result.note,
     };
   }
   // Thống kê chỉ tiêu trúng thầu trong khoảng thời gian
@@ -335,5 +337,17 @@ export class ReportFollowService {
         }), response.fileName
       );
     });
+  }
+  // ==================
+  // Ghi chú cho báo cáo
+  // Cập nhật ghi chú báo cáo chỉ tiêu trúng thầu theo năm
+  updateNoteReportWinBid(year: number, targetNote: string, note: string) {
+    const url = `kpiwinningofbid/note/update`;
+    const requestModel = {
+      year: year,
+      targetNote: targetNote,
+      note: note,
+    };
+    return this.apiService.post(url, requestModel);
   }
 }

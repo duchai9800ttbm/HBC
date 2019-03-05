@@ -3,4 +3,6 @@ export class ReportWinBid {
     totalTargetAmount: number;
     winningOfBidPercent: number;
     totalAmount: number;
+    targetNote: string;
+    note: string;
 }
