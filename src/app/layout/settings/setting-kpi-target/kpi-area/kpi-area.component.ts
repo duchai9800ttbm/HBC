@@ -173,6 +173,23 @@ export class KpiAreaComponent implements OnInit {
         }
       });
     }
+    if (this.paramAction === 'create') {
+      this.settingService.getDetailKpiLocationToYear(this.yearkpi).subscribe(responseToYear => {
+        if (responseToYear && responseToYear.preYearTarget) {
+          const listLocationPreYear = (responseToYear.preYearTarget || []).map(itemPreYearTarget => {
+            if (itemPreYearTarget.location) {
+              itemPreYearTarget.location['preYearTarget'] = itemPreYearTarget.amount;
+            }
+            return itemPreYearTarget.location;
+          });
+          this.locationFA.value.forEach((itemForm, index) => {
+            const itemFind = listLocationPreYear.find(itemPer => itemPer.id === itemForm.locationId);
+            this.locationFA.controls[index].get('preYearTarget').patchValue(
+              itemFind && itemFind['preYearTarget'] ? itemFind['preYearTarget'] : 0);
+          });
+        }
+      });
+    }
   }
 
   createOrEditKpiLocation() {
@@ -225,7 +242,7 @@ export class KpiAreaComponent implements OnInit {
     }
     if (!this.listLocation) {
       this.settingService.readLocation('', 0, 1000).subscribe(response => {
-        this.createForm(response.items);
+        this.createNewForm(response.items);
       });
     }
   }

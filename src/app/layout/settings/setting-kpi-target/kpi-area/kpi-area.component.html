@@ -72,7 +72,7 @@
                     <tr>
                       <td>{{itemLocation?.get('locationName')?.value}}</td>
                       <td class="text-right">{{ itemLocation?.get('preYearTarget').value ?
-                        (itemLocation?.get('preYearTarget')?.value | truncateDecimal) : '0'}}</td>
+                        (itemLocation?.get('preYearTarget')?.value | truncateDecimal) : '-'}}</td>
                       <td *ngIf="paramAction === 'view'" class="text-right">{{ itemLocation?.get('curYearTarget').value
                         ?
                         (itemLocation?.get('curYearTarget').value
