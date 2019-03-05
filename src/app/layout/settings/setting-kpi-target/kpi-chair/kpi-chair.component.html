@@ -81,14 +81,14 @@
               <ng-container *ngIf="(paramAction === 'view')">
                 <div class="icon-double-form--width"></div>
               </ng-container>
-              <div class="pl-2 group--width">
+              <div class="pl-3 group--width pb-1" [class.card-group-name]="paramAction === 'view'">
                 <span *ngIf="paramAction === 'edit' || paramAction === 'create'" class="custom-dropdown w-100">
                   <select class="w-100 form-control" formControlName="groupName" [compareWith]="compareFn">
                     <option [ngValue]="null" *ngIf="!gKpiChairControl.get('groupName').value">--Lựa chọn--</option>
                     <option *ngFor="let item of listGroupkpi" [ngValue]="item" [hidden]="arrayGroupChoosed.includes(item.id)">{{item.name}}</option>
                   </select>
                 </span>
-                <div *ngIf="paramAction === 'view'" class="mt-2">{{gKpiChairControl.get('groupName')?.value?.name}}</div>
+                <div *ngIf="paramAction === 'view'" class="mt-2 title-group">{{gKpiChairControl.get('groupName')?.value?.name}}</div>
                 <div class="text-right mt-2" *ngIf="(paramAction === 'edit' || paramAction === 'create') && gKpiChairControl.get('groupName').value">
                   <a href="javascript:void(0)" class="add-chair-icon pt-2" (click)="addChairToGroupFuc(addChairToGroup, i)">Thêm
                     chủ trì
@@ -152,7 +152,7 @@
     </div>
     <div class="text-center">
       <span>Nhóm:</span>&nbsp;
-      <span>{{GroupNameAddChair?.name}}</span>
+      <span >{{GroupNameAddChair?.name}}</span>
     </div>
     <div class="div-required">Vui lòng chọn chủ trì thuộc nhóm:&nbsp;</div>
 
