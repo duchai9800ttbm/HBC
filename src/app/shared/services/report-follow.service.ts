@@ -132,8 +132,8 @@ export class ReportFollowService {
         };
       }),
       kpiTargetTotalAmount: result.kpiTargetTotalAmount,
-      winningOfBidTotalAmount: result.kpiTargetTotalAmount,
-      achievedPercent: result.kpiTargetTotalAmount,
+      winningOfBidTotalAmount: result.winningOfBidTotalAmount,
+      achievedPercent: result.achievedPercent,
     };
   }
   // Thống kê chỉ tiêu KPI khu vực theo khoảng thời gian
