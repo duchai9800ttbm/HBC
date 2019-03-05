@@ -54,7 +54,6 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
   }
 
   saveNote() {
-    console.log('this.year', this.year);
     if (this.year) {
       this.reportFollowService.updateNoteReportWinBid(this.year, this.targetNote, this.note).subscribe(response => {
         this.alertService.success('Cập nhật ghi chú thành công');

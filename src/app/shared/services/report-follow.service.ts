@@ -153,6 +153,8 @@ export class ReportFollowService {
       targetAmount: result.targetAmount,
       winningOfBidPer: result.winningOfBidPer,
       amount: result.amount,
+      targetNote: result.targetNote,
+      note: result.note,
     };
   }
   // Thống kê chỉ tiêu KPI hạng mục thi công theo khoảng thời gian
@@ -344,6 +346,17 @@ export class ReportFollowService {
   updateNoteReportWinBid(year: number, targetNote: string, note: string) {
     const url = `kpiwinningofbid/note/update`;
     const requestModel = {
+      year: year,
+      targetNote: targetNote,
+      note: note,
+    };
+    return this.apiService.post(url, requestModel);
+  }
+  // Cập nhật ghi chú báo cáo chỉ tiêu KPI theo từng hạng mục thi công theo năm
+  updateNoteReportConstructionCategory(constructionCategoryId: number,year: number, targetNote: string, note: string) {
+    const url = `kpiconstructioncategory/note/update`;
+    const requestModel = {
+      constructionCategoryId: constructionCategoryId,
       year: year,
       targetNote: targetNote,
       note: note,

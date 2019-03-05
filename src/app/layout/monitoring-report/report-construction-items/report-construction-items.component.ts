@@ -15,6 +15,10 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   constructionCategoryName: string = null;
   loading = false;
+  constructionCategoryId: number;
+  year: number;
+  targetNote: string;
+  note: string;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -22,8 +26,15 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.reportFollowService.startAndEndDate.subscribe(startAndEndDate => {
+      const yearSub = startAndEndDate.endDate.getFullYear() - startAndEndDate.startDate.getFullYear();
+      if (yearSub === 0) {
+        this.year = startAndEndDate.endDate.getFullYear();
+      } else {
+        this.year = null;
+      }
       if (startAndEndDate.constructionCategory) {
         this.constructionCategoryName = startAndEndDate.constructionCategoryName;
+        this.constructionCategoryId = startAndEndDate.constructionCategory;
         this.viewReport(startAndEndDate.constructionCategory,
           startAndEndDate.startDate, startAndEndDate.endDate);
       } else {
@@ -43,6 +54,8 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.reportFollowService.detailReportKpiConstructionCategory(constructionCategory, startDateNumber, endDateNumber).subscribe(response => {
       this.reportKpiConstructionCategory = response;
+      this.targetNote = response.targetNote;
+      this.note = response.note;
       this.loading = false;
     }, err => {
       this.loading = false;
@@ -50,6 +63,15 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
     });
   }
 
-  autoExpand() {
+  saveNote() {
+    if (this.year) {
+      this.reportFollowService.updateNoteReportConstructionCategory(
+        this.constructionCategoryId, this.year, this.targetNote, this.note
+      ).subscribe(response => {
+        this.alertService.success('Cập nhật ghi chú thành công');
+      }, err => {
+        this.alertService.error('Cập nhật ghi chú không thành công');
+      });
+    }
   }
 }
