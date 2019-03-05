@@ -227,7 +227,7 @@ export class ConstructionItemsComponent implements OnInit {
         constructionTypeId: itemMainBuild.id,
         constructionTypeName: itemMainBuild.text,
         total: 0,
-        percent: 0,
+        percent: 100,
         totalTarget: 0,
       });
       (this.constructionCategoryForm.get('mainBuild') as FormArray).push(formArrayItem);
