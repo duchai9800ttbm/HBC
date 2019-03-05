@@ -6,7 +6,8 @@ export class ReportKpiWinRateQuarter {
             displayText: string
         };
         winningOfBidPer: number;
-        amount: number
+        amount: number;
+        note: string;
     }[];
     winningOfBidPer: number;
     totalAmount: number;

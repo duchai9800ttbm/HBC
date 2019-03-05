@@ -14,6 +14,7 @@ export class ReportWinRateQuarterComponent implements OnInit, OnDestroy {
   reportKpiWinRateQuarter: ReportKpiWinRateQuarter;
   subscription: Subscription;
   loading = false;
+  year: number;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -21,6 +22,12 @@ export class ReportWinRateQuarterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.reportFollowService.startAndEndDate.subscribe(startAndEndDate => {
+      const yearSub = startAndEndDate.endDate.getFullYear() - startAndEndDate.startDate.getFullYear();
+      if (yearSub === 0) {
+        this.year = startAndEndDate.endDate.getFullYear();
+      } else {
+        this.year = null;
+      }
       this.viewReport(startAndEndDate.startDate, startAndEndDate.endDate);
     });
   }
@@ -43,6 +50,16 @@ export class ReportWinRateQuarterComponent implements OnInit, OnDestroy {
     });
   }
 
-  autoExpand() {
+  saveNote() {
+    console.log('savenote');
+    if (this.year) {
+      this.reportFollowService.updateNoteReportQuaterOfYear(
+        this.year, this.reportKpiWinRateQuarter.reportKPIQuaterOfYearDetails
+      ).subscribe(response => {
+        this.alertService.success('Cập nhật ghi chú thành công');
+      }, err => {
+        this.alertService.error('Cập nhật ghi chú không thành công');
+      });
+    }
   }
 }

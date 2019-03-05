@@ -222,7 +222,8 @@ export class ReportFollowService {
               displayText: itemReportKPIQuaterOfYearDetails.quaterOfYear.displayText,
             },
             winningOfBidPer: itemReportKPIQuaterOfYearDetails.winningOfBidPer,
-            amount: itemReportKPIQuaterOfYearDetails.amount
+            amount: itemReportKPIQuaterOfYearDetails.amount,
+            note: itemReportKPIQuaterOfYearDetails.note,
           };
         }),
       winningOfBidPer: result.winningOfBidPer,
@@ -353,13 +354,28 @@ export class ReportFollowService {
     return this.apiService.post(url, requestModel);
   }
   // Cập nhật ghi chú báo cáo chỉ tiêu KPI theo từng hạng mục thi công theo năm
-  updateNoteReportConstructionCategory(constructionCategoryId: number,year: number, targetNote: string, note: string) {
+  updateNoteReportConstructionCategory(constructionCategoryId: number, year: number, targetNote: string, note: string) {
     const url = `kpiconstructioncategory/note/update`;
     const requestModel = {
       constructionCategoryId: constructionCategoryId,
       year: year,
       targetNote: targetNote,
       note: note,
+    };
+    return this.apiService.post(url, requestModel);
+  }
+  // Cập nhật ghi chú báo cáo "tỉ lệ trúng thầu theo qúy" theo năm
+  updateNoteReportQuaterOfYear(year: number, reportKPIQuaterOfYearDetails: any) {
+    const url = `kpiquaterofyear/note/update`;
+    const details = reportKPIQuaterOfYearDetails.map(item => {
+      return {
+        quaterOfYear: item.quaterOfYear && item.quaterOfYear.key,
+        note: item.note,
+      };
+    });
+    const requestModel = {
+      year: year,
+      details: details,
     };
     return this.apiService.post(url, requestModel);
   }
