@@ -311,12 +311,16 @@ export class ReportFollowService {
     return {
       tenderCount: result.tenderCount,
       tenderAmount: result.tenderAmount,
+      tenderNote: result.tenderNote,
       waitForResultCount: result.waitForResultCount,
       waitForResultAmount: result.waitForResultAmount,
+      waitForResultNote: result.waitForResultNote,
       winningOfBidCount: result.winningOfBidCount,
       winningOfBidAmount: result.winningOfBidAmount,
+      winningOfBidNote: result.winningOfBidNote,
       winningOfBidCompareTenderPer: result.winningOfBidCompareTenderPer,
       winningOfBidCompareTotalBidPer: result.winningOfBidCompareTotalBidPer,
+      perNote: result.perNote
     };
   }
   // Thống kê số lượng trúng thầu
@@ -393,6 +397,19 @@ export class ReportFollowService {
       waitingNote: reportFloorArea.waitForResultNote,
       winningOfBidNote: reportFloorArea.winningOfBidNote,
       perNote: reportFloorArea.perNote,
+    };
+    return this.apiService.post(url, requestModel);
+  }
+
+  // Cập nhật ghi chú thống kê số lượng trùng thầu theo năm
+  updateNoteNumberWinbid(year: number, reportNumberWinBid: ReportNumberWinBid) {
+    const url = `report/winningofbid/note/update`;
+    const requestModel = {
+      year: year,
+      tenderNote: reportNumberWinBid.tenderNote,
+      waitingNote: reportNumberWinBid.waitForResultNote,
+      winningOfBidNote: reportNumberWinBid.winningOfBidNote,
+      perNote: reportNumberWinBid.perNote,
     };
     return this.apiService.post(url, requestModel);
   }

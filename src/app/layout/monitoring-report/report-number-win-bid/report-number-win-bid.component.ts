@@ -15,6 +15,7 @@ export class ReportNumberWinBidComponent implements OnInit, OnDestroy {
   reportNumberWinBid: ReportNumberWinBid;
   subscription: Subscription;
   loading = false;
+  year: number;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -22,6 +23,12 @@ export class ReportNumberWinBidComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.reportFollowService.startAndEndDate.subscribe(startAndEndDate => {
+      const yearSub = startAndEndDate.endDate.getFullYear() - startAndEndDate.startDate.getFullYear();
+      if (yearSub === 0) {
+        this.year = startAndEndDate.endDate.getFullYear();
+      } else {
+        this.year = null;
+      }
       this.viewReport(startAndEndDate.startDate, startAndEndDate.endDate);
     });
   }
@@ -44,6 +51,15 @@ export class ReportNumberWinBidComponent implements OnInit, OnDestroy {
     });
   }
 
-  autoExpand() {
+  saveNote() {
+    if (this.year) {
+      this.reportFollowService.updateNoteNumberWinbid(
+        this.year, this.reportNumberWinBid
+      ).subscribe(response => {
+        this.alertService.success('Cập nhật ghi chú thành công');
+      }, err => {
+        this.alertService.error('Cập nhật ghi chú không thành công');
+      });
+    }
   }
 }
