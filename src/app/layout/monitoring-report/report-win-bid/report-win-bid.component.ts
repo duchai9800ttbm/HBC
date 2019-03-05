@@ -17,6 +17,7 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
   year: number;
   targetNote: string;
   note: string;
+  isMessgeCanNote: boolean;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -30,6 +31,8 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
       } else {
         this.year = null;
       }
+      this.isMessgeCanNote = startAndEndDate.isMessgeCanNote;
+      console.log('this.isMessgeCanNote', startAndEndDate.isMessgeCanNote);
       this.viewReport(startAndEndDate.startDate, startAndEndDate.endDate);
     });
   }

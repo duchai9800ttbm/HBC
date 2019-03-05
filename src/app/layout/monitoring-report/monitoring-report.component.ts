@@ -37,6 +37,7 @@ export class MonitoringReportComponent implements OnInit {
   userModel: UserModel;
   listPrivileges = [];
   isManageReport;
+  messgeCanNote: string = null;
   get alertWarning(): string {
     if (!DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate) || !DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)) {
       return 'Bạn cần chọn thời gian xem báo cáo';
@@ -74,7 +75,9 @@ export class MonitoringReportComponent implements OnInit {
     this.startAndEndDate.endDate = this.endDate;
     this.startAndEndDate.constructionCategory = null;
     this.startAndEndDate.constructionType = null;
+
     this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
+
     this.checkActiveTab();
     this.dataService.getListMainConstructionComponents().subscribe(response => this.listMainBuildingCategory = response);
     this.dataService.getListConstructonTypes().subscribe(response => this.listBuildingProjectType = response);
@@ -186,8 +189,7 @@ export class MonitoringReportComponent implements OnInit {
   }
 
   viewReport() {
-    console.log('DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate',
-      DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate));
+
     this.isViewReport = true;
     if (DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
       && DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)
@@ -226,6 +228,15 @@ export class MonitoringReportComponent implements OnInit {
           this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
           break;
         }
+      }
+      // Note
+      const yearSub = this.startAndEndDate.endDate.getFullYear() - this.startAndEndDate.startDate.getFullYear();
+      if (!(yearSub === 0)) {
+        this.messgeCanNote = 'Để xem được ghi chú của từng năm báo cáo, bạn cần chọn thời gian xem báo cáo trong cùng 1 năm.';
+        this.startAndEndDate.isMessgeCanNote = true;
+      } else {
+        this.messgeCanNote = null;
+        this.startAndEndDate.isMessgeCanNote = false;
       }
     }
   }

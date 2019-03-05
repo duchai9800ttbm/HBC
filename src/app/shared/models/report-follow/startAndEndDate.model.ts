@@ -5,4 +5,5 @@ export class StartAndEndDate {
     constructionCategoryName: string;
     constructionType: number;
     constructionTypeName: string;
+    isMessgeCanNote: boolean;
 }
