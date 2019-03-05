@@ -4,7 +4,8 @@ import { PagedResult, DictionaryItem } from '../../../shared/models';
 import {
     DataService,
     ConfirmationService,
-    AlertService
+    AlertService,
+    SessionService
 } from '../../../shared/services';
 import { Observable, BehaviorSubject, Subject } from '../../../../../node_modules/rxjs';
 import { SettingService } from '../../../shared/services/setting.service';
@@ -12,6 +13,8 @@ import { LocationListItem } from '../../../shared/models/setting/location-list-i
 import { COMMON_CONSTANTS } from '../../../shared/configs/common.config';
 import { DATATABLE_CONFIG } from '../../../shared/configs';
 import { NgxSpinnerService } from '../../../../../node_modules/ngx-spinner';
+import { UserModel } from '../../../shared/models/user/user.model';
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-setting-location',
     templateUrl: './setting-location.component.html',
@@ -28,14 +31,26 @@ export class SettingLocationComponent implements OnInit {
         LocationListItem
         >();
     mySelection: number[] = [];
+    userModel: UserModel;
+    listPrivileges = [];
+    isManageInformationSettings;
     constructor(
         private settingService: SettingService,
         private confirmationService: ConfirmationService,
         private alertService: AlertService,
         private spinner: NgxSpinnerService,
+        private router: Router,
+        private sessionService: SessionService
     ) { }
 
     ngOnInit() {
+        this.userModel = this.sessionService.userInfo;
+        this.listPrivileges = this.userModel.privileges;
+        this.isManageInformationSettings = this.listPrivileges.some(x => x === 'ManageInformationSettings');
+        if (!this.isManageInformationSettings) {
+            this.router.navigate(['/no-permission']);
+        }
+
         this.loading = true;
         this.searchTerm$
             .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)

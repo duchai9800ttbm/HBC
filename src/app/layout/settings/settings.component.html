@@ -11,27 +11,32 @@
                             </ng-template>
                     </kendo-menu>
         </li> -->
-        <li class="nav-item">
-            <a class="nav-link" routerLink="reason" routerLinkActive="active-link">Lý do</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="location" routerLinkActive="active-link">Khu vực</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="construction" routerLinkActive="active-link">Loại công trình</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="construction-category" routerLinkActive="active-link">Hạng mục thi công công trình</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="position" routerLinkActive="active-link">Vị trí/Chức vụ</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="contract" routerLinkActive="active-link">Loại hợp đồng</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="kpi-target" routerLinkActive="active-link">Chỉ tiêu KPI</a>
-        </li>
+        <ng-container *ngIf="isManageInformationSettings">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="reason" routerLinkActive="active-link">Lý do</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="location" routerLinkActive="active-link">Khu vực</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="construction" routerLinkActive="active-link">Loại công trình</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="construction-category" routerLinkActive="active-link">Hạng mục thi công
+                    công trình</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="position" routerLinkActive="active-link">Vị trí/Chức vụ</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="contract" routerLinkActive="active-link">Loại hợp đồng</a>
+            </li>
+        </ng-container>
+        <ng-container *ngIf="isManageKPISettings">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="kpi-target" routerLinkActive="active-link">Chỉ tiêu KPI</a>
+            </li>
+        </ng-container>
     </ul>
     <hr class="mt-0">
     <router-outlet></router-outlet>

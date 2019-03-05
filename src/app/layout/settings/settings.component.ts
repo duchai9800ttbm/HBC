@@ -12,6 +12,8 @@ import { SessionService } from '../../shared/services/session.service';
 })
 export class SettingsComponent implements OnInit {
     isManageSettings;
+    isManageInformationSettings;
+    isManageKPISettings;
     userModel: UserModel;
     listPrivileges = [];
     @ViewChild('kMenuLink') menu: any;
@@ -35,6 +37,8 @@ export class SettingsComponent implements OnInit {
         this.listPrivileges = this.userModel.privileges;
         if (this.listPrivileges) {
           this.isManageSettings = this.listPrivileges.some(x => (x === 'ManageInformationSettings' || x === 'ManageKPISettings'));
+          this.isManageInformationSettings = this.listPrivileges.some(x => x === 'ManageInformationSettings');
+          this.isManageKPISettings = this.listPrivileges.some(x => x === 'ManageKPISettings');
         }
         if (!this.isManageSettings) {
             this.router.navigate(['/no-permission']);

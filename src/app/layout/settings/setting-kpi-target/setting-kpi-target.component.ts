@@ -1,5 +1,7 @@
 import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserModel } from '../../../shared/models/user/user.model';
+import { SessionService } from '../../../shared/services';
 
 @Component({
   selector: 'app-setting-kpi-target',
@@ -12,12 +14,22 @@ export class SettingKpiTargetComponent implements OnInit {
   idReport = 'group-config';
   widthReport: number;
   urlArray = ['group-config', 'kpi-chair', 'group-config', 'win-bid', 'kpi-area', 'construction-items', 'type-construction'];
+  userModel: UserModel;
+  listPrivileges = [];
+  isManageKPISettings;
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private sessionService: SessionService
   ) { }
 
   ngOnInit() {
+    this.userModel = this.sessionService.userInfo;
+    this.listPrivileges = this.userModel.privileges;
+    this.isManageKPISettings = this.listPrivileges.some(x => x === 'ManageKPISettings');
+    if (!this.isManageKPISettings) {
+      this.router.navigate(['/no-permission']);
+    }
     this.checkActiveTab();
   }
 

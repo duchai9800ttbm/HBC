@@ -22,6 +22,8 @@ export class LoginFormComponent implements OnInit {
     isManageUsers;
     isManageUserGroups;
     isManageSettings;
+    isManageInformationSettings;
+    isManageKPISettings;
     isManageReport;
     isSubmitted: boolean;
     authForm: FormGroup;
@@ -80,6 +82,9 @@ export class LoginFormComponent implements OnInit {
                                 this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
                                 // tslint:disable-next-line:max-line-length
                                 this.isManageSettings = this.listPrivileges.some(x => (x === 'ManageInformationSettings' || x === 'ManageKPISettings'));
+                                this.isManageInformationSettings = this.listPrivileges.some(x => x === 'ManageInformationSettings');
+                                this.isManageKPISettings = this.listPrivileges.some(x => x === 'ManageKPISettings');
+
                                 this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
                                 this.isManageReport = this.listPrivileges.some(x => x === 'ManageTrackingReports');
                                 if (this.route.snapshot.queryParamMap.get('returnUrl')) {
@@ -95,8 +100,14 @@ export class LoginFormComponent implements OnInit {
                                                 this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
                                                 this.spinner.hide();
                                             } else if (this.isManageSettings) {
-                                                this.router.navigate(['/settings']);
-                                                this.spinner.hide();
+                                                if (this.isManageInformationSettings) {
+                                                    this.router.navigate(['/settings']);
+                                                    this.spinner.hide();
+                                                }
+                                                if (!this.isManageInformationSettings) {
+                                                    this.router.navigate(['/settings/kpi-target/group-config/list']);
+                                                    this.spinner.hide();
+                                                }
                                             } else if (this.isManageReport) {
                                                 this.router.navigate(['/monitoring-report']);
                                                 this.spinner.hide();
@@ -114,8 +125,14 @@ export class LoginFormComponent implements OnInit {
                                                 this.router.navigate(['/package']);
                                                 this.spinner.hide();
                                             } else if (this.isManageSettings) {
-                                                this.router.navigate(['/settings']);
-                                                this.spinner.hide();
+                                                if (this.isManageInformationSettings) {
+                                                    this.router.navigate(['/settings']);
+                                                    this.spinner.hide();
+                                                }
+                                                if (!this.isManageInformationSettings) {
+                                                    this.router.navigate(['/settings/kpi-target/group-config/list']);
+                                                    this.spinner.hide();
+                                                }
                                             } else if (this.isManageReport) {
                                                 this.router.navigate(['/monitoring-report']);
                                                 this.spinner.hide();
@@ -129,6 +146,17 @@ export class LoginFormComponent implements OnInit {
                                             if (this.isManageSettings) {
                                                 this.router.navigate([`${this.route.snapshot.queryParamMap.get('returnUrl')}`]);
                                                 this.spinner.hide();
+                                                if (this.route.snapshot.queryParamMap.get('returnUrl').split('/')[2] === 'kpi-target'
+                                                    && this.isManageKPISettings) {
+                                                    this.router.navigate([`${this.route.snapshot.queryParamMap.get('returnUrl')}`]);
+                                                    this.spinner.hide();
+                                                } else if (this.isManageInformationSettings) {
+                                                    this.router.navigate([`${this.route.snapshot.queryParamMap.get('returnUrl')}`]);
+                                                    this.spinner.hide();
+                                                } else {
+                                                    this.router.navigate(['/package']);
+                                                    this.spinner.hide();
+                                                }
                                             } else if (this.isManageBidOpportunitys) {
                                                 this.router.navigate(['/package']);
                                                 this.spinner.hide();
@@ -160,8 +188,14 @@ export class LoginFormComponent implements OnInit {
                                                 this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
                                                 this.spinner.hide();
                                             } else if (this.isManageSettings) {
-                                                this.router.navigate(['/settings']);
-                                                this.spinner.hide();
+                                                if (this.isManageInformationSettings) {
+                                                    this.router.navigate(['/settings']);
+                                                    this.spinner.hide();
+                                                }
+                                                if (!this.isManageInformationSettings) {
+                                                    this.router.navigate(['/settings/kpi-target/group-config/list']);
+                                                    this.spinner.hide();
+                                                }
                                             } else {
                                                 this.router.navigate(['/package']);
                                                 this.spinner.hide();
@@ -185,8 +219,14 @@ export class LoginFormComponent implements OnInit {
                                     this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
                                     this.spinner.hide();
                                 } else if (this.isManageSettings) {
-                                    this.router.navigate(['/settings']);
-                                    this.spinner.hide();
+                                    if (this.isManageInformationSettings) {
+                                        this.router.navigate(['/settings']);
+                                        this.spinner.hide();
+                                    }
+                                    if (!this.isManageInformationSettings) {
+                                        this.router.navigate(['/settings/kpi-target/group-config/list']);
+                                        this.spinner.hide();
+                                    }
                                 } else if (this.isManageReport) {
                                     this.router.navigate(['/monitoring-report']);
                                     this.spinner.hide();
