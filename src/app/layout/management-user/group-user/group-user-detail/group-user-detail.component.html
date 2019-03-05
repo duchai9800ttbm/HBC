@@ -170,7 +170,7 @@
       <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;"
         [(ngModel)]="changeTemp" (ngModelChange)="selectEachFieldEditNotUser($event)">
         <option [ngValue]="notPrivilege" *ngFor="let notPrivilege of groupEditOrCreate.notPrivileges">
-          {{notPrivilege.text | translate}}
+          {{notPrivilege.displayText}}
         </option>
       </select>
     </div>
@@ -193,7 +193,7 @@
       <select multiple class="form-control form-select" id="exampleFormControlSelect2" [(ngModel)]="changeTemp"
         (ngModelChange)="selectEachFieldEditUser($event)">
         <option [ngValue]="privilege" *ngFor="let privilege of groupEditOrCreate.privileges">
-          {{privilege.text | translate}}
+          {{privilege.displayText}}
         </option>
       </select>
     </div>
