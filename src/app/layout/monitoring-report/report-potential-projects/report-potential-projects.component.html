@@ -23,6 +23,11 @@
           </td>
         </tr>
       </ng-container>
+      <tr>
+        <td colspan="3"></td>
+        <td class="font-weight-bold">Tổng giá trị dự kiến</td>
+        <td class="font-weight-bold text-right">{{totalCostOfSubmissionExpected ? (totalCostOfSubmissionExpected | thousandSeparate) : '-'}}</td>
+      </tr>
     </ng-container>
     <ng-container *ngIf="!(reportPotentialProjects && (reportPotentialProjects || []).length !== 0) && !loading">
       <tr>

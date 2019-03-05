@@ -290,7 +290,7 @@ export class ReportFollowService {
     };
   }
   // Danh sách dự án tiềm năng
-  listPotentialProjects(startDate: number, endDate: number): Observable<ReportPotentialProjects> {
+  listPotentialProjects(startDate: number, endDate: number): Observable<ReportPotentialProjects[]> {
     const url = `report/potentialbidopportunity?startDate=${startDate}&endDate=${endDate}`;
     return this.apiService.get(url).map(response => {
       const result = response.result;

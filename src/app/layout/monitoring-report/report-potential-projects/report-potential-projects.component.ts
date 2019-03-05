@@ -12,9 +12,10 @@ import { AlertService } from '../../../shared/services';
 })
 export class ReportPotentialProjectsComponent implements OnInit, OnDestroy {
 
-  reportPotentialProjects: ReportPotentialProjects;
+  reportPotentialProjects: ReportPotentialProjects[];
   subscription: Subscription;
   loading = false;
+  totalCostOfSubmissionExpected: number;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -37,6 +38,10 @@ export class ReportPotentialProjectsComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.reportFollowService.listPotentialProjects(startDateNumber, endDateNumber).subscribe(response => {
       this.reportPotentialProjects = response;
+      this.totalCostOfSubmissionExpected = 0;
+      (this.reportPotentialProjects || []).forEach(item => {
+        this.totalCostOfSubmissionExpected = this.totalCostOfSubmissionExpected + item.totalCostOfSubmission;
+      });
       this.loading = false;
     }, err => {
       this.loading = false;
