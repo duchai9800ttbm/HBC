@@ -378,7 +378,7 @@ export class ReportFollowService {
     const url = `kpibidderrole/note/update`;
     const details = reportWinRateConstractors.reportKPIBidderRoleDetails.map(item => {
       return {
-        quaterOfYear: item.bidderRole && item.bidderRole.key,
+        bidderRole: item.bidderRole && item.bidderRole.key,
         note: item.note,
       };
     });
