@@ -7,6 +7,7 @@ export class ReportWinRateConstractors {
         },
         winningOfBidPer: number;
         amount: number;
+        note: string;
     }[];
     winningOfBidPer: number;
     totalAmount: number;

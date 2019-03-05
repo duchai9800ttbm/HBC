@@ -372,6 +372,22 @@ export class ReportFollowService {
     };
     return this.apiService.post(url, requestModel);
   }
+  // Cập nhật ghi chú báo cáo tỉ lệ trúng thầu theo vai trò nhà thầu theo năm
+  updateNoteReportRateContractor(year: number, reportWinRateConstractors: ReportWinRateConstractors) {
+    const url = `kpibidderrole/note/update`;
+    const details = reportWinRateConstractors.reportKPIBidderRoleDetails.map(item => {
+      return {
+        quaterOfYear: item.bidderRole && item.bidderRole.key,
+        note: item.note,
+      };
+    });
+    const requestModel = {
+      year: year,
+      details: details,
+    };
+    console.log('hi.reportWinRateConstractors', requestModel);
+    return this.apiService.post(url, requestModel);
+  }
   // Cập nhật ghi chú báo cáo "tỉ lệ trúng thầu theo qúy" theo năm
   updateNoteReportQuaterOfYear(year: number, reportKPIQuaterOfYearDetails: any) {
     const url = `kpiquaterofyear/note/update`;

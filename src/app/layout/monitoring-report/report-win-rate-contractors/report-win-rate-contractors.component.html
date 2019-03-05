@@ -22,7 +22,11 @@
             itemReportKPIBidderRoleDetails?.amount ? (itemReportKPIBidderRoleDetails?.amount
             |thousandSeparate) : '-' }}</td>
           <td>
-            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
+            <div class="position-relative">
+              <textarea rows="1" [(ngModel)]="itemReportKPIBidderRoleDetails.note" [ngModelOptions]="{standalone: true}"
+                (change)="saveNote($event)" class="w-100" appTextareaHeight></textarea>
+              <i class="fa fa-pencil note-edit"></i>
+            </div>
           </td>
         </tr>
       </ng-container>
