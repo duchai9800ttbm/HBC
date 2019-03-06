@@ -42,6 +42,11 @@ export class PackageSuccessComponent implements OnInit {
       this.kickOff = result;
     });
     this.statusPackage = this.packageService.statusPackageValue2;
+    this.packageService.statusPackageValue$.subscribe(status => {
+      if (status && status.text) {
+        this.statusPackage = this.checkStatusPackage[status.text];
+      }
+    });
     // this.packageService.statusPackageValue$.subscribe(status => {
     //   this.statusPackage = status;
     //   if ((this.statusPackage.id > this.checkStatusPackage.DaNhanTaiLieu.id)
