@@ -16,6 +16,7 @@ import { PermissionService } from '../../../../../../shared/services/permission.
 import { UserModel } from '../../../../../../shared/models/user/user.model';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { DuLieuLiveFormDKDT } from '../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
+import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 
 @Component({
   selector: 'app-price-review-form',
@@ -65,6 +66,8 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   GuiDuyet = false;
   DuyetTDGBGD = false;
   isShowSendApprovalTime: boolean;
+  checkStatusPackage = CheckStatusPackage;
+  statusPackage = null;
   @Input() model: TenderPriceApproval;
   @Input() type: string;
   @Output() refreshData = new EventEmitter<boolean>();
@@ -168,6 +171,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     this.packageService.getInforPackageID(this.packageId)
       .switchMap(goiThau => {
         this.package = goiThau;
+        this.statusPackage = this.checkStatusPackage[goiThau.stageStatus.id];
         if (this.package.stageStatus && this.priceReviewForm.value) {
           if ((this.package.stageStatus.id !== 'DangLapHSDT')
             && (this.package.stageStatus.id !== 'CanLapTrinhDuyetGia')
