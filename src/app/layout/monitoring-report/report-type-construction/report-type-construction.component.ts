@@ -15,6 +15,8 @@ export class ReportTypeConstructionComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   constructionTypeName: string = null;
   loading = false;
+  year: number;
+  constructionTypeId: number;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -22,8 +24,15 @@ export class ReportTypeConstructionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.reportFollowService.startAndEndDate.subscribe(startAndEndDate => {
+      const yearSub = startAndEndDate.endDate.getFullYear() - startAndEndDate.startDate.getFullYear();
+      if (yearSub === 0) {
+        this.year = startAndEndDate.endDate.getFullYear();
+      } else {
+        this.year = null;
+      }
       if (startAndEndDate.constructionType) {
         this.constructionTypeName = startAndEndDate.constructionTypeName;
+        this.constructionTypeId = startAndEndDate.constructionType;
         this.viewReport(startAndEndDate.constructionType,
           startAndEndDate.startDate, startAndEndDate.endDate);
       } else {
@@ -50,6 +59,15 @@ export class ReportTypeConstructionComponent implements OnInit, OnDestroy {
     });
   }
 
-  autoExpand() {
+  saveNote() {
+    if (this.year) {
+      this.reportFollowService.updateNoteReportConstructionType(
+        this.constructionTypeId, this.year, this.reportKpiConstructionType.targetNote, this.reportKpiConstructionType.note
+      ).subscribe(response => {
+        this.alertService.success('Cập nhật ghi chú thành công');
+      }, err => {
+        this.alertService.error('Cập nhật ghi chú không thành công');
+      });
+    }
   }
 }

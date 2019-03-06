@@ -3,4 +3,6 @@ export class ReportKpiConstructionType {
     targetAmount: number;
     winningOfBidPer: number;
     amount: number;
+    targetNote: string;
+    note: string;
 }

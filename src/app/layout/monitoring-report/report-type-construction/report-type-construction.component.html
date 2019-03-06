@@ -22,7 +22,11 @@
             reportKpiConstructionType?.targetAmount ? (reportKpiConstructionType?.targetAmount |
             thousandSeparate) : '-' }}</td>
           <td>
-            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
+            <div class="position-relative">
+              <textarea rows="1" [(ngModel)]="reportKpiConstructionType.targetNote"
+                (change)="saveNote($event)" class="w-100" appTextareaHeight></textarea>
+              <i class="fa fa-pencil note-edit"></i>
+            </div>
           </td>
         </tr>
         <tr>
@@ -35,7 +39,11 @@
             reportKpiConstructionType?.amount ? (reportKpiConstructionType?.amount |
             thousandSeparate) : '-' }}</td>
           <td>
-            <textarea rows="1" (keyup)="autoExpand($event)" class="w-100" appTextareaHeight></textarea>
+            <div class="position-relative">
+              <textarea rows="1" [(ngModel)]="reportKpiConstructionType.note"
+                (change)="saveNote($event)" class="w-100" appTextareaHeight></textarea>
+              <i class="fa fa-pencil note-edit"></i>
+            </div>
           </td>
         </tr>
       </ng-container>

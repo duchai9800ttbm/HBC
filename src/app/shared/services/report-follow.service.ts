@@ -174,6 +174,8 @@ export class ReportFollowService {
       targetAmount: result.targetAmount,
       winningOfBidPer: result.winningOfBidPer,
       amount: result.amount,
+      targetNote: result.targetNote,
+      note: result.note,
     };
   }
   // Thống kê chỉ tiêu KPI loại công trình theo khoảng thời gian
@@ -375,7 +377,17 @@ export class ReportFollowService {
     return this.apiService.post(url, requestModel);
   }
   // Cập nhật ghi chú báo cáo chỉ tiêu KPI theo từng loại công trình theo năm
-  //--------------
+  updateNoteReportConstructionType(constructionTypeId: number, year: number, targetNote: string, note: string) {
+    const url = `kpiconstructiontype/note/update`;
+    const requestModel = {
+      constructionTypeId: constructionTypeId,
+      year: year,
+      targetNote: targetNote,
+      note: note,
+    };
+    return this.apiService.post(url, requestModel);
+  }
+
   // Cập nhật ghi chú báo cáo tỉ lệ trúng thầu theo vai trò nhà thầu theo năm
   updateNoteReportRateContractor(year: number, reportWinRateConstractors: ReportWinRateConstractors) {
     const url = `kpibidderrole/note/update`;
