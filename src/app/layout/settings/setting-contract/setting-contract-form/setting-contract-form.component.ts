@@ -55,6 +55,14 @@ export class SettingContractFormComponent implements OnInit {
     this.isSubmitted = true;
     const valid = this.validateForm();
     if (valid) {
+      // trim()
+      this.contractForm.value.contractNameVi = this.contractForm.value.contractNameVi
+        ? this.contractForm.value.contractNameVi.trim() : this.contractForm.value.contractNameVi;
+      this.contractForm.value.contractNameEng = this.contractForm.value.contractNameEng
+        ? this.contractForm.value.contractNameEng.trim() : this.contractForm.value.contractNameEng;
+      this.contractForm.value.contractDesc = this.contractForm.value.contractDesc
+        ? this.contractForm.value.contractDesc.trim() : this.contractForm.value.contractDesc;
+
       this.settingService.createOrUpdateTypeOfContract(this.contractForm.value).subscribe(() => {
         const message = this.contract.id
           ? `Loại hợp đồng ${contractNameVi} đã được cập nhật thành công.`

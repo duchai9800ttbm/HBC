@@ -63,19 +63,33 @@ export class GroupConfigurationFormComponent implements OnInit {
   submitForm() {
     this.isSubmitted = true;
     if (this.validateForm()) {
+      // trim()
+      this.groupConfigForm.value.groupConfigName = this.groupConfigForm.value.groupConfigName
+        ? this.groupConfigForm.value.groupConfigName.trim() : this.groupConfigForm.value.groupConfigName;
+      this.groupConfigForm.value.groupConfigDes = this.groupConfigForm.value.groupConfigDes
+        ? this.groupConfigForm.value.groupConfigDes.trim() : this.groupConfigForm.value.groupConfigDes;
+
       if (this.config) {
         this.settingService.editGroupKPI(this.groupConfigForm.value, this.groupConfigForm.value.id).subscribe(response => {
           this.alertService.success('Chỉnh sửa nhóm thành công.');
           this.router.navigate([`/settings/kpi-target/group-config/list`]);
         }, err => {
-          this.alertService.error('Đã xảy ra lỗi. Chỉnh sửa nhóm không thành công.');
+          if (err._body && JSON.parse(err._body).errorCode === 'BusinessException') {
+            this.alertService.error(JSON.parse(err._body).errorMessage);
+          } else {
+            this.alertService.error('Đã xảy ra lỗi. Chỉnh sửa nhóm không thành công.');
+          }
         });
       } else {
         this.settingService.createGroupKPI(this.groupConfigForm.value).subscribe(response => {
           this.alertService.success('Tạo mới nhóm thành công.');
           this.router.navigate([`/settings/kpi-target/group-config/list`]);
         }, err => {
-          this.alertService.error('Đã xảy ra lỗi. Tạo mới nhóm không thành công.');
+          if (err._body && JSON.parse(err._body).errorCode === 'BusinessException') {
+            this.alertService.error(JSON.parse(err._body).errorMessage);
+          } else {
+            this.alertService.error('Đã xảy ra lỗi. Tạo mới nhóm không thành công.');
+          }
         });
       }
     }

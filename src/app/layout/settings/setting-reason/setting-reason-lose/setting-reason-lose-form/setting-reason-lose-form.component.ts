@@ -50,6 +50,12 @@ export class SettingReasonLoseFormComponent implements OnInit {
     this.isSubmitted = true;
     const valid = this.validateForm();
     if (valid) {
+      // trim()
+      this.reasonLoseForm.value.bidOpportunityReasonName = this.reasonLoseForm.value.bidOpportunityReasonName
+        ? this.reasonLoseForm.value.bidOpportunityReasonName.trim() : this.reasonLoseForm.value.bidOpportunityReasonName;
+      this.reasonLoseForm.value.bidOpportunityReasonDesc = this.reasonLoseForm.value.bidOpportunityReasonDesc
+        ? this.reasonLoseForm.value.bidOpportunityReasonDesc.trim() : this.reasonLoseForm.value.bidOpportunityReasonDesc;
+
       this.settingService.createOrUpdateOpportunityReason(this.reasonLoseForm.value, SETTING_REASON.Lose).subscribe(data => {
         const message = this.reasonLose.id
           ? `Lý do trật thầu ${reasonName} đã được cập nhật thành công.`

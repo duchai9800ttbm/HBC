@@ -46,6 +46,11 @@ export class SettingPositionFormComponent implements OnInit {
     this.isSubmitted = true;
     const valid = this.validateForm();
     if (valid) {
+      // trim()
+      this.levelForm.value.levelName = this.levelForm.value.levelName
+        ? this.levelForm.value.levelName.trim() : this.levelForm.value.levelName;
+      this.levelForm.value.levelDesc = this.levelForm.value.levelDesc
+        ? this.levelForm.value.levelDesc.trim() : this.levelForm.value.levelDesc;
       this.settingService.createOrUpdateLevel(this.levelForm.value).subscribe(data => {
         const message = this.level.id
           ? `Vị trị/Chức vụ ${levelName} đã được cập nhật thành công.`

@@ -48,6 +48,12 @@ export class SettingLocationFormComponent implements OnInit {
     this.isSubmitted = true;
     const valid = this.validateForm();
     if (valid) {
+       // trim()
+       this.locationForm.value.locationName = this.locationForm.value.locationName
+       ? this.locationForm.value.locationName.trim() : this.locationForm.value.locationName;
+     this.locationForm.value.locationDesc = this.locationForm.value.locationDesc
+       ? this.locationForm.value.locationDesc.trim() : this.locationForm.value.locationDesc;
+
       this.settingService.createOrUpdateLocation(this.locationForm.value).subscribe(data => {
         const message = this.location.id
           ? `Khu vực ${locationName} đã được cập nhật thành công.`
