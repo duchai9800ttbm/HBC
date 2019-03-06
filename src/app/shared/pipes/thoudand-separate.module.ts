@@ -21,9 +21,15 @@ export class ThousandSeparate implements PipeTransform {
     let [integer, fraction = ''] = (+value).toString()
       .split(this.DECIMAL_SEPARATOR);
 
-    fraction = fractionSize > 0
-      ? this.DECIMAL_SEPARATOR + (fraction + PADDING).substring(0, fractionSize)
-      : '';
+    if (+(fraction + PADDING)[fractionSize] > 4) {
+      fraction = fractionSize > 0
+        ? this.DECIMAL_SEPARATOR + (+(fraction + PADDING).substring(0, fractionSize) + 1).toString()
+        : '';
+    } else {
+      fraction = fractionSize > 0
+        ? this.DECIMAL_SEPARATOR + (fraction + PADDING).substring(0, fractionSize)
+        : '';
+    }
 
     integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
 
