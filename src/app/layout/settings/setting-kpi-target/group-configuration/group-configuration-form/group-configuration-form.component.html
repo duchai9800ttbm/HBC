@@ -9,7 +9,7 @@
       <div class="row form-group">
         <div class="col-md-2 text-right required justify-content-end align-items">Tên nhóm</div>
         <div class="col-md-7">
-          <input class="form-control" appAutoFocus [class.is-invalid]="formErrors.groupConfigName" tabindex="1" formControlName="groupConfigName">
+          <input class="form-control" appAutoFocus [class.is-invalid]="formErrors.groupConfigName" tabindex="1" formControlName="groupConfigName" maxlength="200">
           <div class="invalid-feedback" *ngIf="formErrors.groupConfigName">
             {{formErrors.groupConfigName}}
           </div>
@@ -18,7 +18,7 @@
       <div class="row form-group">
         <div class="col-md-2 text-right pad-name-field-des">Mô tả nhóm</div>
         <div class="col-md-7">
-          <textarea rows="3" class="form-control" tabindex="2" formControlName="groupConfigDes"></textarea>
+          <textarea rows="3" class="form-control" tabindex="2" formControlName="groupConfigDes" maxlength="1000"></textarea>
         </div>
       </div>
     </div>

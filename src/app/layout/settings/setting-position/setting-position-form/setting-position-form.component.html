@@ -4,7 +4,7 @@
       <div class="row form-group">
         <div class="col-md-2 text-right required justify-content-end align-items">Tên Vị trí/Chức vụ</div>
         <div class="col-md-7">
-          <input class="form-control" [class.is-invalid]="formErrors.levelName" tabindex="1" formControlName="levelName">
+          <input class="form-control" [class.is-invalid]="formErrors.levelName" tabindex="1" formControlName="levelName" maxlength="200">
           <div class="invalid-feedback" *ngIf="formErrors.levelName">
             {{formErrors.levelName}}
           </div>
@@ -13,7 +13,7 @@
       <div class="row form-group">
         <div class="col-md-2 text-right pad-name-field-des">Mô tả</div>
         <div class="col-md-7">
-          <textarea rows="3" class="form-control" tabindex="2" formControlName="levelDesc"></textarea>
+          <textarea rows="3" class="form-control" tabindex="2" formControlName="levelDesc" maxlength="1000"></textarea>
         </div>
       </div>
     </div>

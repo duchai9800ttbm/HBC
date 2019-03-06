@@ -4,7 +4,7 @@
           <div class="row form-group">
               <div class="col-md-2 text-right required justify-content-end align-items">Tên loại công trình</div>
               <div class="col-md-7">
-                  <input class="form-control" [class.is-invalid]="formErrors.constructionTypeName" tabindex="1" formControlName="constructionTypeName">
+                  <input class="form-control" [class.is-invalid]="formErrors.constructionTypeName" tabindex="1" formControlName="constructionTypeName" maxlength="200">
                   <div class="invalid-feedback" *ngIf="formErrors.constructionTypeName">
                       {{formErrors.constructionTypeName}}
                   </div>
@@ -13,13 +13,13 @@
           <div class="row form-group">
             <div class="col-md-2 text-right pad-name-field-des">Tên loại công trình (ENG)</div>
             <div class="col-md-7">
-                <textarea rows="3" class="form-control" tabindex="2" formControlName="constructionTypeNameEng"></textarea>
+                <textarea rows="3" class="form-control" tabindex="2" formControlName="constructionTypeNameEng" maxlength="1000"></textarea>
             </div>
         </div>
           <div class="row form-group">
               <div class="col-md-2 text-right pad-name-field-des">Mô tả</div>
               <div class="col-md-7">
-                  <textarea rows="3" class="form-control" tabindex="3" formControlName="constructionTypeDesc"></textarea>
+                  <textarea rows="3" class="form-control" tabindex="3" formControlName="constructionTypeDesc" maxlength="1000"></textarea>
               </div>
           </div>
       </div>

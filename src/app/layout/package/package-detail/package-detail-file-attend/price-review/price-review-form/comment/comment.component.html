@@ -7,7 +7,7 @@
             <div class="editor-input center-parent">
                 <div class="mt-1 w-100">
                     <textarea class="editor-comment" [placeholder]="'Viết bình luận...'" (keyup.enter)="addCommentByKeyUpEnter($event)" [(ngModel)]="commentEditor"
-                        pInputTextarea autoResize="autoResize"></textarea>
+                        pInputTextarea autoResize="autoResize" maxlength="1000"></textarea>
                 </div>
             </div>
             <div class="logo center-parent mt-1">
