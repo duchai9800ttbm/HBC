@@ -254,3 +254,7 @@ table, thead, tbody, tfoot {
     overflow-x: scroll;
 }
 
+// disabled for input combox time of kendo
+:host /deep/ .k-datepicker .k-dateinput, .k-datetimepicker .k-dateinput, .k-timepicker .k-dateinput:disabled {
+    pointer-events: none;
+}
