@@ -199,16 +199,16 @@ export class ConstructionItemsComponent implements OnInit {
     this.constructionCategoryForm.get('targetTotal').patchValue(totalTargetAll);
   }
 
-  calculTargetTotalToChangeTotal(indexForm: number) {
-    const percent = this.mainBuildFA.controls[indexForm].get('totalTarget').value * 100
-      / this.mainBuildFA.controls[indexForm].get('total').value;
-    this.mainBuildFA.controls[indexForm].get('percent').patchValue(percent);
-    let totalTargetAll = 0;
-    (this.mainBuildFA.value || []).forEach(itemFormMainBuild => {
-      totalTargetAll = totalTargetAll + itemFormMainBuild.totalTarget;
-    });
-    this.constructionCategoryForm.get('targetTotal').patchValue(totalTargetAll);
-  }
+  // calculTargetTotalToChangeTotal(indexForm: number) {
+  //   const percent = this.mainBuildFA.controls[indexForm].get('totalTarget').value * 100
+  //     / this.mainBuildFA.controls[indexForm].get('total').value;
+  //   this.mainBuildFA.controls[indexForm].get('percent').patchValue(percent);
+  //   let totalTargetAll = 0;
+  //   (this.mainBuildFA.value || []).forEach(itemFormMainBuild => {
+  //     totalTargetAll = totalTargetAll + itemFormMainBuild.totalTarget;
+  //   });
+  //   this.constructionCategoryForm.get('targetTotal').patchValue(totalTargetAll);
+  // }
 
   createConstructionCategory() {
     this.yearBackTemp = this.yearkpi;
