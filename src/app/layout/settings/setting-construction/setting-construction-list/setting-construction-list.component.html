@@ -15,10 +15,10 @@
       </div>
   </div>
   <div class="position-relative">
-    <table *ngIf="!loading" class="zui-table table table-striped table-hover">
+    <table *ngIf="!loading" class="zui-table table table-striped table-hover fix-table-layout">
         <thead>
             <tr style="width: 100%">
-                <th class="text-center" style="width: 15px; padding-left: 7px;">
+                <th class="text-center set-width-checkbox">
                     <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                         <span class="custom-control-indicator"></span>
