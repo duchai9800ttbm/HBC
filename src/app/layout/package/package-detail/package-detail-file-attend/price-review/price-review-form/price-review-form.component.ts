@@ -1301,7 +1301,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   guiDuyet() {
     const dieuKienGuiDuyet = (this.priceReviewForm.get('isApprovedByTenderLeader').value !== null &&
       this.priceReviewForm.get('isApprovedByTenderManager').value !== null);
-    if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) || !dieuKienGuiDuyet) {
+    console.log('dieuKienGuiDuyet', this.priceReviewForm.get('isApprovedByTenderLeader').value,
+    this.priceReviewForm.get('isApprovedByTenderManager').value , dieuKienGuiDuyet);
+    if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) && !dieuKienGuiDuyet) {
       this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`, null);
     } else {
       const that = this;
@@ -1325,7 +1327,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   guiDuyetLai() {
     const dieuKienGuiDuyet = (this.priceReviewForm.get('isApprovedByTenderLeader').value !== null &&
       this.priceReviewForm.get('isApprovedByTenderManager').value !== null);
-    if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) || !dieuKienGuiDuyet) {
+    if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) && !dieuKienGuiDuyet) {
       this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`, null);
     } else {
       const that = this;
@@ -1335,6 +1337,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       }
       this.confirmService.confirm('Bạn có chắc muốn gửi duyệt lại trình duyệt giá?', () => {
         this.priceReviewService.guiDuyetLaiTrinhDuyetGia(this.packageId).subscribe(data => {
+          that.getDataDefaultMapping();
           that.refresh();
           that.alertService.success('Gửi duyệt lại trình duyệt giá thành công!');
         }, err => {
