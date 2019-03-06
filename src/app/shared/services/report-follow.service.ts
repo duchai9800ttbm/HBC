@@ -197,6 +197,7 @@ export class ReportFollowService {
             },
             winningOfBidPer: itemReportKPIBidderRoleDetail.winningOfBidPer,
             amount: itemReportKPIBidderRoleDetail.amount,
+            note: itemReportKPIBidderRoleDetail.note,
           };
         }),
       winningOfBidPer: result.winningOfBidPer,
@@ -373,6 +374,8 @@ export class ReportFollowService {
     };
     return this.apiService.post(url, requestModel);
   }
+  // Cập nhật ghi chú báo cáo chỉ tiêu KPI theo từng loại công trình theo năm
+  //--------------
   // Cập nhật ghi chú báo cáo tỉ lệ trúng thầu theo vai trò nhà thầu theo năm
   updateNoteReportRateContractor(year: number, reportWinRateConstractors: ReportWinRateConstractors) {
     const url = `kpibidderrole/note/update`;
