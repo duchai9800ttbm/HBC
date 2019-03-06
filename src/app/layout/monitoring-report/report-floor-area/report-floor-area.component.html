@@ -27,7 +27,7 @@
                 <td>
                     <div class="position-relative">
                         <textarea rows="1" [(ngModel)]="reportFloorArea.tenderNote" (change)="saveNote($event)" class="w-100"
-                            appTextareaHeight></textarea>
+                            appTextareaHeight [disabled]="!isEditNote"></textarea>
                         <i class="fa fa-pencil note-edit"></i>
                     </div>
                 </td>
@@ -46,7 +46,7 @@
                 <td>
                     <div class="position-relative">
                         <textarea rows="1" [(ngModel)]="reportFloorArea.waitForResultNote" (change)="saveNote($event)"
-                            class="w-100" appTextareaHeight></textarea>
+                            class="w-100" appTextareaHeight [disabled]="!isEditNote"></textarea>
                         <i class="fa fa-pencil note-edit"></i>
                     </div>
                 </td>
@@ -65,7 +65,7 @@
                 <td>
                     <div class="position-relative">
                         <textarea rows="1" [(ngModel)]="reportFloorArea.winningOfBidNote" (change)="saveNote($event)"
-                            class="w-100" appTextareaHeight></textarea>
+                            class="w-100" appTextareaHeight [disabled]="!isEditNote"></textarea>
                         <i class="fa fa-pencil note-edit"></i>
                     </div>
                 </td>
@@ -84,7 +84,7 @@
                 <td>
                     <div class="position-relative">
                         <textarea rows="1" [(ngModel)]="reportFloorArea.perNote" (change)="saveNote($event)" class="w-100"
-                            appTextareaHeight></textarea>
+                            appTextareaHeight [disabled]="!isEditNote"></textarea>
                         <i class="fa fa-pencil note-edit"></i>
                     </div>
                 </td>

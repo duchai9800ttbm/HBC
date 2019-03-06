@@ -16,6 +16,7 @@ export class ReportNumberWinBidComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   loading = false;
   year: number;
+  isEditNote: boolean;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -29,6 +30,7 @@ export class ReportNumberWinBidComponent implements OnInit, OnDestroy {
       } else {
         this.year = null;
       }
+      this.isEditNote = startAndEndDate.isEditNote;
       this.viewReport(startAndEndDate.startDate, startAndEndDate.endDate);
     });
   }

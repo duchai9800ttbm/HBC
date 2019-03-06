@@ -19,6 +19,7 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
   year: number;
   targetNote: string;
   note: string;
+  isEditNote: boolean;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -32,6 +33,7 @@ export class ReportConstructionItemsComponent implements OnInit, OnDestroy {
       } else {
         this.year = null;
       }
+      this.isEditNote = startAndEndDate.isEditNote;
       if (startAndEndDate.constructionCategory) {
         this.constructionCategoryName = startAndEndDate.constructionCategoryName;
         this.constructionCategoryId = startAndEndDate.constructionCategory;

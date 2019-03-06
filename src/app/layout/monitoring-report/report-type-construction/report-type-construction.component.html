@@ -24,7 +24,7 @@
           <td>
             <div class="position-relative">
               <textarea rows="1" [(ngModel)]="reportKpiConstructionType.targetNote"
-                (change)="saveNote($event)" class="w-100" appTextareaHeight></textarea>
+                (change)="saveNote($event)" class="w-100" appTextareaHeight [disabled]="!isEditNote"></textarea>
               <i class="fa fa-pencil note-edit"></i>
             </div>
           </td>
@@ -41,7 +41,7 @@
           <td>
             <div class="position-relative">
               <textarea rows="1" [(ngModel)]="reportKpiConstructionType.note"
-                (change)="saveNote($event)" class="w-100" appTextareaHeight></textarea>
+                (change)="saveNote($event)" class="w-100" appTextareaHeight [disabled]="!isEditNote"></textarea>
               <i class="fa fa-pencil note-edit"></i>
             </div>
           </td>

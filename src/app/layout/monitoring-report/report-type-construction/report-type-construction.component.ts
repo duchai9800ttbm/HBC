@@ -17,6 +17,7 @@ export class ReportTypeConstructionComponent implements OnInit, OnDestroy {
   loading = false;
   year: number;
   constructionTypeId: number;
+  isEditNote: boolean;
   constructor(
     private reportFollowService: ReportFollowService,
     private alertService: AlertService
@@ -30,6 +31,7 @@ export class ReportTypeConstructionComponent implements OnInit, OnDestroy {
       } else {
         this.year = null;
       }
+      this.isEditNote = startAndEndDate.isEditNote;
       if (startAndEndDate.constructionType) {
         this.constructionTypeName = startAndEndDate.constructionTypeName;
         this.constructionTypeId = startAndEndDate.constructionType;

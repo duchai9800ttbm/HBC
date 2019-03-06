@@ -76,6 +76,17 @@ export class MonitoringReportComponent implements OnInit {
     this.startAndEndDate.constructionCategory = null;
     this.startAndEndDate.constructionType = null;
 
+    // Note
+    const yearSub = this.endDate.getFullYear() - this.startDate.getFullYear();
+    console.log('yearSub', yearSub);
+    if (yearSub === 0) {
+      this.messgeCanNote = null;
+      this.startAndEndDate.isEditNote = true;
+    } else {
+      this.messgeCanNote = 'Để xem được ghi chú của từng năm báo cáo, bạn cần chọn thời gian xem báo cáo trong cùng 1 năm.';
+      this.startAndEndDate.isEditNote = false;
+    }
+
     this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
 
     this.checkActiveTab();
@@ -189,7 +200,6 @@ export class MonitoringReportComponent implements OnInit {
   }
 
   viewReport() {
-
     this.isViewReport = true;
     if (DateTimeConvertHelper.fromDtObjectToTimestamp(this.startDate)
       && DateTimeConvertHelper.fromDtObjectToTimestamp(this.endDate)
@@ -207,7 +217,6 @@ export class MonitoringReportComponent implements OnInit {
           {
             this.startAndEndDate.startDate = this.startDate;
             this.startAndEndDate.endDate = this.endDate;
-            this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
             break;
           }
         case 'construction-items': {
@@ -217,7 +226,6 @@ export class MonitoringReportComponent implements OnInit {
           const constructionCategoryName = this.listMainBuildingCategory.find(item => item.id === this.startAndEndDate.constructionCategory);
           // tslint:disable-next-line:max-line-length
           this.startAndEndDate.constructionCategoryName = constructionCategoryName && constructionCategoryName.text ? constructionCategoryName.text : '';
-          this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
           break;
         }
         case 'type-construction': {
@@ -225,19 +233,19 @@ export class MonitoringReportComponent implements OnInit {
           this.startAndEndDate.endDate = this.endDate;
           const constructionTypeName = this.listBuildingProjectType.find(item => item.id === this.startAndEndDate.constructionType);
           this.startAndEndDate.constructionTypeName = constructionTypeName && constructionTypeName.text ? constructionTypeName.text : '';
-          this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
           break;
         }
       }
       // Note
-      const yearSub = this.startAndEndDate.endDate.getFullYear() - this.startAndEndDate.startDate.getFullYear();
-      if (!(yearSub === 0)) {
-        this.messgeCanNote = 'Để xem được ghi chú của từng năm báo cáo, bạn cần chọn thời gian xem báo cáo trong cùng 1 năm.';
-        this.startAndEndDate.isMessgeCanNote = true;
-      } else {
+      const yearSub = this.endDate.getFullYear() - this.startDate.getFullYear();
+      if (yearSub === 0) {
         this.messgeCanNote = null;
-        this.startAndEndDate.isMessgeCanNote = false;
+        this.startAndEndDate.isEditNote = true;
+      } else {
+        this.messgeCanNote = 'Để xem được ghi chú của từng năm báo cáo, bạn cần chọn thời gian xem báo cáo trong cùng 1 năm.';
+        this.startAndEndDate.isEditNote = false;
       }
+      this.reportFollowService.startAndEndDate.next(this.startAndEndDate);
     }
   }
 

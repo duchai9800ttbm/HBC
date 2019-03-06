@@ -25,7 +25,7 @@ export class ReportFollowService {
     constructionCategoryName: null,
     constructionType: null,
     constructionTypeName: null,
-    isMessgeCanNote: true,
+    isEditNote: null,
   });
   constructor(
     private apiService: ApiService,

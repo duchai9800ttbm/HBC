@@ -25,7 +25,7 @@
             | thousandSeparate) : '-'}}</td>
           <td>
             <div class="position-relative">
-              <textarea rows="1" [(ngModel)]="itemReportKPIQuaterOfYearDetails.note" [ngModelOptions]="{standalone: true}" (change)="saveNote($event)" class="w-100" appTextareaHeight></textarea>
+              <textarea rows="1" [(ngModel)]="itemReportKPIQuaterOfYearDetails.note" [ngModelOptions]="{standalone: true}" (change)="saveNote($event)" class="w-100" appTextareaHeight [disabled]="!isEditNote"></textarea>
               <i class="fa fa-pencil note-edit"></i>
             </div>
           </td>
