@@ -73,14 +73,14 @@
             <tr>
                 <td class="text-center"></td>
                 <td class="font-weight-bold" title="Tỷ lệ trúng thầu/ đấu thầu">Tỷ lệ trúng thầu/ đấu thầu</td>
-                <td class="text-right" [title]="reportFloorArea?.winningOfBidCompareTenderPer ?
-                (reportFloorArea?.winningOfBidCompareTenderPer | thousandSeparate) : '-'">{{
+                <td class="text-right font-weight-bold" [title]="reportFloorArea?.winningOfBidCompareTenderPer ?
+                (reportFloorArea?.winningOfBidCompareTenderPer | thousandSeparate) + ' %' : '0.00 %'">{{
                     reportFloorArea?.winningOfBidCompareTenderPer ?
-                    (reportFloorArea?.winningOfBidCompareTenderPer | thousandSeparate) : '-' }}</td>
-                <td class="text-right" [title]="reportFloorArea?.winningOfBidCompareTotalBidPer ?
-                (reportFloorArea?.winningOfBidCompareTotalBidPer | thousandSeparate) : '-'">{{
+                    (reportFloorArea?.winningOfBidCompareTenderPer | thousandSeparate) : '0.00' }} %</td>
+                <td class="text-right font-weight-bold" [title]="reportFloorArea?.winningOfBidCompareTotalBidPer ?
+                (reportFloorArea?.winningOfBidCompareTotalBidPer | thousandSeparate) + ' %' : '0.00 %'">{{
                     reportFloorArea?.winningOfBidCompareTotalBidPer ?
-                    (reportFloorArea?.winningOfBidCompareTotalBidPer | thousandSeparate) : '-' }}</td>
+                    (reportFloorArea?.winningOfBidCompareTotalBidPer | thousandSeparate) : '0.00' }} %</td>
                 <td>
                     <div class="position-relative">
                         <textarea rows="1" [(ngModel)]="reportFloorArea.perNote" (change)="saveNote($event)" class="w-100"

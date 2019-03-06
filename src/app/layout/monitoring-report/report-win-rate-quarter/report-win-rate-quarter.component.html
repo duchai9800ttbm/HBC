@@ -34,11 +34,11 @@
       <tr>
         <td></td>
         <td class="font-weight-bold" title="Tổng">Tổng</td>
-        <td class="text-right" [title]="reportKpiWinRateQuarter?.winningOfBidPer ? (reportKpiWinRateQuarter?.winningOfBidPer |
+        <td class="text-right font-weight-bold" [title]="reportKpiWinRateQuarter?.winningOfBidPer ? (reportKpiWinRateQuarter?.winningOfBidPer |
         thousandSeparate) + ' %' : '0.00 %'">{{reportKpiWinRateQuarter?.winningOfBidPer
           ? (reportKpiWinRateQuarter?.winningOfBidPer |
           thousandSeparate) : '0.00'}} %</td>
-        <td class="text-right" [title]="reportKpiWinRateQuarter?.totalAmount ? (reportKpiWinRateQuarter?.totalAmount |
+        <td class="text-right font-weight-bold" [title]="reportKpiWinRateQuarter?.totalAmount ? (reportKpiWinRateQuarter?.totalAmount |
         thousandSeparate) : '-'">{{reportKpiWinRateQuarter?.totalAmount
           ? (reportKpiWinRateQuarter?.totalAmount |
           thousandSeparate) : '-'}}</td>
