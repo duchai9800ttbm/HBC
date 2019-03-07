@@ -12,7 +12,7 @@ import { AlertService, ConfirmationService } from '../../../../../shared/service
   styleUrls: ['./group-configuration-list.component.scss']
 })
 export class GroupConfigurationListComponent implements OnInit, OnDestroy {
-  private searchTerm$ = new BehaviorSubject<string>('');
+  searchTerm$ = new BehaviorSubject<string>('');
   loading = false;
   pagedResult: PagedResult<any> = new PagedResult<any>();
   checkboxSeclectAll: boolean;
