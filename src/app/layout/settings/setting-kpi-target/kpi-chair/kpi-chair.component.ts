@@ -279,6 +279,9 @@ export class KpiChairComponent implements OnInit {
     this.groupKpiChairsArray.get('targetTotal').patchValue(0);
   }
 
+  editTargetForYear() {
+    this.yearBackTemp = this.yearkpi;
+  }
 
   addTargetForYear() {
     this.paramAction = 'create';

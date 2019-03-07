@@ -5,7 +5,7 @@
     </div>
     <div class="text-right col-md-6">
       <div *ngIf="paramAction === 'view'" id="action">
-        <button class="btn btn-secondary" type="button" *ngIf="isEdit" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}">Sửa
+        <button class="btn btn-secondary" type="button" *ngIf="isEdit" [routerLink]="['../kpi-chair']" [queryParams]="{action:'edit'}" (click)="editTargetForYear()">Sửa
         </button>
         <button type="submit" class="btn btn-primary ml-1" (click)="addTargetForYear()">Thêm mới chỉ tiêu
         </button>

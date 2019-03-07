@@ -5,7 +5,7 @@
     </div>
     <div class="text-right col-md-6" id="action">
       <ng-container *ngIf="paramAction === 'view'">
-        <button class="btn btn-secondary" type="button" [routerLink]="['../type-construction']" [queryParams]="{action:'edit'}">Sửa
+        <button class="btn btn-secondary" type="button" [routerLink]="['../type-construction']" [queryParams]="{action:'edit'}" (click)="editConstructionType()">Sửa
         </button>
         <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../type-construction']" [queryParams]="{action:'create'}"
           (click)="createConstructionType()">Thêm

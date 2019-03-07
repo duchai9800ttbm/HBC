@@ -194,6 +194,10 @@ export class KpiAreaComponent implements OnInit {
     }
   }
 
+  editkpiArea() {
+    this.yearBackTemp = this.yearkpi;
+  }
+
   createOrEditKpiLocation() {
     this.isSubmitCreate = true;
     if (this.yearkpi) {

@@ -117,6 +117,10 @@ export class WinBidComponent implements OnInit {
     this.targetWinBid.get('percent').patchValue(percent);
   }
 
+  editWinBid() {
+    this.yearBackTemp = this.yearkpi;
+  }
+
   createOrEditTargetWinBid() {
     this.isSubmitCreate = true;
     if (this.yearkpi) {

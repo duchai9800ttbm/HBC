@@ -5,7 +5,7 @@
     </div>
     <div class="text-right col-md-6" id="action">
         <ng-container *ngIf="paramAction === 'view'">
-          <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-area']" [queryParams]="{action:'edit'}">Sửa
+          <button class="btn btn-secondary" type="button" [routerLink]="['../kpi-area']" [queryParams]="{action:'edit'}" (click)="editkpiArea()">Sửa
           </button>
           <button type="submit" class="btn btn-primary ml-1" [routerLink]="['../kpi-area']" [queryParams]="{action:'create'}"
             (click)="createKpiArea()">Thêm mới chỉ tiêu

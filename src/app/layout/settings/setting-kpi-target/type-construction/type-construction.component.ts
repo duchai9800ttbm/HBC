@@ -208,6 +208,10 @@ export class TypeConstructionComponent implements OnInit {
   //   this.constructionTypeForm.get('targetTotal').patchValue(totalTargetAll);
   // }
 
+  editConstructionType() {
+    this.yearBackTemp = this.yearkpi;
+  }
+
   createConstructionType() {
     this.yearBackTemp = this.yearkpi;
     this.yearkpi = null;

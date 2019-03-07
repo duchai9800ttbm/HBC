@@ -143,6 +143,10 @@ export class ConstructionItemsComponent implements OnInit {
     }
   }
 
+  editConstructionItems() {
+    this.yearBackTemp = this.yearkpi;
+  }
+
   createOrEditConstructionCategory() {
     this.isSubmitCreate = true;
     if (this.yearkpi) {
