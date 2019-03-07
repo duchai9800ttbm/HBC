@@ -867,7 +867,6 @@ export class DataService {
                     return {
                         id: x.key,
                         text: `${x.value}`,
-                        displayText: x.displayText,
                     };
                 }));
     }
