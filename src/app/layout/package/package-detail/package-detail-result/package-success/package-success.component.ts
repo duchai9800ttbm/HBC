@@ -3,6 +3,7 @@ import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { CheckStatusPackage } from '../../../../../shared/constants/check-status-package';
 import { slideToBottom, slideToTop } from '../../../../../router.animations';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-package-success',
   templateUrl: './package-success.component.html',
@@ -25,7 +26,8 @@ export class PackageSuccessComponent implements OnInit {
   };
   checkStatusPackage = CheckStatusPackage;
   constructor(
-    private packageService: PackageService
+    private packageService: PackageService,
+    private router: Router
   ) {
   }
 
@@ -93,6 +95,7 @@ export class PackageSuccessComponent implements OnInit {
     this.arrow = false;
     this.arrowKickOff = false;
     this.kickOffActive = true;
+    this.router.navigate([`/package/detail/${PackageDetailComponent.packageId}/result/package-success/contract-signed`]);
   }
 
   onClickList() {
