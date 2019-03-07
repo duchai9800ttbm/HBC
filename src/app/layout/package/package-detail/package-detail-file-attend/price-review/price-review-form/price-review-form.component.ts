@@ -1302,7 +1302,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     const dieuKienGuiDuyet = (this.priceReviewForm.get('isApprovedByTenderLeader').value !== null &&
       this.priceReviewForm.get('isApprovedByTenderManager').value !== null);
     console.log('dieuKienGuiDuyet', this.priceReviewForm.get('isApprovedByTenderLeader').value,
-    this.priceReviewForm.get('isApprovedByTenderManager').value , dieuKienGuiDuyet);
+      this.priceReviewForm.get('isApprovedByTenderManager').value, dieuKienGuiDuyet);
     if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) && !dieuKienGuiDuyet) {
       this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`, null);
     } else {
@@ -1451,6 +1451,10 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     }
     // Count Total Bid Price
     this.countTotalBidPriceBaseTender();
+
+    if (this.priceReviewForm.get('infoGfa').value === null) {
+      this.alertService.error('Vui lòng kiểm tra lại diện tích sàn tại thông tin chi tiết gói thầu để dữ liệu của trình duyệt giá được đảm bảo');
+    }
   }
   countTotalCostOfCapitalAlterTenderAmount() {
     const valueGeneralExpensesAmount = this.priceReviewForm.get('chiPhiAlterAmount').value ?
