@@ -78,7 +78,6 @@ export class MonitoringReportComponent implements OnInit {
 
     // Note
     const yearSub = this.endDate.getFullYear() - this.startDate.getFullYear();
-    console.log('yearSub', yearSub);
     if (yearSub === 0) {
       this.messgeCanNote = null;
       this.startAndEndDate.isEditNote = true;

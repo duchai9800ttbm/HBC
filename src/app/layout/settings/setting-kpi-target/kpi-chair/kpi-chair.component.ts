@@ -122,23 +122,19 @@ export class KpiChairComponent implements OnInit {
       ).subscribe(([res1, res2]) => {
         this.createForm(res1[0]);
         this.listGroupkpi = res2.items && res2.items.filter(item => item.isActive === true);
-        console.log('132132132-edit', this.listGroupkpi);
         this.groupKpiChairsArray.value.groupKpiChair.forEach(item => {
           if (item.groupName && item.groupName.isActive === false) {
             this.listGroupkpi.push(item.groupName);
           }
         });
-        console.log('this.listGroupkpi', this.listGroupkpi);
       });
     }
     if (this.paramAction === 'create') {
       this.settingService.getListGroupKPI('', 0, 1000).subscribe(response => {
         this.listGroupkpi = response.items && response.items.filter(item => item.isActive === true);
-        console.log('132132132=create', this.listGroupkpi);
       });
       this.yearkpi = null;
       this.createForm(null);
-      console.log('this.listGroupkpi', this.listGroupkpi);
     }
   }
 

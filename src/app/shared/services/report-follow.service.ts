@@ -401,7 +401,6 @@ export class ReportFollowService {
       year: year,
       details: details,
     };
-    console.log('hi.reportWinRateConstractors', requestModel);
     return this.apiService.post(url, requestModel);
   }
   // Cập nhật ghi chú báo cáo "tỉ lệ trúng thầu theo qúy" theo năm

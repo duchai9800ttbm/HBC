@@ -13,7 +13,6 @@ export class ConfirmationHtmlPopupComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('this.message', this.message);
   }
 
 }

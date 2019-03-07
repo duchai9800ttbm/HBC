@@ -1301,8 +1301,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   guiDuyet() {
     const dieuKienGuiDuyet = (this.priceReviewForm.get('isApprovedByTenderLeader').value !== null &&
       this.priceReviewForm.get('isApprovedByTenderManager').value !== null);
-    console.log('dieuKienGuiDuyet', this.priceReviewForm.get('isApprovedByTenderLeader').value,
-      this.priceReviewForm.get('isApprovedByTenderManager').value, dieuKienGuiDuyet);
     if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) && !dieuKienGuiDuyet) {
       this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`, null);
     } else {
