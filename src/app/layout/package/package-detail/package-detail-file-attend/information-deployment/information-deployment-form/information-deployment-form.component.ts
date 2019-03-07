@@ -45,6 +45,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     tenderPlan: TenderPreparationPlanningRequest;
     mailPersonnel = ['', '', '', ''];
     taskNoAssignment = '';
+    taskTotalNegative = '';
     whoIsInChargeIdSurvey;
     get tasksFA(): FormArray {
         return this.planForm.get('tasks') as FormArray;
@@ -865,6 +866,17 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         });
     }
 
+    checkTotalTimeNegative() {
+        return this.tasksFA.value.every(item => {
+            if (item.totalTime && (+item.totalTime < 0)) {
+                this.taskTotalNegative = item.itemName;
+                return false;
+            } else {
+                return true;
+            }
+        });
+    }
+
     submitForm(isDraft: boolean) {
         if (this.checkQueryDeadline()) {
             if (isDraft) { // Lưu nháp
@@ -872,15 +884,20 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             } else {
                 // Lưu chính thức
                 if (this.checkAssignment()) {
-                    if (this.checkChooseAllTask()) {
-                        this.actionSubmit(isDraft);
+                    if (this.checkTotalTimeNegative()) {
+                        if (this.checkChooseAllTask()) {
+                            this.actionSubmit(isDraft);
+                        } else {
+                            this.confirmationService.confirm(
+                                'Chưa hoàn tất phân công tiến độ, bạn có muốn tiếp tục hay không?',
+                                () => {
+                                    this.actionSubmit(isDraft);
+                                }
+                            );
+                        }
                     } else {
-                        this.confirmationService.confirm(
-                            'Chưa hoàn tất phân công tiến độ, bạn có muốn tiếp tục hay không?',
-                            () => {
-                                this.actionSubmit(isDraft);
-                            }
-                        );
+                        // tslint:disable-next-line:max-line-length
+                        this.alertService.error(`Bạn cần chọn ngày bắt đầu nhỏ hơn ngày kết thúc cho công việc "${this.taskTotalNegative}"`);
                     }
                 } else {
                     this.alertService.error(`Bạn cần chọn ngày bắt đầu và ngày kết thúc cho công việc "${this.taskNoAssignment}"`);
