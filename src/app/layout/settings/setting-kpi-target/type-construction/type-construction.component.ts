@@ -197,16 +197,16 @@ export class TypeConstructionComponent implements OnInit {
     this.constructionTypeForm.get('targetTotal').patchValue(totalTargetAll);
   }
 
-  calculTargetTotalToChangeTotal(indexForm: number) {
-    const percent = this.typeBuilddFA.controls[indexForm].get('totalTargetAmount').value * 100
-      / this.typeBuilddFA.controls[indexForm].get('totalAmount').value;
-    this.typeBuilddFA.controls[indexForm].get('percent').patchValue(percent);
-    let totalTargetAll = 0;
-    (this.typeBuilddFA.value || []).forEach(itemFormMainBuild => {
-      totalTargetAll = totalTargetAll + itemFormMainBuild.totalTargetAmount;
-    });
-    this.constructionTypeForm.get('targetTotal').patchValue(totalTargetAll);
-  }
+  // calculTargetTotalToChangeTotal(indexForm: number) {
+  //   const percent = this.typeBuilddFA.controls[indexForm].get('totalTargetAmount').value * 100
+  //     / this.typeBuilddFA.controls[indexForm].get('totalAmount').value;
+  //   this.typeBuilddFA.controls[indexForm].get('percent').patchValue(percent);
+  //   let totalTargetAll = 0;
+  //   (this.typeBuilddFA.value || []).forEach(itemFormMainBuild => {
+  //     totalTargetAll = totalTargetAll + itemFormMainBuild.totalTargetAmount;
+  //   });
+  //   this.constructionTypeForm.get('targetTotal').patchValue(totalTargetAll);
+  // }
 
   createConstructionType() {
     this.yearBackTemp = this.yearkpi;
@@ -229,7 +229,7 @@ export class TypeConstructionComponent implements OnInit {
         constructionTypeId: itemTypeBuild.id,
         constructionTypeName: itemTypeBuild.text,
         totalAmount: 0,
-        percent: 0,
+        percent: 100,
         totalTargetAmount: 0,
       });
       (this.constructionTypeForm.get('typeBuild') as FormArray).push(formArrayItem);
