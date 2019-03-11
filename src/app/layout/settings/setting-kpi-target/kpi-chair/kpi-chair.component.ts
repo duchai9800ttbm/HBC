@@ -223,8 +223,11 @@ export class KpiChairComponent implements OnInit {
     this.loadingListChairEmployeeCanChoosedTemp = true;
     this.packageService.searchKeyWordListGroupChaired(0, 1000, this.searchTermChairName$).subscribe(response => {
       // const arraySelectChoosedTemp = this.listChairEmployeeChoosedTemp.map(itemSelect => itemSelect.employeeId);
+      const arrayListChairEmployeeChoosedTemp = this.listChairEmployeeChoosedTemp.map(item => item.employeeId);
       this.listChairEmployeeCanChoosedTemp = response.items.filter(item => {
-        return !arrayChairUsed.includes(item.employeeId) && (item.activeCheck === true);
+        return !arrayChairUsed.includes(item.employeeId)
+          && (item.activeCheck === true)
+          && !arrayListChairEmployeeChoosedTemp.includes(item.employeeId);
         // !arraySelectChoosedTemp.includes(item.employeeId) &&
       });
       this.listChairEmployee = response.items;
