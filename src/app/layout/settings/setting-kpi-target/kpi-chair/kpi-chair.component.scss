@@ -3,6 +3,7 @@
 // }
 .zui-table thead th{
     background-color: #34a5e4;
+    padding: 0.38rem 0.8rem;
 }
 
 .btn-icon {
@@ -19,10 +20,14 @@
 
 .btn-icon-plus {
     background-color: #00a0e3;
+    margin-left: 3px;
+    i{
+        margin-top: 2px;
+    }
 }
 
 .icon-delete-form--width{
-    width: 19px;
+    width: 22px;
 }
 .icon-double-form--width{
     width: 39px;
@@ -30,6 +35,9 @@
 
 .btn-icon-minus {
     background-color: #EA5552;
+    i{
+        margin-top: 2px;
+    }
 }
 
 .add-chair-icon{
@@ -40,6 +48,7 @@
 
 .group--width{
     width: calc(100% - 40px);
+    padding-top: 1px;
 }
 
 .form-select-cus::before{
@@ -117,7 +126,10 @@
 
 .manipulation{
     .year-min-width{
-        min-width: 150px
+        min-width: 150px;
+        .option-year{
+            padding-left: 2px;
+        }
     }
 }
 
@@ -144,5 +156,13 @@
     box-shadow: 1px 2px 0px 1px rgba(45, 45, 51, 0.28);
     border-radius: .28571429rem;
     border-radius: 0.25rem;
+}
+
+.but-cancel--mar{
+    margin-right: 8px
+}
+
+.select-year--width{
+    width: 122px;
 }
 

@@ -23,10 +23,11 @@
     <div class="row manipulation">
       <div class="col-md-3 d-flex year-min-width" id="year">
         <ng-container *ngIf="!(paramAction === 'view' && listYearConfigured && listYearConfigured.length === 0)">
-          <span class="font-weight-bold year--pad-top" [class.required]="paramAction === 'edit' || paramAction === 'create'">Năm:&nbsp;</span>&nbsp;&nbsp;
-          <div>
+          <span class="font-weight-bold year--pad-top" [class.required]="paramAction === 'edit' || paramAction === 'create'">Năm:&nbsp;</span>&nbsp;
+          <!-- &nbsp; -->
+          <div class="option-year">
             <div class="custom-dropdown">
-              <select class="form-control select-year--width" style="width: 122px;" [(ngModel)]="yearkpi" (change)="changeYearKpiFuc()"
+              <select class="form-control select-year--width" [(ngModel)]="yearkpi" (change)="changeYearKpiFuc()"
                 [class.is-invalid]="isSubmitCreate && (!yearkpi || yearkpi === 'null')">
                 <option value="null" *ngIf="yearkpi === null">--Lựa chọn--</option>
                 <ng-container *ngIf="paramAction === 'view' || paramAction === 'edit'">
@@ -70,10 +71,10 @@
             <div class="col-md-3 d-flex">
               <ng-container *ngIf="(paramAction === 'edit' || paramAction === 'create')">
                 <div class="btn-icon btn-icon-plus mt-2" (click)="addGroupToForm()">
-                  <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                  <i class="fa fa-plus" aria-hidden="true"></i>
                 </div>
                 <div class="btn-icon btn-icon-minus mt-2" (click)="removeGroupToForm(i)" *ngIf="!(groupKpiChairFA.controls.length === 1 && i === 0)">
-                  <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                  <i class="fa fa-minus" aria-hidden="true"></i>
                 </div>
                 <div *ngIf="(groupKpiChairFA.controls.length === 1 && i === 0)" class="icon-delete-form--width">
                 </div>
@@ -81,7 +82,7 @@
               <ng-container *ngIf="(paramAction === 'view')">
                 <div class="icon-double-form--width"></div>
               </ng-container>
-              <div class="pl-3 group--width pb-1" [class.card-group-name]="paramAction === 'view'">
+              <div class="pl-2 group--width pb-1" [class.card-group-name]="paramAction === 'view'">
                 <span *ngIf="paramAction === 'edit' || paramAction === 'create'" class="custom-dropdown w-100">
                   <select class="w-100 form-control" formControlName="groupName" [compareWith]="compareFn">
                     <option [ngValue]="null" *ngIf="!gKpiChairControl.get('groupName').value">--Lựa chọn--</option>
@@ -204,7 +205,7 @@
       </div>
     </div>
     <div class="pd-b20 d-flex justify-content-center">
-      <button type="button" class="btn btn-default" (click)="closedPopup()" style="margin-right: 8px">Hủy</button>
+      <button type="button" class="btn btn-default but-cancel--mar" (click)="closedPopup()">Hủy</button>
       <button type="submit" class="btn btn-primary" (click)="addGroupChairEmployeeInGroupKpi();">Lưu</button>
     </div>
   </div>
