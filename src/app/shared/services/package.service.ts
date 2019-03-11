@@ -1232,6 +1232,7 @@ export class PackageService {
             avatarUrl: result.avatarUrl,
             employeeId: result.employeeId,
             email: result.email,
+            activeCheck: result.activeCheck
         };
     }
     // Danh sách người dùng nhóm chủ trì, phân trang

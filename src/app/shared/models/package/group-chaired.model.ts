@@ -11,4 +11,5 @@ export class GroupChaired {
     avatarUrl: string;
     employeeId: number;
     email: string;
+    activeCheck: boolean;
 }
