@@ -31,8 +31,12 @@ export class ThousandSeparate implements PipeTransform {
         : '';
     }
 
-    integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
-
+    if ( fraction.toString().length === (fractionSize + 2) ) {
+      integer = (+integer + 1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
+      fraction = this.DECIMAL_SEPARATOR + PADDING.substring(0, fractionSize);
+    } else {
+      integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
+    }
     return integer + fraction + (integer && this.CURRENCY_UNIT);
   }
 
