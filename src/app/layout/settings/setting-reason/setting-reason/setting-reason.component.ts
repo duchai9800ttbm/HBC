@@ -14,6 +14,7 @@ export class SettingReasonComponent implements OnInit {
   userModel: UserModel;
   listPrivileges = [];
   isManageInformationSettings;
+  isManageKPISettings;
   constructor(
     private router: Router,
     private sessionService: SessionService
@@ -23,8 +24,13 @@ export class SettingReasonComponent implements OnInit {
     this.userModel = this.sessionService.userInfo;
     this.listPrivileges = this.userModel.privileges;
     this.isManageInformationSettings = this.listPrivileges.some(x => x === 'ManageInformationSettings');
+    this.isManageKPISettings = this.listPrivileges.some(x => x === 'ManageKPISettings');
     if (!this.isManageInformationSettings) {
-      this.router.navigate(['/no-permission']);
+      if (this.isManageKPISettings) {
+        this.router.navigate(['/settings/kpi-target']);
+      } else {
+        this.router.navigate(['/no-permission']);
+      }
     }
   }
 
