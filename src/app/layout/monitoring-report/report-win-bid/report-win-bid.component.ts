@@ -4,6 +4,8 @@ import { ReportFollowService } from '../../../shared/services/report-follow.serv
 import { ReportWinBid } from '../../../shared/models/report-follow/report-kpi-win-bid.model';
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
 import { AlertService } from '../../../shared/services';
+import { SettingService } from '../../../shared/services/setting.service';
+import { StartAndEndDate } from '../../../shared/models/report-follow/startAndEndDate.model';
 
 @Component({
   selector: 'app-report-win-bid',
@@ -18,9 +20,11 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
   targetNote: string;
   note: string;
   isEditNote: boolean;
+  listYearConfigured: number[];
   constructor(
     private reportFollowService: ReportFollowService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private settingService: SettingService
   ) { }
 
   ngOnInit() {
@@ -31,8 +35,19 @@ export class ReportWinBidComponent implements OnInit, OnDestroy {
       } else {
         this.year = null;
       }
-      this.isEditNote = startAndEndDate.isEditNote;
+      this.checkListYearConfigred(startAndEndDate);
       this.viewReport(startAndEndDate.startDate, startAndEndDate.endDate);
+    });
+  }
+
+  checkListYearConfigred(startAndEndDate: StartAndEndDate) {
+    this.settingService.listYearConfigToWinBid().subscribe(reponseListYear => {
+      this.listYearConfigured = (reponseListYear || []).filter(item => item.isConfigured === true).map(i => i.year);
+      if (this.year !== null && !this.listYearConfigured.includes(this.year) ) {
+        this.isEditNote = false;
+      } else {
+        this.isEditNote = startAndEndDate.isEditNote;
+      }
     });
   }
 

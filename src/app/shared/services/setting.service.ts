@@ -914,7 +914,7 @@ export class SettingService {
     }
     // Danh sách năm đã cấu hình KPI loại công trình
     listYearConfigToKpiConstructionType() {
-        const url = `kpiconstructioncategory/configuredyears`;
+        const url = `kpiconstructiontype/configuredyears`;
         return this.apiService.get(url).map(reponse => {
             return (reponse.result || []);
         });

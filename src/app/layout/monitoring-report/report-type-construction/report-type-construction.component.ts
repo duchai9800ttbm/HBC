@@ -4,6 +4,8 @@ import { ReportKpiConstructionType } from '../../../shared/models/report-follow/
 import { ReportFollowService } from '../../../shared/services/report-follow.service';
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
 import { AlertService } from '../../../shared/services';
+import { StartAndEndDate } from '../../../shared/models/report-follow/startAndEndDate.model';
+import { SettingService } from '../../../shared/services/setting.service';
 
 @Component({
   selector: 'app-report-type-construction',
@@ -18,9 +20,11 @@ export class ReportTypeConstructionComponent implements OnInit, OnDestroy {
   year: number;
   constructionTypeId: number;
   isEditNote: boolean;
+  listYearConfigured: number[];
   constructor(
     private reportFollowService: ReportFollowService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private settingService: SettingService
   ) { }
 
   ngOnInit() {
@@ -31,7 +35,8 @@ export class ReportTypeConstructionComponent implements OnInit, OnDestroy {
       } else {
         this.year = null;
       }
-      this.isEditNote = startAndEndDate.isEditNote;
+      // this.isEditNote = startAndEndDate.isEditNote;
+      this.checkListYearConfigred(startAndEndDate);
       if (startAndEndDate.constructionType) {
         this.constructionTypeName = startAndEndDate.constructionTypeName;
         this.constructionTypeId = startAndEndDate.constructionType;
@@ -39,6 +44,17 @@ export class ReportTypeConstructionComponent implements OnInit, OnDestroy {
           startAndEndDate.startDate, startAndEndDate.endDate);
       } else {
         this.reportKpiConstructionType = null;
+      }
+    });
+  }
+
+  checkListYearConfigred(startAndEndDate: StartAndEndDate) {
+    this.settingService.listYearConfigToKpiConstructionType().subscribe(reponseListYear => {
+      this.listYearConfigured = (reponseListYear || []).filter(item => item.isConfigured === true).map(i => i.year);
+      if (this.year !== null && !this.listYearConfigured.includes(this.year) ) {
+        this.isEditNote = false;
+      } else {
+        this.isEditNote = startAndEndDate.isEditNote;
       }
     });
   }
