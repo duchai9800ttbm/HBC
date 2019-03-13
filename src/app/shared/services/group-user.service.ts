@@ -69,6 +69,7 @@ export class GroupUserService implements OnInit {
       isUsing: result.isUsing,
       userCount: result.userCount,
       canBeMofify: result.canBeMofify,
+      canBeDelete: result.canBeDelete,
     };
   }
   constructor(
