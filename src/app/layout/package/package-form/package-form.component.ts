@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PackageModel } from '../../../shared/models/package/package.model';
 import ValidationHelper from '../../../shared/helpers/validation.helper';
@@ -37,7 +37,7 @@ import { CustomerConsultant } from '../../../shared/models/package/customer-cons
     templateUrl: './package-form.component.html',
     styleUrls: ['./package-form.component.scss']
 })
-export class PackageFormComponent implements OnInit {
+export class PackageFormComponent implements OnInit, OnDestroy {
     @Input() package: PackageModel;
     packageForm: FormGroup;
     formErrors = {
@@ -105,6 +105,10 @@ export class PackageFormComponent implements OnInit {
         window.scroll(0, 0);
     }
 
+    ngOnDestroy() {
+        this.isDisabledButSave = false;
+    }
+
     createForm() {
         this.packageForm = this.fb.group({
             projectName: [this.package.projectName],
@@ -155,7 +159,6 @@ export class PackageFormComponent implements OnInit {
                     this.router.navigate([`/package/detail/${response.result.bidOpportunityId}`]);
                     const message = 'Gói thầu đã được tạo.';
                     this.alertService.success(message);
-                    this.isDisabledButSave = false;
                 },
                     err => {
                         this.spinner.hide();
