@@ -5,7 +5,7 @@ import CustomValidator from '../../../shared/helpers/custom-validator.helper';
 import { routerTransition } from '../../../router.animations';
 import ValidationHelper from '../../../shared/helpers/validation.helper';
 import { UserModel } from '../../../shared/models/user/user.model';
-import { UserService, SessionService, AlertService } from '../../../shared/services/index';
+import { UserService, SessionService, AlertService, ConfirmationService } from '../../../shared/services/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -36,6 +36,7 @@ export class UserProfileComponent implements OnInit {
     private sessionService: SessionService,
     private modalService: NgbModal,
     private alertService: AlertService,
+    private confirmationService: ConfirmationService
   ) { }
   avatarSrc: string;
   ngOnInit() {
@@ -110,7 +111,17 @@ export class UserProfileComponent implements OnInit {
     const modaRef = this.modalService.open(UserAvatarModalComponent);
   }
   clearAvatar() {
-    this.avatarSrc = defaultAvatarSrc;
+    this.confirmationService.confirm(
+      'Bạn có chắc muốn xóa hình đại diện? Nếu xóa bạn sẽ sử dụng hình đại diện mặc định.',
+      () => {
+        this.avatarSrc = defaultAvatarSrc;
+
+        this.userService.upLoadAvatar(null).subscribe(res => {
+          this.sessionService.saveAvatarUser(res);
+          this.alertService.success('Xóa ảnh đại diện thành công!');
+        });
+
+      });
     //   this.uploadAvatar();
   }
 
