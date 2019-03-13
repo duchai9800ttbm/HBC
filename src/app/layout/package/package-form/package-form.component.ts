@@ -73,6 +73,7 @@ export class PackageFormComponent implements OnInit {
     dataEvaluation: EvaluationModel[];
     public min: Date = new Date(1917, 0, 1);
     public max: Date = new Date(2000, 11, 31);
+    isDisabledButSave = false;
     constructor(
         private fb: FormBuilder,
         private alertService: AlertService,
@@ -146,6 +147,7 @@ export class PackageFormComponent implements OnInit {
         this.isSubmitted = true;
         if (this.validateForm() && this.validateDate()) {
             this.spinner.show();
+            this.isDisabledButSave = true;
             this.packageService
                 .createOpportunity(this.packageForm.value)
                 .subscribe(response => {
@@ -153,11 +155,13 @@ export class PackageFormComponent implements OnInit {
                     this.router.navigate([`/package/detail/${response.result.bidOpportunityId}`]);
                     const message = 'Gói thầu đã được tạo.';
                     this.alertService.success(message);
+                    this.isDisabledButSave = false;
                 },
                     err => {
                         this.spinner.hide();
                         const message = 'Đã xảy ra lỗi. Gói thầu không được tạo.';
                         this.alertService.error(message);
+                        this.isDisabledButSave = false;
                     });
         }
     }
