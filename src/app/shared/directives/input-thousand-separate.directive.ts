@@ -26,7 +26,7 @@ export class InputThousandSeparateDirective implements OnInit {
     private thousandSeparate: ThousandSeparate,
   ) {
     this.renderer.setElementAttribute(this.el.nativeElement, 'onkeypress', 'return event.charCode >= 48 && event.charCode <= 57');
-    this.renderer.setElementAttribute(this.el.nativeElement, 'maxlength', '18');
+    this.renderer.setElementAttribute(this.el.nativeElement, 'maxlength', '17');
   }
 
 
