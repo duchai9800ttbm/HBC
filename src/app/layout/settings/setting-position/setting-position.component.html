@@ -54,11 +54,11 @@
                         {{item?.levelDesc}}
                     </td>
                     <td class="d-flex justify-content-around">
-                        <a [routerLink]="['/settings/position/edit',item.id]" class=" text-success" title="Sửa">
-                            <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
+                        <a [routerLink]="['/settings/position/edit',item.id]" class=" text-success">
+                            <i title="Sửa" class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                         </a>
-                        <a class=" text-dark ml-3" title="Xóa">
-                            <i (click)="deleteLevel(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
+                        <a class=" text-dark ml-3">
+                            <i *ngIf="item?.levelNo !== 'TRUONGPHONG'" title="Xóa" (click)="deleteLevel(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
                         </a>
                     </td>
                 </tr>
