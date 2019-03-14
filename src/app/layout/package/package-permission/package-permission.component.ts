@@ -28,7 +28,7 @@ export class PackagePermissionComponent implements OnInit, OnDestroy {
       PackagePermissionComponent.packageId = this.packageId;
       this.subscription = this.permissionService.getUser().subscribe(data => {
         if ((data && data.userGroup && data.userGroup.text === 'Admin') ||
-          (data && data.department && data.userGroup.text === 'Chủ trì') ||
+          (data && data.department && data.userGroup.text === 'ChuTri') ||
           ((data && data.department && data.department.text === 'PHÒNG DỰ THẦU')
             && (data && data.level && data.level.text === 'Trưởng phòng'))) {
           this.isPermision = true;
