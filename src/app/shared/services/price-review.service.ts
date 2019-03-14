@@ -357,9 +357,10 @@ export class PriceReviewService {
         note: formValue.phatTienDoCY
       },
       constructionWarrantyTime: {
-        percent: Number.isNaN(+formValue.thoiGianBHYCPercent)
-          ? formValue.thoiGianBHYCPercent.substring(0, formValue.thoiGianBHYCPercent.length - 1)
-          : formValue.thoiGianBHYCPercent,
+        percent: formValue.thoiGianBHYCPercent,
+        // Number.isNaN(+formValue.thoiGianBHYCPercent)
+        //   ? formValue.thoiGianBHYCPercent.substring(0, formValue.thoiGianBHYCPercent.length - 1)
+        //   : formValue.thoiGianBHYCPercent
         money: formValue.thoiGianBHYCAmount,
         bond: formValue.thoiGianBHDXBond,
         month: formValue.thoiGianBHMonth,

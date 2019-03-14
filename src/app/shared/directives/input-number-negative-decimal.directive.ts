@@ -67,7 +67,7 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
         let integer = (value || '').replace(this.CURRENCY_UNIT, '');
         integer = integer.split(this.THOUSANDS_SEPARATOR).join('');
         return +integer;
-      }
+    }
 
     @HostListener('input', ['$event'])
     onInputChange(event) {
@@ -106,4 +106,15 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
             // event.stopPropagation();
         }
     }
+
+    @HostListener('keypress', ['$event'])
+    onKeyPress(e: KeyboardEvent) {
+        const initalValue = this._el.nativeElement.value as String;
+        const l = initalValue.match(/\./g) || [];
+        // chỉ cho nhập 1 dấu .
+        if (l.length === 1 && e.key === '.') {
+            e.preventDefault();
+        }
+    }
+
 }
