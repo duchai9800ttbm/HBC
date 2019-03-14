@@ -132,8 +132,8 @@
             </td>
             <td class="text-truncate">
               <div class="d-flex justify-content-between">
-                <div class="text-truncate" [title]="(item.userGroup && item.userGroup.value)? item.userGroup.value : '/'">
-                  {{(item.userGroup && item.userGroup.value)? item.userGroup.value : '/'}}
+                <div class="text-truncate" [title]="(item.userGroup && item.userGroup.displayText)? item.userGroup.displayText : '/'">
+                  {{(item.userGroup && item.userGroup.displayText)? item.userGroup.displayText : '/'}}
                 </div>
                 <div class="text-center" style="padding-left: 2px;">
                   <i class="fa fa-random color-random pointer" [title]="'Thay đổi nhóm'" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
