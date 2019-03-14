@@ -3,7 +3,8 @@ import {
     ElementRef,
     HostListener,
     Input,
-    OnInit
+    OnInit,
+    Renderer
 } from '@angular/core';
 import { NgControl } from '../../../../node_modules/@angular/forms';
 import { VnCurrencyPipe } from '../pipes/vn-currency-pipe.module';
@@ -32,10 +33,12 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
         private _el: ElementRef,
         private ngControl: NgControl,
         private vnCurrencyPipe: VnCurrencyPipe,
+        private renderer: Renderer,
     ) {
         this.DECIMAL_SEPARATOR = '.';
         this.THOUSANDS_SEPARATOR = ',';
         this.CURRENCY_UNIT = ' đ';
+        this.renderer.setElementAttribute(this._el.nativeElement, 'maxlength', '18');
     }
 
     ngOnInit() {
