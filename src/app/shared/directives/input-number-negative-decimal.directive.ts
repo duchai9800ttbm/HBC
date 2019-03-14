@@ -15,7 +15,7 @@ const PADDING = '000000';
     host: {
         '(blur)': 'formatInputValue($event.target.value)',
         '(focus)': 'formatToNumber($event.target.value)',
-    }
+    },
 })
 export class InputNumberNegativeDecimalDirective implements OnInit {
     @Input('negative')
@@ -29,6 +29,7 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
     private DECIMAL_SEPARATOR: string;
     private THOUSANDS_SEPARATOR: string;
     private CURRENCY_UNIT: string;
+    private MAX_LENGTH: number;
     constructor(
         private _el: ElementRef,
         private ngControl: NgControl,
@@ -38,7 +39,8 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
         this.DECIMAL_SEPARATOR = '.';
         this.THOUSANDS_SEPARATOR = ',';
         this.CURRENCY_UNIT = ' đ';
-        this.renderer.setElementAttribute(this._el.nativeElement, 'maxlength', '18');
+        this.MAX_LENGTH = 18;
+        this.renderer.setElementAttribute(this._el.nativeElement, 'maxlength', this.MAX_LENGTH.toString());
     }
 
     ngOnInit() {
@@ -113,11 +115,26 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
     @HostListener('keypress', ['$event'])
     onKeyPress(e: KeyboardEvent) {
         const initalValue = this._el.nativeElement.value as String;
-        const l = initalValue.match(/\./g) || [];
+
         // chỉ cho nhập 1 dấu .
-        if (l.length === 1 && e.key === '.') {
+        const l = initalValue.match(/\./g) || [];
+        if (this.decimal && ((l.length === 1 && e.key === '.') || !(((e.charCode >= 48 && e.charCode <= 57) || (e.charCode === 46))))) {
             e.preventDefault();
         }
+
+        // // max length for phần nguyên không lớn hơn 18 số
+        // if (this.decimal && initalValue && !isNaN(+initalValue)) {
+        //     const [integer, fraction = ''] = (+initalValue).toString()
+        //         .split(this.DECIMAL_SEPARATOR);
+        //     if (integer.length >= this.MAX_LENGTH) {
+        //         e.preventDefault();
+        //     }
+        // } else {
+        //     if (initalValue.length >= this.MAX_LENGTH) {
+        //         e.preventDefault();
+        //     }
+        // }
+
     }
 
 }
