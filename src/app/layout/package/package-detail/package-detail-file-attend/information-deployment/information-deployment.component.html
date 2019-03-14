@@ -30,7 +30,7 @@
                         class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
                 </ng-container>
 
-                <ng-container *ngIf="ThongBaoTrienKhai || (currentUserInfo?.department?.text === 'PHÒNG DỰ THẦU' && currentUserInfo?.level?.text === 'Trưởng phòng')">
+                <ng-container *ngIf="ThongBaoTrienKhai || (currentUserInfo?.department?.code === 'PDUTHAU' && currentUserInfo?.level?.code === 'TRUONGPHONG')">
                     <button type="button" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau"
                         class="btn btn-up btn-dep" (click)="openModalDeployment(informationDeployment)">Thông báo triển
                         khai

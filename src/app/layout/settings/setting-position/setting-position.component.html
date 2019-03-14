@@ -58,7 +58,7 @@
                             <i title="Sửa" class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                         </a>
                         <a class=" text-dark ml-3">
-                            <i *ngIf="item?.levelNo !== 'TRUONGPHONG'" title="Xóa" (click)="deleteLevel(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
+                            <i *ngIf="item?.levelNo !== 'TRUONGPHONG' && item?.levelNo !== 'TruongNhom'" title="Xóa" (click)="deleteLevel(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
                         </a>
                     </td>
                 </tr>

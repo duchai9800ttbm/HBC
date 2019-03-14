@@ -19,10 +19,12 @@ export class UserModel {
     level: {
         id: string;
         text: string;
+        code?: string;
     };
     department: {
         id: string;
         text: string;
+        code?: string;
     };
     firstName: string;
     lastName: string;

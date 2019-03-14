@@ -73,10 +73,12 @@ export class PermissionService {
       department: result.department && {
         id: result.department.key,
         text: result.department.value,
+        code: result.department.code,
       },
       level: result.level && {
         id: result.level.key,
-        text: result.level.value
+        text: result.level.value,
+        code: result.level.code,
       },
       userGroup: result.userGroup && {
         id: result.userGroup.key,

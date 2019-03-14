@@ -188,13 +188,13 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
               this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
             }
             if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
-              && this.userModel.department.text === 'PHÒNG DỰ THẦU'
-              && this.userModel.level && this.userModel.level.text === 'Trưởng phòng')) {
+              && this.userModel.department.code === 'PDUTHAU'
+              && this.userModel.level && this.userModel.level.code === 'TRUONGPHONG')) {
               this.priceReviewForm.controls['isApprovedByTenderManager'].enable();
             }
             if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
-              && this.userModel.department.text === 'PHÒNG DỰ THẦU'
-              && this.userModel.level && this.userModel.level.text === 'Trưởng nhóm')) {
+              && this.userModel.department.code === 'PDUTHAU'
+              && this.userModel.level && this.userModel.level.code === 'TruongNhom')) {
               this.priceReviewForm.controls['isApprovedByTenderLeader'].enable();
             }
           }
@@ -1141,13 +1141,13 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
         }
         if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
-          && this.userModel.department.text === 'PHÒNG DỰ THẦU'
-          && this.userModel.level && this.userModel.level.text === 'Trưởng phòng')) {
+          && this.userModel.department.code === 'PDUTHAU'
+          && this.userModel.level && this.userModel.level.code === 'TRUONGPHONG')) {
           this.priceReviewForm.controls['isApprovedByTenderManager'].enable();
         }
         if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
-          && this.userModel.department.text === 'PHÒNG DỰ THẦU'
-          && this.userModel.level && this.userModel.level.text === 'Trưởng nhóm')) {
+          && this.userModel.department.code === 'PDUTHAU'
+          && this.userModel.level && this.userModel.level.code === 'TruongNhom')) {
           this.priceReviewForm.controls['isApprovedByTenderLeader'].enable();
         }
       }
