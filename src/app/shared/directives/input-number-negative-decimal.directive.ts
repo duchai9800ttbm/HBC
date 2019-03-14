@@ -39,8 +39,9 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
         this.DECIMAL_SEPARATOR = '.';
         this.THOUSANDS_SEPARATOR = ',';
         this.CURRENCY_UNIT = ' đ';
-        this.MAX_LENGTH = 18;
-        this.renderer.setElementAttribute(this._el.nativeElement, 'maxlength', this.MAX_LENGTH.toString());
+        this.MAX_LENGTH = 17;
+        this.renderer.setElementAttribute(this._el.nativeElement, 'maxlength', this.MAX_LENGTH.toString() );
+        // this.decimal ? (this.MAX_LENGTH + 3).toString() :
     }
 
     ngOnInit() {

@@ -78,7 +78,7 @@
                         (itemLocation?.get('curYearTarget').value
                         | truncateDecimal) : '-'}}</td>
                       <td *ngIf="paramAction === 'edit' || paramAction === 'create'" class="text-right">
-                        <input type="text" appInputThousandSeparate class="w-100 m-0 p-0 text-right" formControlName="curYearTarget"
+                        <input type="text" appInputNumberNegativeDecimal class="w-100 m-0 p-0 text-right" formControlName="curYearTarget"
                           (input)="calculTargetTotal()" placeholder="Nhập chỉ tiêu">
                       </td>
                     </tr>

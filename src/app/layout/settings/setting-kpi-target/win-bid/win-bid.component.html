@@ -81,7 +81,7 @@
                     <td>{{ targetWinBid?.get('total')?.value ? (targetWinBid.get('total').value | truncateDecimal) :
                       '0'}}</td>
                     <td class="text-right">
-                      <input type="text" appInputNumberNegativeDecimal [min]="0" [max]="500" [decimal]="true" class="w-100 m-0 p-0 text-right"
+                      <input type="text" appInputNumberNegativeDecimal [decimal]="true" [min]="0" [max]="500" class="w-100 m-0 p-0 text-right"
                         formControlName="percent" (input)="calculValueReach()" placeholder="Nhập tỷ lệ">
                     </td>
                     <td class="text-right">

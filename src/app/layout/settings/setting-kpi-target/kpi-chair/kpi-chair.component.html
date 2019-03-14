@@ -123,9 +123,10 @@
                           !== 0)
                           ? (chairEmployeeControl.get('targetskpi').value | truncateDecimal) : 0}}</td>
                         <td class="text-right" *ngIf="paramAction === 'edit' || paramAction === 'create' ">
-                          <input type="text" appInputThousandSeparate class="w-100 m-0 p-0 text-right" formControlName="targetskpi"
+                          <input type="text" appInputNumberNegativeDecimal class="w-100 m-0 p-0 text-right" formControlName="targetskpi"
                             (input)="calculTargetTotal(i)" placeholder="Nhập chỉ tiêu" [class.validate-target-kpi]="(!chairEmployeeControl.get('targetskpi').value || !(chairEmployeeControl.get('targetskpi').value > 0)) && isSubmit">
                         </td>
+                        <!-- appInputThousandSeparate -->
                       </tr>
                     </ng-container>
                   </ng-container>
