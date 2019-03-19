@@ -235,6 +235,9 @@ export class GroupUserDetailComponent implements OnInit {
     const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
     const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
     this.groupEditOrCreate.notPrivileges = stringFilter.map(i => JSON.parse(i));
+
+    // ======
+    this.isError = false;
     this.modalRef = this.modalService.show(template, {
       class: 'gray modal-lg'
     });
@@ -567,10 +570,10 @@ export class GroupUserDetailComponent implements OnInit {
   ediGroupUser() {
     this.submitted = true;
     if (this.groupEditOrCreate.id) {
-      if (this.groupEditOrCreate.name) {
+      if (this.groupEditOrCreate.name && this.groupEditOrCreate.name.trim()) {
         const resquestModel = {
           id: this.groupEditOrCreate.id,
-          name: this.groupEditOrCreate.name,
+          name: this.groupEditOrCreate.name.trim(),
           description: this.groupEditOrCreate.desc,
           privilegeIds: this.groupEditOrCreate.privileges.map(i => Number(i.id)),
         };
@@ -585,17 +588,24 @@ export class GroupUserDetailComponent implements OnInit {
                 this.sessionService.saveUserInfo(result)
               );
             });
+          this.submitted = false;
+          this.groupEditOrCreate.id = null;
         },
           err => {
-            this.modalRef.hide();
-            this.alertService.error('Đã xảy ra lỗi. Sửa nhóm người dùng không thành công!');
+            const error = err.json();
+            if (error.errorCode === 'BusinessException') {
+              this.isError = true;
+              //  this.alertService.error(`${error.errorMessage}`);
+            } else {
+              // this.modalRef.hide();
+              this.alertService.error('Đã xảy ra lỗi. Sửa nhóm người dùng không thành công!');
+            }
           });
-        this.submitted = false;
-        this.groupEditOrCreate.id = null;
+
       }
     } else {
       if (this.groupEditOrCreate.name) {
-        this.groupEditOrCreate.userGroupName = this.groupEditOrCreate.name;
+        this.groupEditOrCreate.userGroupName = this.groupEditOrCreate.name.trim();
         this.groupUserService.createGroupUser(this.groupEditOrCreate).subscribe(response => {
           this.groupUserService.instantSearchGroupUser(this.searchTerm$, this.pagedResult.currentPage, this.pagedResult.pageSize)
             .subscribe(responsepageResultUserGroup => {
@@ -607,6 +617,7 @@ export class GroupUserDetailComponent implements OnInit {
               );
               this.alertService.success('Thêm nhóm người dùng thành công!');
             });
+          this.submitted = false;
         },
           err => {
             const error = err.json();
@@ -614,12 +625,12 @@ export class GroupUserDetailComponent implements OnInit {
               this.isError = true;
               //  this.alertService.error(`${error.errorMessage}`);
             } else {
-              this.modalRef.hide();
+              // this.modalRef.hide();
               this.alertService.error('Đã xảy ra lỗi. Thêm nhóm người dùng không thành công!');
             }
 
           });
-        this.submitted = false;
+
       }
     }
   }
