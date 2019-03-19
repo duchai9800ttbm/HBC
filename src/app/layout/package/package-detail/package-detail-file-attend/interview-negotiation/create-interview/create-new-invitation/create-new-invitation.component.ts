@@ -6,10 +6,10 @@ import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { AlertService } from '../../../../../../../shared/services';
 import { InterviewInvitationService } from '../../../../../../../shared/services/interview-invitation.service';
-import { CustomerModel } from '../../../../../../../shared/models/interview-invitation/customer.model';
 import ValidationHelper from '../../../../../../../shared/helpers/validation.helper';
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
 import { StatusObservableHsdtService } from '../../../../../../../shared/services/status-observable-hsdt.service';
+import CustomValidator from '../../../../../../../shared/helpers/custom-validator.helper';
 @Component({
   selector: 'app-create-new-invitation',
   templateUrl: './create-new-invitation.component.html',
@@ -69,7 +69,7 @@ export class CreateNewInvitationComponent implements OnInit {
       interviewDate: [this.interviewInvitation.interviewDate ?
         DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.interviewDate * 1000) : null
         , [Validators.required]],
-      place: [this.interviewInvitation.place, [Validators.required]],
+      place: [this.interviewInvitation.place, [CustomValidator.required]],
       interviewTimes: [this.interviewInvitation.interviewTimes ? this.interviewInvitation.interviewTimes
         : this.interviewInvitationService.returnMaxInterViewTimes() + 1, [Validators.required]],
       content: [this.interviewInvitation.content],

@@ -7,6 +7,7 @@ import { FileInfo, SelectEvent } from '@progress/kendo-angular-upload';
 import { DictionaryItem } from '../../../../../../shared/models';
 import { NgxSpinnerService } from 'ngx-spinner';
 import ValidationHelper from '../../../../../../shared/helpers/validation.helper';
+import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
 
 @Component({
   selector: 'app-upload-file',
@@ -126,7 +127,7 @@ export class UploadFileComponent implements OnInit {
       nameFile: '',
       version: '',
       type: null,
-      editName: ['', Validators.required],
+      editName: ['', CustomValidator.required],
       date: new Date(),
       description: ''
     });
