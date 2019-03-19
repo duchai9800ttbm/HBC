@@ -103,10 +103,13 @@ export class InterviewNoticeComponent implements OnInit {
         const approvedDate = DateTimeConvertHelper.fromTimestampToDtObject(element.approvedDate * 1000);
         const approvedDateStr = approvedDate.getDate() + '/' + (approvedDate.getMonth() + 1) + '/' + approvedDate.getFullYear();
         const interviewDate = DateTimeConvertHelper.fromTimestampToDtObject(element.interviewDate * 1000);
-        const hour = interviewDate.getHours() < 10 ? '0' + interviewDate.getHours() : interviewDate.getHours();
-        const minutes = interviewDate.getMinutes() < 10 ? '0' + interviewDate.getMinutes() : interviewDate.getMinutes();
-        const interviewDateStr = interviewDate.getDate() + '/' + (interviewDate.getMonth() + 1) + '/' + interviewDate.getFullYear()
-          + ',' + hour + ':' + minutes;
+        let interviewDateStr = '';
+        if (interviewDate) {
+          const hour = interviewDate.getHours() < 10 ? '0' + interviewDate.getHours() : interviewDate.getHours();
+          const minutes = interviewDate.getMinutes() < 10 ? '0' + interviewDate.getMinutes() : interviewDate.getMinutes();
+          interviewDateStr = interviewDate.getDate() + '/' + (interviewDate.getMonth() + 1) + '/' + interviewDate.getFullYear()
+            + ',' + hour + ':' + minutes;
+        }
         this.emailModel.content = this.emailModel.content + `
                               <div>Lần phỏng vấn: ${element.interviewTimes}</div>
                               <li> <span>Khách hàng:</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span>${element.customer && element.customer.customerName ? element.customer.customerName : ''}</span></li>
