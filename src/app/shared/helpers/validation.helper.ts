@@ -28,6 +28,7 @@ export default class ValidationHelper {
                 // tslint:disable-next-line:forin
                 for (const key in control.errors) {
                     formErrors[field] += this.validationMessages[key] + '';
+                    break;
                 }
             }
         }

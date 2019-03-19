@@ -101,10 +101,11 @@ export class EditUserComponent implements OnInit {
         this.groupUserModel = sucess;
         this.checkboxTrue = this.groupUserModel.isActive;
         this.formEditUser = this.formBuilder.group({
-          userName: [this.groupUserModel.userName ? this.groupUserModel.userName : '', [Validators.required, CustomValidator.loginName]],
-          email: [this.groupUserModel.email ? this.groupUserModel.email : '', [Validators.required, Validators.email]],
-          firstName: [this.groupUserModel.firstName ? this.groupUserModel.firstName : '', Validators.required],
-          lastName: [this.groupUserModel.lastName ? this.groupUserModel.lastName : '', Validators.required],
+          userName: [this.groupUserModel.userName ? this.groupUserModel.userName : '',
+          [CustomValidator.required, CustomValidator.loginName]],
+          email: [this.groupUserModel.email ? this.groupUserModel.email : '', [CustomValidator.required, Validators.email]],
+          firstName: [this.groupUserModel.firstName ? this.groupUserModel.firstName : '', CustomValidator.required],
+          lastName: [this.groupUserModel.lastName ? this.groupUserModel.lastName : '', CustomValidator.required],
           levelId: [this.groupUserModel.level ? this.groupUserModel.level.key : null],
           userGroupId: [this.groupUserModel.userGroup ? this.groupUserModel.userGroup.id : null, Validators.required],
           department: [this.groupUserModel.department ? Number(this.groupUserModel.department.key) : null, Validators.required],
@@ -147,7 +148,7 @@ export class EditUserComponent implements OnInit {
     if (this.validateForm()) {
       const dataUser = {
         id: this.idString,
-        userName: this.formEditUser.value.userName,
+        userName: this.formEditUser.value.userName.trim(),
         email: this.formEditUser.value.email,
         lastName: this.formEditUser.value.lastName,
         firstName: this.formEditUser.value.firstName,

@@ -110,7 +110,7 @@ export default class CustomValidator {
 
     static loginName(control: AbstractControl): ValidationErrors | null {
         return (CustomValidator.isNullOrEmpty(control.value)
-            || (control.value.length >= USERNAME_LOGIN_MIN_LENGTH))
+            || (control.value && control.value.trim().length >= USERNAME_LOGIN_MIN_LENGTH))
             ? null
             : {
                 userName: {

@@ -111,12 +111,12 @@ export class AddUserComponent implements OnInit {
     };
 
     this.formAddUser = this.formBuilder.group({
-      userName: ['', [Validators.required, CustomValidator.loginName]],
-      email: ['', [Validators.required, Validators.email]],
+      userName: ['', [CustomValidator.required, CustomValidator.loginName]],
+      email: ['', [CustomValidator.required, Validators.email]],
       password: ['', [Validators.required, CustomValidator.password]],
       rePassword: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', CustomValidator.required],
+      lastName: ['', CustomValidator.required],
       levelId: null,
       userGroupId: null,
       departmentId: [null , Validators.required],
@@ -146,7 +146,7 @@ export class AddUserComponent implements OnInit {
         return;
       }
       const dataUser = {
-        userName: this.formAddUser.value.userName,
+        userName: this.formAddUser.value.userName.trim(),
         email: this.formAddUser.value.email,
         lastName: this.formAddUser.value.lastName,
         firstName: this.formAddUser.value.firstName,
