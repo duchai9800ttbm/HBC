@@ -143,7 +143,7 @@ export class UploadFileComponent implements OnInit {
 
   validateForm() {
     const isFile = (this.uploadForm.get('nameFile').value) ? true : false;
-    const isLinkFile = (this.uploadForm.get('link').value) ? true : false;
+    const isLinkFile = (this.uploadForm.get('link').value && this.uploadForm.get('link').value.trim()) ? true : false;
     if (!isFile && !isLinkFile) {
       this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
     } else {

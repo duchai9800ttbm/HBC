@@ -86,7 +86,7 @@ export class DetailResultPackageService {
     const url = `tenderresultdocument/upload`;
     const formData = new FormData();
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
-    formData.append('Name', `${uploadResultFormValue.documentName}`);
+    formData.append('Name', `${uploadResultFormValue.documentName.trim()}`);
     formData.append('InterviewTimes', `${uploadResultFormValue.interviewTimes}`);
     formData.append('ReceivedDate', uploadResultFormValue.receivedDate ?
       DateTimeConvertHelper.fromDtObjectToTimestamp(uploadResultFormValue.receivedDate).toString() : '');
@@ -96,7 +96,7 @@ export class DetailResultPackageService {
     if (file) {
       formData.append('File', file);
     } else {
-      formData.append('Url', uploadResultFormValue.link);
+      formData.append('Url', uploadResultFormValue.link.trim());
     }
     formData.append('Version', uploadResultFormValue.version);
     return this.apiService.postFile(url, formData)

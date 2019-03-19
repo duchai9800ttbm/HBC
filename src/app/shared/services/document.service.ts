@@ -204,11 +204,11 @@ export class DocumentService {
         const formData = new FormData();
         formData.append('BidOpportunityId', `${id}`);
         formData.append('DocumentTypeId', documentTypeId);
-        formData.append('DocumentName', documentName);
-        formData.append('DocumentDesc', description);
+        formData.append('DocumentName', documentName.trim());
+        formData.append('DocumentDesc', description.trim());
         formData.append('ReceivedDate', `${moment(receivedDate).unix()}`);
         formData.append('DocumentFile', file);
-        formData.append('Url', link);
+        formData.append('Url', link.trim());
         formData.append('Version', version);
         return this.apiService.postFile(url, formData)
             .map(response => response)

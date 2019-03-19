@@ -289,10 +289,10 @@ export class InterviewInvitationService {
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
     formData.append('ReceivedDate', `${DateTimeConvertHelper.fromDtObjectToTimestamp(createFormNewInvitationValue.approvedDate)}`);
     formData.append('InterViewDate', `${DateTimeConvertHelper.fromDtObjectToTimestamp(createFormNewInvitationValue.interviewDate)}`);
-    formData.append('Place', createFormNewInvitationValue.place);
+    formData.append('Place', createFormNewInvitationValue.place.trim());
     formData.append('InterviewTimes', createFormNewInvitationValue.interviewTimes);
-    if (createFormNewInvitationValue.content) {
-      formData.append('Content', createFormNewInvitationValue.content);
+    if (createFormNewInvitationValue.content && createFormNewInvitationValue.content.trim()) {
+      formData.append('Content', createFormNewInvitationValue.content.trim());
     }
     formData.append('DocumentFile', file);
     return this.apiService.postFile(url, formData)
@@ -314,10 +314,10 @@ export class InterviewInvitationService {
     formData.append('BidInterviewInvitationId', `${BidInterviewInvitationId}`);
     formData.append('ReceivedDate', `${DateTimeConvertHelper.fromDtObjectToTimestamp(createFormNewInvitationValue.approvedDate)}`);
     formData.append('InterViewDate', `${DateTimeConvertHelper.fromDtObjectToTimestamp(createFormNewInvitationValue.interviewDate)}`);
-    formData.append('Place', createFormNewInvitationValue.place);
+    formData.append('Place', createFormNewInvitationValue.place.trim());
     formData.append('InterviewTimes', createFormNewInvitationValue.interviewTimes);
-    if (createFormNewInvitationValue.content) {
-      formData.append('Content', createFormNewInvitationValue.content);
+    if (createFormNewInvitationValue.content && createFormNewInvitationValue.content.trim()) {
+      formData.append('Content', createFormNewInvitationValue.content.trim());
     }
     formData.append('DocumentFile', file);
     return this.apiService.postFile(url, formData)
