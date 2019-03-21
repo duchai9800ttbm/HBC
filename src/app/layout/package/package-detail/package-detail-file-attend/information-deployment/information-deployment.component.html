@@ -129,7 +129,7 @@
             <div class="text-center mt-3">
                 {{toggleTextUpFile}}
             </div>
-            <div class="text-center mt-3" *ngIf="packageInfo?.stageStatus.id == bidStatus.DaThongBaoTrienKhai && !tenderPlan">
+            <div class="text-center mt-3" *ngIf="packageInfo?.stageStatus.id == bidStatus.DaThongBaoTrienKhai && !tenderPlan && TaoMoiBangPCTD">
                 <button class="btn btn-primary ml-1" routerLink="./create" (click)="changeAction('create')">
                     Tạo mới bảng phân công tiến độ
                 </button>
