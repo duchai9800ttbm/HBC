@@ -78,6 +78,7 @@ export class GroupUserDetailComponent implements OnInit {
   userModel: UserModel;
   listPrivileges = [];
   isManageUserGroups;
+  isManageUsers;
   loading = false;
   checkboxSeclectAll: boolean;
   constructor(
@@ -98,9 +99,14 @@ export class GroupUserDetailComponent implements OnInit {
     this.listPrivileges = this.userModel.privileges;
     if (this.listPrivileges) {
       this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
+      this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
     }
     if (!this.isManageUserGroups) {
-      this.router.navigate(['/no-permission']);
+      if (this.isManageUsers) {
+        this.router.navigate(['/management-user/group-user/manage-user-list']);
+      } else {
+        this.router.navigate(['/no-permission']);
+      }
     }
     this.isQTV = false;
     this.hideInput = false;
