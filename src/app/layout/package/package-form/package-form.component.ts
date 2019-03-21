@@ -140,7 +140,10 @@ export class PackageFormComponent implements OnInit, OnDestroy {
             projectEstimatedStartDate: [this.package.projectEstimatedStartDate],
             projectEstimatedEndDate: [this.package.projectEstimatedEndDate],
             totalTime: [this.package.totalTime],
-            description: [this.package.description]
+            description: [this.package.description],
+            receiveWinResultDate: this.package.receiveWinResultDate,
+            receiveLoseResultDate: this.package.receiveLoseResultDate,
+            receiveCancelResultDate: this.package.receiveCancelResultDate,
         });
         this.packageForm.valueChanges.subscribe(data => {
             this.onFormValueChanged(data);

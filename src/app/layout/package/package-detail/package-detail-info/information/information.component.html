@@ -245,6 +245,30 @@
                                     <div class="w-75 form-control">{{package.totalTime}}</div>
                                 </td>
                             </tr>
+                            <tr>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Ngày nhận kết
+                                    quả thầu</td>
+                                <td class="w-35 no-boder">
+                                    <div class="w-75 form-control">
+                                        <span *ngIf="package.receiveWinResultDate && package.receiveWinResultDate !== 0">{{(package.receiveWinResultDate)*1000
+                                            | date:'dd/MM/yyyy'}}</span>
+                                        <span *ngIf="package.receiveLoseResultDate && package.receiveLoseResultDate !== 0">{{(package.receiveLoseResultDate)*1000
+                                            | date:'dd/MM/yyyy'}}</span>
+
+                                    </div>
+                                </td>
+                                <td class="w-15 bg-light text-right label no-boder field-name"></td>
+                                <td class="w-35 no-boder">
+                                </td>
+
+                                <!-- <td class="w-15 bg-light text-right label no-boder field-name">Ngày huỷ thầu</td>
+                                <td class="w-35 no-boder">
+                                    <div class="w-75 form-control">
+                                        <span *ngIf="package.receiveCancelResultDate && package.receiveCancelResultDate !== 0">{{(package.receiveCancelResultDate)*1000
+                                            | date:'dd/MM/yyyy'}}</span>
+                                    </div>
+                                </td> -->
+                            </tr>
                         </tbody>
                     </table>
                 </div>

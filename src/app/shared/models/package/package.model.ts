@@ -29,4 +29,7 @@ export class PackageModel {
     projectEstimatedEndDate: number;
     totalTime: string;
     description: string;
+    receiveWinResultDate: number;
+    receiveLoseResultDate: number;
+    receiveCancelResultDate: number;
 }

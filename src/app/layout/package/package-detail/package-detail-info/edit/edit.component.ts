@@ -156,7 +156,10 @@ export class EditComponent implements OnInit {
             acceptanceReason: [this.package.acceptanceReason],
             unacceptanceReason: this.package.unacceptanceReason,
             cancelReason: [this.package.cancelReason],
-            progress: this.package.progress
+            progress: this.package.progress,
+            receiveWinResultDate: this.package.receiveWinResultDate,
+            receiveLoseResultDate: this.package.receiveLoseResultDate,
+            receiveCancelResultDate: this.package.receiveCancelResultDate,
         });
         this.packageForm.valueChanges.subscribe(data => {
             this.onFormValueChanged(data);

@@ -218,7 +218,7 @@ export class PackageSuccessService {
                     url += `?receiveWinResultDate=${DateTimeConvertHelper.fromDtObjectToTimestamp(receiveResultDate)}`;
                     break;
                 case SETTING_REASON.Lose:
-                    url += `?receiveLostResultDate=${DateTimeConvertHelper.fromDtObjectToTimestamp(receiveResultDate)}`;
+                    url += `?receiveLoseResultDate=${DateTimeConvertHelper.fromDtObjectToTimestamp(receiveResultDate)}`;
                     break;
                 case SETTING_REASON.Cancel:
                     url += `?receiveCancelResultDate=${DateTimeConvertHelper.fromDtObjectToTimestamp(receiveResultDate)}`;

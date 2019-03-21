@@ -93,4 +93,7 @@ export class PackageInfoModel {
     winReasonName: string;
     loseReasonName: string;
     cancelReasonName: string;
+    receiveWinResultDate: number;
+    receiveLoseResultDate: number;
+    receiveCancelResultDate: number;
 }

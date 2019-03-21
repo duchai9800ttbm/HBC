@@ -537,6 +537,9 @@ export class PackageService {
                 winReasonName: result.winReasonName,
                 loseReasonName: result.loseReasonName,
                 cancelReasonName: result.cancelReasonName,
+                receiveWinResultDate: result.receiveWinResultDate,
+                receiveLoseResultDate: result.receiveLoseResultDate,
+                receiveCancelResultDate: result.receiveCancelResultDate,
             };
         }).share();
     }
@@ -1259,17 +1262,17 @@ export class PackageService {
             searchUrl,
             searchTerm
         )
-        .map(result => {
-            return {
-                currentPage: result.pageIndex,
-                pageSize: result.pageSize,
-                pageCount: result.totalPages,
-                total: result.totalCount,
-                items: (result.items || []).map(
-                    this.toGetListGroupChaired
-                )
-            };
-        });
+            .map(result => {
+                return {
+                    currentPage: result.pageIndex,
+                    pageSize: result.pageSize,
+                    pageCount: result.totalPages,
+                    total: result.totalCount,
+                    items: (result.items || []).map(
+                        this.toGetListGroupChaired
+                    )
+                };
+            });
     }
 
     directionalTabAttendFuc() {
