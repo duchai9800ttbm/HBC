@@ -7,11 +7,15 @@
             <img class="image-empty" src="assets/images/file_empty.png">
             <div class="mt-3">Hiện chưa có bản báo cáo khảo sát công trường nào</div>
             <div class="mt-3 d-flex justify-content-center">
-                <ng-container *ngIf="TaoMoiLiveForm">
-                    <button class="btn btn-primary" [routerLink]="['./form/create']" (click)="onActivate('create')">
-                        Tạo mới báo cáo khảo sát công trường
-                    </button>
+                <ng-container *ngIf="!isChotHoSo">
+                    <ng-container *ngIf="TaoMoiLiveForm">
+                        <button class="btn btn-primary" [routerLink]="['./form/create']" (click)="onActivate('create')">
+                            Tạo mới báo cáo khảo sát công trường
+                        </button>
+                    </ng-container>
                 </ng-container>
+
+
 
             </div>
         </div>
@@ -166,7 +170,8 @@
 
                             </ng-container>
                             <div *ngIf="brief(updateInfo.items)" class="d-flex justify-content-center py-1">
-                                <a class="popup-detail" (click)="viewDetail(updateInfo, indexItemHistoryChange - i)">Xem thêm</a>
+                                <a class="popup-detail" (click)="viewDetail(updateInfo, indexItemHistoryChange - i)">Xem
+                                    thêm</a>
                             </div>
                         </div>
                     </td>

@@ -108,6 +108,11 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
     this.subscription.add(permission$);
     this.subscription.add(getDataReport$);
     this.getChangeHistory(0, 10);
+
+    const statusPackage$ = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
+      this.isChotHoSo = status;
+    });
+    this.subscription.add(statusPackage$);
   }
   ngOnDestroy() {
     if (this.subscription) {
