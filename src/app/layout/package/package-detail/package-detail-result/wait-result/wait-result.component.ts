@@ -31,7 +31,8 @@ export class WaitResultComponent implements OnInit, OnDestroy {
     reasonForm: FormGroup;
     isSubmitted: boolean;
     formErrors = {
-        reasonName: ''
+        reasonName: '',
+        receiveResultDate: ''
     };
     public pageSize = 10;
     public skip = 0;
@@ -92,7 +93,8 @@ export class WaitResultComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.reasonForm = this.formBuilder.group({
-            reasonName: ['', Validators.required]
+            reasonName: ['', Validators.required],
+            receiveResultDate: ['', Validators.required],
         });
         this.reasonForm.valueChanges.subscribe(data => {
             this.onFormValueChanged(data);
@@ -168,7 +170,7 @@ export class WaitResultComponent implements OnInit, OnDestroy {
     }
 
     modalTrungThau(template: TemplateRef<any>, type: string) {
-        this.modaltrungThau = this.modalService.show(template);
+        this.modaltrungThau = this.modalService.show(template, { class: 'gray modal-lg' });
         this.textTrungThau = type;
         switch (this.textTrungThau) {
             case 'trúng':
@@ -227,7 +229,11 @@ export class WaitResultComponent implements OnInit, OnDestroy {
     }
 
     getAPIWinOrRLoseOrReject(typeBid) {
-        this.packageSuccessService.sendBidResult(this.currentPackageId, Number(this.reasonForm.get('reasonName').value), typeBid)
+        this.packageSuccessService.sendBidResult(
+            this.currentPackageId,
+            Number(this.reasonForm.get('reasonName').value),
+            typeBid,
+            this.reasonForm.get('receiveResultDate').value)
             .subscribe(data => {
                 this.modaltrungThau.hide();
                 this.alertService.success(`Gửi lý do ${this.textTrungThau} thầu thành công!`);

@@ -130,3 +130,13 @@
     border-bottom: none;
     margin-top: 20px;
 }
+
+.validate-date-result {
+    :host() .k-dateinput-wrap .k-input, .k-dropdown-wrap .k-input, .k-picker-wrap .k-input, .k-multiselect-wrap .k-input, .k-numeric-wrap .k-input {
+        border: 0.5px solid #dc3545 !important;
+        border-right: 0px !important;
+        border-radius: 5px 0px 0px 5px !important;
+    }
+}
+
+

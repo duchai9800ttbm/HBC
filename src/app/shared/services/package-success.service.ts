@@ -5,6 +5,7 @@ import { PagedResult } from '../models/paging-result.model';
 import { CancelItem } from '../models/reason/cancel-item';
 import { DocumentItem } from '../models/document-item';
 import { SETTING_REASON } from '../configs/common.config';
+import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 
 @Injectable()
 export class PackageSuccessService {
@@ -198,7 +199,7 @@ export class PackageSuccessService {
     }
 
     // kết quả dự thầu: trúng/trật/hủy thầu
-    sendBidResult(bidOpportunityId: number, reasonId: number, type: string): Observable<any> {
+    sendBidResult(bidOpportunityId: number, reasonId: number, type: string, receiveResultDate: Date): Observable<any> {
         let url = `bidopportunity/kqdt/${bidOpportunityId}/`;
         switch (type) {
             case SETTING_REASON.Win:
@@ -210,6 +211,19 @@ export class PackageSuccessService {
             case SETTING_REASON.Cancel:
                 url += `huythau/${reasonId}`;
                 break;
+        }
+        if (receiveResultDate) {
+            switch (type) {
+                case SETTING_REASON.Win:
+                    url += `?receiveWinResultDate=${DateTimeConvertHelper.fromDtObjectToTimestamp(receiveResultDate)}`;
+                    break;
+                case SETTING_REASON.Lose:
+                    url += `?receiveLostResultDate=${DateTimeConvertHelper.fromDtObjectToTimestamp(receiveResultDate)}`;
+                    break;
+                case SETTING_REASON.Cancel:
+                    url += `?receiveCancelResultDate=${DateTimeConvertHelper.fromDtObjectToTimestamp(receiveResultDate)}`;
+                    break;
+            }
         }
         return this.apiService.post(url).map(response => response.result);
     }
