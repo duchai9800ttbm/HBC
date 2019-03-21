@@ -21,6 +21,7 @@ import { CheckStatusPackage } from '../../../../../shared/constants/check-status
 import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 import { ThanksLetterComponent } from './thanks-letter/thanks-letter.component';
+import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
 
 @Component({
     selector: 'app-wait-result',
@@ -193,6 +194,12 @@ export class WaitResultComponent implements OnInit, OnDestroy {
     submitForm(template: TemplateRef<any>) {
         this.isSubmitted = true;
         const valid = this.validateForm();
+        if ( DateTimeConvertHelper.fromDtObjectToTimestamp(this.reasonForm.get('receiveResultDate').value) <= 0) {
+            this.formErrors.receiveResultDate = 'Bạn vui lòng chọn thời gian hợp lệ';
+            return;
+        } else {
+            this.formErrors.receiveResultDate = '';
+        }
         if (this.validateForm()) {
             this.spinner.show();
             let typeBid = null;
