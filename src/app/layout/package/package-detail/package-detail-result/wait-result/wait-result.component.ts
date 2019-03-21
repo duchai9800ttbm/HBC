@@ -194,11 +194,15 @@ export class WaitResultComponent implements OnInit, OnDestroy {
     submitForm(template: TemplateRef<any>) {
         this.isSubmitted = true;
         const valid = this.validateForm();
-        if ( DateTimeConvertHelper.fromDtObjectToTimestamp(this.reasonForm.get('receiveResultDate').value) <= 0) {
-            this.formErrors.receiveResultDate = 'Bạn vui lòng chọn thời gian hợp lệ';
-            return;
+        if (this.textTrungThau === 'trúng' || this.textTrungThau === 'trật') {
+            if (DateTimeConvertHelper.fromDtObjectToTimestamp(this.reasonForm.get('receiveResultDate').value) <= 0) {
+                this.formErrors.receiveResultDate = 'Bạn vui lòng chọn thời gian hợp lệ';
+                return;
+            } else {
+                this.formErrors.receiveResultDate = '';
+            }
         } else {
-            this.formErrors.receiveResultDate = '';
+            this.reasonForm.get('receiveResultDate').patchValue(new Date());
         }
         if (this.validateForm()) {
             this.spinner.show();
