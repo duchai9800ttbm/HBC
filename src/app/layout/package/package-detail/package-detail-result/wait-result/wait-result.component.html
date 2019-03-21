@@ -22,9 +22,9 @@
         <h5>bạn đã nhận kết quả dự thầu từ khách hàng?</h5>
         <div class="confirm-button">
             <ng-container *ngIf="ChonKQDT">
-                    <button class="btn btn-primary" id="success" (click)="modalTrungThau(trungthau, 'trúng')">trúng thầu</button>
-                    <button class="btn btn-primary" id="fail" (click)="modalTrungThau(trungthau, 'trật')">trật thầu</button>
-                    <button class="btn btn-primary" id="cancel" (click)="modalTrungThau(trungthau, 'hủy')">hủy thầu</button>
+                <button class="btn btn-primary" id="success" (click)="modalTrungThau(trungthau, 'trúng')">trúng thầu</button>
+                <button class="btn btn-primary" id="fail" (click)="modalTrungThau(trungthau, 'trật')">trật thầu</button>
+                <button class="btn btn-primary" id="cancel" (click)="modalTrungThau(trungthau, 'hủy')">hủy thầu</button>
             </ng-container>
         </div>
     </div>
@@ -45,22 +45,34 @@
             </div>
         </div>
         <div class="modal-body">
-            <div class="row" style="padding-bottom: 40px;font-weight: 700">
-                <div class="col-md-3 offset-md-1 lh required text-nowrap">Lý do {{textTrungThau}} thầu</div>
-                <!-- <div class="col-md-3 offset-md-1 lh" *ngIf="btnTratThau">Lý do {{textTratThau}} thầu</div>
-                <div class="col-md-3 offset-md-1 lh" *ngIf="btnHuyThau">Lý do {{textHuyThau}} thầu</div> -->
-                <div class="col-md-6">
-                    <span class="custom-dropdown" style="width: 100%">
-                        <select class="form-control" tabindex="5" formControlName="reasonName" [class.is-invalid]="formErrors.reasonName">
-                            <option [ngValue]="''">---Chọn---</option>
-                            <option *ngFor="let item of reason.items" [value]="item.id">{{item.reasonName }}</option>
-                        </select>
-                    </span>
-                    <div class="invalid-feedback" *ngIf="formErrors.reasonName">
-                        {{formErrors.reasonName}}
+            <div style="padding-bottom: 40px;font-weight: 700">
+                <div class="row">
+                    <div class="col-md-3 offset-md-1 lh required text-nowrap">Lý do {{textTrungThau}} thầu</div>
+                    <!-- <div class="col-md-3 offset-md-1 lh" *ngIf="btnTratThau">Lý do {{textTratThau}} thầu</div>
+                            <div class="col-md-3 offset-md-1 lh" *ngIf="btnHuyThau">Lý do {{textHuyThau}} thầu</div> -->
+                    <div class="col-md-6">
+                        <span class="custom-dropdown" style="width: 100%">
+                            <select class="form-control" tabindex="5" formControlName="reasonName" [class.is-invalid]="formErrors.reasonName">
+                                <option [ngValue]="''">---Chọn---</option>
+                                <option *ngFor="let item of reason.items" [value]="item.id">{{item.reasonName }}</option>
+                            </select>
+                        </span>
+                        <div class="invalid-feedback" *ngIf="formErrors.reasonName">
+                            {{formErrors.reasonName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-md-3 offset-md-1 lh required">
+                        <span *ngIf="textTrungThau === 'trúng' || textTrungThau === 'trật'">Ngày nhận kết quả thầu</span>
+                        <span *ngIf="textTrungThau === 'hủy'">Ngày huỷ thầu</span>
+                    </div>
+                    <div class="col-md-6">
+                        <kendo-datepicker class="w-100" tabindex="6" ></kendo-datepicker>
                     </div>
                 </div>
             </div>
+
             <div class="text-center">
                 <button type="submit" class="btn btn-primary w-80" [disabled]="loading">OK</button>
                 <button type="button" class="btn btn-default w-80 bg-cancle" (click)="closeModel()">Hủy</button>
@@ -132,7 +144,7 @@
             <div class="row pd-up">
                 <div class="col-md-4 mg-l">Ngày nhận kết quả</div>
                 <div class="col-md-7 input-group">
-                    <owl-date-time  >
+                    <owl-date-time>
                     </owl-date-time>
                     <span class="input-group-addon">
                         <i class="fa fa-calendar"></i>
@@ -155,4 +167,4 @@
     </form>
 </ng-template>
 
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>
