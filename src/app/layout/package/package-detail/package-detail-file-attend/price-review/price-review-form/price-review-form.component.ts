@@ -1251,8 +1251,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   }
 
   giamDocDuyet() {
-    const isApprovedByBoardOfDirector = this.priceReviewForm.get('isApprovedByBoardOfDirector').value;
-    if (!isApprovedByBoardOfDirector) {
+    // const isApprovedByBoardOfDirector = this.priceReviewForm.get('isApprovedByBoardOfDirector').value;
+    // if (!isApprovedByBoardOfDirector) {
+    // Giám đốc luôn dc duyệt
       this.priceReviewService.giamDocDuyet(this.packageId).subscribe(() => {
         this.checkDuyet();
         this.alertService.success('Duyệt trình duyệt giá thành công!');
@@ -1265,7 +1266,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại.`);
         }
       });
-    }
+    // }
   }
 
   giamDocKhongDuyet() {
