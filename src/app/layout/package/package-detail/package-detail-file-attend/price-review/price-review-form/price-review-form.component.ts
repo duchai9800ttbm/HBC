@@ -1251,21 +1251,22 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   }
 
   giamDocDuyet() {
-    const isApprovedByBoardOfDirector = this.priceReviewForm.get('isApprovedByBoardOfDirector').value;
-    if (!isApprovedByBoardOfDirector) {
-      this.priceReviewService.giamDocDuyet(this.packageId).subscribe(() => {
-        this.checkDuyet();
-        this.alertService.success('Duyệt trình duyệt giá thành công!');
-      }, err => {
-        this.priceReviewForm.get('isApprovedByBoardOfDirector').patchValue(null);
-        const error = err.json();
-        if (error.errorCode === 'BusinessException') {
-          this.alertService.error(`${error.errorMessage}`);
-        } else {
-          this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại.`);
-        }
-      });
-    }
+    // const isApprovedByBoardOfDirector = this.priceReviewForm.get('isApprovedByBoardOfDirector').value;
+    // if (!isApprovedByBoardOfDirector) {
+    // tổng giám đốc luôn được duyệt
+    this.priceReviewService.giamDocDuyet(this.packageId).subscribe(() => {
+      this.checkDuyet();
+      this.alertService.success('Duyệt trình duyệt giá thành công!');
+    }, err => {
+      this.priceReviewForm.get('isApprovedByBoardOfDirector').patchValue(null);
+      const error = err.json();
+      if (error.errorCode === 'BusinessException') {
+        this.alertService.error(`${error.errorMessage}`);
+      } else {
+        this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại.`);
+      }
+    });
+    // }
   }
 
   giamDocKhongDuyet() {
