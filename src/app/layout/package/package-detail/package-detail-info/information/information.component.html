@@ -297,7 +297,7 @@
         <div class="" style="width: auto; margin-right: 20px;  margin-left: 20px">
             <div class="media-header">
                 <span class="action-bar alignment-but">
-                    <button type="submit" class="btn btn-primary" [routerLink]="['/package/detail',currentPackageId,'info','edit']">Chỉnh
+                    <button *ngIf="isEditBidOpportunity" type="submit" class="btn btn-primary" [routerLink]="['/package/detail',currentPackageId,'info','edit']">Chỉnh
                         sửa &nbsp;
                     </button>
                 </span>

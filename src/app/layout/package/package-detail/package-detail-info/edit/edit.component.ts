@@ -3,7 +3,7 @@ import ValidationHelper from '../../../../../shared/helpers/validation.helper';
 import { FakePackageData } from '../../../../../shared/fake-data/package-data';
 import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
 import { Validators, FormBuilder, FormGroup } from '../../../../../../../node_modules/@angular/forms';
-import { AlertService, DataService, UserService } from '../../../../../shared/services';
+import { AlertService, DataService, UserService, SessionService } from '../../../../../shared/services';
 import { ActivatedRoute, Router } from '../../../../../../../node_modules/@angular/router';
 import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker.config';
 import { PackageDetailComponent } from '../../package-detail.component';
@@ -31,6 +31,7 @@ import { EvaluationModel } from '../../../../../shared/models/package/evaluation
 import { moment } from '../../../../../../../node_modules/ngx-bootstrap/chronos/test/chain';
 import { GroupChaired } from '../../../../../shared/models/package/group-chaired.model';
 import { CustomerConsultant } from '../../../../../shared/models/package/customer-consultant';
+import { AdministeredPackageList } from '../../../../../shared/constants/administered-package';
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
@@ -71,7 +72,10 @@ export class EditComponent implements OnInit {
     consultantSearchResults: CustomerConsultant[];
     userListItem: GroupChaired[];
     dataEvaluation: EvaluationModel[];
-
+    listPrivileges = [];
+    administeredPackageList = AdministeredPackageList;
+    isEditBidOpportunity;
+    isViewBidOpportunityDetail;
     constructor(
         private fb: FormBuilder,
         private alertService: AlertService,
@@ -81,12 +85,22 @@ export class EditComponent implements OnInit {
         private spinner: NgxSpinnerService,
         private dataService: DataService,
         private userService: UserService,
+        private sessionService: SessionService
     ) { }
 
     ngOnInit() {
+        this.listPrivileges = this.sessionService.userInfo && this.sessionService.userInfo.privileges;
+        if (this.listPrivileges) {
+            this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
+            this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
+            if (!this.isEditBidOpportunity) {
+                this.router.navigate(['/no-permission']);
+            }
+        }
+
         this.getDataEvaluation();
         // this.userService.getAllUser('').subscribe(data => this.userListItem = data);
-        this.packageService.getListGroupChaired(0, 100, '').subscribe( data => this.userListItem = data.items);
+        this.packageService.getListGroupChaired(0, 100, '').subscribe(data => this.userListItem = data.items);
         this.packageId = +PackageDetailComponent.packageId;
         this.listZone = this.dataService.getListRegionTypes();
         this.listQuarterOfYear = this.dataService.getListQuatersOfYear();
@@ -282,7 +296,7 @@ export class EditComponent implements OnInit {
             this.alertService.error('Ngày khởi công dự án phải nhỏ hơn hoặc bằng ngày kết thúc dự án');
             return false;
         }
-         // else if (resultEstimatedDate && projectEstimatedStartDate && resultEstimatedDate > projectEstimatedStartDate) {
+        // else if (resultEstimatedDate && projectEstimatedStartDate && resultEstimatedDate > projectEstimatedStartDate) {
         //     this.alertService.error('Ngày dự kiến kết quả thầu phải nhỏ hơn hoặc bằng ngày khởi công dự án');
         //     return false;
         // }
