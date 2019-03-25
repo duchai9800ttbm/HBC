@@ -54,7 +54,11 @@ export class SidebarComponent implements OnInit {
     toggleSidebar() {
         const width = document.getElementById('sidebar').offsetWidth;
         const widthScreen = window.screen.width;
-        if (widthScreen > 992) {
+        const heightScreen = window.screen.height;
+        // check PORTRAIT or LANDSCAPE
+        // PORTRAIT thì so sánh width, LANDSCAPE thì so sánh height
+        const widthPortrait = window.matchMedia("(orientation: portrait)").matches ? widthScreen : heightScreen;
+        if (widthPortrait > 992) {
             if (width === 55) {
                 this.toggleMenuFromSidebar.emit(false);
                 this.layoutService.emitEvent(false);
