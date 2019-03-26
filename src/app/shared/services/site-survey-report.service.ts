@@ -186,111 +186,183 @@ export class SiteSurveyReportService {
             constructionPeriod: (obj.scaleOverall.quyMoDuAn.tienDo) ? obj.scaleOverall.quyMoDuAn.tienDo : ''
           }
         },
-        perspectiveImageOfProject: obj.scaleOverall.hinhAnhPhoiCanh && {
+        perspectiveImageOfProject: obj.scaleOverall.hinhAnhPhoiCanh ? {
           desc: obj.scaleOverall.hinhAnhPhoiCanh.description,
           imageUrls: obj.scaleOverall.hinhAnhPhoiCanh.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        existingStructure: obj.scaleOverall.thongTinVeKetCau && {
+        existingStructure: obj.scaleOverall.thongTinVeKetCau ? {
           desc: obj.scaleOverall.thongTinVeKetCau.description,
           imageUrls: obj.scaleOverall.thongTinVeKetCau.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        specialRequirement: obj.scaleOverall.nhungYeuCauDacBiet && {
+        specialRequirement: obj.scaleOverall.nhungYeuCauDacBiet ? {
           desc: obj.scaleOverall.nhungYeuCauDacBiet.description,
           imageUrls: obj.scaleOverall.nhungYeuCauDacBiet.images
-        }
+        } : {
+          desc: null,
+          imageUrls: []
+        },
       },
       siteInformation: obj.describeOverall && {
-        topography: obj.describeOverall.chiTietDiaHinh && {
+        topography: obj.describeOverall.chiTietDiaHinh ? {
           desc: obj.describeOverall.chiTietDiaHinh.description,
           imageUrls: obj.describeOverall.chiTietDiaHinh.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        existBuildingOnTheSite: obj.describeOverall.kienTrucHienHuu && {
+        existBuildingOnTheSite: obj.describeOverall.kienTrucHienHuu ? {
           desc: obj.describeOverall.kienTrucHienHuu.description,
           imageUrls: obj.describeOverall.kienTrucHienHuu.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        existObstacleOnTheSite: obj.describeOverall.yeuCauChuongNgai && {
+        existObstacleOnTheSite: obj.describeOverall.yeuCauChuongNgai ? {
           desc: obj.describeOverall.yeuCauChuongNgai.description,
           imageUrls: obj.describeOverall.yeuCauChuongNgai.images
+        } : {
+          desc: null,
+          imageUrls: []
         }
       },
       transportationAndSiteEntranceCondition: obj.traffic && {
-        disadvantage: obj.traffic.chiTietDiaHinhKhoKhan && {
+        disadvantage: obj.traffic.chiTietDiaHinhKhoKhan ? {
           desc: obj.traffic.chiTietDiaHinhKhoKhan.description,
           imageUrls: obj.traffic.chiTietDiaHinhKhoKhan.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        advantage: obj.traffic.chiTietDiaHinhThuanLoi && {
+        advantage: obj.traffic.chiTietDiaHinhThuanLoi ? {
           desc: obj.traffic.chiTietDiaHinhThuanLoi.description,
           imageUrls: obj.traffic.chiTietDiaHinhThuanLoi.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        directionOfSiteEntrance: obj.traffic.loiVaoCongTrinhHuongVao && {
+        directionOfSiteEntrance: obj.traffic.loiVaoCongTrinhHuongVao ? {
           desc: obj.traffic.loiVaoCongTrinhHuongVao.description,
           imageUrls: obj.traffic.loiVaoCongTrinhHuongVao.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        existingRoadOnSite: obj.traffic.loiVaoCongTrinhDuongHienCo && {
+        existingRoadOnSite: obj.traffic.loiVaoCongTrinhDuongHienCo ? {
           desc: obj.traffic.loiVaoCongTrinhDuongHienCo.description,
           imageUrls: obj.traffic.loiVaoCongTrinhDuongHienCo.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        temporatyRoadRequirement: obj.traffic.loiVaoCongTrinhYeuCauDuongTam && {
+        temporatyRoadRequirement: obj.traffic.loiVaoCongTrinhYeuCauDuongTam ? {
           desc: obj.traffic.loiVaoCongTrinhYeuCauDuongTam.description,
           imageUrls: obj.traffic.loiVaoCongTrinhYeuCauDuongTam.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        temporaryFenceRequirement: obj.traffic.loiVaoCongTrinhYeuCauHangRao && {
+        temporaryFenceRequirement: obj.traffic.loiVaoCongTrinhYeuCauHangRao ? {
           desc: obj.traffic.loiVaoCongTrinhYeuCauHangRao.description,
           imageUrls: obj.traffic.loiVaoCongTrinhYeuCauHangRao.images
+        } : {
+          desc: null,
+          imageUrls: []
         }
       },
       demobilisationAndConsolidation: obj.demoConso && {
-        demobilisationExistingStructureOrBuilding: obj.demoConso.phaVoKetCau && {
+        demobilisationExistingStructureOrBuilding: obj.demoConso.phaVoKetCau ? {
           desc: obj.demoConso.phaVoKetCau.description,
           imageUrls: obj.demoConso.phaVoKetCau.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        consolidationExistingStructureOrBuilding: obj.demoConso.giaCoKetCau && {
+        consolidationExistingStructureOrBuilding: obj.demoConso.giaCoKetCau ? {
           desc: obj.demoConso.giaCoKetCau.description,
           imageUrls: obj.demoConso.giaCoKetCau.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        adjacentBuildingConditions: obj.demoConso.dieuKien && {
+        adjacentBuildingConditions: obj.demoConso.dieuKien ? {
           desc: obj.demoConso.dieuKien.description,
           imageUrls: obj.demoConso.dieuKien.images
-        }
+        } : {
+          desc: null,
+          imageUrls: []
+        },
       },
       temporaryBuildingServiceForConstruction: obj.serviceConstruction && {
-        supplyWaterSystemExistingSystem: obj.serviceConstruction.heThongNuocHeThongHienHuu && {
+        supplyWaterSystemExistingSystem: obj.serviceConstruction.heThongNuocHeThongHienHuu ? {
           desc: obj.serviceConstruction.heThongNuocHeThongHienHuu.description,
           imageUrls: obj.serviceConstruction.heThongNuocHeThongHienHuu.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        supplyWaterSystemExistingConnectionPoint: obj.serviceConstruction.heThongNuocDiemDauNoi && {
+        supplyWaterSystemExistingConnectionPoint: obj.serviceConstruction.heThongNuocDiemDauNoi ? {
           desc: obj.serviceConstruction.heThongNuocDiemDauNoi.description,
           imageUrls: obj.serviceConstruction.heThongNuocDiemDauNoi.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        drainageWaterSystemExistingSystem: obj.serviceConstruction.heThongNuocThoatHeThongHienHuu && {
+        drainageWaterSystemExistingSystem: obj.serviceConstruction.heThongNuocThoatHeThongHienHuu ? {
           desc: obj.serviceConstruction.heThongNuocThoatHeThongHienHuu.description,
           imageUrls: obj.serviceConstruction.heThongNuocThoatHeThongHienHuu.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        drainageWaterSystemExistingConnectionPoint: obj.serviceConstruction.heThongNuocThoatDiemDauNoi && {
+        drainageWaterSystemExistingConnectionPoint: obj.serviceConstruction.heThongNuocThoatDiemDauNoi ? {
           desc: obj.serviceConstruction.heThongNuocThoatDiemDauNoi.description,
           imageUrls: obj.serviceConstruction.heThongNuocThoatDiemDauNoi.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        transformerStation: obj.serviceConstruction.heThongDienTramHaThe && {
+        transformerStation: obj.serviceConstruction.heThongDienTramHaThe ? {
           desc: obj.serviceConstruction.heThongDienTramHaThe.description,
           imageUrls: obj.serviceConstruction.heThongDienTramHaThe.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        existingMediumVoltageSystem: obj.serviceConstruction.heThongDienDuongDayTrungThe && {
+        existingMediumVoltageSystem: obj.serviceConstruction.heThongDienDuongDayTrungThe ? {
           desc: obj.serviceConstruction.heThongDienDuongDayTrungThe.description,
           imageUrls: obj.serviceConstruction.heThongDienDuongDayTrungThe.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        others: obj.serviceConstruction.heThongDienThongTinKhac && {
+        others: obj.serviceConstruction.heThongDienThongTinKhac ? {
           desc: obj.serviceConstruction.heThongDienThongTinKhac.description,
           imageUrls: obj.serviceConstruction.heThongDienThongTinKhac.images
-        }
+        } : {
+          desc: null,
+          imageUrls: []
+        },
       },
       existingSoilCondition: obj.soilCondition && {
-        existingFooting: obj.soilCondition.nenMongHienCo && {
+        existingFooting: obj.soilCondition.nenMongHienCo ? {
           desc: obj.soilCondition.nenMongHienCo.description,
           imageUrls: obj.soilCondition.nenMongHienCo.images
+        } : {
+          desc: null,
+          imageUrls: []
         },
-        soilInvestigation: obj.soilCondition.thongTinCongTrinhGanDo && {
+        soilInvestigation: obj.soilCondition.thongTinCongTrinhGanDo ? {
           desc: obj.soilCondition.thongTinCongTrinhGanDo.description,
           imageUrls: obj.soilCondition.thongTinCongTrinhGanDo.images
+        } : {
+          desc: null,
+          imageUrls: []
         }
       },
       usefulInFormations: (obj.usefulInfo) ? obj.usefulInfo.map(subject => ({
