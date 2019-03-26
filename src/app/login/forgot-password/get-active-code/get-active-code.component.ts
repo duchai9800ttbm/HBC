@@ -26,6 +26,7 @@ export class GetActiveCodeComponent implements OnInit {
   formErrors = {
     email: '',
   };
+  currentYear = new Date().getFullYear();
   ngOnInit() {
     this.createForm();
     const browserName = this.getBrowser();

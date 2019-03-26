@@ -37,7 +37,7 @@ export class ResetPasswordComponent implements OnInit {
     newPassword: '',
     confirmPassword: '',
   };
-
+  currentYear = new Date().getFullYear();
   ngOnInit() {
     this.createForm();
     this.queryParamsSubsription = this.activatedRoute.queryParams.subscribe(data => {

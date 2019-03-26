@@ -34,6 +34,7 @@ export class LoginFormComponent implements OnInit {
         password: '',
     };
     administeredPackageList = AdministeredPackageList;
+    currentYear = new Date().getFullYear();
     constructor(
         private route: ActivatedRoute,
         private router: Router,

@@ -40,6 +40,7 @@ export class EnterActiveCodeComponent implements OnInit, OnDestroy {
     numberFive: '',
     numberSix: ''
   };
+  currentYear = new Date().getFullYear();
   ngOnInit() {
     this.createForm();
     this.queryParamsSubsription = this.activatedRoute.queryParams.subscribe(data => {
