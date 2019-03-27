@@ -8,6 +8,7 @@ import { ConfirmationPopupCallAwayComponent } from "../components/confirmation-p
 import { ResetPasswordComponent } from "../components/reset-password/reset-password.component";
 import { MissActionComponent } from "../components/miss-action/miss-action.component";
 import { ConfirmationHtmlPopupComponent } from "../components/confirmation-html-popup/confirmation-html-popup.component";
+import { NotifiComponent } from "../components/notifi/notifi.component";
 @Injectable()
 export class ConfirmationService {
     constructor(private modalService: NgbModal) {}
@@ -88,6 +89,13 @@ export class ConfirmationService {
         );
         modalRef.componentInstance.message = message;
         modalRef.componentInstance.routerLink = routerLink;
+    }
+
+    openNotifi(message) {
+        const modalRef = this.modalService.open(
+            NotifiComponent
+        );
+        modalRef.componentInstance.message = message;
     }
 
 }

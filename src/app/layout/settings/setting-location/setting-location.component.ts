@@ -68,6 +68,11 @@ export class SettingLocationComponent implements OnInit {
     }
 
     deleteLocation(item) {
+        if (item && (item.isDelete === false)) {
+            // tslint:disable-next-line:max-line-length
+            this.confirmationService.openNotifi(`Khu vực này đã được thiết lập chỉ tiêu KPI hoặc đang được sử dụng trong gói thầu. Vui lòng không xoá.`);
+            return;
+        }
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa khu vực này?',
             () => {
@@ -101,6 +106,14 @@ export class SettingLocationComponent implements OnInit {
     deleteMultiple() {
         const listSelected = this.pagedResult.items.filter(i => i.checkboxSelected);
         if (listSelected.length > 0) {
+
+            const deleteArray = listSelected.filter(item => item.isDelete === false);
+            if (deleteArray.length > 0) {
+                // tslint:disable-next-line:max-line-length
+                this.confirmationService.openNotifi(`Có khu vực đã được thiết lập chỉ tiêu KPI hoặc đang được sử dụng trong gói thầu. Vui lòng không xoá.`);
+                return;
+            }
+
             this.confirmationService.confirm(
                 'Bạn có chắc chắn muốn xóa những khu vực được chọn?',
                 () => {

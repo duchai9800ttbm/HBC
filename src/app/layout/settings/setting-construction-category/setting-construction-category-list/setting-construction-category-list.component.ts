@@ -43,6 +43,12 @@ export class SettingConstructionCategoryListComponent implements OnInit {
     }
 
     deleteConstructionCategory(item) {
+        if (item && (item.isDelete === false)) {
+            // tslint:disable-next-line:max-line-length
+            this.confirmationService.openNotifi(`Hạng mục thi công công trình này đã được thiết lập chỉ tiêu KPI hoặc đang được sử dụng trong gói thầu. Vui lòng không xoá.`);
+            return;
+        }
+
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa hạng mục thi công công trình này?',
             () => {
@@ -76,6 +82,13 @@ export class SettingConstructionCategoryListComponent implements OnInit {
     deleteMultiple() {
         const listSelected = this.pagedResult.items.filter(i => i.checkboxSelected);
         if (listSelected.length > 0) {
+            const deleteArray = listSelected.filter(item => item.isDelete === false);
+            if (deleteArray.length > 0) {
+                // tslint:disable-next-line:max-line-length
+                this.confirmationService.openNotifi(`Có hạng mục thi công công trình đã được thiết lập chỉ tiêu KPI hoặc đang được sử dụng trong gói thầu. Vui lòng không xoá.`);
+                return;
+            }
+
             this.confirmationService.confirm(
                 'Bạn có chắc chắn muốn xóa những hạng mục thi công công trình được chọn?',
                 () => {

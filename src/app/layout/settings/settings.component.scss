@@ -147,3 +147,7 @@ router-outlet{
         border-color: orange !important;
     }
 }
+
+:host ::ng-deep .delete-icon-disabled{
+    color: #cec3dd;
+}

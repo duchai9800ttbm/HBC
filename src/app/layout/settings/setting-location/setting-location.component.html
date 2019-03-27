@@ -58,7 +58,7 @@
                             <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                         </a>
                         <a class=" text-dark ml-3" title="Xóa">
-                            <i (click)="deleteLocation(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
+                            <i (click)="deleteLocation(item)" class="fa fa-trash-o pointer" [class.delete-icon-disabled]="item && (item.isDelete === false)" aria-hidden="true"></i>
                         </a>
                     </td>
                 </tr>

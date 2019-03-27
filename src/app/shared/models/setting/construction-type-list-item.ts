@@ -5,4 +5,5 @@ export class ConstructionTypeListItem {
     constructionTypeDesc: string;
     constructionTypeNameEng: string;
     checkboxSelected: boolean;
+    isDelete ?: boolean;
 }
