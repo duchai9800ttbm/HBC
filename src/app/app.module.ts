@@ -43,7 +43,7 @@ import { PrintingDocumentService } from './shared/services/printing-document.ser
 import { PermissionService } from './shared/services/permission.service';
 import { ScrollService } from './shared/services/scroll.service';
 import { ReportFollowService } from './shared/services/report-follow.service';
-
+import {NgxImageCompressService} from 'ngx-image-compress';
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -103,6 +103,7 @@ registerLocaleData(localeFrCa, localeFrCaExtra);
         PermissionService,
         ScrollService,
         ReportFollowService,
+        NgxImageCompressService,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
             // Set default locale to bg-BG
