@@ -210,26 +210,26 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
   uploadPerspectiveImage(event) {
     const files = event.target.files;
 
-    for (const image of files) {
-      console.log('fileOld', image);
-      const nameFile = image.name;
-      const reader = new FileReader();
-      reader.readAsDataURL(image);
-      const that = this;
-      reader.onload = function () {
-        that.imageCompress.compressFile(reader.result, -2, 50, 50).then(
-          result => {
-            console.warn('Size in bytes is now:', result, that.imageCompress.byteCount(reader.result), that.imageCompress.byteCount(result));
-            fetch(result)
-              .then(res => res.blob())
-              .then(blob => {
-                const fileNew = new File([blob], '');
-                console.log('fileNew', fileNew);
-              });
-          }
-        );
-      };
-    }
+    // for (const image of files) {
+    //   console.log('fileOld', image);
+    //   const nameFile = image.name;
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(image);
+    //   const that = this;
+    //   reader.onload = function () {
+    //     that.imageCompress.compressFile(reader.result, -2, 50, 50).then(
+    //       result => {
+    //         console.warn('Size in bytes is now:', result, that.imageCompress.byteCount(reader.result), that.imageCompress.byteCount(result));
+    //         fetch(result)
+    //           .then(res => res.blob())
+    //           .then(blob => {
+    //             const fileNew = new File([blob], '');
+    //             console.log('fileNew', fileNew);
+    //           });
+    //       }
+    //     );
+    //   };
+    // }
 
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
