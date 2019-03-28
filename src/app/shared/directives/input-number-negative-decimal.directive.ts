@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { NgControl } from '../../../../node_modules/@angular/forms';
 import { VnCurrencyPipe } from '../pipes/vn-currency-pipe.module';
+import { AlertService } from '../services';
 const PADDING = '000000';
 @Directive({
     selector: '[appInputNumberNegativeDecimal]',
@@ -35,6 +36,7 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
         private ngControl: NgControl,
         private vnCurrencyPipe: VnCurrencyPipe,
         private renderer: Renderer,
+        private alertService: AlertService,
     ) {
         this.DECIMAL_SEPARATOR = '.';
         this.THOUSANDS_SEPARATOR = ',';
@@ -58,7 +60,9 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
 
     transformNotDenominations(value: number | string, fractionSize: number = 2): string {
         if (!value) { return ''; }
-        if (isNaN(+value)) { return value.toString(); }
+        if (isNaN(+value)) {
+            this.alertService.error('Số liệu nhập không phải kiểu số');
+            return value.toString(); }
         let [integer, fraction = ''] = (+value).toString()
             .split(this.DECIMAL_SEPARATOR);
         fraction = fractionSize > 0
