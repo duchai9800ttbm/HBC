@@ -35,6 +35,7 @@ export class SiteSurveyReportService {
           liveFormTitle: item.liveFormTitle,
           oldValue: item.oldValue,
           newValue: item.newValue,
+          isChangeImage: item.isChangeImage,
         })
       ) : []
     };

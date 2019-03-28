@@ -147,13 +147,21 @@
                                                     (itemByLiveFormStep.liveFormSubject
                                                     | translate) : (itemByLiveFormStep.liveFormStep | translate) ) }}:
 
-                                                    <div class="pl-1">từ
+                                                    <div class="pl-1" *ngIf="!itemByLiveFormStep.isChangeImage">từ
                                                         <span class="font-weight-bold">
                                                             {{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue
                                                             :
                                                             'không có'}}
                                                         </span>
                                                         thành
+                                                        <span class="font-weight-bold">
+                                                            {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue
+                                                            :
+                                                            'không có'}}
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="pl-1" *ngIf="itemByLiveFormStep.isChangeImage">
                                                         <span class="font-weight-bold">
                                                             {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue
                                                             :
