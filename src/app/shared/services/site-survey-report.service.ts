@@ -486,7 +486,7 @@ export class SiteSurveyReportService {
           description: (model.projectStatistic.perspectiveImageOfProject.desc !== 'null') ?
             model.projectStatistic.perspectiveImageOfProject.desc : '',
           images: (model.projectStatistic.perspectiveImageOfProject.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -495,7 +495,7 @@ export class SiteSurveyReportService {
           description: (model.projectStatistic.existingStructure.desc !== 'null') ?
             model.projectStatistic.existingStructure.desc : '',
           images: (model.projectStatistic.existingStructure.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -504,7 +504,7 @@ export class SiteSurveyReportService {
           description: (model.projectStatistic.specialRequirement.desc !== 'null') ?
             model.projectStatistic.specialRequirement.desc : '',
           images: (model.projectStatistic.specialRequirement.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -515,7 +515,7 @@ export class SiteSurveyReportService {
           description: (model.siteInformation.topography.desc !== 'null') ?
             model.siteInformation.topography.desc : '',
           images: (model.siteInformation.topography.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -524,7 +524,7 @@ export class SiteSurveyReportService {
           description: (model.siteInformation.existBuildingOnTheSite.desc !== 'null') ?
             model.siteInformation.existBuildingOnTheSite.desc : '',
           images: (model.siteInformation.existBuildingOnTheSite.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -533,7 +533,7 @@ export class SiteSurveyReportService {
           description: (model.siteInformation.existObstacleOnTheSite.desc !== 'null') ?
             model.siteInformation.existObstacleOnTheSite.desc : '',
           images: (model.siteInformation.existObstacleOnTheSite.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -544,7 +544,7 @@ export class SiteSurveyReportService {
           description: (model.transportationAndSiteEntranceCondition.disadvantage.desc !== 'null') ?
             model.transportationAndSiteEntranceCondition.disadvantage.desc : '',
           images: (model.transportationAndSiteEntranceCondition.disadvantage.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -553,7 +553,7 @@ export class SiteSurveyReportService {
           description: (model.transportationAndSiteEntranceCondition.advantage.desc !== 'null') ?
             model.transportationAndSiteEntranceCondition.advantage.desc : '',
           images: (model.transportationAndSiteEntranceCondition.advantage.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -562,7 +562,7 @@ export class SiteSurveyReportService {
           description: (model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.desc !== 'null') ?
             model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.desc : '',
           images: (model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -571,7 +571,7 @@ export class SiteSurveyReportService {
           description: (model.transportationAndSiteEntranceCondition.existingRoadOnSite.desc !== 'null') ?
             model.transportationAndSiteEntranceCondition.existingRoadOnSite.desc : '',
           images: (model.transportationAndSiteEntranceCondition.existingRoadOnSite.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -580,7 +580,7 @@ export class SiteSurveyReportService {
           description: (model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.desc !== 'null') ?
             model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.desc : '',
           images: (model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -589,7 +589,7 @@ export class SiteSurveyReportService {
           description: (model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.desc !== 'null') ?
             model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.desc : '',
           images: (model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -600,7 +600,7 @@ export class SiteSurveyReportService {
           description: (model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.desc !== 'null') ?
             model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.desc : '',
           images: (model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -609,7 +609,7 @@ export class SiteSurveyReportService {
           description: (model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.desc !== 'null') ?
             model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.desc : '',
           images: (model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -618,7 +618,7 @@ export class SiteSurveyReportService {
           description: (model.demobilisationAndConsolidation.adjacentBuildingConditions.desc !== 'null') ?
             model.demobilisationAndConsolidation.adjacentBuildingConditions.desc : '',
           images: (model.demobilisationAndConsolidation.adjacentBuildingConditions.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -629,7 +629,7 @@ export class SiteSurveyReportService {
           description: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.desc !== 'null') ?
             model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.desc : '',
           images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -639,7 +639,7 @@ export class SiteSurveyReportService {
             model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.desc : '',
           images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.imageUrls || [])
             .map(x => ({
-              id: x.guid,
+              guid: x.guid,
               thumbSizeUrl: x.thumbSizeUrl,
               largeSizeUrl: x.largeSizeUrl
             }))
@@ -649,7 +649,7 @@ export class SiteSurveyReportService {
             model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.desc : '',
           images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.imageUrls || [])
             .map(x => ({
-              id: x.guid,
+              guid: x.guid,
               thumbSizeUrl: x.thumbSizeUrl,
               largeSizeUrl: x.largeSizeUrl
             }))
@@ -660,7 +660,7 @@ export class SiteSurveyReportService {
               model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.desc : '',
           images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.imageUrls || [])
             .map(x => ({
-              id: x.guid,
+              guid: x.guid,
               thumbSizeUrl: x.thumbSizeUrl,
               largeSizeUrl: x.largeSizeUrl
             }))
@@ -669,7 +669,7 @@ export class SiteSurveyReportService {
           description: (model.temporaryBuildingServiceForConstruction.transformerStation.desc !== 'null') ?
             model.temporaryBuildingServiceForConstruction.transformerStation.desc : '',
           images: (model.temporaryBuildingServiceForConstruction.transformerStation.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -678,7 +678,7 @@ export class SiteSurveyReportService {
           description: (model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.desc !== 'null') ?
             model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.desc : '',
           images: (model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -687,7 +687,7 @@ export class SiteSurveyReportService {
           description: (model.temporaryBuildingServiceForConstruction.others.desc !== 'null') ?
             model.temporaryBuildingServiceForConstruction.others.desc : '',
           images: (model.temporaryBuildingServiceForConstruction.others.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -698,7 +698,7 @@ export class SiteSurveyReportService {
           description: (model.existingSoilCondition.existingFooting.desc !== 'null') ?
             model.existingSoilCondition.existingFooting.desc : '',
           images: (model.existingSoilCondition.existingFooting.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -707,7 +707,7 @@ export class SiteSurveyReportService {
           description: (model.existingSoilCondition.soilInvestigation.desc !== 'null') ?
             model.existingSoilCondition.soilInvestigation.desc : '',
           images: (model.existingSoilCondition.soilInvestigation.imageUrls || []).map(x => ({
-            id: x.guid,
+            guid: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
@@ -719,7 +719,7 @@ export class SiteSurveyReportService {
           name: (i.name !== 'null') ? i.name : '',
           detail: (i.detail !== 'null') ? i.detail : '',
           imageUrls: i.imageUrls.map(e => ({
-            id: e.guid,
+            guid: e.guid,
             thumbSizeUrl: e.thumbSizeUrl,
             largeSizeUrl: e.largeSizeUrl
           }))
