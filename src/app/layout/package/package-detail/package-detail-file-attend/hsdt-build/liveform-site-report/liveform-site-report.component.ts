@@ -167,6 +167,7 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
       // setTimeout(() => {
       //   this.dtTrigger2.next();
       // });
+      console.log('updateInfoList', this.updateInfoList);
     });
   }
 

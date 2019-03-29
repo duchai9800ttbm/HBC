@@ -209,42 +209,51 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploadPerspectiveImage(event) {
     const files = event.target.files;
-
-    // for (const image of files) {
-    //   const nameFile = image.name;
-    //   const typeFile = image.type;
-    //   const reader = new FileReader();
-    //   reader.readAsDataURL(image);
-    //   const that = this;
-    //   reader.onload = function () {
-    //     that.imageCompress.compressFile(reader.result, -2, 50, 50).then(
-    //       result => {
-    //         // console.warn('Size in bytes is now:', that.imageCompress.byteCount(reader.result), that.imageCompress.byteCount(result));
-    //         fetch(result)
-    //           .then(res => res.blob())
-    //           .then(blob => {
-    //             const fileNew = new File([blob], nameFile, { type: typeFile });
-    //           });
-    //       }
-    //     );
-    //   };
-    // }
-
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        this.perspectiveImageUrls = [...this.perspectiveImageUrls, ...res];
-        this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
-        this.uploadPerspective.nativeElement.value = null;
-      }, err => {
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.perspectiveImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.perspectiveImageUrls.indexOf(x);
-            this.perspectiveImageUrls.splice(index, 1);
+    const filesNew = [];
+    console.log('files', files);
+    for (let i = 0; i < files.length; ++i) {
+      const image = files[i];
+      const nameFile = image.name;
+      const typeFile = image.type;
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      const that = this;
+      reader.onload = function () {
+        that.imageCompress.compressFile(reader.result, -2, 50, 50).then(
+          result => {
+            // console.warn('Size in bytes is now:', that.imageCompress.byteCount(reader.result), that.imageCompress.byteCount(result));
+            fetch(result)
+              .then(res => res.blob())
+              .then(blob => {
+                const fileNew = new File([blob], nameFile, { type: typeFile });
+                filesNew.push(fileNew);
+                if ((i + 1) === files.length) {
+                  console.log('123-files-after', filesNew);
+                  that.upoadImageCompressored(filesNew);
+                }
+              });
           }
-        });
+        );
+      };
+    }
+  }
+
+  upoadImageCompressored(files) {
+    this.siteSurveyReportService
+    .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+    .subscribe(res => {
+      this.perspectiveImageUrls = [...this.perspectiveImageUrls, ...res];
+      this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
+      this.uploadPerspective.nativeElement.value = null;
+    }, err => {
+      this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+      this.perspectiveImageUrls.forEach(x => {
+        if (!x.id) {
+          const index = this.perspectiveImageUrls.indexOf(x);
+          this.perspectiveImageUrls.splice(index, 1);
+        }
       });
+    });
   }
 
   deletePerspectiveImage(i) {
