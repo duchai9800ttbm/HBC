@@ -1171,7 +1171,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   }
 
   checkNumberInvalid() {
-    console.log('value-Number', this.priceReviewForm.value);
     if (
       !(
         (!this.priceReviewForm.get('interviewTimes').value || Number(this.priceReviewForm.get('interviewTimes').value))
