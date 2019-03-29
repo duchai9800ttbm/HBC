@@ -16,6 +16,7 @@ const PADDING = '000000';
     host: {
         '(blur)': 'formatInputValue($event.target.value)',
         '(focus)': 'formatToNumber($event.target.value)',
+        '(paste)': 'pasteNumber($event)'
     },
 })
 export class InputNumberNegativeDecimalDirective implements OnInit {
@@ -42,7 +43,7 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
         this.THOUSANDS_SEPARATOR = ',';
         this.CURRENCY_UNIT = ' đ';
         this.MAX_LENGTH = 17;
-        this.renderer.setElementAttribute(this._el.nativeElement, 'maxlength', this.MAX_LENGTH.toString() );
+        this.renderer.setElementAttribute(this._el.nativeElement, 'maxlength', this.MAX_LENGTH.toString());
         // this.decimal ? (this.MAX_LENGTH + 3).toString() :
     }
 
@@ -61,8 +62,9 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
     transformNotDenominations(value: number | string, fractionSize: number = 2): string {
         if (!value) { return ''; }
         if (isNaN(+value)) {
-            this.alertService.error('Số liệu nhập không phải kiểu số');
-            return value.toString(); }
+            // this.alertService.error('Số liệu nhập không phải kiểu số');
+            return value.toString();
+        }
         let [integer, fraction = ''] = (+value).toString()
             .split(this.DECIMAL_SEPARATOR);
         fraction = fractionSize > 0
@@ -142,4 +144,13 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
 
     }
 
+
+    pasteNumber(event: ClipboardEvent) {
+        const clipboardData = event.clipboardData;
+        // || window.clipboardData;
+        const pastedText = clipboardData.getData('text');
+        if (!Number(pastedText)) {
+            this.alertService.error('Số liệu nhập không phải kiểu số');
+        }
+    }
 }
