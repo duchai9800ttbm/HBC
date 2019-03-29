@@ -190,7 +190,8 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
       dienTichCongTruong: data.dienTichCongTruong,
       tongDienTichXayDung: data.tongDienTichXayDung,
       soTang: data.soTang,
-      tienDo: String(data.tienDo) + ' ' + (this.scaleModel.quyMoDuAn.donViTienDo && this.scaleModel.quyMoDuAn.donViTienDo.value),
+      tienDo: data.tienDo,
+      // String(data.tienDo) + ' ' + (this.scaleModel.quyMoDuAn.donViTienDo && this.scaleModel.quyMoDuAn.donViTienDo.value),
       donViTienDo: null
     };
     EditComponent.liveformData.scaleOverall.hinhAnhPhoiCanh = {
