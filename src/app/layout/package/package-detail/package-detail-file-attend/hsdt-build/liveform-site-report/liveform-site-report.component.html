@@ -139,7 +139,7 @@
                                                     (itemByLiveFormStep.liveFormStep | translate)
                                             )
                                         }}">*
-                                                    {{ itemByLiveFormStep.liveFormTitle ?
+                                                    {{ (itemByLiveFormStep.liveFormTitle && itemByLiveFormStep.liveFormTitle !== 'ImageUrls') ?
                                                     (itemByLiveFormStep.liveFormTitle
                                                     |
                                                     translate)
