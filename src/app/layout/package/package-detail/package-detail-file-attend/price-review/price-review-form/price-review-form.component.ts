@@ -68,6 +68,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   isShowSendApprovalTime: boolean;
   checkStatusPackage = CheckStatusPackage;
   statusPackage = null;
+  isValidateFormNumber = false;
   @Input() model: TenderPriceApproval;
   @Input() type: string;
   @Output() refreshData = new EventEmitter<boolean>();
@@ -1163,9 +1164,41 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       }
       this.checkDuyet();
     }
+
+    this.priceReviewForm.valueChanges.subscribe(data => {
+      this.checkNumberInvalid();
+    });
   }
 
-
+  checkNumberInvalid() {
+    console.log('value-Number', this.priceReviewForm.value);
+    if (
+      !(
+        (!this.priceReviewForm.get('interviewTimes').value || Number(this.priceReviewForm.get('interviewTimes').value))
+        && (!this.priceReviewForm.get('tamUngYCKhauTru').value || Number(this.priceReviewForm.get('tamUngYCKhauTru').value))
+        && (!this.priceReviewForm.get('tamUngDXPercent').value || Number(this.priceReviewForm.get('tamUngDXPercent').value))
+        && (!this.priceReviewForm.get('tamUngDXKhauTru').value || Number(this.priceReviewForm.get('tamUngDXKhauTru').value))
+        && (!this.priceReviewForm.get('thoiGianBHYCPercent').value || Number(this.priceReviewForm.get('thoiGianBHYCPercent').value))
+        && (!this.priceReviewForm.get('chiPhiBaseAmount').value || Number(this.priceReviewForm.get('chiPhiBaseAmount').value))
+        && (!this.priceReviewForm.get('chiPhiAlterAmount').value || Number(this.priceReviewForm.get('chiPhiAlterAmount').value))
+        && (!this.priceReviewForm.get('giaTriBaseAmount').value || Number(this.priceReviewForm.get('giaTriBaseAmount').value))
+        && (!this.priceReviewForm.get('giaTriAlterAmount').value || Number(this.priceReviewForm.get('giaTriAlterAmount').value))
+        && (!this.priceReviewForm.get('giaTriPCBaseAmount').value || Number(this.priceReviewForm.get('giaTriPCBaseAmount').value))
+        && (!this.priceReviewForm.get('giaTriPCAlterAmount').value || Number(this.priceReviewForm.get('giaTriPCAlterAmount').value))
+        // tslint:disable-next-line:max-line-length
+        && (!this.priceReviewForm.get('giaTriNhaThauTrucTiepBaseAmount').value || Number(this.priceReviewForm.get('giaTriNhaThauTrucTiepBaseAmount').value))
+        // tslint:disable-next-line:max-line-length
+        && (!this.priceReviewForm.get('giaTriNhaThauTrucTiepAlterAmount').value || Number(this.priceReviewForm.get('giaTriNhaThauTrucTiepAlterAmount').value))
+        && (!this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value || Number(this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value))
+        // tslint:disable-next-line:max-line-length
+        && (!this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value || Number(this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value))
+      )
+    ) {
+      this.isValidateFormNumber = true;
+    } else {
+      this.isValidateFormNumber = false;
+    }
+  }
 
   submit(isSaveDraft: boolean) {
     if (isSaveDraft) {
