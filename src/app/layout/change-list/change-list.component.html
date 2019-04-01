@@ -27,7 +27,12 @@
                             width="30" height="30">
                     </div>
                     <div class="pl-3 pr-2">
-                        <p class="mb-1" [title]="audit.bidActivityChangeEntityName">
+                        <p class="mb-1" [title]="audit?.changeEmployee?.employeeName + ' ' + renderDataChangeRecently(
+                            audit?.bidActivityChangeAction?.key,
+                            audit?.bidActivityChangeEntityType?.key,
+                            audit?.bidOpportunity,
+                            'text'
+                            ) + ' ' + (audit.bidActivityChangeEntityName ? audit.bidActivityChangeEntityName : audit?.bidOpportunity?.opportunityName)">
                             <strong>{{ audit?.changeEmployee?.employeeName }}</strong>
                             {{
                             renderDataChangeRecently(
@@ -37,7 +42,7 @@
                             'text'
                             )
                             }}
-                            <strong>{{ audit.bidActivityChangeEntityName }}</strong>
+                            <strong>{{ audit.bidActivityChangeEntityName ? audit.bidActivityChangeEntityName : audit?.bidOpportunity?.opportunityName }}</strong>
                         </p>
                         <p class="small text-muted">
                             <em>{{ (audit.bidActivityChangDate*1000 - 7*60*60*1000) | amCalendar }}</em>

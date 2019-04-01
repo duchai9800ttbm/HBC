@@ -120,7 +120,11 @@
                             width="30" height="30">
                     </div>
                     <div class="pl-2 pr-2">
-                        <p class="mb-1 text-truncate-height" [title]="changeContent.bidActivityChangeEntityName" style="-webkit-box-orient: vertical;">
+                        <p class="mb-1 text-truncate-height" [title]="changeContent?.changeEmployee?.employeeName + ' ' + renderDataChangeRecently(
+                            changeContent?.bidActivityChangeAction?.key,
+                            changeContent?.bidActivityChangeEntityType?.key,
+                            changeContent?.bidOpportunity
+                            ) + ' ' + (changeContent.bidActivityChangeEntityName ? changeContent.bidActivityChangeEntityName : changeContent?.bidOpportunity?.opportunityName)" style="-webkit-box-orient: vertical;">
                             <strong>{{ changeContent?.changeEmployee?.employeeName }}</strong>
                             {{
                             renderDataChangeRecently(
@@ -129,7 +133,7 @@
                             changeContent?.bidOpportunity
                             )
                             }}
-                            <strong>{{ changeContent.bidActivityChangeEntityName }}</strong>
+                            <strong>{{ changeContent.bidActivityChangeEntityName ? changeContent.bidActivityChangeEntityName : changeContent?.bidOpportunity?.opportunityName }}</strong>
                         </p>
                     </div>
                 </div>
