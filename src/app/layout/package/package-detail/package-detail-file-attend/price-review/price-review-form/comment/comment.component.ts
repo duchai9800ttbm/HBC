@@ -4,6 +4,7 @@ import { PackageDetailComponent } from '../../../../package-detail.component';
 import { moment } from '../../../../../../../../../node_modules/ngx-bootstrap/chronos/test/chain';
 import { CommentItem } from '../../../../../../../shared/models/comment/comment.model';
 import { PagedResult } from '../../../../../../../shared/models';
+import { AlertService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'app-comment-editor',
@@ -16,7 +17,10 @@ export class CommentComponent implements OnInit {
   comments: CommentItem[] = [];
   public showButtonLoadMore = false;
   pagedResult: PagedResult<CommentItem> = new PagedResult<CommentItem>();
-  constructor(private commentService: CommentService) { }
+  constructor(
+    private commentService: CommentService,
+    private alertService: AlertService
+  ) { }
 
   ngOnInit() {
     this.packageId = PackageDetailComponent.packageId;
@@ -46,17 +50,27 @@ export class CommentComponent implements OnInit {
   }
 
   addCommentByIcon() {
-    const comment = this.commentEditor.trim();
-    this.commentEditor = null;
+    let comment = '';
+    if (this.commentEditor && this.commentEditor !== '') {
+      comment = this.commentEditor.trim();
+    }
     if (comment === '') {
+      this.alertService.error('Bạn chưa nhập nội dung bình luận.');
       return null;
     }
     this.commentService.createComment(this.packageId, comment)
       .subscribe(data => {
+        this.commentEditor = null;
         this.commentService.getComment(this.packageId, 0, 10).subscribe(result => {
           this.pagedResult = result;
           this.comments = this.pagedResult.items;
         });
+      }, err => {
+        if (err.json().errorCode === 'InternalServerError') {
+          this.alertService.error('Nội dung bình luận quá dài.');
+        } else {
+          this.alertService.error('Đã có lỗi xảy ra. Vui lòng thử lại!');
+        }
       });
   }
 
