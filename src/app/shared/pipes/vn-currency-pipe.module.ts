@@ -16,7 +16,7 @@ export class VnCurrencyPipe implements PipeTransform {
     this.CURRENCY_UNIT = ' đ';
   }
 
-  transform(value: number | string, fractionSize: number = 0): string {
+  transform(value: number | string, fractionSize: number = 2): string {
     if (!value) { return '0' + this.CURRENCY_UNIT; }
     if (isNaN(+value)) { return value.toString(); }
 
@@ -33,7 +33,7 @@ export class VnCurrencyPipe implements PipeTransform {
     return integer + fraction + (integer && this.CURRENCY_UNIT);
   }
 
-  parse(value: string, fractionSize: number = 0): number {
+  parse(value: string, fractionSize: number = 2): number {
     if (!isNaN(+value)) { return +value; }
 
     let integer = (value || '').replace(this.CURRENCY_UNIT, '');
