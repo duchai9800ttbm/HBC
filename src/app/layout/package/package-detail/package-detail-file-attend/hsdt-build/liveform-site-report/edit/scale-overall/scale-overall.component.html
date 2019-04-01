@@ -94,7 +94,7 @@
                             <label for="" class="col-lg-5">Tiến độ dự kiến/ Construction period (ngày)</label>
                             <div class="col-lg-7">
                                     <div class="form-view w-80" [class.form-view-bg]="isViewMode">
-                                            {{ scaleOverallForm?.get('tienDo').value }} {{ scaleModel?.quyMoDuAn?.donViTienDo?.value }}
+                                            {{ scaleOverallForm?.get('tienDo').value }} {{ scaleModel?.quyMoDuAn?.donViTienDo?.value ? scaleModel?.quyMoDuAn?.donViTienDo?.value : 'Ngày' }}
                                         </div>
                             </div>
                         </div>

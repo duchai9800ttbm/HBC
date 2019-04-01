@@ -132,7 +132,7 @@
 
                                                 <div *ngIf="itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue"
                                                     class="d-flex" title="* {{
-                                            itemByLiveFormStep.liveFormTitle ?
+                                            (itemByLiveFormStep.liveFormTitle && itemByLiveFormStep.liveFormTitle !== 'ImageUrls') ?
                                             (itemByLiveFormStep.liveFormTitle | translate) :
                                             ( itemByLiveFormStep.liveFormSubject ? 
                                                 (itemByLiveFormStep.liveFormSubject | translate) :

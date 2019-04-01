@@ -480,7 +480,8 @@ export class SiteSurveyReportService {
           dienTichCongTruong: model.projectStatistic.projectStatistic.projectScale.siteArea,
           tongDienTichXayDung: model.projectStatistic.projectStatistic.projectScale.grossFloorArea,
           soTang: model.projectStatistic.projectStatistic.projectScale.totalNumberOfFloor,
-          tienDo: null,
+          tienDo: model.projectStatistic.projectStatistic.projectScale.constructionPeriod,
+          // null,
           donViTienDo: null
         },
         hinhAnhPhoiCanh: model.projectStatistic.perspectiveImageOfProject && {
