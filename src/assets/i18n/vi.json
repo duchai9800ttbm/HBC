@@ -336,6 +336,8 @@
     "CostOfCapital": "Giá vốn (chưa có hệ số)",
     "CostOfCapitalGeneralCost": "Chi phí chung",
     "CostOfCapitalValue": "Giá trị Hòa Bình làm trực tiếp",
+    "CostOfNSC": "Giá trị nhà thầu chỉ định",
+    "DirectContractorCost": "Giá trị nhà thầu trực tiếp",
     "CostOfCapitalPCPSValue": "Giá trị PC/PS",
     "TotalCostOfCapital": "Total giá vốn",
     "TotalCostOfCapitalProfitCost": "Chi phí lợi nhuận (O&P)",
