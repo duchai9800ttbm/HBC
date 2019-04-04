@@ -124,9 +124,11 @@ export class SummaryConditionFormInfoComponent implements OnInit {
 
   uploadPerspectiveImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadPhoiCanhLoading').classList.add('loader');
     this.hoSoDuThauService
       .uploadImage(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadPhoiCanhLoading').classList.remove('loader');
         if (this.hinhAnhPhoiCanhUrls) {
           this.hinhAnhPhoiCanhUrls = [...this.hinhAnhPhoiCanhUrls, ...res];
         }
@@ -136,6 +138,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
         this.thongTinDuAnForm.get('hinhAnhPhoiCanh').patchValue(this.hinhAnhPhoiCanhUrls);
         this.uploadPhoiCanh.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadPhoiCanhLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.hinhAnhPhoiCanhUrls.forEach(x => {
           if (!x.id) {
@@ -159,9 +162,11 @@ export class SummaryConditionFormInfoComponent implements OnInit {
 
   uploadBanVe(event) {
     const files = event.target.files;
+    document.getElementById('uploadMasterplanLoading').classList.add('loader');
     this.hoSoDuThauService
       .uploadImage(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadMasterplanLoading').classList.remove('loader');
         if (this.banVeMasterPlanUrls) {
           this.banVeMasterPlanUrls = [...this.banVeMasterPlanUrls, ...res];
         }
@@ -172,6 +177,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
         this.uploadMasterplan.nativeElement.value = null;
 
       }, err => {
+        document.getElementById('uploadMasterplanLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.banVeMasterPlanUrls.forEach(x => {
           if (!x.id) {
