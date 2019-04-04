@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { SessionService } from './session.service';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/operator/mergeMap';
 import { DictionaryItem, PagedResult } from '../models';
 import { SiteSurveyReport } from '../models/site-survey-report/site-survey-report';
 import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
@@ -27,6 +29,10 @@ import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
 import { StateLiveFormSummaryCondition } from '../models/ho-so-du-thau/stateLiveFormSummaryCondition';
 import { HistoryLiveForm } from '../models/ho-so-du-thau/history-liveform.model';
 import { ProposeTenderParticipateRequest } from '../models/api-request/package/propose-tender-participate-request';
+
+declare var ImageCompressor: any;
+
+const compressor = new ImageCompressor();
 
 @Injectable()
 export class HoSoDuThauService {
@@ -983,14 +989,21 @@ export class HoSoDuThauService {
   ) {
     const url = `tenderconditionalsummary/uploadimage`;
     const imageUploadForm = new FormData();
-    for (const image of listImage) {
-      imageUploadForm.append('Images', image);
-    }
+    const promises: Promise<Blob>[] = [];
     imageUploadForm.append('BidOpportunityId', `${bidOpportunityId}`);
-    return this.apiService
-      .postFile(url, imageUploadForm)
-      .map(res => res.result)
-      .share();
+    for (const image of listImage) {
+      promises.push(compressor.compress(image, {quality: .5}));
+    }
+    const resultPromise = Promise.all(promises).then(_files => {
+      _files.forEach(image => imageUploadForm.append('Images', image));
+      return this.apiService
+        .postFile(url, imageUploadForm)
+        .map(res => res.result)
+        .share();
+    });
+    return Observable.fromPromise(resultPromise).mergeMap(result => {
+      return result;
+    });
   }
 
   deleleLiveFormTTDKDuThau(bidOpportunityId: number) {
