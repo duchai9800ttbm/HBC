@@ -200,10 +200,13 @@ export class UploadFileHsdtComponent implements OnInit {
   }
   uploadImageF(event) {
     const file = event.target.files;
+    document.getElementById('uploadImageLoading').classList.add('loader');
     this.hoSoDuThauService.uploadImageService(file[0]).subscribe(res => {
+      document.getElementById('uploadImageLoading').classList.remove('loader');
       this.imageUrls.push(res);
       this.uploadImageAction.nativeElement.value = null;
     }, err => {
+      document.getElementById('uploadImageLoading').classList.remove('loader');
       this.alertService.error('Tải ảnh lên thất bại. Vui lòng thử lại!');
       this.imageUrls.forEach(x => {
         if (!x.guid) {

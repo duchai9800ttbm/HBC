@@ -43,10 +43,15 @@ export class NeedCreateTenderFormImagesProjectComponent implements OnInit {
   }
   uploadImageProject(event) {
     const files = event.target.files;
+    document.getElementById('uploadImageLoading').classList.add('loader');
     this.packageService.uploadImagTender(files, this.bidOpportunityId).subscribe(imageUrls => {
+      document.getElementById('uploadImageLoading').classList.remove('loader');
       this.imageProjects = [...this.imageProjects, ...imageUrls];
       NeedCreateTenderFormComponent.formModel.projectImage.projectImages = this.imageProjects;
       this.uploadImage.nativeElement.value = null;
+    }, err => {
+      document.getElementById('uploadImageLoading').classList.remove('loader');
+      this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
     });
   }
   deleteImage(i) {

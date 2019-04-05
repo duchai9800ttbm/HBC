@@ -130,13 +130,16 @@ export class DemoConsoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploadDemobilisationImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadDemobilisationLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadDemobilisationLoading').classList.remove('loader');
         this.demobilisationImageUrls = [...this.demobilisationImageUrls, ...res];
         this.demoConsoForm.get('phaVoKetCauList').patchValue(this.demobilisationImageUrls);
         this.uploadDemobilisation.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadDemobilisationLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.demobilisationImageUrls.forEach(x => {
           if (!x.id) {
@@ -161,13 +164,16 @@ export class DemoConsoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploadConsolidationImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadConsolidationLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadConsolidationLoading').classList.remove('loader');
         this.consolidationImageUrls = [...this.consolidationImageUrls, ...res];
         this.demoConsoForm.get('giaCoKetCauList').patchValue(this.consolidationImageUrls);
         this.uploadConsolidation.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadConsolidationLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.consolidationImageUrls.forEach(x => {
           if (!x.id) {
@@ -192,13 +198,16 @@ export class DemoConsoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploaAdjacentImage(event) {
     const files = event.target.files;
+    document.getElementById('uploaAdjacentLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploaAdjacentLoading').classList.remove('loader');
         this.adjacentImageUrls = [...this.adjacentImageUrls, ...res];
         this.demoConsoForm.get('dieuKienHinhAnhList').patchValue(this.adjacentImageUrls);
         this.uploaAdjacent.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploaAdjacentLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.adjacentImageUrls.forEach(x => {
           if (!x.id) {

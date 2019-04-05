@@ -120,13 +120,16 @@ export class SoilConditionComponent implements OnInit, AfterViewInit, OnDestroy 
 
   uploadFootingImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadFootingLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadFootingLoading').classList.remove('loader');
         this.footingImageUrls = [...this.footingImageUrls, ...res];
         this.soilConditionForm.get('nenMongHienCoList').patchValue(this.footingImageUrls);
         this.uploadFooting.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadFootingLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.footingImageUrls.forEach(x => {
           if (!x.id) {
@@ -151,13 +154,16 @@ export class SoilConditionComponent implements OnInit, AfterViewInit, OnDestroy 
 
   uploadInvestigationImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadInvestigationLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadInvestigationLoading').classList.remove('loader');
         this.investigationImageUrls = [...this.investigationImageUrls, ...res];
         this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
         this.uploadInvestigation.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadInvestigationLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.investigationImageUrls.forEach(x => {
           if (!x.id) {
