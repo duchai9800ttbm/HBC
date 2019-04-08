@@ -29,6 +29,7 @@
             <div class="perspective-image" [ngClass]="{'d-none': isModeView}" #uploadPhoiCanhButton (focus)="onFocus('uploadPhoiCanhButton')" (click)="uploadPhoiCanh.click()" tabindex="3">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 <p>Image</p>
+                <div id="uploadPhoiCanhLoading"></div>
             </div>
         </div>
     </div>
@@ -48,6 +49,7 @@
                 tabindex="4">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 <p>Image</p>
+                <div id="uploadMasterplanLoading"></div>
             </div>
         </div>
     </div>

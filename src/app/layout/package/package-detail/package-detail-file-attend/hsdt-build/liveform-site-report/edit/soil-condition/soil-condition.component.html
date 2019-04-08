@@ -27,6 +27,7 @@
                             <div tabindex="2" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadFooting.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
+                                <div id="uploadFootingLoading"></div>
                             </div>
                         </div>
                     </div>
@@ -65,6 +66,7 @@
                             <div tabindex="4" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadInvestigation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
+                                <div id="uploadInvestigationLoading"></div>
                             </div>
                         </div>
                     </div>

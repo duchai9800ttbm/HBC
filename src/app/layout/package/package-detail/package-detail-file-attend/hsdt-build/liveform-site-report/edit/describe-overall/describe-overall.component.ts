@@ -131,13 +131,16 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit, OnDestro
 
   uploadTopographyImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadTopographyLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadTopographyLoading').classList.remove('loader');
         this.topographyImageUrls = [...this.topographyImageUrls, ...res];
         this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
         this.uploadTopography.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadTopographyLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.topographyImageUrls.forEach(x => {
           if (!x.id) {
@@ -162,13 +165,16 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit, OnDestro
 
   uploadExistingBuildImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadExistingBuildLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadExistingBuildLoading').classList.remove('loader');
         this.existingBuildImageUrls = [...this.existingBuildImageUrls, ...res];
         this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
         this.uploadExistingBuild.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadExistingBuildLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.existingBuildImageUrls.forEach(x => {
           if (!x.id) {
@@ -193,13 +199,16 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit, OnDestro
 
   uploadStacaleImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadStacaleLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadStacaleLoading').classList.remove('loader');
         this.stacaleImageUrls = [...this.stacaleImageUrls, ...res];
         this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
         this.uploadStacale.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadStacaleLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.stacaleImageUrls.forEach(x => {
           if (!x.id) {

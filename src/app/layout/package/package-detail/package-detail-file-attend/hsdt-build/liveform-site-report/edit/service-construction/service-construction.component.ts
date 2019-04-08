@@ -211,13 +211,16 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadSupplySystemImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadSupplySystemLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadSupplySystemLoading').classList.remove('loader');
         this.supplySystemImageUrls = [...this.supplySystemImageUrls, ...res];
         this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
         this.uploadSupplySystem.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadSupplySystemLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.supplySystemImageUrls.forEach(x => {
           if (!x.id) {
@@ -242,13 +245,16 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadSupplyPointImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadSupplyPointLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadSupplyPointLoading').classList.remove('loader');
         this.supplyPointImageUrls = [...this.supplyPointImageUrls, ...res];
         this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
         this.uploadSupplyPoint.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadSupplyPointLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.supplyPointImageUrls.forEach(x => {
           if (!x.id) {
@@ -274,13 +280,16 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadDrainageSystemImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadDrainageSystemLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadDrainageSystemLoading').classList.remove('loader');
         this.drainageSystemImageUrls = [...this.drainageSystemImageUrls, ...res];
         this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
         this.uploadDrainageSystem.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadDrainageSystemLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.drainageSystemImageUrls.forEach(x => {
           if (!x.id) {
@@ -305,13 +314,16 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadDrainagePointImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadDrainagePointLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadDrainagePointLoading').classList.remove('loader');
         this.drainagePointImageUrls = [...this.drainagePointImageUrls, ...res];
         this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
         this.uploadDrainagePoint.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadDrainagePointLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.drainagePointImageUrls.forEach(x => {
           if (!x.id) {
@@ -336,13 +348,16 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadPowerStationImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadPowerStationLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadPowerStationLoading').classList.remove('loader');
         this.powerStationImageUrls = [...this.powerStationImageUrls, ...res];
         this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
         this.uploadPowerStation.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadPowerStationLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.powerStationImageUrls.forEach(x => {
           if (!x.id) {
@@ -367,13 +382,16 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadMediumVoltageSystemImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadMediumVoltageSystemLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadMediumVoltageSystemLoading').classList.remove('loader');
         this.mediumVoltageSystemImageUrls = [...this.mediumVoltageSystemImageUrls, ...res];
         this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
         this.uploadMediumVoltageSystem.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadMediumVoltageSystemLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.mediumVoltageSystemImageUrls.forEach(x => {
           if (!x.id) {
@@ -398,13 +416,16 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadPowerOtherImage(event) {
     const files = event.target.files;
+    document.getElementById('uploadPowerOtherLoading').classList.add('loader');
     this.siteSurveyReportService
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
+        document.getElementById('uploadPowerOtherLoading').classList.remove('loader');
         this.powerOtherImageUrls = [...this.powerOtherImageUrls, ...res];
         this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
         this.uploadPowerOther.nativeElement.value = null;
       }, err => {
+        document.getElementById('uploadPowerOtherLoading').classList.remove('loader');
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.powerOtherImageUrls.forEach(x => {
           if (!x.id) {

@@ -11,6 +11,8 @@ import { CustomerModel } from '../models/site-survey-report/customer-list';
 import { PackageInfoModel } from '../models/package/package-info.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 
+declare var ImageCompressor: any;
+const compressor = new ImageCompressor();
 @Injectable()
 export class SiteSurveyReportService {
   static dataPackage: PackageInfoModel;
@@ -145,14 +147,21 @@ export class SiteSurveyReportService {
   ) {
     const url = `bidopportunity/tendersitesurveyingreport/uploadimage`;
     const imageUploadForm = new FormData();
-    for (const image of listImage) {
-      imageUploadForm.append('Images', image);
-    }
+    const promises: Promise<Blob>[] = [];
     imageUploadForm.append('BidOpportunityId', `${bidOpportunityId}`);
-    return this.apiService
-      .postFile(url, imageUploadForm)
-      .map(res => res.result)
-      .share();
+    for (const image of listImage) {
+      promises.push(compressor.compress(image, {quality: .5}));
+    }
+    const resultPromise = Promise.all(promises).then(_files => {
+      _files.forEach(image => imageUploadForm.append('Images', image));
+      return this.apiService
+        .postFile(url, imageUploadForm)
+        .map(res => res.result)
+        .share();
+    });
+    return Observable.fromPromise(resultPromise).mergeMap(result => {
+      return result;
+    });
   }
 
   // Tạo mới - cập nhật báo cáo công trình
