@@ -8,7 +8,7 @@ import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so
 })
 export class PopupUpdateDescriptionComponent implements OnInit {
   @Output() closed = new EventEmitter<boolean>();
-  descriptionUpdate: string;
+  descriptionUpdate = '';
   constructor(
     private hoSoDuThauService: HoSoDuThauService
   ) { }

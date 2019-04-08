@@ -10,6 +10,7 @@ import { DuLieuLiveFormDKDT } from '../../../../../../../shared/models/ho-so-du-
 import { Subscription } from 'rxjs';
 import { ScrollToTopService } from '../../../../../../../shared/services/scroll-to-top.service';
 import { ThongTinDuAn } from '../../../../../../../shared/models/ho-so-du-thau/thong-tin-du-an';
+import Utils from '../../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-summary-condition-form',
@@ -18,6 +19,7 @@ import { ThongTinDuAn } from '../../../../../../../shared/models/ho-so-du-thau/t
 })
 export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   static formModel: TenderConditionSummaryRequest;
+  formModelCompare: DuLieuLiveFormDKDT;
   @ViewChild('scrollView') scrollView;
   packageId;
   package: PackageInfoModel;
@@ -57,6 +59,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
         case 'edit': {
           this.isModeView = false;
           this.hoSoDuThauService.emitIsModeView(false);
+          this.formModelCompare = HoSoDuThauService.tempDataLiveFormDKDT.value;
           break;
         }
         case 'detail': {
@@ -76,6 +79,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       if (data) {
         this.hoSoDuThauService.emitDataAll(data);
         this.isDraft = data.isDraftVersion;
+        this.formModelCompare = {...data};
       }
       if (!data) {
         const obj = new DuLieuLiveFormDKDT();
@@ -130,7 +134,9 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     if (check || this.isCreate || previousStatus) {
       this.submitLiveForm(true);
     } else {
-      this.showPopupConfirm = true;
+      // nếu 2 obj = nhau, không cần thông báo
+      const isEqual = Utils.isEqual({...HoSoDuThauService.tempDataLiveFormDKDT.value}, this.formModelCompare);
+      isEqual ? this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]) : this.showPopupConfirm = true;
     }
   }
   backSummary() {
