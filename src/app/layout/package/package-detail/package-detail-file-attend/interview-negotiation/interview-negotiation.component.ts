@@ -209,7 +209,7 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
       && this.interviewInvitationService.getChooseInterviewNotification().length !== 0) {
       this.dialog = this.dialogService.open({
         content: InterviewNoticeComponent,
-        width: 1100,
+        // width: 1100,
         minWidth: 250
       });
       const instance = this.dialog.content.instance;

@@ -15,6 +15,7 @@ import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-
 import { StatusObservableHsdtService } from '../../../../../../../shared/services/status-observable-hsdt.service';
 import { Router } from '../../../../../../../../../node_modules/@angular/router';
 import CustomValidator from '../../../../../../../shared/helpers/custom-validator.helper';
+import Utils from '../../../../../../../shared/helpers/utils.helper';
 @Component({
   selector: 'app-interview-notice',
   templateUrl: './interview-notice.component.html',
@@ -39,6 +40,7 @@ export class InterviewNoticeComponent implements OnInit {
   interviewChoose;
   maxBidInterviewInvitationId = 1;
   arrayBidInterviewInvitationId = [];
+  errorMess: string;
   constructor(
     private emailService: EmailService,
     private spinner: NgxSpinnerService,
@@ -166,12 +168,17 @@ export class InterviewNoticeComponent implements OnInit {
   }
 
   uploadfile(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
+    // : FileList
+    const fileList = event.target.files;
+    if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
+      this.errorMess = null;
       for (let i = 0; i < fileList.length; i++) {
         this.file.push(fileList[i]);
       }
       event.target.value = null;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx';
     }
   }
 

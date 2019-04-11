@@ -8,6 +8,7 @@ import { DocumentService } from '../../../../../../../shared/services/document.s
 import { NgxSpinnerService } from '../../../../../../../../../node_modules/ngx-spinner';
 import ValidationHelper from '../../../../../../../shared/helpers/validation.helper';
 import { PriceReviewService } from '../../../../../../../shared/services/price-review.service';
+import Utils from '../../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-upload-file-attach',
@@ -65,8 +66,9 @@ export class UploadFileAttachComponent implements OnInit {
 
   fileChange(event) {
     this.uploadForm.get('link').disable();
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
+    // FileList
+    const fileList = event.target.files;
+    if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
       this.file = fileList[0];
       this.uploadForm.get('link').patchValue('');
       this.uploadForm.get('nameFile').patchValue('');
@@ -74,6 +76,9 @@ export class UploadFileAttachComponent implements OnInit {
       this.uploadForm.get('nameFile').patchValue(event.target.files[0].name);
       this.uploadForm.get('editName').patchValue(event.target.files[0].name);
       event.target.value = null;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx');
     }
   }
 

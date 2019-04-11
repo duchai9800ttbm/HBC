@@ -90,7 +90,7 @@
                     <div class="fileUpload">
                         <button class="btn btn-primary font-size-control">
                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File</button>
-                        <input type="file" class="upload" (change)="fileChange($event)" />
+                        <input type="file" class="upload" (change)="fileChange($event)" accept=".jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx"/>
                     </div>
                     <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
                         <div class="text-truncate" [title]="this.createFormNewInvitation.get('attachedFiles')?.value">

@@ -7,6 +7,7 @@ import { PackageDetailComponent } from '../../../../package-detail.component';
 import ValidationHelper from '../../../../../../../shared/helpers/validation.helper';
 import CustomValidator from '../../../../../../../shared/helpers/custom-validator.helper';
 import { StatusObservableHsdtService } from '../../../../../../../shared/services/status-observable-hsdt.service';
+import Utils from '../../../../../../../shared/helpers/utils.helper';
 @Component({
   selector: 'app-report-end-interview',
   templateUrl: './report-end-interview.component.html',
@@ -28,6 +29,7 @@ export class ReportEndInterviewComponent implements OnInit {
     interviewTimes: '',
     version: ''
   };
+  errorMess: string;
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -63,6 +65,10 @@ export class ReportEndInterviewComponent implements OnInit {
   onFormValueChanged(data?: any) {
     if (this.isSubmitted) {
       this.validateForm();
+      if (!((this.createFormReport.get('link').value
+        && this.createFormReport.get('link').value !== '') || this.file) && this.isSubmitted) {
+          this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
+      }
     }
   }
 
@@ -71,8 +77,10 @@ export class ReportEndInterviewComponent implements OnInit {
   }
 
   fileChange(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
+    // : FileList
+    const fileList = event.target.files;
+    if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
+      this.errorMess = null;
       this.file = fileList[0];
       if (this.file.size < 10485760) {
         if (this.createFormReport.get('documentName').value === null || this.createFormReport.get('documentName').value === '') {
@@ -81,6 +89,9 @@ export class ReportEndInterviewComponent implements OnInit {
       } else {
         this.alertService.error('Dung lượng ảnh quá lớn! Vui lòng chọn ảnh dưới 10MB.');
       }
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx';
     }
   }
 

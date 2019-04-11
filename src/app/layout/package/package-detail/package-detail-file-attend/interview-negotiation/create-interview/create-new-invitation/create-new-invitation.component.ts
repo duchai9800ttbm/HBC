@@ -10,6 +10,7 @@ import ValidationHelper from '../../../../../../../shared/helpers/validation.hel
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
 import { StatusObservableHsdtService } from '../../../../../../../shared/services/status-observable-hsdt.service';
 import CustomValidator from '../../../../../../../shared/helpers/custom-validator.helper';
+import Utils from '../../../../../../../shared/helpers/utils.helper';
 @Component({
   selector: 'app-create-new-invitation',
   templateUrl: './create-new-invitation.component.html',
@@ -95,14 +96,18 @@ export class CreateNewInvitationComponent implements OnInit {
   }
 
   fileChange(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
+    // FileList
+    const fileList = event.target.files;
+    if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
       this.file = fileList[0];
       if (this.file.size < 10485760) {
         this.createFormNewInvitation.get('attachedFiles').patchValue(event.target.files[0].name);
       } else {
         this.alertService.error('Dung lượng ảnh quá lớn! Vui lòng chọn ảnh dưới 10MB.');
       }
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx');
     }
   }
   deleteFileUpload(event) {
