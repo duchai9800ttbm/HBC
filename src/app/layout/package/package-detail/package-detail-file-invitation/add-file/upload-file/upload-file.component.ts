@@ -96,8 +96,8 @@ export class UploadFileComponent implements OnInit {
   fileChange(event) {
     this.uploadForm.get('link').disable();
     const fileList: FileList = event.target.files;
-    console.log('check', Utils.checkTypeFile(fileList[0].name));
     if (fileList.length > 0 && Utils.checkTypeFile(fileList[0].name)) {
+      this.errorMess = null;
       this.file = fileList[0];
       this.uploadForm.get('link').patchValue('');
       this.uploadForm.get('nameFile').patchValue(event.target.files[0].name);
@@ -105,6 +105,9 @@ export class UploadFileComponent implements OnInit {
         this.uploadForm.get('editName').patchValue(event.target.files[0].name);
       }
       event.target.value = null;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx';
     }
   }
 
