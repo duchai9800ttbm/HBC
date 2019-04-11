@@ -4,7 +4,7 @@
             <h5 class="text-uppercase">IX. Hình ảnh dự án (nếu có)</h5>
         </div>
         <div class="image-demo-img">
-            <input type="file" accept="image/*" multiple (change)="uploadImageProject($event)" #uploadImage>
+            <input type="file" accept="image/*" multiple (change)="uploadImageProject($event)" #uploadImage accept=".jpg, .jpeg">
             <ng-container *ngFor="let url of imageProjects; index as i">
                 <div class="display-img" [ngClass]="{'border-none': routerAction == 'view'}" (click)="viewFullScreenImage(imageProjects, i)">
                     <img [src]="url.thumbSizeUrl">

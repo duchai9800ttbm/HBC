@@ -4,6 +4,7 @@ import { AlertService } from '../../../../../../../shared/services';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { Router } from '@angular/router';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
+import Utils from '../../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-need-create-tender-form-images-project',
@@ -43,6 +44,8 @@ export class NeedCreateTenderFormImagesProjectComponent implements OnInit {
   }
   uploadImageProject(event) {
     const files = event.target.files;
+    console.log('-files-', files );
+    console.log('files.every(item => Utils.checkTypeFileImage(item.name))', Utils.checkTypeFileImage(files));
     document.getElementById('uploadImageLoading').classList.add('loader');
     this.packageService.uploadImagTender(files, this.bidOpportunityId).subscribe(imageUrls => {
       document.getElementById('uploadImageLoading').classList.remove('loader');

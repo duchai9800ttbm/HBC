@@ -96,7 +96,7 @@ export class UploadFileComponent implements OnInit {
   fileChange(event) {
     this.uploadForm.get('link').disable();
     const fileList: FileList = event.target.files;
-    if (fileList.length > 0 && Utils.checkTypeFile(fileList[0].name)) {
+    if (fileList.length > 0 && Utils.checkTypeFile([fileList[0]])) {
       this.errorMess = null;
       this.file = fileList[0];
       this.uploadForm.get('link').patchValue('');

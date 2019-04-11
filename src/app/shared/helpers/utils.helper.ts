@@ -99,22 +99,30 @@ export default class Utils {
         }
     }
 
-    static checkTypeFile(name: string): boolean {
+    static checkTypeFile(file: File[]): boolean {
         const typeAllow = ['jpg', 'jpeg', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
-        const typeAray = name.split('.');
-        if ( typeAllow.includes(typeAray[typeAray.length - 1]) && typeAray.length >= 2) {
-            return true;
+        let isReturn = true;
+        for (const image of file) {
+            const typeAray = image.name.split('.');
+            if ( !(typeAllow.includes(typeAray[typeAray.length - 1]) && typeAray.length >= 2) ) {
+                isReturn = false;
+                break;
+            }
         }
-        return false;
+        return isReturn;
     }
 
-    static checkTypeFileImage(name: string): boolean {
+    static checkTypeFileImage(file: File[]): boolean {
         const typeAllow = ['jpg', 'jpeg'];
-        const typeAray = name.split('.');
-        if ( typeAllow.includes(typeAray[typeAray.length - 1]) && typeAray.length >= 2) {
-            return true;
+        let isReturn = true;
+        for (const image of file) {
+            const typeAray = image.name.split('.');
+            if ( !(typeAllow.includes(typeAray[typeAray.length - 1]) && typeAray.length >= 2) ) {
+                isReturn = false;
+                break;
+            }
         }
-        return false;
+        return isReturn;
     }
 
 }
