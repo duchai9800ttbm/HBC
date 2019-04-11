@@ -21,6 +21,7 @@ import { PermissionService } from '../../../../../../shared/services/permission.
 import { EmailFilter, EmailItemModel } from '../../../../../../shared/models/email/email-item.model';
 import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
 import { slideToLeft } from '../../../../../../router.animations';
+import Utils from '../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-meeting-kickoff',
@@ -89,6 +90,7 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   listEmailSended: EmailItemModel[];
   isAgain: boolean;
   isSendMailKickOff = false;
+  errorMess: string;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -221,6 +223,7 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   }
   modalNoti(template: TemplateRef<any>, isAgain: boolean) {
     this.isAgain = isAgain;
+    this.errorMess = null;
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'gray modal-lg-max' })
@@ -275,12 +278,17 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   }
   // Gửi thư thông báo kick-off
   uploadfile(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
+    // : FileList
+    const fileList = event.target.files;
+    if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
+      this.errorMess = null;
       for (let i = 0; i < fileList.length; i++) {
         this.file.push(fileList[i]);
       }
       event.target.value = null;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx';
     }
   }
   deleteFileUpload(index: number) {

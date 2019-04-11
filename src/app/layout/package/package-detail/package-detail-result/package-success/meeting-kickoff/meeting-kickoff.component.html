@@ -159,7 +159,10 @@
       </div>
     </div>
 
-    <div class="pull-right">
+    <div class="pull-right d-flex">
+        <div class="w-100 center-parent" *ngIf="errorMess" class="alert alert-danger mb-0 p-2 mr-3" role="alert">
+            <span> {{errorMess}}</span>
+        </div>
       <button type="button" class="btn btn-cancel mr-2" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
       <button type="button" *ngIf="!showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendInformation()">Gửi</button>
     </div>
@@ -231,7 +234,7 @@
       <div class="fileUpload width-but-upload pt-2">
         <button class="btn btn-primary">
           <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;&nbsp; Đính kèm file</button>
-        <input type="file" class="upload" tabindex="2" (change)="uploadfile($event)" multiple />
+        <input type="file" class="upload" tabindex="2" (change)="uploadfile($event)" multiple accept=".jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx"/>
       </div>
       <div class="width-add-file-upload">
         <div *ngFor="let item of file; let i = index" class="d-flex pl-2 pt-2 float-left">

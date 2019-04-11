@@ -7,6 +7,7 @@ import { PackageService } from '../../../../../../shared/services/package.servic
 import { PackageDetailComponent } from '../../../package-detail.component';
 import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
 import ValidationHelper from '../../../../../../shared/helpers/validation.helper';
+import Utils from '../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-thanks-letter-cancel',
@@ -25,6 +26,7 @@ export class ThanksLetterCancelComponent implements OnInit {
   invalidMessages: string[];
   currentPackageId: number;
   // checkStatusPackage = CheckStatusPackage;
+  errorMess: string;
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -60,6 +62,10 @@ export class ThanksLetterCancelComponent implements OnInit {
   onFormValueChanged(data?: any) {
     if (this.isSubmitted) {
       this.validateForm();
+      if (!((this.uploadResultForm.get('link').value &&
+        this.uploadResultForm.get('link').value !== '') || this.file) && this.isSubmitted) {
+          this.errorMess = 'Bạn phải nhập đường dẫn link hoặc đính kèm file';
+      }
     }
   }
 
@@ -83,14 +89,18 @@ export class ThanksLetterCancelComponent implements OnInit {
   }
 
   fileChange(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
+    // : FileList
+    const fileList = event.target.files;
+    if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
       this.file = fileList[0];
       if (this.file.size < 10485760) {
         this.uploadResultForm.get('documentName').patchValue(event.target.files[0].name);
       } else {
         this.alertService.error('Dung lượng ảnh quá lớn! Vui lòng chọn ảnh dưới 10MB.');
       }
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx';
     }
   }
 

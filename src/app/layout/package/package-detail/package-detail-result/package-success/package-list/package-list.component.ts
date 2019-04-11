@@ -24,6 +24,7 @@ import { PermissionService } from '../../../../../../shared/services/permission.
 import { ViewDetailComponent } from '../../view-detail/view-detail.component';
 import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
 import { slideToLeft } from '../../../../../../router.animations';
+import Utils from '../../../../../../shared/helpers/utils.helper';
 @Component({
   selector: 'app-package-list',
   templateUrl: './package-list.component.html',
@@ -98,6 +99,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
   isAgain = false;
   inforPackage;
   dialogViewDetail;
+  errorMess: string;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -237,6 +239,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
   }
   openModalNotification(template: TemplateRef<any>, actionSendEmail: string, isAgain: boolean) {
     this.actionSendEmail = actionSendEmail;
+    this.errorMess = null;
     this.emailModel = new SendEmailModel();
     switch (actionSendEmail) {
       case 'ContractRoom': {
@@ -461,12 +464,17 @@ export class PackageListComponent implements OnInit, OnDestroy {
     this.isSendBcc = !this.isSendBcc;
   }
   uploadfile(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
+    // : FileList
+    const fileList = event.target.files;
+    if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
+      this.errorMess = null;
       for (let i = 0; i < fileList.length; i++) {
         this.file.push(fileList[i]);
       }
       event.target.value = null;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx';
     }
   }
   deleteFileUpload(index: number) {

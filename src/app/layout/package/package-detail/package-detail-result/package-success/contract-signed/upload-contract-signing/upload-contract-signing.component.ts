@@ -5,6 +5,7 @@ import CustomValidator from '../../../../../../../shared/helpers/custom-validato
 import ValidationHelper from '../../../../../../../shared/helpers/validation.helper';
 import { DetailResultPackageService } from '../../../../../../../shared/services/detail-result-package.service';
 import { AlertService } from '../../../../../../../shared/services';
+import Utils from '../../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-upload-contract-signing',
@@ -25,6 +26,7 @@ export class UploadContractSigningComponent implements OnInit {
   };
   isSubmitted = false;
   file;
+  errorMess: string;
   constructor(
     private fb: FormBuilder,
     private detailResultPackageService: DetailResultPackageService,
@@ -58,6 +60,10 @@ export class UploadContractSigningComponent implements OnInit {
   onFormValueChanged(data?: any) {
     if (this.isSubmitted) {
       this.validateForm();
+      if (!((this.uploadContractForm.get('link').value &&
+        this.uploadContractForm.get('link').value !== '') || this.file) && this.isSubmitted) {
+        this.errorMess = 'Bạn phải nhập đường dẫn link hoặc đính kèm file';
+      }
     }
   }
 
@@ -82,14 +88,19 @@ export class UploadContractSigningComponent implements OnInit {
   }
 
   fileChange(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
+    // : FileList
+    const fileList = event.target.files;
+    if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
+      this.errorMess = null;
       this.file = fileList[0];
       if (this.file.size < 10485760) {
         this.uploadContractForm.get('documentName').patchValue(event.target.files[0].name);
       } else {
         this.alertService.error('Dung lượng ảnh quá lớn! Vui lòng chọn ảnh dưới 10MB.');
       }
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx';
     }
   }
 
