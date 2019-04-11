@@ -6,6 +6,7 @@ import { AlertService } from '../../../../../../shared/services/alert.service';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { ListDocumentTypeIdGroup } from '../../../../../../shared/models/ho-so-du-thau/list-document-type.model';
+import Utils from '../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-upload-file-hsdt',
@@ -168,16 +169,20 @@ export class UploadFileHsdtComponent implements OnInit {
   uploadFile(event) {
     this.uploadForm.get('linkFile').disable();
     this.tempFile = event.target.files;
-    this.displayName = this.tempFile[0].name;
-    if (!this.uploadForm.get('editName').value) {
-      this.uploadForm.get('editName').patchValue(this.displayName);
+    if (Utils.checkTypeFile(this.tempFile)) {
+      this.displayName = this.tempFile[0].name;
+      if (!this.uploadForm.get('editName').value) {
+        this.uploadForm.get('editName').patchValue(this.displayName);
+      }
+      this.uploadForm.get('file').patchValue(this.tempFile[0]);
+      if (!this.uploadForm.get('editName').value) {
+        this.uploadForm.get('editName').patchValue(this.displayName);
+      }
+      event.target.value = null;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx';
     }
-    this.uploadForm.get('file').patchValue(this.tempFile[0]);
-
-    if (!this.uploadForm.get('editName').value) {
-      this.uploadForm.get('editName').patchValue(this.displayName);
-    }
-    event.target.value = null;
   }
 
   deleteFileUpload() {
@@ -200,20 +205,24 @@ export class UploadFileHsdtComponent implements OnInit {
   }
   uploadImageF(event) {
     const file = event.target.files;
-    document.getElementById('uploadImageLoading').classList.add('loader');
-    this.hoSoDuThauService.uploadImageService(file[0]).subscribe(res => {
-      document.getElementById('uploadImageLoading').classList.remove('loader');
-      this.imageUrls.push(res);
-      this.uploadImageAction.nativeElement.value = null;
-    }, err => {
-      document.getElementById('uploadImageLoading').classList.remove('loader');
-      this.alertService.error('Tải ảnh lên thất bại. Vui lòng thử lại!');
-      this.imageUrls.forEach(x => {
-        if (!x.guid) {
-          this.imageUrls.splice(this.imageUrls.indexOf(x), 1);
-        }
+    if (Utils.checkTypeFileImage(file)) {
+      document.getElementById('uploadImageLoading').classList.add('loader');
+      this.hoSoDuThauService.uploadImageService(file[0]).subscribe(res => {
+        document.getElementById('uploadImageLoading').classList.remove('loader');
+        this.imageUrls.push(res);
+        this.uploadImageAction.nativeElement.value = null;
+      }, err => {
+        document.getElementById('uploadImageLoading').classList.remove('loader');
+        this.alertService.error('Tải ảnh lên thất bại. Vui lòng thử lại!');
+        this.imageUrls.forEach(x => {
+          if (!x.guid) {
+            this.imageUrls.splice(this.imageUrls.indexOf(x), 1);
+          }
+        });
       });
-    });
+    } else {
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg';
+    }
   }
   deleteImage(image) {
     if (image.guid) {

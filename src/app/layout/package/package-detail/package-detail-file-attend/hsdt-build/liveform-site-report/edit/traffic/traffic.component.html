@@ -15,7 +15,7 @@
                                 [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploaDisadvantage (change)="uploaDisadvantageImage($event)">
+                            <input type="file" accept="image/*" multiple #uploaDisadvantage (change)="uploaDisadvantageImage($event)" accept=".jpg, .jpeg">
 
                             <ng-container *ngFor="let url of disadvantageImageUrls; index as k">
                                 <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(disadvantageImageUrls, k)">
@@ -43,7 +43,7 @@
                                 [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" accept="image/*" #uploaAdvantage multiple (change)="uploaAdvantageImage($event)">
+                            <input type="file" accept="image/*" #uploaAdvantage multiple (change)="uploaAdvantageImage($event)" accept=".jpg, .jpeg">
 
                             <ng-container *ngFor="let url of advantageImageUrls; index as k">
                                 <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(advantageImageUrls, k)">
@@ -77,7 +77,7 @@
                         [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div class="image-demo-img">
-                    <input type="file" accept="image/*" multiple #uploadDirection (change)="uploadDirectionImage($event)">
+                    <input type="file" accept="image/*" multiple #uploadDirection (change)="uploadDirectionImage($event)" accept=".jpg, .jpeg">
 
                     <ng-container *ngFor="let url of directionImageUrls; index as k">
                         <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(directionImageUrls, k)">
@@ -104,7 +104,7 @@
                         [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div class="image-demo-img">
-                    <input type="file" accept="image/*" multiple #uploadExisting (change)="uploadExistingImage($event)">
+                    <input type="file" accept="image/*" multiple #uploadExisting (change)="uploadExistingImage($event)" accept=".jpg, .jpeg">
 
                     <ng-container *ngFor="let url of existingImageUrls; index as k">
                         <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(existingImageUrls, k)">
@@ -131,7 +131,7 @@
                         [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div class="image-demo-img">
-                    <input type="file" accept="image/*" multiple #uploadRoad (change)="uploadRoadImage($event)">
+                    <input type="file" accept="image/*" multiple #uploadRoad (change)="uploadRoadImage($event)" accept=".jpg, .jpeg">
 
                     <ng-container *ngFor="let url of roadImageUrls; index as k">
                         <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(roadImageUrls, k)">
@@ -157,7 +157,7 @@
                         [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div class="image-demo-img">
-                    <input type="file" accept="image/*" multiple #uploadFence (change)="uploadFenceImage($event)">
+                    <input type="file" accept="image/*" multiple #uploadFence (change)="uploadFenceImage($event)" accept=".jpg, .jpeg">
 
                     <ng-container *ngFor="let url of fenceImageUrls; index as k">
                         <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(fenceImageUrls, k)">

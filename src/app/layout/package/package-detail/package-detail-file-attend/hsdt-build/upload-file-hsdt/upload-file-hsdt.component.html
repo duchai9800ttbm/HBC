@@ -38,7 +38,7 @@
                                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;
                                             Chọn File</button>
                                         <input type="file" class="upload" [class.pointer-default]="lockField" tabindex="2"
-                                            [disabled]="lockField" (change)="uploadFile($event)" />
+                                            [disabled]="lockField" (change)="uploadFile($event)" accept=".jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx"/>
                                     </div>
                                     <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
                                         <div> <span class="text-breakline">{{ displayName }}</span></div>
@@ -54,7 +54,7 @@
                                 <td class="no-boder">
 
                                     <div class="image-demo-img">
-                                        <input type="file" accept="image/*" #uploadImage (change)="uploadImageF($event)">
+                                        <input type="file" accept="image/*" #uploadImage (change)="uploadImageF($event)" accept=".jpg, .jpeg">
                                         <div class="display-img" *ngFor="let url of imageUrls" (click)="viewFullScreenImage(structureImageUrls)">
                                             <img [src]="url.largeSizeUrl">
                                             <div class="icon-delete-image" (click)="deleteImage(url)">

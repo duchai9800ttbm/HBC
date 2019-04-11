@@ -7,6 +7,7 @@ import { PackageDetailComponent } from '../../../../../package-detail.component'
 import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 import { Subscription } from 'rxjs';
+import Utils from '../../../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-traffic',
@@ -172,24 +173,28 @@ export class TrafficComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploaDisadvantageImage(event) {
     const files = event.target.files;
-    document.getElementById('uploaDisadvantageLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploaDisadvantageLoading').classList.remove('loader');
-        this.disadvantageImageUrls = [...this.disadvantageImageUrls, ...res];
-        this.trafficForm.get('chiTietDiaHinhKhoKhanList').patchValue(this.disadvantageImageUrls);
-        this.uploaDisadvantage.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploaDisadvantageLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.disadvantageImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.disadvantageImageUrls.indexOf(x);
-            this.disadvantageImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploaDisadvantageLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploaDisadvantageLoading').classList.remove('loader');
+          this.disadvantageImageUrls = [...this.disadvantageImageUrls, ...res];
+          this.trafficForm.get('chiTietDiaHinhKhoKhanList').patchValue(this.disadvantageImageUrls);
+          this.uploaDisadvantage.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploaDisadvantageLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.disadvantageImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.disadvantageImageUrls.indexOf(x);
+              this.disadvantageImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteDisadvantageImage(i) {
     const index = this.disadvantageImageUrls.indexOf(i);
@@ -206,24 +211,28 @@ export class TrafficComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploaAdvantageImage(event) {
     const files = event.target.files;
-    document.getElementById('uploaAdvantageLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploaAdvantageLoading').classList.remove('loader');
-        this.advantageImageUrls = [...this.advantageImageUrls, ...res];
-        this.trafficForm.get('chiTietDiaHinhThuanLoiList').patchValue(this.advantageImageUrls);
-        this.uploaAdvantage.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploaAdvantageLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.advantageImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.advantageImageUrls.indexOf(x);
-            this.advantageImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploaAdvantageLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploaAdvantageLoading').classList.remove('loader');
+          this.advantageImageUrls = [...this.advantageImageUrls, ...res];
+          this.trafficForm.get('chiTietDiaHinhThuanLoiList').patchValue(this.advantageImageUrls);
+          this.uploaAdvantage.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploaAdvantageLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.advantageImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.advantageImageUrls.indexOf(x);
+              this.advantageImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteAdvantageImage(i) {
     const index = this.advantageImageUrls.indexOf(i);
@@ -240,24 +249,28 @@ export class TrafficComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploadDirectionImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadDirectionLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadDirectionLoading').classList.remove('loader');
-        this.directionImageUrls = [...this.directionImageUrls, ...res];
-        this.trafficForm.get('huongVaoCongTruongList').patchValue(this.directionImageUrls);
-        this.uploadDirection.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadDirectionLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.directionImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.directionImageUrls.indexOf(x);
-            this.directionImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadDirectionLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadDirectionLoading').classList.remove('loader');
+          this.directionImageUrls = [...this.directionImageUrls, ...res];
+          this.trafficForm.get('huongVaoCongTruongList').patchValue(this.directionImageUrls);
+          this.uploadDirection.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadDirectionLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.directionImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.directionImageUrls.indexOf(x);
+              this.directionImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteDirectionImage(i) {
     const index = this.directionImageUrls.indexOf(i);
@@ -274,24 +287,28 @@ export class TrafficComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploadExistingImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadExistingLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadExistingLoading').classList.remove('loader');
-        this.existingImageUrls = [...this.existingImageUrls, ...res];
-        this.trafficForm.get('duongHienCoTrenCongTruongList').patchValue(this.existingImageUrls);
-        this.uploadExisting.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadExistingLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.existingImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.existingImageUrls.indexOf(x);
-            this.existingImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadExistingLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadExistingLoading').classList.remove('loader');
+          this.existingImageUrls = [...this.existingImageUrls, ...res];
+          this.trafficForm.get('duongHienCoTrenCongTruongList').patchValue(this.existingImageUrls);
+          this.uploadExisting.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadExistingLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.existingImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.existingImageUrls.indexOf(x);
+              this.existingImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteExistingImage(i) {
     const index = this.existingImageUrls.indexOf(i);
@@ -308,24 +325,28 @@ export class TrafficComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploadRoadImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadRoadLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadRoadLoading').classList.remove('loader');
-        this.roadImageUrls = [...this.roadImageUrls, ...res];
-        this.trafficForm.get('yeuCauDuongTamList').patchValue(this.roadImageUrls);
-        this.uploadRoad.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadRoadLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.roadImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.roadImageUrls.indexOf(x);
-            this.roadImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadRoadLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadRoadLoading').classList.remove('loader');
+          this.roadImageUrls = [...this.roadImageUrls, ...res];
+          this.trafficForm.get('yeuCauDuongTamList').patchValue(this.roadImageUrls);
+          this.uploadRoad.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadRoadLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.roadImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.roadImageUrls.indexOf(x);
+              this.roadImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteRoadImage(i) {
     const index = this.roadImageUrls.indexOf(i);
@@ -342,24 +363,28 @@ export class TrafficComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploadFenceImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadFenceLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadFenceLoading').classList.remove('loader');
-        this.fenceImageUrls = [...this.fenceImageUrls, ...res];
-        this.trafficForm.get('yeuCauHangRaoList').patchValue(this.fenceImageUrls);
-        this.uploadFence.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadFenceLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.fenceImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.fenceImageUrls.indexOf(x);
-            this.fenceImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadFenceLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadFenceLoading').classList.remove('loader');
+          this.fenceImageUrls = [...this.fenceImageUrls, ...res];
+          this.trafficForm.get('yeuCauHangRaoList').patchValue(this.fenceImageUrls);
+          this.uploadFence.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadFenceLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.fenceImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.fenceImageUrls.indexOf(x);
+              this.fenceImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteFenceImage(i) {
     const index = this.fenceImageUrls.indexOf(i);

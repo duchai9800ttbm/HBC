@@ -6,6 +6,7 @@ import { AlertService } from '../../../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../../../shared/services/site-survey-report.service';
 import { EditComponent } from '../../../edit.component';
 import { Subscription } from 'rxjs';
+import Utils from '../../../../../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-content-item',
@@ -85,24 +86,28 @@ export class ContentItemComponent implements OnInit, OnDestroy {
   }
   uploadContentImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadContentLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadContentLoading').classList.remove('loader');
-        this.contentItemImageList = [...this.contentItemImageList, ...res];
-        this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
-        this.uploadContent.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadContentLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.contentItemImageList.forEach(x => {
-          if (!x.id) {
-            const index = this.contentItemImageList.indexOf(x);
-            this.contentItemImageList.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadContentLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadContentLoading').classList.remove('loader');
+          this.contentItemImageList = [...this.contentItemImageList, ...res];
+          this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
+          this.uploadContent.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadContentLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.contentItemImageList.forEach(x => {
+            if (!x.id) {
+              const index = this.contentItemImageList.indexOf(x);
+              this.contentItemImageList.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteContentImage(i) {
     const index = this.contentItemImageList.indexOf(i);

@@ -12,7 +12,7 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadDemobilisation (change)="uploadDemobilisationImage($event)" accept=".jpg, .jpeg">
                             <ng-container *ngFor="let url of demobilisationImageUrls; index as k">
                                 <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(demobilisationImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
@@ -41,7 +41,7 @@
                 </div>
                 <div>
                     <div class="image-demo-img">
-                        <input type="file" accept="image/*" multiple #uploadConsolidation (change)="uploadConsolidationImage($event)">
+                        <input type="file" accept="image/*" multiple #uploadConsolidation (change)="uploadConsolidationImage($event)" accept=".jpg, .jpeg">
 
                         <ng-container *ngFor="let url of consolidationImageUrls; index as k">
                             <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(consolidationImageUrls, k)">
@@ -71,7 +71,7 @@
                 </div>
                 <div>
                     <div class="image-demo-img">
-                        <input type="file" accept="image/*" #uploaAdjacent multiple (change)="uploaAdjacentImage($event)">
+                        <input type="file" accept="image/*" #uploaAdjacent multiple (change)="uploaAdjacentImage($event)" accept=".jpg, .jpeg">
 
                         <ng-container *ngFor="let url of adjacentImageUrls; index as k">
                             <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(adjacentImageUrls, k)">

@@ -7,6 +7,7 @@ import { PackageDetailComponent } from '../../../../../package-detail.component'
 import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 import { Subscription } from 'rxjs';
+import Utils from '../../../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-service-construction',
@@ -211,24 +212,28 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadSupplySystemImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadSupplySystemLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadSupplySystemLoading').classList.remove('loader');
-        this.supplySystemImageUrls = [...this.supplySystemImageUrls, ...res];
-        this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
-        this.uploadSupplySystem.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadSupplySystemLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.supplySystemImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.supplySystemImageUrls.indexOf(x);
-            this.supplySystemImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadSupplySystemLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadSupplySystemLoading').classList.remove('loader');
+          this.supplySystemImageUrls = [...this.supplySystemImageUrls, ...res];
+          this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
+          this.uploadSupplySystem.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadSupplySystemLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.supplySystemImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.supplySystemImageUrls.indexOf(x);
+              this.supplySystemImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteSupplySystemImage(i) {
     const index = this.supplySystemImageUrls.indexOf(i);
@@ -245,24 +250,28 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadSupplyPointImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadSupplyPointLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadSupplyPointLoading').classList.remove('loader');
-        this.supplyPointImageUrls = [...this.supplyPointImageUrls, ...res];
-        this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
-        this.uploadSupplyPoint.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadSupplyPointLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.supplyPointImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.supplyPointImageUrls.indexOf(x);
-            this.supplyPointImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadSupplyPointLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadSupplyPointLoading').classList.remove('loader');
+          this.supplyPointImageUrls = [...this.supplyPointImageUrls, ...res];
+          this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
+          this.uploadSupplyPoint.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadSupplyPointLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.supplyPointImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.supplyPointImageUrls.indexOf(x);
+              this.supplyPointImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteSupplyPointImage(i) {
     const index = this.supplyPointImageUrls.indexOf(i);
@@ -280,24 +289,28 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadDrainageSystemImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadDrainageSystemLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadDrainageSystemLoading').classList.remove('loader');
-        this.drainageSystemImageUrls = [...this.drainageSystemImageUrls, ...res];
-        this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
-        this.uploadDrainageSystem.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadDrainageSystemLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.drainageSystemImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.drainageSystemImageUrls.indexOf(x);
-            this.drainageSystemImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadDrainageSystemLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadDrainageSystemLoading').classList.remove('loader');
+          this.drainageSystemImageUrls = [...this.drainageSystemImageUrls, ...res];
+          this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
+          this.uploadDrainageSystem.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadDrainageSystemLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.drainageSystemImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.drainageSystemImageUrls.indexOf(x);
+              this.drainageSystemImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteDrainageSystemImage(i) {
     const index = this.drainageSystemImageUrls.indexOf(i);
@@ -314,24 +327,28 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadDrainagePointImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadDrainagePointLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadDrainagePointLoading').classList.remove('loader');
-        this.drainagePointImageUrls = [...this.drainagePointImageUrls, ...res];
-        this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
-        this.uploadDrainagePoint.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadDrainagePointLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.drainagePointImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.drainagePointImageUrls.indexOf(x);
-            this.drainagePointImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadDrainagePointLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadDrainagePointLoading').classList.remove('loader');
+          this.drainagePointImageUrls = [...this.drainagePointImageUrls, ...res];
+          this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
+          this.uploadDrainagePoint.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadDrainagePointLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.drainagePointImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.drainagePointImageUrls.indexOf(x);
+              this.drainagePointImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteDrainagePointImage(i) {
     const index = this.drainagePointImageUrls.indexOf(i);
@@ -348,24 +365,28 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadPowerStationImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadPowerStationLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadPowerStationLoading').classList.remove('loader');
-        this.powerStationImageUrls = [...this.powerStationImageUrls, ...res];
-        this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
-        this.uploadPowerStation.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadPowerStationLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.powerStationImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.powerStationImageUrls.indexOf(x);
-            this.powerStationImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadPowerStationLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadPowerStationLoading').classList.remove('loader');
+          this.powerStationImageUrls = [...this.powerStationImageUrls, ...res];
+          this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
+          this.uploadPowerStation.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadPowerStationLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.powerStationImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.powerStationImageUrls.indexOf(x);
+              this.powerStationImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deletePowerStationImage(i) {
     const index = this.powerStationImageUrls.indexOf(i);
@@ -382,24 +403,28 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadMediumVoltageSystemImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadMediumVoltageSystemLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadMediumVoltageSystemLoading').classList.remove('loader');
-        this.mediumVoltageSystemImageUrls = [...this.mediumVoltageSystemImageUrls, ...res];
-        this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
-        this.uploadMediumVoltageSystem.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadMediumVoltageSystemLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.mediumVoltageSystemImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.mediumVoltageSystemImageUrls.indexOf(x);
-            this.mediumVoltageSystemImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadMediumVoltageSystemLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadMediumVoltageSystemLoading').classList.remove('loader');
+          this.mediumVoltageSystemImageUrls = [...this.mediumVoltageSystemImageUrls, ...res];
+          this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
+          this.uploadMediumVoltageSystem.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadMediumVoltageSystemLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.mediumVoltageSystemImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.mediumVoltageSystemImageUrls.indexOf(x);
+              this.mediumVoltageSystemImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteMediumVoltageSystemImage(i) {
     const index = this.mediumVoltageSystemImageUrls.indexOf(i);
@@ -416,24 +441,28 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
 
   uploadPowerOtherImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadPowerOtherLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadPowerOtherLoading').classList.remove('loader');
-        this.powerOtherImageUrls = [...this.powerOtherImageUrls, ...res];
-        this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
-        this.uploadPowerOther.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadPowerOtherLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.powerOtherImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.powerOtherImageUrls.indexOf(x);
-            this.powerOtherImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadPowerOtherLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadPowerOtherLoading').classList.remove('loader');
+          this.powerOtherImageUrls = [...this.powerOtherImageUrls, ...res];
+          this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
+          this.uploadPowerOther.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadPowerOtherLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.powerOtherImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.powerOtherImageUrls.indexOf(x);
+              this.powerOtherImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deletePowerOtherImage(i) {
     const index = this.powerOtherImageUrls.indexOf(i);

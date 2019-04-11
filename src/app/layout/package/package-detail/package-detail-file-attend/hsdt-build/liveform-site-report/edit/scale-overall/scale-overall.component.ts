@@ -21,6 +21,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { EditComponent } from '../edit.component';
 import { Subscription } from 'rxjs';
 import { NgxImageCompressService } from '../../../../../../../../../../node_modules/ngx-image-compress';
+import Utils from '../../../../../../../../shared/helpers/utils.helper';
 @Component({
   selector: 'app-scale-overall',
   templateUrl: './scale-overall.component.html',
@@ -214,24 +215,28 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   upoadImageCompressored(files) {
-    document.getElementById('uploadPerspectiveLoading').classList.add('loader');
-    this.siteSurveyReportService
-    .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-    .subscribe(res => {
-      document.getElementById('uploadPerspectiveLoading').classList.remove('loader');
-      this.perspectiveImageUrls = [...this.perspectiveImageUrls, ...res];
-      this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
-      this.uploadPerspective.nativeElement.value = null;
-    }, err => {
-      document.getElementById('uploadPerspectiveLoading').classList.remove('loader');
-      this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-      this.perspectiveImageUrls.forEach(x => {
-        if (!x.id) {
-          const index = this.perspectiveImageUrls.indexOf(x);
-          this.perspectiveImageUrls.splice(index, 1);
-        }
-      });
-    });
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadPerspectiveLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadPerspectiveLoading').classList.remove('loader');
+          this.perspectiveImageUrls = [...this.perspectiveImageUrls, ...res];
+          this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
+          this.uploadPerspective.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadPerspectiveLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.perspectiveImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.perspectiveImageUrls.indexOf(x);
+              this.perspectiveImageUrls.splice(index, 1);
+            }
+          });
+        });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
 
   deletePerspectiveImage(i) {
@@ -248,24 +253,28 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploadStructureImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadStructureLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadStructureLoading').classList.remove('loader');
-        this.structureImageUrls = [...this.structureImageUrls, ...res];
-        this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
-        this.uploadStructure.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadStructureLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.structureImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.structureImageUrls.indexOf(x);
-            this.structureImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadStructureLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadStructureLoading').classList.remove('loader');
+          this.structureImageUrls = [...this.structureImageUrls, ...res];
+          this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
+          this.uploadStructure.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadStructureLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.structureImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.structureImageUrls.indexOf(x);
+              this.structureImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteStructureImage(i) {
     const index = this.structureImageUrls.indexOf(i);
@@ -280,24 +289,28 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   uploadRequirementsImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadRequirementsLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadRequirementsLoading').classList.remove('loader');
-        this.requirementsImageUrls = [...this.requirementsImageUrls, ...res];
-        this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
-        this.uploadRequirements.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadRequirementsLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.requirementsImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.requirementsImageUrls.indexOf(x);
-            this.requirementsImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadRequirementsLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadRequirementsLoading').classList.remove('loader');
+          this.requirementsImageUrls = [...this.requirementsImageUrls, ...res];
+          this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
+          this.uploadRequirements.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadRequirementsLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.requirementsImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.requirementsImageUrls.indexOf(x);
+              this.requirementsImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteRequirementsImage(i) {
     const index = this.requirementsImageUrls.indexOf(i);

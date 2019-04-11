@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 import { Subscription } from 'rxjs';
+import Utils from '../../../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-describe-overall',
@@ -131,24 +132,28 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit, OnDestro
 
   uploadTopographyImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadTopographyLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadTopographyLoading').classList.remove('loader');
-        this.topographyImageUrls = [...this.topographyImageUrls, ...res];
-        this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
-        this.uploadTopography.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadTopographyLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.topographyImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.topographyImageUrls.indexOf(x);
-            this.topographyImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadTopographyLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadTopographyLoading').classList.remove('loader');
+          this.topographyImageUrls = [...this.topographyImageUrls, ...res];
+          this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
+          this.uploadTopography.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadTopographyLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.topographyImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.topographyImageUrls.indexOf(x);
+              this.topographyImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteTopographyImage(i) {
     const index = this.topographyImageUrls.indexOf(i);
@@ -165,24 +170,28 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit, OnDestro
 
   uploadExistingBuildImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadExistingBuildLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadExistingBuildLoading').classList.remove('loader');
-        this.existingBuildImageUrls = [...this.existingBuildImageUrls, ...res];
-        this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
-        this.uploadExistingBuild.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadExistingBuildLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.existingBuildImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.existingBuildImageUrls.indexOf(x);
-            this.existingBuildImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadExistingBuildLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadExistingBuildLoading').classList.remove('loader');
+          this.existingBuildImageUrls = [...this.existingBuildImageUrls, ...res];
+          this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
+          this.uploadExistingBuild.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadExistingBuildLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.existingBuildImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.existingBuildImageUrls.indexOf(x);
+              this.existingBuildImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteExistingBuildImage(i) {
     const index = this.existingBuildImageUrls.indexOf(i);
@@ -199,24 +208,28 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit, OnDestro
 
   uploadStacaleImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadStacaleLoading').classList.add('loader');
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadStacaleLoading').classList.remove('loader');
-        this.stacaleImageUrls = [...this.stacaleImageUrls, ...res];
-        this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
-        this.uploadStacale.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadStacaleLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.stacaleImageUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.stacaleImageUrls.indexOf(x);
-            this.stacaleImageUrls.splice(index, 1);
-          }
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadStacaleLoading').classList.add('loader');
+      this.siteSurveyReportService
+        .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadStacaleLoading').classList.remove('loader');
+          this.stacaleImageUrls = [...this.stacaleImageUrls, ...res];
+          this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
+          this.uploadStacale.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadStacaleLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.stacaleImageUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.stacaleImageUrls.indexOf(x);
+              this.stacaleImageUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
   deleteStacaleImage(i) {
     const index = this.stacaleImageUrls.indexOf(i);

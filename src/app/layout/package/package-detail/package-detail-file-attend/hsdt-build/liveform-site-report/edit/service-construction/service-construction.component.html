@@ -14,7 +14,7 @@
                             <input tabindex="1" #autofocus class="w-70" type="text" placeholder="Nhập text" formControlName="heThongNuocHienHuuDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadSupplySystem (change)="uploadSupplySystemImage($event)" accept=".jpg, .jpeg">
 
                             <ng-container *ngFor="let url of supplySystemImageUrls; index as k">
                                 <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(supplySystemImageUrls, k)">
@@ -39,7 +39,7 @@
                             <input tabindex="3" class="w-70" type="text" placeholder="Nhập text" formControlName="heThongNuocDiemDauNoiDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadSupplyPoint (change)="uploadSupplyPointImage($event)" accept=".jpg, .jpeg">
 
                             <ng-container *ngFor="let url of supplyPointImageUrls; index as k">
                                 <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(supplyPointImageUrls, k)">
@@ -70,7 +70,7 @@
                             <input tabindex="5" class="w-70" type="text" placeholder="Nhập text" formControlName="heThongNuocThoatHienHuuDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)" accept=".jpg, .jpeg">
 
                             <ng-container *ngFor="let url of drainageSystemImageUrls; index as k">
                                 <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(drainageSystemImageUrls, k)">
@@ -95,7 +95,7 @@
                             <input tabindex="7" class="w-70" type="text" placeholder="Nhập text" formControlName="heThongNuocThoatDiemDauNoiDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadDrainagePoint (change)="uploadDrainagePointImage($event)" accept=".jpg, .jpeg">
 
                             <ng-container *ngFor="let url of drainagePointImageUrls; index as k">
                                 <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(drainagePointImageUrls, k)">
@@ -125,7 +125,7 @@
                             <input tabindex="9" class="w-70" type="text" placeholder="Nhập text" formControlName="tramHaTheDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadPowerStation (change)="uploadPowerStationImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadPowerStation (change)="uploadPowerStationImage($event)" accept=".jpg, .jpeg">
 
                             <ng-container *ngFor="let url of powerStationImageUrls; index as k">
                                 <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(powerStationImageUrls, k)">
@@ -152,7 +152,7 @@
                             <input tabindex="11" class="w-70" type="text" placeholder="Nhập text" formControlName="duongDayTrungTheDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)" accept=".jpg, .jpeg">
 
                             <ng-container *ngFor="let url of mediumVoltageSystemImageUrls; index as k">
                                 <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(mediumVoltageSystemImageUrls, k)">
@@ -177,7 +177,7 @@
                                 <input tabindex="13" class="w-70" type="text" placeholder="Nhập text" formControlName="heThongDienKhacDesc" [ngClass]="{'view-mode-control': isViewMode}">
                             </div>
                         <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadPowerOther (change)="uploadPowerOtherImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadPowerOther (change)="uploadPowerOtherImage($event)" accept=".jpg, .jpeg">
 
                             <ng-container *ngFor="let url of powerOtherImageUrls; index as k">
                                 <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(powerOtherImageUrls, k)">
