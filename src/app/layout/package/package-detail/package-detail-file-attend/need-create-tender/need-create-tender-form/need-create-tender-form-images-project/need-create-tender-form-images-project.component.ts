@@ -44,18 +44,20 @@ export class NeedCreateTenderFormImagesProjectComponent implements OnInit {
   }
   uploadImageProject(event) {
     const files = event.target.files;
-    console.log('-files-', files );
-    console.log('files.every(item => Utils.checkTypeFileImage(item.name))', Utils.checkTypeFileImage(files));
-    document.getElementById('uploadImageLoading').classList.add('loader');
-    this.packageService.uploadImagTender(files, this.bidOpportunityId).subscribe(imageUrls => {
-      document.getElementById('uploadImageLoading').classList.remove('loader');
-      this.imageProjects = [...this.imageProjects, ...imageUrls];
-      NeedCreateTenderFormComponent.formModel.projectImage.projectImages = this.imageProjects;
-      this.uploadImage.nativeElement.value = null;
-    }, err => {
-      document.getElementById('uploadImageLoading').classList.remove('loader');
-      this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-    });
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadImageLoading').classList.add('loader');
+      this.packageService.uploadImagTender(files, this.bidOpportunityId).subscribe(imageUrls => {
+        document.getElementById('uploadImageLoading').classList.remove('loader');
+        this.imageProjects = [...this.imageProjects, ...imageUrls];
+        NeedCreateTenderFormComponent.formModel.projectImage.projectImages = this.imageProjects;
+        this.uploadImage.nativeElement.value = null;
+      }, err => {
+        document.getElementById('uploadImageLoading').classList.remove('loader');
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpeg, .jpg');
+    }
   }
   deleteImage(i) {
     const index = this.imageProjects.indexOf(i);

@@ -31,6 +31,7 @@ import { PermissionModel } from '../../../../../shared/models/permission/permiss
 import { ScheduleAssignments } from '../../../../../shared/constants/schedule-assignments';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import Utils from '../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-information-deployment',
@@ -143,7 +144,7 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   dataChangeHistory: any;
   index: number;
   isShowMore = false;
-
+  errorMess: string;
   public model = {
     editorData: '<p>Hello world!</p>'
   };
@@ -329,6 +330,7 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   }
 
   openModalDeployment(template: TemplateRef<any>) {
+    this.errorMess = null;
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'gray modal-lg-max' })
@@ -454,12 +456,17 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   }
 
   uploadfile(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
+    // : FileList
+    const fileList = event.target.files;
+    if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
+      this.errorMess = null;
       for (let i = 0; i < fileList.length; i++) {
         this.file.push(fileList[i]);
       }
       event.target.value = null;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx';
     }
   }
 
