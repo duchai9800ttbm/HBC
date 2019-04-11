@@ -115,6 +115,7 @@ export class UploadKickOffComponent implements OnInit {
     // : FileList
     const fileList = event.target.files;
     if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
+      this.errorMess = null;
       this.file = fileList[0];
       if (this.file.size < 10485760) {
         this.uploadMeetingKickOff.get('documentName').patchValue(event.target.files[0].name);

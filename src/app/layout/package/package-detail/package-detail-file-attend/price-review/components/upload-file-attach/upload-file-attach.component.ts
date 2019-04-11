@@ -69,6 +69,7 @@ export class UploadFileAttachComponent implements OnInit {
     // FileList
     const fileList = event.target.files;
     if (fileList.length > 0 && Utils.checkTypeFile(fileList)) {
+      this.errorMess = null;
       this.file = fileList[0];
       this.uploadForm.get('link').patchValue('');
       this.uploadForm.get('nameFile').patchValue('');
@@ -78,7 +79,7 @@ export class UploadFileAttachComponent implements OnInit {
       event.target.value = null;
     } else {
       // tslint:disable-next-line:max-line-length
-      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx');
+      this.errorMess = 'Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm .jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx';
     }
   }
 
