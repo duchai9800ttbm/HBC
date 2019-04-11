@@ -44,7 +44,7 @@
                                                     <i class="fa fa-cloud-upload " aria-hidden="true"></i>&nbsp;&nbsp;
                                                     Chọn File</button>
                                                 <input type="file" class="upload " tabindex="2" [disabled]="uploadForm.get('link').value && uploadForm.get('link').value.trim()"
-                                                    (change)="fileChange($event)" />
+                                                    (change)="fileChange($event)" accept=".jpg, .jpeg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx"/>
                                             </div>
                                             <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
                                                 <div> <span class="text-breakline">{{file?.name}}</span></div>

@@ -8,6 +8,7 @@ import { DictionaryItem } from '../../../../../../shared/models';
 import { NgxSpinnerService } from 'ngx-spinner';
 import ValidationHelper from '../../../../../../shared/helpers/validation.helper';
 import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
+import Utils from '../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-upload-file',
@@ -95,7 +96,8 @@ export class UploadFileComponent implements OnInit {
   fileChange(event) {
     this.uploadForm.get('link').disable();
     const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
+    console.log('check', Utils.checkTypeFile(fileList[0].name));
+    if (fileList.length > 0 && Utils.checkTypeFile(fileList[0].name)) {
       this.file = fileList[0];
       this.uploadForm.get('link').patchValue('');
       this.uploadForm.get('nameFile').patchValue(event.target.files[0].name);
