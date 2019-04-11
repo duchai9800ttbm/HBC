@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../../../../../../../shared/services';
 import { ThongTinDuAn } from '../../../../../../../../shared/models/ho-so-du-thau/thong-tin-du-an';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
+import Utils from '../../../../../../../../shared/helpers/utils.helper';
 
 @Component({
   selector: 'app-summary-condition-form-info',
@@ -124,29 +125,33 @@ export class SummaryConditionFormInfoComponent implements OnInit {
 
   uploadPerspectiveImage(event) {
     const files = event.target.files;
-    document.getElementById('uploadPhoiCanhLoading').classList.add('loader');
-    this.hoSoDuThauService
-      .uploadImage(files, this.currentBidOpportunityId)
-      .subscribe(res => {
-        document.getElementById('uploadPhoiCanhLoading').classList.remove('loader');
-        if (this.hinhAnhPhoiCanhUrls) {
-          this.hinhAnhPhoiCanhUrls = [...this.hinhAnhPhoiCanhUrls, ...res];
-        }
-        if (!this.hinhAnhPhoiCanhUrls) {
-          this.hinhAnhPhoiCanhUrls = res;
-        }
-        this.thongTinDuAnForm.get('hinhAnhPhoiCanh').patchValue(this.hinhAnhPhoiCanhUrls);
-        this.uploadPhoiCanh.nativeElement.value = null;
-      }, err => {
-        document.getElementById('uploadPhoiCanhLoading').classList.remove('loader');
-        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.hinhAnhPhoiCanhUrls.forEach(x => {
-          if (!x.id) {
-            const index = this.hinhAnhPhoiCanhUrls.indexOf(x);
-            this.hinhAnhPhoiCanhUrls.splice(index, 1);
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadPhoiCanhLoading').classList.add('loader');
+      this.hoSoDuThauService
+        .uploadImage(files, this.currentBidOpportunityId)
+        .subscribe(res => {
+          document.getElementById('uploadPhoiCanhLoading').classList.remove('loader');
+          if (this.hinhAnhPhoiCanhUrls) {
+            this.hinhAnhPhoiCanhUrls = [...this.hinhAnhPhoiCanhUrls, ...res];
           }
+          if (!this.hinhAnhPhoiCanhUrls) {
+            this.hinhAnhPhoiCanhUrls = res;
+          }
+          this.thongTinDuAnForm.get('hinhAnhPhoiCanh').patchValue(this.hinhAnhPhoiCanhUrls);
+          this.uploadPhoiCanh.nativeElement.value = null;
+        }, err => {
+          document.getElementById('uploadPhoiCanhLoading').classList.remove('loader');
+          this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+          this.hinhAnhPhoiCanhUrls.forEach(x => {
+            if (!x.id) {
+              const index = this.hinhAnhPhoiCanhUrls.indexOf(x);
+              this.hinhAnhPhoiCanhUrls.splice(index, 1);
+            }
+          });
         });
-      });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
 
   }
 
@@ -162,7 +167,8 @@ export class SummaryConditionFormInfoComponent implements OnInit {
 
   uploadBanVe(event) {
     const files = event.target.files;
-    document.getElementById('uploadMasterplanLoading').classList.add('loader');
+    if (Utils.checkTypeFileImage(files)) {
+      document.getElementById('uploadMasterplanLoading').classList.add('loader');
     this.hoSoDuThauService
       .uploadImage(files, this.currentBidOpportunityId)
       .subscribe(res => {
@@ -186,6 +192,9 @@ export class SummaryConditionFormInfoComponent implements OnInit {
           }
         });
       });
+    } else {
+      this.alertService.error('Hệ thống không hỗ trợ upload loại file này. Những loại file được hỗ trợ bao gồm jpg, .jpeg');
+    }
   }
 
   deleteBanVe(i) {

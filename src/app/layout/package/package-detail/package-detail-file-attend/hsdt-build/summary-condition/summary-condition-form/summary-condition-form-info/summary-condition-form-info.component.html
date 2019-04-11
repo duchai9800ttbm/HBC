@@ -17,7 +17,7 @@
     <div class="row mt-3">
         <div class="col-md-4">1. Hình phối cảnh</div>
         <div class="image-demo-img col-md-8">
-            <input type="file" accept="image/*" multiple #uploadPhoiCanh (change)="uploadPerspectiveImage($event)">
+            <input type="file" accept="image/*" multiple #uploadPhoiCanh (change)="uploadPerspectiveImage($event)" accept=".jpg, .jpeg">
             <ng-container *ngFor="let url of hinhAnhPhoiCanhUrls; index as k">
                 <div class="display-img" (click)="viewFullScreenImage(hinhAnhPhoiCanhUrls, k)">
                     <img [src]="url.largeSizeUrl">
@@ -36,7 +36,7 @@
     <div class="row mt-3">
         <div class="col-md-4">2. Bản vẽ master plan</div>
         <div class="image-demo-img col-md-8">
-            <input type="file" accept="image/*" multiple #uploadMasterplan (change)="uploadBanVe($event)">
+            <input type="file" accept="image/*" multiple #uploadMasterplan (change)="uploadBanVe($event)" accept=".jpg, .jpeg">
             <ng-container *ngFor="let url of banVeMasterPlanUrls; index as k">
                 <div class="display-img" (click)="viewFullScreenImage(banVeMasterPlanUrls, k)">
                     <img [src]="url.largeSizeUrl">
