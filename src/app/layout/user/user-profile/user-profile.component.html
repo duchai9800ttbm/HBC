@@ -16,7 +16,8 @@
               </div>
               <img class="w-100" [src]="avatarSrc" alt="Hình đại diện" />
               <div class="user-info__photo-change-btn w-100"  >
-                <input class="w-100" id="upload-photo" (click)="openAvatarModal()" accept="image/*" />
+                  <!-- accept="image/*"  -->
+                <input class="w-100" id="upload-photo" (click)="openAvatarModal()" accept=".jpg, .jpeg"/>
                 <label for="upload-photo">
                   <a class="">
                     <i class="fa fa-upload"></i>
