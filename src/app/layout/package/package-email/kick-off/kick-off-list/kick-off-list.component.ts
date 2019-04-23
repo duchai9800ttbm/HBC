@@ -9,7 +9,7 @@ import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner
 import { Router } from '../../../../../../../node_modules/@angular/router';
 import { PackageEmailComponent } from '../../package-email.component';
 import { Subscription } from '../../../../../../../node_modules/rxjs/Subscription';
-import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 
 @Component({

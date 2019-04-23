@@ -8,8 +8,8 @@ import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner
 import { Router } from '../../../../../../../node_modules/@angular/router';
 import { PackageEmailComponent } from '../../package-email.component';
 import { Subscription } from '../../../../../../../node_modules/rxjs/Subscription';
-import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 
 @Component({
   selector: 'app-transfer-document-list',

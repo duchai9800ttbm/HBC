@@ -18,10 +18,10 @@ import { DialogService } from '../../../../../../../node_modules/@progress/kendo
 import { UploadResultAttendComponent } from './upload-result-attend/upload-result-attend.component';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { CheckStatusPackage } from '../../../../../shared/constants/check-status-package';
-import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 import { ThanksLetterComponent } from './thanks-letter/thanks-letter.component';
 import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
+import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 
 @Component({
     selector: 'app-wait-result',

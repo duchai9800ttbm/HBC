@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { Router, NavigationStart } from "@angular/router";
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap/modal/modal";
-import { ConfirmationPopupComponent } from "../components/confirmation-popup/confirmation-popup.component";
-import { ConfirmationPopupCallAwayComponent } from "../components/confirmation-popup-call-away/confirmation-popup-call-away.component";
-import { ResetPasswordComponent } from "../components/reset-password/reset-password.component";
-import { MissActionComponent } from "../components/miss-action/miss-action.component";
-import { ConfirmationHtmlPopupComponent } from "../components/confirmation-html-popup/confirmation-html-popup.component";
-import { NotifiComponent } from "../components/notifi/notifi.component";
+import { Injectable } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal/modal';
+import { ConfirmationPopupComponent } from '../components/confirmation-popup/confirmation-popup.component';
+import { ConfirmationPopupCallAwayComponent } from '../components/confirmation-popup-call-away/confirmation-popup-call-away.component';
+import { ResetPasswordComponent } from '../components/reset-password/reset-password.component';
+import { MissActionComponent } from '../components/miss-action/miss-action.component';
+import { ConfirmationHtmlPopupComponent } from '../components/confirmation-html-popup/confirmation-html-popup.component';
+import { NotifiComponent } from '../components/notifi/notifi.component';
 @Injectable()
 export class ConfirmationService {
     constructor(private modalService: NgbModal) {}
@@ -16,7 +16,7 @@ export class ConfirmationService {
     confirm(message: string, siFn: () => void) {
         // this.setConfirmation(message, siFn, noFn);
         this.openConfirmationPopup({
-            type: "confirm",
+            type: 'confirm',
             text: message,
             siFn: function() {
                 siFn();
@@ -27,7 +27,7 @@ export class ConfirmationService {
     confirmHTML(message: any, siFn: () => void) {
         // this.setConfirmation(message, siFn, noFn);
         this.openConfirmationHTMLPopup({
-            type: "confirm",
+            type: 'confirm',
             text: message,
             siFn: function() {
                 siFn();
@@ -50,7 +50,7 @@ export class ConfirmationService {
     confirmCallAway(message: string, siFn: () => void) {
         // this.setConfirmation(message, siFn, noFn);
         this.openConfirmationPopupCallAway({
-            type: "confirm",
+            type: 'confirm',
             text: message,
             siFn: function() {
                 siFn();

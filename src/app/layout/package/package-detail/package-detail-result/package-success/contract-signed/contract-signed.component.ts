@@ -22,8 +22,8 @@ import { ContractSigningList } from '../../../../../../shared/models/result-atte
 import { groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { slideToLeft } from '../../../../../../router.animations';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 
 @Component({
   selector: 'app-contract-signed',

@@ -8,7 +8,7 @@ import { PermissionService } from '../../../shared/services/permission.service';
 import { Subscription } from '../../../../../node_modules/rxjs';
 import { AdminPermissions } from '../../../shared/data-admin/admin.permission';
 import { IntervalObservable } from '../../../../../node_modules/rxjs/observable/IntervalObservable';
-import { PermissionModel } from '../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../shared/models/permission/permission.model';
 
 @Component({
   selector: 'app-package-email',

@@ -16,12 +16,13 @@ import { UploadKickOffComponent } from './upload-kick-off/upload-kick-off.compon
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+// import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { EmailFilter, EmailItemModel } from '../../../../../../shared/models/email/email-item.model';
 import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
 import { slideToLeft } from '../../../../../../router.animations';
 import Utils from '../../../../../../shared/helpers/utils.helper';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 
 @Component({
   selector: 'app-meeting-kickoff',

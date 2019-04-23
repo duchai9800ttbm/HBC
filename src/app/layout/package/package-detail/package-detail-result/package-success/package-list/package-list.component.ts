@@ -19,12 +19,12 @@ import { SendEmailModel } from '../../../../../../shared/models/send-email-model
 import { EmailService } from '../../../../../../shared/services/email.service';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { ViewDetailComponent } from '../../view-detail/view-detail.component';
 import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
 import { slideToLeft } from '../../../../../../router.animations';
 import Utils from '../../../../../../shared/helpers/utils.helper';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 @Component({
   selector: 'app-package-list',
   templateUrl: './package-list.component.html',

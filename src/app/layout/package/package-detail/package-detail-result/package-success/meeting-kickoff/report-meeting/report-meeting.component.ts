@@ -16,9 +16,9 @@ import { DialogService } from '../../../../../../../../../node_modules/@progress
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { NgxSpinnerService } from '../../../../../../../../../node_modules/ngx-spinner';
 import { groupBy } from '../../../../../../../../../node_modules/@progress/kendo-data-query';
-import { PermissionModel } from '../../../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../../../shared/services/permission.service';
 import { slideToLeft } from '../../../../../../../router.animations';
+import { PermissionModel } from '../../../../../../../shared/models/permission/permission.model';
 
 @Component({
   selector: 'app-report-meeting',
