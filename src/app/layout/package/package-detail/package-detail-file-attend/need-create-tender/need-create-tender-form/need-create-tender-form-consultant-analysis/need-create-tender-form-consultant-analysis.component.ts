@@ -17,7 +17,8 @@ export class NeedCreateTenderFormConsultantAnalysisComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private packageService: PackageService,
-    private router: Router
+    private router: Router,
+    private parent: NeedCreateTenderFormComponent
   ) { }
 
   ngOnInit() {
@@ -50,9 +51,18 @@ export class NeedCreateTenderFormConsultantAnalysisComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.consultantAnalysis = data;
   }
 
+  mappingToSaveLiveFormData(data) {
+    NeedCreateTenderFormComponent.formModel.consultantAnalysis = data;
+    this.parent.saveOfficially(false);
+  }
+
   routerLink(event, link) {
     if (event.key === 'Enter') {
       this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/${link}`]);
     }
+  }
+
+  saveData() {
+    this.mappingToSaveLiveFormData(this.consultantAnalysForm.value);
   }
 }

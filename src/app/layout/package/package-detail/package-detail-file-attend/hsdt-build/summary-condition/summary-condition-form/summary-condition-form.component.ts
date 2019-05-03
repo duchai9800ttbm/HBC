@@ -7,6 +7,7 @@ import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du
 import { Router, ActivatedRoute } from '../../../../../../../../../node_modules/@angular/router';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 import { DuLieuLiveFormDKDT } from '../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
+// tslint:disable-next-line: import-blacklist
 import { Subscription } from 'rxjs';
 import { ScrollToTopService } from '../../../../../../../shared/services/scroll-to-top.service';
 import { ThongTinDuAn } from '../../../../../../../shared/models/ho-so-du-thau/thong-tin-du-an';
@@ -127,29 +128,39 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(check: boolean) {
+  onSubmit(check: boolean, saveAll: boolean) {
+    console.log(1);
     const previousStatus = HoSoDuThauService.tempDataLiveFormDKDT.value.isDraftVersion;
     HoSoDuThauService.tempDataLiveFormDKDT.value.bidOpportunityId = this.packageId;
     HoSoDuThauService.tempDataLiveFormDKDT.value.isDraftVersion = check;
     if (check || this.isCreate || previousStatus) {
-      this.submitLiveForm(true);
+      this.submitLiveForm(true, saveAll);
     } else {
+      console.log(11);
       // nếu 2 obj = nhau, không cần thông báo
       const isEqual = Utils.isEqual({...HoSoDuThauService.tempDataLiveFormDKDT.value}, this.formModelCompare);
-      isEqual ? this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]) : this.showPopupConfirm = true;
+      if (saveAll) {
+        isEqual ? this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]) : this.showPopupConfirm = true;
+      } else {
+        this.submitLiveForm(true, saveAll);
+      }
     }
   }
   backSummary() {
     this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
   }
-  submitLiveForm(event) {
+  submitLiveForm(event, saveAll) {
+    console.log(2);
     if (!event) {
       this.showPopupConfirm = false;
     } else {
       this.hoSoDuThauService.createOrUpdateLiveFormTomTat().subscribe(res => {
         this.hoSoDuThauService.detectUploadFile(true);
-        this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
+        if (saveAll) { this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]); }
         const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
+        if (res.result.id) {
+          this.isCreate = false;
+        }
         this.alertService.success(`${message} Bảng tóm tắt điều kiện dự thầu thành công!`);
         if (!res.result.isDraftVersion) { this.hoSoDuThauService.detectCondition(true); }
       }, err => {

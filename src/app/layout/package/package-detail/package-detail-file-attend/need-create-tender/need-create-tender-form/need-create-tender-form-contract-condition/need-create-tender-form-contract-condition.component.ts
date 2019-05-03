@@ -23,7 +23,8 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private packageService: PackageService,
-    private router: Router
+    private router: Router,
+    private parent: NeedCreateTenderFormComponent
   ) { }
 
   ngOnInit() {
@@ -90,9 +91,20 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.contractCondition.commencementDate = data.commencementDate ? DateTimeConvertHelper.fromDtObjectToSecon(data.commencementDate) : null;
   }
 
+  mappingToSaveLiveFormData(data) {
+    NeedCreateTenderFormComponent.formModel.contractCondition = data;
+    // tslint:disable-next-line:max-line-length
+    NeedCreateTenderFormComponent.formModel.contractCondition.commencementDate = data.commencementDate ? DateTimeConvertHelper.fromDtObjectToSecon(data.commencementDate) : null;
+    this.parent.saveOfficially(false);
+  }
+
   routerLink(event, link) {
     if (event.key === 'Enter') {
       this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/${link}`]);
     }
+  }
+
+  saveData() {
+    this.mappingToSaveLiveFormData(this.contractConditionForm.value);
   }
 }

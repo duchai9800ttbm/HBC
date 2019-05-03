@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { StakeHolder } from '../../../../../../../../shared/models/ho-so-du-thau/stack-holder.model';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 
 @Component({
   selector: 'app-summary-condition-form-related-parties',
@@ -17,6 +18,7 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
 
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
+    private parent: SummaryConditionFormComponent
   ) { }
 
 
@@ -101,5 +103,9 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
       }
     }
     return dem;
+  }
+
+  saveData() {
+    this.parent.onSubmit(false, false);
   }
 }

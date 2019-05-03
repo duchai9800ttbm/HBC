@@ -11,6 +11,7 @@ import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du
 import { CustomerModel } from '../../../../../../../shared/models/site-survey-report/customer-list';
 import { DepartmentsFormBranches } from '../../../../../../../shared/models/user/departments-from-branches';
 import { SiteSurveyReport } from '../../../../../../../shared/models/site-survey-report/site-survey-report';
+// tslint:disable-next-line: max-line-length
 import { ScaleOverall, ConstructionModel, ConstructionItem } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
 import { UsefulInfo, ContentItem } from '../../../../../../../shared/models/site-survey-report/useful-info.model';
 import { ScrollToTopService } from '../../../../../../../shared/services/scroll-to-top.service';
@@ -64,6 +65,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
     // Check Action Mode
     const activate$ = this.activatedRoute.params.subscribe(data => {
+      console.log(data.action);
       switch (data.action) {
         case 'create': {
           this.isCreate = true;
@@ -159,10 +161,10 @@ export class EditComponent implements OnInit, OnDestroy {
           if (EditComponent.liveformData && dataPackageInfo) {
             const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
               const constructionTypes = ress;
-              const foundItem = constructionTypes.find(item => item.id == dataPackageInfo.projectType.id);
-              foundItem.checked = true;
+              const foundItem = constructionTypes.find(item => item.id === dataPackageInfo.projectType.id);
+              if (foundItem) { foundItem.checked = true; }
               constructionTypes[constructionTypes
-                .indexOf(constructionTypes.find(item => item.id == dataPackageInfo.projectType.id))] = foundItem;
+                .indexOf(constructionTypes.find(item => item.id === dataPackageInfo.projectType.id))] = foundItem;
               EditComponent.liveformData.scaleOverall.loaiCongTrinh = constructionTypes.map(x => ({
                 text: x.text,
                 value: x.value,
@@ -189,10 +191,10 @@ export class EditComponent implements OnInit, OnDestroy {
             EditComponent.liveformData.scaleOverall.quyMoDuAn.donViTienDo = this.dataDNDT.contractCondition.timeForCompletionUnit;
             const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
               const constructionTypes = ress;
-              const foundItem = constructionTypes.find(item => item.id == dataPackageInfo.projectType.id);
-              foundItem.checked = true;
+              const foundItem = constructionTypes.find(item => item.id === dataPackageInfo.projectType.id);
+              if (foundItem.checked) { foundItem.checked = true; }
               constructionTypes[constructionTypes
-                .indexOf(constructionTypes.find(item => item.id == dataPackageInfo.projectType.id))] = foundItem;
+                .indexOf(constructionTypes.find(item => item.id === dataPackageInfo.projectType.id))] = foundItem;
               EditComponent.liveformData.scaleOverall.loaiCongTrinh =
                 this.mergeConstructionType(constructionTypes, EditComponent.liveformData.scaleOverall.loaiCongTrinh);
               if (EditComponent.liveformData) {
@@ -239,11 +241,12 @@ export class EditComponent implements OnInit, OnDestroy {
   getInfoTenderPreparationPlanning() {
     this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
       const tempDataTasks = data.tasks;
-      this.ngayKhaoSat = tempDataTasks.find(item => item.itemId == 6).finishDate;
+      this.ngayKhaoSat = tempDataTasks.find(item => item.itemId === 6).finishDate;
     }, err => this.alertService.error('Lấy thông tin Phân công tiến độ không thành công.'));
   }
-  submitLiveForm(event) {
-    this.departmentId = this.listDepartments.find(item => item.departmentNo === this.departmentNo).id;
+  submitLiveForm(event, saveAll: boolean) {
+    const departmentFind = this.listDepartments.find(item => item.departmentNo === this.departmentNo);
+    this.departmentId = departmentFind && departmentFind.id;
     EditComponent.liveformData.phongBan = {
       id: this.departmentId,
       key: this.departmentNo,
@@ -264,11 +267,17 @@ export class EditComponent implements OnInit, OnDestroy {
       this.showPopupConfirm = false;
       this.siteSurveyReportService
         .createOrUpdateSiteSurveyingReport(objData)
-        .subscribe(() => {
+        .subscribe(res => {
           this.showPopupConfirm = false;
           this.hoSoDuThauService.detectUploadFile(true);
-          this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/liveformsite`]);
+          if (saveAll) {
+            this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/liveformsite`]);
+          }
+          console.log('aaa', this.isCreate);
           const message = (this.isCreate) ? 'Tạo mới' : 'Cập nhật';
+          if (this.isCreate) {
+            this.isCreate = false;
+          }
           this.alertService.success(`${message} Báo cáo khảo sát công trường thành công.`);
           if (!EditComponent.liveformData.isDraft) {
             this.hoSoDuThauService.detectCondition(true);
@@ -277,6 +286,7 @@ export class EditComponent implements OnInit, OnDestroy {
           this.showPopupConfirm = false;
           const message = (this.isCreate) ? 'Tạo mới' : 'Cập nhật';
           EditComponent.actionMode = (this.isCreate) ? 'create' : 'edit';
+          this.isCreate = false;
           this.isViewMode = false;
           this.alertService.error(`Đã xảy ra lỗi. ${message} Báo cáo khảo sát công trường không thành công.`);
         });
@@ -288,11 +298,11 @@ export class EditComponent implements OnInit, OnDestroy {
     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
   }
 
-  updateliveform(check: boolean) {
+  updateliveform(check: boolean, saveAll: boolean) {
     const statusPrevious = EditComponent.liveformData.isDraft;
     EditComponent.liveformData.isDraft = check;
-    if (this.isCreate || check || statusPrevious) { return this.submitLiveForm(true); }
-    return this.showPopupConfirm = true;
+    if (this.isCreate || check || statusPrevious) { return this.submitLiveForm(true, saveAll); }
+    return saveAll ? this.showPopupConfirm = true : this.submitLiveForm(true, saveAll);
   }
   cancelCreateUpdate() {
     this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/liveformsite`]);

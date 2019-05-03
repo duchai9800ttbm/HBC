@@ -32,7 +32,8 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         private sessionService: SessionService,
         private alertService: AlertService,
         private statusObservableHsdtService: StatusObservableHsdtService,
-        private router: Router
+        private router: Router,
+        private parent: NeedCreateTenderFormComponent
     ) { }
 
     ngOnInit() {
@@ -172,6 +173,20 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         }
     }
 
+    mappingToSaveLiveFormData(data) {
+        if (NeedCreateTenderFormComponent.formModel) {
+            NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = data;
+            const directorData =
+                NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
+            // tslint:disable-next-line:max-line-length
+            NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.expectedTime =
+                directorData && directorData.expectedDate
+                    ? directorData.expectedDate
+                    : 0;
+            this.parent.saveOfficially(false);
+        }
+    }
+
     onSubmit() {
         if (NeedCreateTenderFormComponent.formModel.createdEmployeeId) {
             NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.employeeId;
@@ -225,5 +240,9 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         if (event.key === 'Enter') {
             this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/${link}`]);
         }
+    }
+
+    saveData() {
+        this.mappingToSaveLiveFormData(this.decisionBoardForm.value);
     }
 }

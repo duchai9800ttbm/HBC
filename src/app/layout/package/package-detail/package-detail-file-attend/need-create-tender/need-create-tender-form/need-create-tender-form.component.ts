@@ -33,6 +33,7 @@ import { ProjectImages } from '../../../../../../shared/models/package/project-i
 })
 export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     static formModel: ProposeTenderParticipateRequest = new ProposeTenderParticipateRequest();
+    static edit = false;
     bidOpportunityId;
     packageInfo: PackageInfoModel;
     routerAction: string;
@@ -133,6 +134,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             setTimeout(() => {
                 switch (this.routerAction) {
                     case 'create': {
+                        // NeedCreateTenderFormComponent.edit = true;
                         if (!this.TaoMoiDNDT) {
                             this.router.navigate(['not-found']);
                         }
@@ -307,7 +309,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             });
     }
 
-    onSubmit(isDraf: boolean) {
+    onSubmit(isDraf: boolean, saveAll: boolean) {
         NeedCreateTenderFormComponent.formModel.isDraftVersion = isDraf;
         NeedCreateTenderFormComponent.formModel.bidOpportunityId = this.bidOpportunityId;
         if (NeedCreateTenderFormComponent.formModel.createdEmployeeId) {
@@ -327,11 +329,13 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.spinner.hide();
-                    this.router.navigate([
-                        `package/detail/${
-                        PackageDetailComponent.packageId
-                        }/attend/create-request`
-                    ]);
+                    if (saveAll) {
+                        this.router.navigate([
+                            `package/detail/${
+                            PackageDetailComponent.packageId
+                            }/attend/create-request`
+                        ]);
+                    }
                     if (NeedCreateTenderFormComponent.formModel.id) {
                         this.alertService.success(
                             'Cập nhật phiếu đề nghị dự thầu thành công!'
@@ -340,6 +344,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                         this.alertService.success(
                             'Tạo phiếu đề nghị dự thầu thành công!'
                         );
+                        NeedCreateTenderFormComponent.formModel.id = data.id || null;
                     }
                 },
                 err => {
@@ -444,25 +449,28 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     }
 
     saveDrafts() {
-        this.onSubmit(true);
+        this.onSubmit(true, false);
     }
 
-    saveOfficially() {
+    saveOfficially(saveAll: boolean) {
         // this.draftsOrOfficially = false;
+        console.log(saveAll);
         if (NeedCreateTenderFormComponent.formModel.id) {
             if (NeedCreateTenderFormComponent.formModel && !NeedCreateTenderFormComponent.formModel.isDraftVersion) {
-                this.isShowChanges = true;
+                if (saveAll) {
+                    this.isShowChanges = true;
+                }
             } else {
-                this.onSubmit(false);
+                this.onSubmit(false, saveAll);
             }
-        } else {
-            this.onSubmit(false);
         }
+
+        if (!this.isShowChanges) { this.onSubmit(false, saveAll); }
     }
 
     saveChangesLiveForm() {
         NeedCreateTenderFormComponent.formModel.updatedDesc = this.updatedDetail;
-        this.onSubmit(false);
+        this.onSubmit(false, true);
         this.updatedDetail = '';
     }
 

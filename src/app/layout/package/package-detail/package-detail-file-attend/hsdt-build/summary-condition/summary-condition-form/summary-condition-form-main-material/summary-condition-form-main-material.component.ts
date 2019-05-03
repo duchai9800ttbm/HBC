@@ -27,6 +27,7 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
     private fb: FormBuilder,
     private hoSoDuThauService: HoSoDuThauService,
     private router: Router,
+    private parent: SummaryConditionFormComponent
   ) { }
 
   ngOnInit() {
@@ -99,5 +100,9 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
     if (e.code === 'Enter') {
       this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
     }
+  }
+
+  saveData() {
+    this.parent.onSubmit(false, false);
   }
 }

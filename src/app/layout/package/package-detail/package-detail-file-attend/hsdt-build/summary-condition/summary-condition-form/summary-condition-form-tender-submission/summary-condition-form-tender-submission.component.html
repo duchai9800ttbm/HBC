@@ -63,8 +63,12 @@
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
-            <button  [tabindex]="taiLieuLuuYFA.controls.length + 3" class="btn btn-primary ml-1" (keyup)="routerLink($event, 'profile-destination')" routerLink="../profile-destination">
+            <button [tabindex]="taiLieuLuuYFA.controls.length + 3" class="btn btn-primary ml-1" (keyup)="routerLink($event, 'profile-destination')" routerLink="../profile-destination">
                 Tiếp
+                <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+            </button>
+            <button [tabindex]="taiLieuLuuYFA.controls.length + 3" class="btn btn-primary ml-1" (keyup)="routerLink($event, 'profile-destination')" routerLink="../profile-destination" (click)="saveData()" *ngIf="!isModeView">
+                Lưu và tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>
         </div>

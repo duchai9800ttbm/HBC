@@ -5,6 +5,7 @@ import { DienGiaiYeuCauLamRo } from '../../../../../../../../shared/models/ho-so
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { Router } from '../../../../../../../../../../node_modules/@angular/router';
+import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 
 @Component({
   selector: 'app-summary-condition-form-tender-clarfication',
@@ -21,6 +22,7 @@ export class SummaryConditionFormTenderClarficationComponent implements OnInit {
     private fb: FormBuilder,
     private hoSoDuThauService: HoSoDuThauService,
     private router: Router,
+    private parent: SummaryConditionFormComponent
   ) { }
 
   ngOnInit() {
@@ -180,5 +182,9 @@ export class SummaryConditionFormTenderClarficationComponent implements OnInit {
     if (e.code === 'Enter') {
       this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
     }
+  }
+
+  saveData() {
+    this.parent.onSubmit(false, false);
   }
 }

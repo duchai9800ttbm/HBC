@@ -65,6 +65,10 @@
                     Tiếp
                     <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
                 </button>
+                <button class="btn btn-primary ml-1" tabindex="6" routerLink="../images-project" (keyup)="routerLink($event, 'images-project')" (click)="saveData()" *ngIf="routerAction != 'view'">
+                    Lưu và tiếp
+                    <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     </form>

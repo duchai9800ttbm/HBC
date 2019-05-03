@@ -11,6 +11,7 @@ import { Router } from '../../../../../../../../../../node_modules/@angular/rout
 import { SettingService } from '../../../../../../../../shared/services/setting.service';
 import { Contract } from '../../../../../../../../shared/models/setting/contract';
 import { AlertService } from '../../../../../../../../shared/services';
+import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 
 @Component({
     selector: 'app-summary-condition-form-condition-contract',
@@ -45,7 +46,8 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
         private hoSoDuThauService: HoSoDuThauService,
         private router: Router,
         private settingService: SettingService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private parent: SummaryConditionFormComponent
     ) { }
 
     ngOnInit() {
@@ -633,5 +635,9 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
         if (e.code === 'Enter') {
             this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary/form/create/${link}`]);
         }
+    }
+
+    saveData() {
+        this.parent.onSubmit(false, false);
     }
 }

@@ -86,6 +86,10 @@
                 Tiếp
                 <i class="fa fa-chevron-right" aria-hidden="true"></i>
             </button>
+            <button tabindex="5" type="button" class="btn btn-primary w-5rem ml-2" [routerLink]="['../moreinfo']" (click)="saveData()" *ngIf="!isViewMode">
+                Lưu và tiếp
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </button>
         </div>
     </div>
 

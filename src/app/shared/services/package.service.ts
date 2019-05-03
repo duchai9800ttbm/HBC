@@ -1133,7 +1133,7 @@ export class PackageService {
         data.tasks.forEach(element => {
             element.startDate = DateTimeConvertHelper.fromDtObjectToTimestamp(element.startDate);
             element.finishDate = DateTimeConvertHelper.fromDtObjectToTimestamp(element.finishDate);
-            let a = (element.whoIsInChargeIds && element.whoIsInChargeIds.length !== 0) ?
+            const a = (element.whoIsInChargeIds && element.whoIsInChargeIds.length !== 0) ?
                 element.whoIsInChargeIds.map(item => item.employeeId) : [];
             element.whoIsInChargeIds = {
                 ids: a,
@@ -1147,7 +1147,7 @@ export class PackageService {
     comfirmTenderPreparationPlanning(data: any): Observable<any> {
         const url = `tenderpreparationplanningassignment/createorupdate`;
         data.tasks.forEach(element => {
-            let a = (element.whoIsInCharges && element.whoIsInCharges.length !== 0) ?
+            const a = (element.whoIsInCharges && element.whoIsInCharges.length !== 0) ?
                 element.whoIsInCharges.map(item => item.employeeId) : [];
             element.whoIsInChargeIds = {
                 ids: a,

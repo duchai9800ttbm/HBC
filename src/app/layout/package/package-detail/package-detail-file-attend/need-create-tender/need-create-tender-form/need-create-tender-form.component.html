@@ -23,7 +23,7 @@
             <button class="btn btn-primary ml-1" (click)="saveDrafts()" *ngIf="routerAction != 'view' && dataModel?.isDraftVersion">
                 Lưu nháp
             </button>
-            <button class="btn btn-primary ml-1" (click)="saveOfficially()" *ngIf="routerAction != 'view'">
+            <button class="btn btn-primary ml-1" (click)="saveOfficially('true')" *ngIf="routerAction != 'view'">
                 Lưu
             </button>
             <button class="btn btn-secondary ml-1" (click)="cancel()" *ngIf="routerAction != 'view'">

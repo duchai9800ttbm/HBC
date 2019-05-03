@@ -5,6 +5,7 @@ import { EditComponent } from '../edit.component';
 import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
+// tslint:disable-next-line: import-blacklist
 import { Subscription } from 'rxjs';
 
 
@@ -27,7 +28,8 @@ export class UsefulInfoComponent implements OnInit, AfterViewInit {
   subscription: Subscription;
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
-    private router: Router
+    private router: Router,
+    private parent: EditComponent
   ) { }
 
   ngOnInit() {
@@ -99,5 +101,9 @@ export class UsefulInfoComponent implements OnInit, AfterViewInit {
   }
   closeView() {
     this.showPopupViewImage = false;
+  }
+
+  saveData() {
+    this.parent.updateliveform(false, false);
   }
 }

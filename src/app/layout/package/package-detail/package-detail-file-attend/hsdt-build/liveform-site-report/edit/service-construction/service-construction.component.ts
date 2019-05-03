@@ -43,7 +43,8 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private parent: EditComponent
   ) {
 
   }
@@ -491,5 +492,9 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
         input.click();
       }
     });
+  }
+
+  saveData() {
+    this.parent.updateliveform(false, false);
   }
 }

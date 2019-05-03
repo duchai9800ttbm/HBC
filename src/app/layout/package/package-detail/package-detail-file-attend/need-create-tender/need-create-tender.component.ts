@@ -5,6 +5,7 @@ import { ProposeTenderParticipateRequest } from '../../../../../shared/models/ap
 import { PackageService } from '../../../../../shared/services/package.service';
 import { AlertService, ConfirmationService } from '../../../../../shared/services';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
+// tslint:disable-next-line: import-blacklist
 import { Subject, Subscription } from 'rxjs';
 import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';

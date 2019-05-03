@@ -79,5 +79,9 @@
             Tiếp
             <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
         </button>
+        <button [appAutoFocus]="!stakeHolderList || stakeHolderList.length === 0" [tabindex]="maxIndex() + 1" class="btn btn-primary ml-1" routerLink="../scope" (click)="saveData()" *ngIf="!isModeView">
+            Lưu và tiếp
+            <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+        </button>
     </div>
 </div>

@@ -29,7 +29,8 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit, On
         private spinner: NgxSpinnerService,
         private alertService: AlertService,
         private router: Router,
-        private permissionService: PermissionService
+        private permissionService: PermissionService,
+        private parent: NeedCreateTenderFormComponent
     ) { }
 
     ngOnInit() {
@@ -110,6 +111,21 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit, On
         NeedCreateTenderFormComponent.formModel.isAgreedParticipating = data.isAgreed;
     }
 
+    mappingToSaveLiveFormData(data) {
+        NeedCreateTenderFormComponent.formModel.tenderDirectorProposal = data;
+        NeedCreateTenderFormComponent.formModel.isAgreedParticipating =
+            data.isAgreedParticipating;
+        // tslint:disable-next-line:max-line-length
+        NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToSecon(
+            data.date
+        );
+        NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToSecon(
+            data.expectedDate
+        );
+        NeedCreateTenderFormComponent.formModel.isAgreedParticipating = data.isAgreed;
+        this.parent.saveOfficially(false);
+    }
+
     onSubmit() {
         // NeedCreateTenderFormComponent.formModel.isDraftVersion = isDraf;
         // NeedCreateTenderFormComponent.formModel.bidOpportunityId = this.bidOpportunityId;
@@ -155,5 +171,9 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit, On
         if (event.key === 'Enter') {
             this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/${link}`]);
         }
+    }
+
+    saveData() {
+        this.mappingToSaveLiveFormData(this.directorProposalForm.value);
     }
 }

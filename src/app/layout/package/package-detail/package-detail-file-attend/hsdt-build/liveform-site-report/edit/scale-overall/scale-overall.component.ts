@@ -19,6 +19,7 @@ import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { EditComponent } from '../edit.component';
+// tslint:disable-next-line: import-blacklist
 import { Subscription } from 'rxjs';
 import { NgxImageCompressService } from '../../../../../../../../../../node_modules/ngx-image-compress';
 import Utils from '../../../../../../../../shared/helpers/utils.helper';
@@ -66,7 +67,8 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
     private fb: FormBuilder,
-    private imageCompress: NgxImageCompressService
+    private imageCompress: NgxImageCompressService,
+    private parent: EditComponent
   ) { }
 
   ngOnInit() {
@@ -356,5 +358,9 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
         input.click();
       }
     });
+  }
+
+  saveData() {
+    this.parent.updateliveform(false, false);
   }
 }

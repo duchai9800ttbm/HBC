@@ -5,6 +5,7 @@ import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so
 import { PhamViCongViec } from '../../../../../../../../shared/models/ho-so-du-thau/pham-vi-cong-viec';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { Router } from '../../../../../../../../../../node_modules/@angular/router';
+import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 
 @Component({
   selector: 'app-summary-condition-form-scope-work',
@@ -28,6 +29,7 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
     private hoSoDuThauService: HoSoDuThauService,
     private fb: FormBuilder,
     private router: Router,
+    private parent: SummaryConditionFormComponent
   ) { }
 
   ngOnInit() {
@@ -133,5 +135,9 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
     if (e.code === 'Enter') {
       this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
     }
+  }
+
+  saveData() {
+    this.parent.onSubmit(false, false);
   }
 }

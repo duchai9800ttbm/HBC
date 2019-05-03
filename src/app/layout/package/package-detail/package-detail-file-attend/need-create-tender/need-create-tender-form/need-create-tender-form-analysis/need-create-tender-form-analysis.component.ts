@@ -20,6 +20,7 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private packageService: PackageService,
     private router: Router,
+    private parent: NeedCreateTenderFormComponent
   ) { }
 
   ngOnInit() {
@@ -35,7 +36,9 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
         this.analysisForm.enable();
       }
       this.createForm();
-      this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+      this.analysisForm.valueChanges.subscribe(data => {
+        this.mappingToLiveFormData(data);
+      });
     });
     this.packageService.dataProposals$.subscribe(value => {
       this.createForm();
@@ -68,9 +71,22 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
     }
   }
 
+  mappingToSaveLiveFormData(data) {
+    if (NeedCreateTenderFormComponent.formModel) {
+      NeedCreateTenderFormComponent.formModel.documentName = data.documentName;
+      NeedCreateTenderFormComponent.formModel.employerAnalysis = data.employerAnalysis;
+      this.parent.saveOfficially(false);
+    }
+  }
+
   routerLink(event) {
     if (event.key === 'Enter') {
       this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/consultant-analys`]);
     }
+  }
+
+  saveData() {
+    this.mappingToSaveLiveFormData(this.analysisForm.value);
+    console.log(this.analysisForm.value);
   }
 }

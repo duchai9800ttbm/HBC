@@ -5,6 +5,7 @@ import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so
 import { DictionaryItemText } from '../../../../../../../../shared/models';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { Router } from '../../../../../../../../../../node_modules/@angular/router';
+import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 
 @Component({
   selector: 'app-summary-condition-form-tender-submission',
@@ -21,6 +22,7 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
     private hoSoDuThauService: HoSoDuThauService,
     private fb: FormBuilder,
     private router: Router,
+    private parent: SummaryConditionFormComponent
   ) { }
 
 
@@ -104,4 +106,7 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
     }
   }
 
+  saveData() {
+    this.parent.onSubmit(false, false);
+  }
 }

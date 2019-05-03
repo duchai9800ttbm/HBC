@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
+// tslint:disable-next-line: import-blacklist
 import { Subscription } from 'rxjs';
 import Utils from '../../../../../../../../shared/helpers/utils.helper';
 
@@ -42,7 +43,8 @@ export class TrafficComponent implements OnInit, AfterViewInit, OnDestroy {
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private parent: EditComponent
   ) { }
 
   ngOnInit() {
@@ -413,5 +415,9 @@ export class TrafficComponent implements OnInit, AfterViewInit, OnDestroy {
         input.click();
       }
     });
+  }
+
+  saveData() {
+    this.parent.updateliveform(false, false);
   }
 }

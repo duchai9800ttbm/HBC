@@ -31,12 +31,12 @@
                 </div>
                 
                 <div *ngIf="!isModeView" class="mr-1">
-                    <button class="btn btn-primary" (click)="onSubmit(false)">
+                    <button class="btn btn-primary" (click)="onSubmit(false, 'true')">
                         Lưu
                     </button>
                 </div>
                 <div *ngIf="!isModeView && isDraft" class="mr-1">
-                    <button class="btn btn-primary" (click)="onSubmit(true)">
+                    <button class="btn btn-primary" (click)="onSubmit(true, 'true')">
                         Lưu nháp
                     </button>
                 </div>
@@ -96,5 +96,5 @@
         <router-outlet></router-outlet>
     </div>
 </div>
-<app-popup-update-description *ngIf="showPopupConfirm" (closed)="submitLiveForm($event)"></app-popup-update-description>
+<app-popup-update-description *ngIf="showPopupConfirm" (closed)="submitLiveForm($event, 'true')"></app-popup-update-description>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>

@@ -7,6 +7,7 @@ import { AlertService } from '../../../../../../../../shared/services';
 import { PackageService } from '../../../../../../../../shared/services/package.service';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { Router } from '../../../../../../../../../../node_modules/@angular/router';
+import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 
 @Component({
   selector: 'app-summary-condition-form-profile-destination',
@@ -25,6 +26,7 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
     private packageService: PackageService,
     private alertService: AlertService,
     private router: Router,
+    private parent: SummaryConditionFormComponent
   ) { }
 
   ngOnInit() {
@@ -91,5 +93,9 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
     if (e.code === 'Enter') {
       this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary/form/create/${link}`]);
     }
+  }
+
+  saveData() {
+    this.parent.onSubmit(false, false);
   }
 }

@@ -43,6 +43,7 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   loading = false;
   file = [];
   public gridView: GridDataResult;
+// tslint:disable-next-line: no-use-before-declare
   public items: any[] = listUsers;
   public mySelection: number[] = [];
   isSendCc: boolean;

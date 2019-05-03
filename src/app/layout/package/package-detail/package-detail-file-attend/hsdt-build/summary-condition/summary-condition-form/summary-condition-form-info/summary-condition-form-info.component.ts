@@ -6,6 +6,7 @@ import { AlertService } from '../../../../../../../../shared/services';
 import { ThongTinDuAn } from '../../../../../../../../shared/models/ho-so-du-thau/thong-tin-du-an';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import Utils from '../../../../../../../../shared/helpers/utils.helper';
+import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 
 @Component({
   selector: 'app-summary-condition-form-info',
@@ -33,7 +34,8 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     private hoSoDuThauService: HoSoDuThauService,
     private alertService: AlertService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private parent: SummaryConditionFormComponent
   ) { }
 
   ngOnInit() {
@@ -78,9 +80,10 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   }
   loadData() {
     this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
+      console.log(data);
       const objDataStepInfo = data.thongTinDuAn;
       if (objDataStepInfo) {
-        this.dataStepInfo.tenTaiLieu = data.documentName;
+        this.dataStepInfo.tenTaiLieu = objDataStepInfo.tenTaiLieu;
         this.dataStepInfo.lanPhongVan = objDataStepInfo.lanPhongVan;
         this.dataStepInfo.hinhAnhPhoiCanh = objDataStepInfo.hinhAnhPhoiCanh;
         this.dataStepInfo.banVeMasterPlan = objDataStepInfo.banVeMasterPlan;
@@ -217,4 +220,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     this.showPopupViewImage = false;
   }
 
+  saveData() {
+    this.parent.onSubmit(false, false);
+  }
 }

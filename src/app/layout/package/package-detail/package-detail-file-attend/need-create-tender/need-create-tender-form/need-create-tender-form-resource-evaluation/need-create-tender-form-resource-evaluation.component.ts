@@ -17,7 +17,8 @@ export class NeedCreateTenderFormResourceEvaluationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private packageService: PackageService,
-    private router: Router
+    private router: Router,
+    private parent: NeedCreateTenderFormComponent
   ) { }
 
   ngOnInit() {
@@ -50,6 +51,15 @@ export class NeedCreateTenderFormResourceEvaluationComponent implements OnInit {
 
   mappingToLiveFormData(data) {
     NeedCreateTenderFormComponent.formModel.internalResourcesEvaluation = data;
+  }
+
+  mappingToSaveLiveFormData(data) {
+    NeedCreateTenderFormComponent.formModel.internalResourcesEvaluation = data;
+    this.parent.saveOfficially(false);
+  }
+
+  saveData() {
+    this.mappingToSaveLiveFormData(this.resourceEvaluationForm.value);
   }
 
   routerLink(event, link) {

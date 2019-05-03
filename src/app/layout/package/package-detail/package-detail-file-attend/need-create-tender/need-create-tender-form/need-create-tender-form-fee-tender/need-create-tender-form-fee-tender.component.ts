@@ -19,7 +19,8 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private packageService: PackageService,
-    private router: Router
+    private router: Router,
+    private parent: NeedCreateTenderFormComponent
   ) { }
 
   ngOnInit() {
@@ -71,6 +72,18 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
     if (NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument == null) {
       NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument = 0;
     }
+  }
+
+  mappingToSaveLiveFormData(data) {
+    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument = data;
+    if (NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument == null) {
+      NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument = 0;
+    }
+    this.parent.saveOfficially(false);
+  }
+
+  saveData() {
+    this.mappingToSaveLiveFormData(this.feeTenderForm.value);
   }
 
   routerLink(event, link) {
