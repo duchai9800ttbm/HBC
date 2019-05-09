@@ -11,6 +11,7 @@ import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/h
 import { groupBy } from '@progress/kendo-data-query';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
+// tslint:disable-next-line: import-blacklist
 import { Subscription } from 'rxjs';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';

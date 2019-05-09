@@ -354,7 +354,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
             .getFileNoSearch(this.packageId)
             .subscribe(responseResultDocument => {
                 const checkDocUpload = responseResultDocument.items;
-                this.checkDocFile = checkDocUpload.some(item => item.status == 'Official');
+                this.checkDocFile = checkDocUpload.some(item => item.status === 'Official');
             });
         this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId).subscribe(result => {
             this.checkTenderSummary = (result) ? result.isDraftVersion : true;

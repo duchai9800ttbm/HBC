@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
     CanActivate,
     ActivatedRouteSnapshot,
     RouterStateSnapshot
-} from "@angular/router";
-import { Router } from "@angular/router";
-import { SessionService } from "./session.service";
+} from '@angular/router';
+import { Router } from '@angular/router';
+import { SessionService } from './session.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
             return true;
         }
 
-        this.router.navigate(["/login"], {
+        this.router.navigate(['/login'], {
             queryParams: { returnUrl: state.url }
         });
         return false;

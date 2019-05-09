@@ -192,7 +192,9 @@ export class EditComponent implements OnInit, OnDestroy {
             const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
               const constructionTypes = ress;
               const foundItem = constructionTypes.find(item => item.id === dataPackageInfo.projectType.id);
-              if (foundItem.checked) { foundItem.checked = true; }
+              if ( foundItem) {
+                foundItem.checked = true;
+              }
               constructionTypes[constructionTypes
                 .indexOf(constructionTypes.find(item => item.id === dataPackageInfo.projectType.id))] = foundItem;
               EditComponent.liveformData.scaleOverall.loaiCongTrinh =
@@ -305,6 +307,7 @@ export class EditComponent implements OnInit, OnDestroy {
     return saveAll ? this.showPopupConfirm = true : this.submitLiveForm(true, saveAll);
   }
   cancelCreateUpdate() {
+    EditComponent.liveformData = new SiteSurveyReport();
     this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/liveformsite`]);
   }
   editLiveform() {

@@ -147,6 +147,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     }
   }
   backSummary() {
+    SummaryConditionFormComponent.formModel = null;
     this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
   }
   submitLiveForm(event, saveAll) {

@@ -363,9 +363,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     }
 
     cancel() {
-        NeedCreateTenderFormComponent.formModel = Object.assign(
-            {}, this.dataModelCopy
-        );
+        NeedCreateTenderFormComponent.formModel = null;
+        NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
         this.packageService.setRouterAction('view');
         this.router.navigate([
             `package/detail/${
